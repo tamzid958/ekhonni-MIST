@@ -4,7 +4,7 @@ import Button from "@/components/Button";
 const Header = ()=>{
     return (
         <>
-            <div className=" px-6 w-screen h-[100px] border-2 border-black flex justify-between">
+            <div className=" my-2 px-6 w-screen h-[100px] border-2 border-black flex justify-between">
                 <div className="flex">
                     <div className=" my-auto">
                         <h1 className=" font-extrabold text-2xl font-serif tracking-widest">Ekhonni</h1>
