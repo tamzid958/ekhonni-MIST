@@ -1,10 +1,17 @@
-const Button = ({value})=>{
+
+const Button = ({value , option , type}) => {
+
     return (
         <>
-            <button className="w-24 h-10 bg-black text-white rounded-lg font-bold">
-                {value}
-            </button>
-
+            {option ? (
+                <button className="w-24 h-10 border border-black bg-black text-white rounded-lg font-bold" type={type}>
+                    {value}
+                </button>
+            ) : (
+                <button className="w-24 h-10 border border-white bg-transparent text-white rounded-lg font-bold" type={type}>
+                    {value}
+                </button>
+            )}
         </>
     )
 }
