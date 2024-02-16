@@ -5,13 +5,45 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e3fc2882-6fa8-40ca-b4d8-681976bd00f9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/ekonni.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/mvnw" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/mvnw.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/BackendApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/controller/AppUserController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/model/Admin.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/model/AppUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/model/BaseEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/model/Person.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/model/Product.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/repository/AdminRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/repository/AppUserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/security/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/service/AppUserService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/service/implententation/AppUserServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/dsi/backend/BackendApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/Instagram.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/all_adds.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/banner.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/dslr.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/facebook.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/message.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/notification.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/search.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/user.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/public/what's_app.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/ButtonFull.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Card.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Corosol.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Footer.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Header.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Search.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/backend.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/globals.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/layout.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/app/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/page.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/Button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Button.jsx" afterDir="false" />
@@ -40,7 +72,7 @@
     "Node.js.TextField.jsx.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "page/login",
+    "git-widget-placeholder": "Merging page/login",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -70,7 +102,7 @@
       <workItem from="1708009245842" duration="10280000" />
       <workItem from="1708057322553" duration="4490000" />
       <workItem from="1708071378871" duration="360000" />
-      <workItem from="1708075982125" duration="5975000" />
+      <workItem from="1708075982125" duration="6613000" />
     </task>
     <servers />
   </component>
