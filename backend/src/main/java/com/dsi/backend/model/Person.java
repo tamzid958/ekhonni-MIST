@@ -1,9 +1,9 @@
 package com.dsi.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.io.Serializable;
 
 @Setter
 @Getter
@@ -11,17 +11,27 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-public class Person {
+public class Person extends BaseEntity<Long> implements Serializable {
 
-    @Id //primary key
-    private String id;
+    @Column(name = "name")
     private String name;
-    private String email;
-    private String password;
-    private String contact;
-    private String address;
-    private String profilePicture;
 
-    public void verify
+    @Column(name="email")
+    private String email;
+
+    @Column(name="contact")
+    private String contact;
+
+    @Column(name="address")
+    private String address;
+
+    @Column(name="division")
+    private String division;
+
+    @Column(name="password")
+    private String password;
+
+    @Column(name="profile_picture")
+    private String profilePicture;
 }
 
