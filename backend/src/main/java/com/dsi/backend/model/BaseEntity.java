@@ -24,8 +24,8 @@ import java.io.Serializable;
 
 @Setter
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 @RequiredArgsConstructor
 @MappedSuperclass
 public abstract class BaseEntity <PK extends Serializable> {
