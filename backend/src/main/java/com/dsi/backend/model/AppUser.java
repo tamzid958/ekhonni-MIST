@@ -13,7 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "client")
-public class Client extends Person {
+public class AppUser extends Person {
 
     @Column(name="client_status")
     private String clientStatus;
