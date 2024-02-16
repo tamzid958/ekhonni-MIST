@@ -1,4 +1,5 @@
 import Image from "next/image";
+<<<<<<< Updated upstream
 
 export default function Home() {
   return (
@@ -25,6 +26,17 @@ export default function Home() {
               priority
             />
           </a>
+=======
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import TextField from "@/components/TextField";
+export default function Home() {
+  return (
+    <>
+        <div className=" w-screen ">
+
+            <TextField placeholder={"Username"} />
+>>>>>>> Stashed changes
         </div>
       </div>
 
