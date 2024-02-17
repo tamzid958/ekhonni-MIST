@@ -6,10 +6,7 @@ import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -19,9 +16,14 @@ public class AppUserController {
     public AppUserService appUserService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerAppUser(@RequestBody AppUser appUser) {
+    public ResponseEntity<?> registerAppUser(@RequestBody AppUser appUser) {
         AppUser registeredUser = appUserService.registerAppUser(appUser);
-        return new ResponseEntity<>("User registered successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginAppUser(@RequestParam String email, @RequestParam String password){
+        return appUserService.loginAppUser(email,password);
     }
 
 }

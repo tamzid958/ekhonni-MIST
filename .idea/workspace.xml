@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="33031be7-0793-4c27-a051-fa16612d786f" name="Changes" comment="Header,footer and button component created" />
+    <list default="true" id="1ca05e41-56a0-4b08-a00e-e791c758112b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/controller/AppUserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/controller/AppUserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/model/AppUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/model/AppUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/service/AppUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/service/AppUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/service/implententation/AppUserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/service/implententation/AppUserServiceImpl.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,60 +21,61 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/frontend/src/components/Button.jsx" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/frontend/src/components/TopBidding.jsx" root0="FORCE_HIGHLIGHTING" />
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 7
+  &quot;associatedIndex&quot;: 4
 }</component>
-  <component name="ProjectId" id="2cLnBI5MJE3qdRwIvj98Glwg81z" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectId" id="2cQxmDuQz8kmgnmZbbpZ9BZJACO" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Node.js.TextField.jsx.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging page/login",
+    "Spring Boot.BackendApplication.executor": "Run",
+    "git-widget-placeholder": "example",
+    "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
+    ]
   }
 }]]></component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="F:\Coding\DSi Project\frontend\src\app" />
-    </key>
+  <component name="RunManager">
+    <configuration name="BackendApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="backend" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.dsi.backend.BackendApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e3fc2882-6fa8-40ca-b4d8-681976bd00f9" name="Changes" comment="" />
-      <created>1707899592984</created>
+      <changelist id="1ca05e41-56a0-4b08-a00e-e791c758112b" name="Changes" comment="" />
+      <created>1708057761277</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1707899592984</updated>
-      <workItem from="1707899603077" duration="4368000" />
-      <workItem from="1707958336497" duration="292000" />
-      <workItem from="1707972301850" duration="2818000" />
-      <workItem from="1707994149829" duration="6225000" />
-      <workItem from="1708009245842" duration="10280000" />
-      <workItem from="1708057322553" duration="4490000" />
-      <workItem from="1708071378871" duration="360000" />
-      <workItem from="1708075982125" duration="6613000" />
+      <updated>1708057761277</updated>
+      <workItem from="1708057762728" duration="2723000" />
+      <workItem from="1708149413904" duration="820000" />
+      <workItem from="1708179667987" duration="3483000" />
     </task>
     <servers />
   </component>
