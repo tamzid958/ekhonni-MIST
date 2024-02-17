@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-<<<<<<< HEAD
     "next": "14.1.0",
     "react": "^18",
     "react-alice-carousel": "^2.8.0",
@@ -17,23 +16,16 @@
     "react-dom": "^18",
     "react-slick": "^0.30.1",
     "slick-carousel": "^1.8.1",
-    "swiper": "^11.0.6"
-=======
-    "axios": "^1.6.7",
-    "next": "14.1.0",
-    "react": "^18",
-    "react-dom": "^18"
->>>>>>> ee96bc448d51b746d41178e310551cf46b4d8703
+    "swiper": "^11.0.6",
+    "axios": "^1.6.7"
+
+
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "postcss": "^8",
-<<<<<<< HEAD
-    "tailwindcss": "^3.3.0"
-=======
     "tailwindcss": "^3.4.1"
->>>>>>> ee96bc448d51b746d41178e310551cf46b4d8703
   }
 }
