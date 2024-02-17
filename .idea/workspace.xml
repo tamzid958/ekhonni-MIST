@@ -4,50 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e3fc2882-6fa8-40ca-b4d8-681976bd00f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.mvn/wrapper/maven-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/BackendApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/controller/AppUserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/model/Admin.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/model/AppUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/model/BaseEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/model/Person.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/model/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/repository/AdminRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/repository/AppUserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/security/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/service/AppUserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/dsi/backend/service/implententation/AppUserServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/dsi/backend/BackendApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/Instagram.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/all_adds.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/banner.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/dslr.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/facebook.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/message.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/notification.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/search.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/user.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/what's_app.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/ButtonFull.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Card.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Corosol.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Footer.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Header.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Search.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/backend.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/layout.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/layout.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/page.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Button.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Button.jsx" afterDir="false" />
-    </list>
+    <list default="true" id="33031be7-0793-4c27-a051-fa16612d786f" name="Changes" comment="Header,footer and button component created" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,6 +13,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/Button.jsx" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/TopBidding.jsx" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -63,6 +24,9 @@
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2cLnBI5MJE3qdRwIvj98Glwg81z" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -78,7 +42,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "F:\\SetupFiles\\WebStorm 2023.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2023.3.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
