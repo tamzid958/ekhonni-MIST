@@ -21,7 +21,7 @@ public class AppUserController {
         return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/user/login")
     public ResponseEntity<?> loginAppUser(@RequestParam String email, @RequestParam String password){
         return appUserService.loginAppUser(email,password);
     }

@@ -1,24 +1,38 @@
 package com.dsi.backend.service.implententation;
 
 import com.dsi.backend.model.AppUser;
+import com.dsi.backend.model.TokenResponse;
 import com.dsi.backend.repository.AppUserRepository;
 import com.dsi.backend.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.dsi.backend.service.JwtTokenService;
+
+import java.util.Map;
 
 @Service
-public class AppUserServiceImpl implements AppUserService, UserDetailsService {
+public class AppUserServiceImpl implements AppUserService{
 
     @Autowired
     private AppUserRepository appUserRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtTokenService jwtTokenService;
 
     @Override
     public AppUser registerAppUser(AppUser appUser){
@@ -29,11 +43,17 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
 
     @Override
     public ResponseEntity<?> loginAppUser(String email, String password) {
-        return null;
+        try{
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
+            authenticationManager.authenticate(authenticationToken);
+            String jwtToken = jwtTokenService.createToken(email);
+            return ResponseEntity.ok(new TokenResponse(jwtToken));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(Map.of("error", "bad credential"),HttpStatus.UNAUTHORIZED);
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return appUserRepository.findByEmail(email);
-    }
+
 }
