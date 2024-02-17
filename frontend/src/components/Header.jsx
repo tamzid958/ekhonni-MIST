@@ -24,7 +24,7 @@ const Header = ()=>{
                         <Image src={"./user.svg"} alt={"message"} width={20} height={20} className=" mr-4"/>
                         <p className=" text-lg font-semibold">Account</p>
                     </div>
-                    <Button value="Post Ad"/>
+                    <Button value="Post Ad" option={true} type={"submit"}/>
                 </div>
             </div>
 

@@ -11,7 +11,7 @@ const ScrollCard = ({img,header,description,button_text})=>{
                 <div className="w-2/5 h-full flex flex-col justify-center items-center">
                     <h1 className="text-2xl font-bold leading-[3rem]">{header}</h1>
                     <p className="text-xl mb-5">{description}</p>
-                    <Button value={button_text}/>
+                    <Button value={button_text} option={true} type={"submit"}/>
                 </div>
             </div>
         </>
