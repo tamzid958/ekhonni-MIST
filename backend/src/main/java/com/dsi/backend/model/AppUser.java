@@ -22,7 +22,7 @@ public class AppUser extends Person implements UserDetails {
 
     @Column
     private String clientStatus;
-//    private String role;
+//    private final static String ROLE="ROLE_USER";
 
 
     @Override
