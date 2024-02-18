@@ -10,7 +10,6 @@ import lombok.*;
 //@AllArgsConstructor // Already defined in Person class no arg, as Person and Admin have same attributes.
 @ToString
 @Entity
-@Table(name = "admin")
 public class Admin extends Person{
 
 }
