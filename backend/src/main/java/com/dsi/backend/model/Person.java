@@ -15,6 +15,7 @@ public class Person extends BaseEntity<Long> implements Serializable {
 
     @Column
     private String name;
+    @Column(unique = true)
     private String email;
     private String contact;
     private String address;

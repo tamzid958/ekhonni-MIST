@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.*;
 
+import javax.swing.text.StyledEditorKit;
 import java.io.Serializable;
 
 @Setter
@@ -22,4 +23,5 @@ public class Product extends BaseEntity<Long>{
     private Double startingPrice;
     private String image;
     private Boolean usedCondition;
+    private Boolean isApprovedByAdmin; // true-> will show in product list
 }
