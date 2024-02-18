@@ -16,7 +16,7 @@ const Footer = ()=>{
                     </div>
                 </div>
                 <div className=" w-1/3 h-full text-center">
-                    <h1 className=" font-xl font-bold my-3">Contract Us</h1>
+                    <h1 className=" font-xl font-bold my-3">Contact Us</h1>
                     <p>House # 177,Lane #2</p>
                     <p>Mohakhali-DOHS</p>
                     <p>Dhaka-1236</p>
