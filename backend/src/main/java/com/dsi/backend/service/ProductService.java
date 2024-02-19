@@ -14,5 +14,9 @@ public interface ProductService {
 
     Product updateProduct(Long id, Boolean isApprovedByAdmin);
 
+    List<Product> fetchAllRequests();
+
     List<Product> fetchAllProducts();
+
+    Product getProductById(Long id);
 }
