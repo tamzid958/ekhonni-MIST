@@ -18,6 +18,9 @@ const LoginPage = () => {
         const formData = JSON.stringify(formDataObject);
         console.log(formData);
         // const response = await axios.post('http://localhost:8000/api/v1/user/login' , formData);
+        // const { token , refreshToken } = response.data;
+        // localStorage.setItem("token" , token);
+        // localStorage.setItem("refreshToken" , refreshToken);
     }
     return (
         <form onSubmit={handleSubmit}>

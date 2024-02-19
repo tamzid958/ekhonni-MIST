@@ -119,7 +119,7 @@ const CategoryDropdown = ({name , setCategory , setSubCategory}) => {
                     }}>
                 <option disabled selected>Select Category</option>
                 {Categories.map((item) => (
-                    <option key={item.category} value={item.category}>{item.category}</option>
+                    <option key={item.category} value={item.category}> {item.category} </option>
                 ))}
             </select>
             <div>
