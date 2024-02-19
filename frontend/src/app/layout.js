@@ -7,6 +7,7 @@ const montserrat = Montserrat({ subsets: ["latin"] });
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Search from "@/components/Search";
+import {Toaster} from "sonner";
 
 
 export const metadata = {
