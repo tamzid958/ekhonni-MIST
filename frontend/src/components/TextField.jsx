@@ -2,7 +2,7 @@
 const TextField = ({placeholder , type , name , value , onChange}) => {
     return (
         <>
-            <input className="w-[275px] h-10 border-2 my-3 border-neutral-900 rounded-lg pl-2" placeholder={placeholder} type={type} name={name} value={value} onChange={onChange} required/>
+            <input className="w-[350px] h-12 my-3 bg-slate-50 border-2 border-black drop-shadow-lg rounded-lg pl-2 transition ease-in-out duration-500 focus:scale-105" placeholder={placeholder} type={type} name={name} value={value} onChange={onChange} required/>
         </>
     )
 }
