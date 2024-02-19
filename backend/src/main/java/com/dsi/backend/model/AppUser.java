@@ -1,10 +1,16 @@
 package com.dsi.backend.model;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.awt.print.Book;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,11 +18,53 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "client")
-public class AppUser extends Person {
+public class AppUser extends BaseEntity<Long> implements UserDetails, Serializable {
 
-    @Column(name="client_status")
+//    @OneToMany
+//    @JoinColumn(referencedColumnName = "id")
+//    private List<Product> product;
+
+    @Column
+    private String name;
+    @Column(unique = true)
+    private String email;
+    private String contact;
+    private String address;
+    private String division;
+    private String password;
+    private String profilePicture;
     private String clientStatus;
+    private String role;
+//    private final static String ROLE="ROLE_USER";
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.getEmail();
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

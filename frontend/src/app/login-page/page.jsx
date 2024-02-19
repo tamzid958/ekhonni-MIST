@@ -1,10 +1,11 @@
 "use client"
 
+import axios from "axios";
 import {FormEvent, useState} from "react";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 
-const loginPage = () => {
+const LoginPage = () => {
     const [email , setEmail] = useState("");
     const [password , setPassword] = useState("");
     async function handleSubmit(event) {
@@ -15,7 +16,9 @@ const loginPage = () => {
         };
         const formData = JSON.stringify(formDataObject);
         console.log(formData);
-        // const response = await axios.post('localhost:8000/api/submit' , formData);
+        const response = await axios.post(`http://localhost:8080/api/v1/user/login?email=${email}&password=${password}`);
+        console.log(response);
+
     }
     return (
         <form onSubmit={handleSubmit}>
@@ -48,4 +51,4 @@ const loginPage = () => {
         </form>
     )
 }
-export default loginPage
+export default LoginPage

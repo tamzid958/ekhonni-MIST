@@ -1,10 +1,10 @@
 package com.dsi.backend.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
+import javax.swing.text.StyledEditorKit;
 import java.io.Serializable;
 
 @Setter
@@ -14,18 +14,17 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 public class Product extends BaseEntity<Long>{
-    @Column(name="name")
+    @Column
     private String name;
-    @Column(name="size")
     private String size;
-    @Column(name="description")
     private String description;
-    @Column(name="category")
-    private String category;
-    @Column(name="starting_price")
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
     private Double startingPrice;
-    @Column(name="image")
     private String image;
-    @Column(name="used_condition")
     private Boolean usedCondition;
+    private Boolean isApprovedByAdmin; // true-> will show in product list
+    @ManyToOne @JoinColumn (name = "seller_id", referencedColumnName = "id", columnDefinition = "bigint")
+    private AppUser seller;
 }
