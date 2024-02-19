@@ -1,15 +1,14 @@
-import Card from "@/components/Card";
+import Categories from "@/components/Categories";
 import Corosol from "@/components/Corosol";
-import Image from "next/image";
-
+import TopBidding from "@/components/TopBidding";
 export default function Home() {
-
-  return (
-    <>
-        <div className=" w-screen flex justify-center">
-            <Card picture="/dslr.jpg" name="DSLR Camera" categories="Electronics" price="120"/>
-
-        </div>
-    </>
-  );
+    return (
+        <>
+            <div className=" w-screen ">
+                <Corosol/>
+                <Categories/>
+                <TopBidding/>
+            </div>
+        </>
+    );
 }
