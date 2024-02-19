@@ -17,17 +17,19 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-public class SecurityConfig {
+public class SecurityConfig{
     @Autowired
     private UserAuthService userAuthService;
+
     @Autowired
     private JwtAuthFilter jwtAuthFilter;
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> {
-                    request.requestMatchers("/api/v1/register", "/api/v1/user/login", "/api/v1/","/api/v1/products", "/api/v1/products/{id}").permitAll()
+                    request.requestMatchers("/api/v1/register", "/api/v1/user/login", "/api/v1/admin/login","/api/v1/","/api/v1/products","/api/v1/products/{id}").permitAll()
                             .requestMatchers("/api/v1/user/**").hasAuthority("ROLE_USER")
                             .requestMatchers("/api/v1/admin/**").hasAuthority("ROLE_ADMIN")
                             .anyRequest().authenticated();
