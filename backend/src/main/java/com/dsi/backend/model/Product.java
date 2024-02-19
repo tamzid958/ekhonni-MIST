@@ -1,11 +1,11 @@
 package com.dsi.backend.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
+import javax.swing.text.StyledEditorKit;
 import java.io.Serializable;
+import java.util.Set;
 
 @Setter
 @Getter
@@ -22,4 +22,12 @@ public class Product extends BaseEntity<Long>{
     private Double startingPrice;
     private String image;
     private Boolean usedCondition;
+    private Boolean isApprovedByAdmin; // true-> will show in product list
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "product_image",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id")
+    )
+    private Set<ImageModel> productImage;
 }
