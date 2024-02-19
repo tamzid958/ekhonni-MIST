@@ -14,18 +14,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 public class Product extends BaseEntity<Long>{
-    @Column(name="name")
+    @Column
     private String name;
-    @Column(name="size")
     private String size;
-    @Column(name="description")
     private String description;
-    @Column(name="category")
     private String category;
-    @Column(name="starting_price")
     private Double startingPrice;
-    @Column(name="image")
     private String image;
-    @Column(name="used_condition")
     private Boolean usedCondition;
 }
