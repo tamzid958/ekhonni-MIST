@@ -6,6 +6,7 @@ import Button from "@/components/Button";
 import DivisionDropdown from "@/components/DivisionDropdown";
 import React, { useState } from 'react';
 import {toast, Toaster} from "sonner";
+import axios from "axios";
 const AccountCreationPage = () =>
 {
     const [name, setName] = useState("");
@@ -29,7 +30,8 @@ const AccountCreationPage = () =>
             };
             const formData = JSON.stringify(formDataObject);
             console.log(formData);
-            // const response = await axios.post('localhost:8000/api/submit' , formData);
+            const response = await axios.post('http://localhost:8080/api/v1/register' , formDataObject);
+            console.log(response);
         }
         else {
             toast.error("Passwords must match");

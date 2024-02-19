@@ -22,33 +22,33 @@ public class ProductController {
     @Autowired
     public ProductService productService;
 
-    @PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> saveProduct(@RequestPart("product") Product product,
-                                         @RequestPart("imageFile")MultipartFile[] file) {
-        try {
-            Set<ImageModel> image = uploadImage(file);
-            product.setProductImage(image);
-            Product savedProduct = productService.saveProduct(product);
+//    @PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+//    public ResponseEntity<?> saveProduct(@RequestPart("product") Product product,
+//                                         @RequestPart("imageFile")MultipartFile[] file) {
+//        try {
+//            Set<ImageModel> image = uploadImage(file);
+//            product.setProductImage(image);
+//            Product savedProduct = productService.saveProduct(product);
+//
+//            return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
+//        } catch (Exception exception) {
+//            System.out.println(exception.getMessage());
+//            return null;
+//        }
+//    }
 
-            return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
-        } catch (Exception exception) {
-            System.out.println(exception.getMessage());
-            return null;
-        }
-    }
-
-    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
-        Set<ImageModel> image = new HashSet<>();
-
-        for (MultipartFile file: multipartFiles) {
-            ImageModel imageModel = new ImageModel(file.getOriginalFilename(),
-                    file.getContentType(),
-                    file.getBytes());
-            image.add(imageModel);
-        }
-
-        return image;
-    }
+//    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
+//        Set<ImageModel> image = new HashSet<>();
+//
+//        for (MultipartFile file: multipartFiles) {
+//            ImageModel imageModel = new ImageModel(file.getOriginalFilename(),
+//                    file.getContentType(),
+//                    file.getBytes());
+//            image.add(imageModel);
+//        }
+//
+//        return image;
+//    }
 
 
 }
