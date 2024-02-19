@@ -2,6 +2,7 @@ package com.dsi.backend.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import javax.swing.text.StyledEditorKit;
 import java.io.Serializable;
@@ -18,16 +19,13 @@ public class Product extends BaseEntity<Long>{
     private String name;
     private String size;
     private String description;
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
     private Double startingPrice;
     private String image;
     private Boolean usedCondition;
     private Boolean isApprovedByAdmin; // true-> will show in product list
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "product_image",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "image_id")
-    )
-    private Set<ImageModel> productImage;
+    @ManyToOne @JoinColumn (name = "seller_id", referencedColumnName = "id", columnDefinition = "bigint")
+    private AppUser seller;
 }
