@@ -53,10 +53,16 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    public List<Product> fetchAllProducts() {
-//        List<Product> products= productRepository.findByIsApprovedByAdminFalse();
-//        return products.stream().toList();
+    public List<Product> fetchAllRequests() {
         return productRepository.findByIsApprovedByAdminFalse();
+    }
+
+    public List<Product> fetchAllProducts() {
+        return productRepository.findByIsApprovedByAdminTrue();
+    }
+
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElseThrow(()->new ProductNotFoundException("Product not found by id: "+id));
     }
 
 }

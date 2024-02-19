@@ -9,45 +9,38 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @RestController
-@RequestMapping("/api/v1/user/products")
+@RequestMapping("/api/v1")
 public class ProductController {
 
     @Autowired
     public ProductService productService;
 
-    @PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> saveProduct(@RequestPart("product") Product product,
-                                         @RequestPart("imageFile")MultipartFile[] file) {
-        try {
-            Set<ImageModel> image = uploadImage(file);
-            product.setProductImage(image);
-            Product savedProduct = productService.saveProduct(product);
 
-            return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
-        } catch (Exception exception) {
-            System.out.println(exception.getMessage());
-            return null;
-        }
+    @PostMapping("/user/products/save")
+    public ResponseEntity<?> saveProduct(@RequestBody Product product) {
+        Product savedProduct = productService.saveProduct(product);
+        return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
 
-    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
-        Set<ImageModel> image = new HashSet<>();
+    @GetMapping("/products")
+    public List<Product> fetchAllProduct() {
+        return productService.fetchAllProducts();
+    }
 
-        for (MultipartFile file: multipartFiles) {
-            ImageModel imageModel = new ImageModel(file.getOriginalFilename(),
-                    file.getContentType(),
-                    file.getBytes());
-            image.add(imageModel);
-        }
-
-        return image;
+    @GetMapping(value = "/products/{id}")
+    public Product getProductById(@PathVariable("id") Long id) {
+        return productService.getProductById(id);
     }
 
 
