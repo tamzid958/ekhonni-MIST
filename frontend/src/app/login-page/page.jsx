@@ -17,7 +17,7 @@ const LoginPage = () => {
         const formData = JSON.stringify(formDataObject);
         console.log(formData);
 
-        const response = await axios.post(`http://localhost:8080/api/v1/user/login?email=${email}&password=${password}`);
+        const response = await axios.post(`http://localhost:8080/api/v1/user/login`, formDataObject);
         console.log(response);
 
 
