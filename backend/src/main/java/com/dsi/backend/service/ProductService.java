@@ -19,4 +19,7 @@ public interface ProductService {
     List<Product> fetchAllProducts();
 
     Product getProductById(Long id);
+
+    List<Product> findSortedProducts(String field, Boolean direction);
+
 }
