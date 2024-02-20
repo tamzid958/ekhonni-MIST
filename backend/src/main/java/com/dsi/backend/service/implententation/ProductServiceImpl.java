@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
     private AppUserRepository appUserRepository;
 
     public Product saveProduct(Product product) {
-        product.setIsApprovedByAdmin(false);
+        product.setIsApprovedByAdmin(null);
         Category category = categoryRepository.findByCategoryAndSubCategory(product.getCategory().getCategory(),product.getCategory().getSubCategory());
         if (category == null) {
             throw new IllegalArgumentException("Invalid category name");
@@ -40,21 +40,12 @@ public class ProductServiceImpl implements ProductService {
     public Product updateProduct(Long id, Boolean isApprovedByAdmin) {
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
-        if(!isApprovedByAdmin)
-        {
-            productRepository.delete(existingProduct);
-            return null;
-//            return "Product with ID " + id + " has been deleted successfully.";
-        }
-        else
-        {
-            existingProduct.setIsApprovedByAdmin(true);
-            return productRepository.save(existingProduct);
-        }
+        existingProduct.setIsApprovedByAdmin(isApprovedByAdmin);
+        return productRepository.save(existingProduct);
     }
 
     public List<Product> fetchAllRequests() {
-        return productRepository.findByIsApprovedByAdminFalse();
+        return productRepository.findByIsApprovedByAdminIsNull();
     }
 
     public List<Product> fetchAllProducts() {
