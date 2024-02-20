@@ -33,7 +33,7 @@ public class ProductController {
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
 
-    @GetMapping("/products")
+    @GetMapping("")
     public List<Product> fetchAllProduct() {
         return productService.fetchAllProducts();
     }

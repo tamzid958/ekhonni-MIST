@@ -11,7 +11,7 @@ const Pagination = ({data,length})=>{
     }, [currentPage]);
     return (
         <>
-            <div className="w-full h-10 border-y-2 my-4 mx-auto flex justify-center items-center">
+            <div className="w-full h-10  my-4 mx-auto flex justify-center items-center">
                 <button className="text-xl" onClick={()=>(currentPage === 1 ? setCurrentPage(currentPage):setCurrentPage(currentPage-1))}>◀</button>
                 <p className="mx-4 text-xl font-medium">{currentPage} of {numOfPage}</p>
                 <button className="text-xl" onClick={()=>(currentPage === numOfPage ? setCurrentPage(1):setCurrentPage(currentPage+1))}>▶</button>
