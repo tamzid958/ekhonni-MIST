@@ -6,6 +6,7 @@ import org.antlr.v4.runtime.misc.NotNull;
 
 import javax.swing.text.StyledEditorKit;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Setter
@@ -28,4 +29,8 @@ public class Product extends BaseEntity<Long>{
     private Boolean isApprovedByAdmin; // true-> will show in product list
     @ManyToOne @JoinColumn (name = "seller_id", referencedColumnName = "id", columnDefinition = "bigint")
     private AppUser seller;
+    private Boolean isSold;
+    private Boolean isBidActive;
+    private LocalDateTime productTime;
+    private Boolean isVisible;
 }
