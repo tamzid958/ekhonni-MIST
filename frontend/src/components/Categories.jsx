@@ -11,7 +11,7 @@ const Categories =()=>{
             setCurrentIndex((prevIndex) =>
                 prevIndex === category.length - 1 ? 0 : prevIndex + 1
             );
-        }, 1000); // Change slide every 1 seconds
+        }, 2000); // Change slide every 1 seconds
 
         return () => clearInterval(interval);
     }, []);
@@ -30,6 +30,30 @@ const Categories =()=>{
 
 
     const category = [
+        {img:"/computer.svg",category:"Electronics",item:"110"},
+        {img:"/vehicle.svg",category:"Vehicle",item:"260"},
+        {img:"/clothing.svg",category:"Clothing",item:"190"},
+        {img:"/decor.svg",category:"Home Decor",item:"100"},
+        {img:"/furniture.svg",category:"Furniture",item:"10"},
+        {img:"/sports_item.svg",category:"Sports item",item:"210"},
+        {img:"/properties.svg",category:"Properties",item:"51"},
+        {img:"/toy.svg",category:"Toy",item:"340"},
+        {img:"/computer.svg",category:"Electronics",item:"110"},
+        {img:"/vehicle.svg",category:"Vehicle",item:"260"},
+        {img:"/clothing.svg",category:"Clothing",item:"190"},
+        {img:"/decor.svg",category:"Home Decor",item:"100"},
+        {img:"/furniture.svg",category:"Furniture",item:"10"},
+        {img:"/sports_item.svg",category:"Sports item",item:"210"},
+        {img:"/properties.svg",category:"Properties",item:"51"},
+        {img:"/toy.svg",category:"Toy",item:"340"},
+        {img:"/computer.svg",category:"Electronics",item:"110"},
+        {img:"/vehicle.svg",category:"Vehicle",item:"260"},
+        {img:"/clothing.svg",category:"Clothing",item:"190"},
+        {img:"/decor.svg",category:"Home Decor",item:"100"},
+        {img:"/furniture.svg",category:"Furniture",item:"10"},
+        {img:"/sports_item.svg",category:"Sports item",item:"210"},
+        {img:"/properties.svg",category:"Properties",item:"51"},
+        {img:"/toy.svg",category:"Toy",item:"340"},
         {img:"/computer.svg",category:"Electronics",item:"110"},
         {img:"/vehicle.svg",category:"Vehicle",item:"260"},
         {img:"/clothing.svg",category:"Clothing",item:"190"},

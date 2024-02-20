@@ -38,6 +38,7 @@ public class AppUserServiceImpl implements AppUserService{
     public AppUser registerAppUser(AppUser appUser){
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
         appUser.setClientStatus("verified");
+        appUser.setRole("ROLE_USER");
         return appUserRepository.save(appUser);
     }
 
