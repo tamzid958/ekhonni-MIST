@@ -27,6 +27,7 @@ public class ProductController {
     public ProductService productService;
 
 
+
     @PostMapping("/user/products/save")
     public ResponseEntity<?> saveProduct(@RequestBody Product product) {
         Product savedProduct = productService.saveProduct(product);
@@ -47,5 +48,6 @@ public class ProductController {
     public List<Product> findSortedProducts(@RequestParam String field,@RequestParam Boolean direction) {
         return productService.findSortedProducts(field,direction); //0-> asc, 1->desc
     }
+
 
 }
