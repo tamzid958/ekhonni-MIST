@@ -3,7 +3,7 @@ import Image from "next/image";
 const Footer = ()=>{
     return (
         <>
-            <div className="w-screen h-[200px] bg-black flex text-white p-4 my-3">
+            <div className="w-full overflow-x-hidden h-[200px] bg-black flex text-white p-4 my-3">
                 <div className=" w-1/3 h-full text-center">
                     <div className="my-3">
                         <h1 className=" font-extrabold text-2xl font-serif tracking-widest">Ekhonni</h1>
