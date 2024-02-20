@@ -40,7 +40,7 @@ public class AdminController {
 
     @GetMapping("/products/review")
     public List<Product> fetchAllRequest() {
-        return productService.fetchAllProducts();
+        return productService.fetchAllRequests();
     }
 
 }
