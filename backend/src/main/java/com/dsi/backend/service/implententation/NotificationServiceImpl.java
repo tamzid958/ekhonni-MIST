@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
@@ -31,4 +32,20 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setSeen(false);
         return notificationRepository.save(notification);
     }
+
+    @Override
+    public List<Notification> fetchNotification(Long id) {
+        AppUser receiver = appUserRepository.findById(id).orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+        return notificationRepository.findByReceiver(receiver);
+    }
+
+    @Override
+    public String clearAllNotification(Long id) {
+        AppUser receiver = appUserRepository.findById(id).orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+        List<Notification> notifications = notificationRepository.findByReceiver(receiver);
+        notificationRepository.deleteAll(notifications);
+        return "Deleted successfully";
+    }
+
+
 }
