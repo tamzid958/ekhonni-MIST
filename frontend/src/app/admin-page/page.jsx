@@ -8,16 +8,14 @@ export default function AdminPage(){
 
     return(
         <>
-            <Header/>
-            <div className="w-screen h-[700px] justify-center items-center ml-80  ">
 
-                <p className="font-bold text-3xl ml-0 mt-4 ">Posts to approve</p>
+            <div className="w-screen h-[700px] justify-center items-center ">
+
+                <p className="font-bold text-3xl mx-[300px] mt-4 ">Posts to approve</p>
                 <PostApprovalbox className="absolute"/>
-                <PostApprovalbox className="absolute"/>
-                <PostApprovalbox className="absolute"/>
+
             </div>
 
-            <Footer/>
 
         </>
     )
