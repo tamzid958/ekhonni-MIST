@@ -4,9 +4,9 @@ import Button from "@/components/Button";
 import {useState} from "react";
 import ProfileBox from "@/components/ProfileBox";
 
-const Header = ()=>{
-    const [profileModel,setProfileModel] = useState(false);
 
+const Header = () => {
+    const [profileModel,setProfileModel] = useState(false);
     return (
         <>
             <div className=" px-6 w-full overflow-x-hidden h-[100px] border-black flex justify-between bg-slate-100">

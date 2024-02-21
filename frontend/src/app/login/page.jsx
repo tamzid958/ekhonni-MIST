@@ -4,6 +4,8 @@ import axios from "axios";
 import {FormEvent, useState} from "react";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
+import Link from "next/link";
+
 
 const LoginPage = () => {
     const [email , setEmail] = useState("");
@@ -15,11 +17,13 @@ const LoginPage = () => {
             password : password
         };
         const formData = JSON.stringify(formDataObject);
-        console.log(formData);
 
-        const response = await axios.post(`http://localhost:8080/api/v1/user/login`,formDataObject);
+        const response = await axios.post(`http://localhost:8080/api/v1/user/login`, formDataObject);
         console.log(response);
-
+        const { token } = response.data;
+        localStorage.setItem("token" , token);
+        localStorage.setItem("currentUserEmail" , email);
+        // localStorage.setItem("refreshToken" , refreshToken);
     }
     return (
         <form onSubmit={handleSubmit}>
@@ -44,7 +48,9 @@ const LoginPage = () => {
                         <div className="w-full h-3/5 flex flex-col items-center justify-center">
                             <h1 className="font-bold text-3xl text-white "> New Here? </h1>
                             <p className="text-center text-white text-lg my-7">Create an account using your personal information </p>
-                            <Button value={"Sign Up"} option={0} type={"button"}/>
+                            <Link href="/register">
+                                <Button value={"Sign Up"} option={0} type={"button"}/>
+                            </Link>
                         </div>
                     </div>
                 </div>
