@@ -35,8 +35,8 @@ public class BidServiceImpl implements BidService{
         return bidRepository.save(addBid);
     }
 
-//    @Override
-//    public Set<Bid> fetchBids(Product product) {
-//        return bidRepository.findByProductIdOrderByOfferedPriceDesc(product.getId());
-//    }
+    @Override
+    public Set<Bid> fetchBids(Product product) {
+        return bidRepository.findByProductIdOrderByOfferedPriceDesc(product.getId());
+    }
 }

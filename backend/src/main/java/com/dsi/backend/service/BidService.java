@@ -8,5 +8,5 @@ import java.util.Set;
 public interface BidService {
     Bid saveBid(Bid bid);
 
-//    Set<Bid> fetchBids(Product product);
+    Set<Bid> fetchBids(Product product);
 }

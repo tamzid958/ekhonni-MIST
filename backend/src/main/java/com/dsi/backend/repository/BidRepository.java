@@ -7,5 +7,5 @@ import java.util.Set;
 
 public interface BidRepository extends JpaRepository<Bid, Long> {
 
-//    Set<Bid> findByProductIdOrderByOfferedPriceDesc(Long product_id);
+    Set<Bid> findByProductIdOrderByOfferedPriceDesc(Long product_id);
 }

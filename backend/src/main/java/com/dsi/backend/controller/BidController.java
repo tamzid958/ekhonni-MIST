@@ -20,8 +20,10 @@ public class BidController {
         return new ResponseEntity<>(bidService.saveBid(bid), HttpStatus.CREATED);
     }
 
-//    @GetMapping("/fetch")
-//    public ResponseEntity<?> fetchBids(@RequestBody Product product) {
-//        return new ResponseEntity<>(bidService.fetchBids(product), HttpStatus.OK);
-//    }
+    @GetMapping("/fetch")
+    public ResponseEntity<?> fetchBids(@RequestBody Product product) {
+        return new ResponseEntity<>(bidService.fetchBids(product), HttpStatus.OK);
+    }
+
+
 }
