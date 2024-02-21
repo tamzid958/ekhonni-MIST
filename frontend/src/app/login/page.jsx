@@ -21,6 +21,7 @@ const LoginPage = () => {
         console.log(response);
         const { token } = response.data;
         localStorage.setItem("token" , token);
+        localStorage.setItem("currentUserEmail" , email);
         // localStorage.setItem("refreshToken" , refreshToken);
     }
     return (

@@ -8,6 +8,8 @@ import Button from "@/components/Button";
 
 const ProductBidPage = ({ params }) => {
 
+    const currentUserEmail = localStorage.getItem("currentUserEmail");
+    let seller = false
     const [data , setData] = useState([]);
     const product_id = params.id;
     // const  fetchProductDetails = async () => {
@@ -20,8 +22,12 @@ const ProductBidPage = ({ params }) => {
     //         console.log(r);
     //     });
     // }, []);
-
-
+    // if(data.seller.email === currentUserEmail) {
+    //      seller = true;
+    // }
+    // else {
+    //      seller = false;
+    // }
     return (
         <div className="w-screen h-[700px] flex justify-center items-center">
             <div className="w-4/5 h-5/6 border-2 border-black flex flex-row justify-start items-center rounded-lg">
