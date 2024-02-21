@@ -2,7 +2,6 @@ package com.dsi.backend.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.io.Serializable;
 
@@ -16,12 +15,10 @@ import java.io.Serializable;
 @Table(name = "bid")
 public class Bid extends BaseEntity<Long> implements Serializable {
 
-    @ManyToOne @JoinColumn
-    @NotNull
+    @ManyToOne @JoinColumn(nullable = false, name = "product_id")
     private Product product;
 
-    @ManyToOne @JoinColumn
-    @NotNull
+    @ManyToOne @JoinColumn(nullable = false, name = "buyer_id")
     private AppUser buyer;
 
     @Column(name = "offered_price")
