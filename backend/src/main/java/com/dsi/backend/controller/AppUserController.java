@@ -22,8 +22,8 @@ public class AppUserController {
     }
 
     @PostMapping("/user/login")
-    public ResponseEntity<?> loginAppUser(@RequestParam String email, @RequestParam String password){
-        return appUserService.loginAppUser(email,password);
+    public ResponseEntity<?> loginAppUser(@RequestBody AppUser appUser){
+        return appUserService.loginAppUser(appUser.getEmail(),appUser.getPassword());
     }
 
 }

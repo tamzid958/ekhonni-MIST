@@ -17,6 +17,7 @@ const LoginPage = () => {
             password : password
         };
         const formData = JSON.stringify(formDataObject);
+
         const response = await axios.post(`http://localhost:8080/api/v1/user/login`, formDataObject);
         console.log(response);
         const { token } = response.data;
