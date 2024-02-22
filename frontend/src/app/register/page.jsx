@@ -6,13 +6,11 @@ import Button from "@/components/Button";
 import DivisionDropdown from "@/components/DivisionDropdown";
 import React, { useState } from 'react';
 import {toast, Toaster} from "sonner";
-<<<<<<< HEAD:frontend/src/app/register/page.jsx
+
 import Link from "next/link";
-import axios from "axios";
 import {useRouter} from "next/navigation";
-=======
 import axios from "axios";
->>>>>>> cb35fcacaedeb82d6afcc3adf41b352faebc51d1:frontend/src/app/account-creation/page.jsx
+
 const AccountCreationPage = () =>
 {
     const router = useRouter();
@@ -38,16 +36,14 @@ const AccountCreationPage = () =>
             };
             const formData = JSON.stringify(formDataObject);
             console.log(formData);
-<<<<<<< HEAD:frontend/src/app/register/page.jsx
+
+
             const response = await axios.post('http://localhost:8080/api/register' , formDataObject);
             if (response.ok) {
                 await router.push("/login");
                 toast.success("Account created successfully");
             }
-=======
-            const response = await axios.post('http://localhost:8080/api/v1/register' , formDataObject);
-            console.log(response);
->>>>>>> cb35fcacaedeb82d6afcc3adf41b352faebc51d1:frontend/src/app/account-creation/page.jsx
+
         }
         else {
             toast.error("Passwords must match");
