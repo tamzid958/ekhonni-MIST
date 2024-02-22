@@ -9,9 +9,9 @@ const Categories =()=>{
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) =>
-                prevIndex === category.length - 1 ? 0 : prevIndex + 1
+                prevIndex === 1 ? 0 : prevIndex + 0.1
             );
-        }, 1000); // Change slide every 1 seconds
+        }, 200); // Change slide every 1 seconds
 
         return () => clearInterval(interval);
     }, []);
@@ -38,6 +38,30 @@ const Categories =()=>{
         {img:"/sports_item.svg",category:"Sports item",item:"210"},
         {img:"/properties.svg",category:"Properties",item:"51"},
         {img:"/toy.svg",category:"Toy",item:"340"},
+        {img:"/computer.svg",category:"Electronics",item:"110"},
+        {img:"/vehicle.svg",category:"Vehicle",item:"260"},
+        {img:"/clothing.svg",category:"Clothing",item:"190"},
+        {img:"/decor.svg",category:"Home Decor",item:"100"},
+        {img:"/furniture.svg",category:"Furniture",item:"10"},
+        {img:"/sports_item.svg",category:"Sports item",item:"210"},
+        {img:"/properties.svg",category:"Properties",item:"51"},
+        {img:"/toy.svg",category:"Toy",item:"340"},
+        {img:"/computer.svg",category:"Electronics",item:"110"},
+        {img:"/vehicle.svg",category:"Vehicle",item:"260"},
+        {img:"/clothing.svg",category:"Clothing",item:"190"},
+        {img:"/decor.svg",category:"Home Decor",item:"100"},
+        {img:"/furniture.svg",category:"Furniture",item:"10"},
+        {img:"/sports_item.svg",category:"Sports item",item:"210"},
+        {img:"/properties.svg",category:"Properties",item:"51"},
+        {img:"/toy.svg",category:"Toy",item:"340"},
+        {img:"/computer.svg",category:"Electronics",item:"110"},
+        {img:"/vehicle.svg",category:"Vehicle",item:"260"},
+        {img:"/clothing.svg",category:"Clothing",item:"190"},
+        {img:"/decor.svg",category:"Home Decor",item:"100"},
+        {img:"/furniture.svg",category:"Furniture",item:"10"},
+        {img:"/sports_item.svg",category:"Sports item",item:"210"},
+        {img:"/properties.svg",category:"Properties",item:"51"},
+        {img:"/toy.svg",category:"Toy",item:"340"},
     ]
     return (
         <>
@@ -50,7 +74,7 @@ const Categories =()=>{
                     </div>
                 </div>
                 <div className={" relative overflow-hidden"}>
-                    <div className="mx-8 flex  transition ease-out duration-500" style={{transform: `translateX(-${currentIndex * 20}%)`}}>
+                    <div className="mx-8 flex  transition ease-out duration-1000" style={{transform: `translateX(-${currentIndex * 5}%)`}}>
                         {category.map((data, index) => <CategoryCard key={index} img={data.img} categories={data.category}
                                                                      item={data.item}/>)}
                     </div>

@@ -1,6 +1,7 @@
 package com.dsi.backend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -37,6 +38,10 @@ public class AppUser extends BaseEntity<Long> implements UserDetails, Serializab
     private String role;
 //    private final static String ROLE="ROLE_USER";
 
+//    @JsonIgnore
+//    public String getPassword() {
+//        return password;
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
