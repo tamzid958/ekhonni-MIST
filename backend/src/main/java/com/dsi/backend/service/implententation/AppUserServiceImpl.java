@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.dsi.backend.service.JwtTokenService;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class AppUserServiceImpl implements AppUserService{
@@ -54,6 +55,44 @@ public class AppUserServiceImpl implements AppUserService{
             e.printStackTrace();
         }
         return new ResponseEntity<>(Map.of("error", "bad credential"),HttpStatus.UNAUTHORIZED);
+    }
+
+    @Override
+    public ResponseEntity<?> updateProfile(AppUser appUser) {
+        if(appUser==null){
+            return new ResponseEntity<>("Nothing to be updated with", HttpStatus.NO_CONTENT);
+        }
+        AppUser updatedAppUser = appUserRepository.findById(appUser.getId())
+                .orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+
+        if(appUser.getName()!=null) {
+            updatedAppUser.setName(appUser.getName());
+        }
+        else if(appUser.getEmail()!=null){
+            updatedAppUser.setEmail(appUser.getEmail());
+        }
+        else if(appUser.getContact()!=null){
+            updatedAppUser.setContact(appUser.getContact());
+        }
+        else if(appUser.getAddress()!=null){
+            updatedAppUser.setAddress(appUser.getAddress());
+        }
+        else if(appUser.getDivision()!=null){
+            updatedAppUser.setDivision(appUser.getDivision());
+        }
+        else{
+            return new ResponseEntity<>("Nothing to be updated with", HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(appUserRepository.save(updatedAppUser),HttpStatus.OK);
+    }
+
+
+
+    @Override
+    public ResponseEntity<?> fetchInformation(Long id) {
+        AppUser appUser = appUserRepository.findById(id)
+                .orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+        return ResponseEntity.ok(appUser);
     }
 
 
