@@ -19,7 +19,6 @@ const Profile =()=>{
                             <InputBox Name={"Contact"} value={"01982711168"} type={"number"}/>
                             <InputBox Name={"Address"} value={"Jatrabari"} type={"text"}/>
                             <InputBox Name={"Division"} value={"Dhaka"} type={"text"}/>
-                            <InputBox Name={"Password"} value={"abc"} type={"password"}/>
                        </div>
                         <div className="w-full  flex justify-end">
                             <div className="w-1/2  flex justify-center mr-10">
