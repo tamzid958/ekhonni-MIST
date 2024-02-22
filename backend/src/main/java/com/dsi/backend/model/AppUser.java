@@ -33,7 +33,8 @@ public class AppUser extends BaseEntity<Long> implements UserDetails, Serializab
     private String address;
     private String division;
     private String password;
-    private String profilePicture;
+    @OneToOne
+    private ImageModel profilePicture;
     private String clientStatus;
     private String role;
 //    private final static String ROLE="ROLE_USER";

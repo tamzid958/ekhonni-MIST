@@ -1,22 +1,23 @@
 package com.dsi.backend.service.implententation;
 
 import com.dsi.backend.model.AppUser;
+import com.dsi.backend.model.ImageModel;
 import com.dsi.backend.model.TokenResponse;
 import com.dsi.backend.repository.AppUserRepository;
+import com.dsi.backend.repository.ImageRepository;
 import com.dsi.backend.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authorization.AuthorizationManager;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.dsi.backend.service.JwtTokenService;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Map;
 
 @Service
@@ -33,6 +34,9 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Autowired
     private JwtTokenService jwtTokenService;
+
+    @Autowired
+    private ImageRepository imageRepository;
 
     @Override
     public AppUser registerAppUser(AppUser appUser){
@@ -54,6 +58,58 @@ public class AppUserServiceImpl implements AppUserService{
             e.printStackTrace();
         }
         return new ResponseEntity<>(Map.of("error", "bad credential"),HttpStatus.UNAUTHORIZED);
+    }
+
+    @Override
+    public ResponseEntity<?> updateProfile(AppUser appUser) {
+        if(appUser==null){
+            return new ResponseEntity<>("Nothing to be updated with", HttpStatus.NO_CONTENT);
+        }
+        AppUser updatedAppUser = appUserRepository.findById(appUser.getId())
+                .orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+
+        if(appUser.getName()!=null) {
+            updatedAppUser.setName(appUser.getName());
+        }
+        else if(appUser.getEmail()!=null){
+            updatedAppUser.setEmail(appUser.getEmail());
+        }
+        else if(appUser.getContact()!=null){
+            updatedAppUser.setContact(appUser.getContact());
+        }
+        else if(appUser.getAddress()!=null){
+            updatedAppUser.setAddress(appUser.getAddress());
+        }
+        else if(appUser.getDivision()!=null){
+            updatedAppUser.setDivision(appUser.getDivision());
+        }
+        else{
+            return new ResponseEntity<>("Nothing to be updated with", HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(appUserRepository.save(updatedAppUser),HttpStatus.OK);
+    }
+
+
+
+    @Override
+    public ResponseEntity<?> fetchInformation(Long id) {
+        AppUser appUser = appUserRepository.findById(id)
+                .orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+        return ResponseEntity.ok(appUser);
+    }
+
+    @Override
+    public AppUser uploadImage(MultipartFile imageFile, Long id) throws IOException {
+        ImageModel imageModel = new ImageModel(imageFile.getOriginalFilename(),
+                imageFile.getContentType(),
+                imageFile.getBytes());
+        imageModel = imageRepository.save(imageModel);
+
+        AppUser appUser = appUserRepository.findById(id)
+                .orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+        appUser.setProfilePicture(imageModel);
+
+        return appUserRepository.save(appUser);
     }
 
 
