@@ -5,7 +5,7 @@ import Search from "@/components/Search";
 export default function Home() {
     return (
         <>
-            <div className=" w-screen ">
+            <div className=" w-full ">
                 <Search/>
                 <Corosol/>
                 <Categories/>

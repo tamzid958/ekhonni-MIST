@@ -34,7 +34,7 @@ public class ProductController {
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
 
-    @GetMapping("/products")
+    @GetMapping("")
     public List<Product> fetchAllProduct() {
         return productService.fetchAllProducts();
     }
@@ -44,6 +44,10 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
+    @GetMapping("/products/sort")
+    public List<Product> findSortedProducts(@RequestParam String field,@RequestParam Boolean direction) {
+        return productService.findSortedProducts(field,direction); //0-> asc, 1->desc
+    }
 
 
 }
