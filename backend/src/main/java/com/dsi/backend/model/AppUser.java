@@ -21,10 +21,6 @@ import java.util.List;
 @Entity
 public class AppUser extends BaseEntity<Long> implements UserDetails, Serializable {
 
-//    @OneToMany
-//    @JoinColumn(referencedColumnName = "id")
-//    private List<Product> product;
-
     @Column
     private String name;
     @Column(unique = true)

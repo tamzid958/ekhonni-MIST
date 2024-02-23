@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 
 @Setter
@@ -37,4 +38,11 @@ public class Product extends BaseEntity<Long>{
             inverseJoinColumns = @JoinColumn(name = "image_id")
     )
     private Set<ImageModel> productImage;
+
+    public String getCategoryName() {
+        if (this.category != null) {
+            return this.category.getCategory();
+        }
+        return null;
+    }
 }
