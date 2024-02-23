@@ -16,7 +16,7 @@ public class Notification extends BaseEntity<Long>{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Message message;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private AppUser receiver;
     private LocalDateTime notificationTime;
