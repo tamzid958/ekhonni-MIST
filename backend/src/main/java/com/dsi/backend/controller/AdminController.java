@@ -1,5 +1,6 @@
 package com.dsi.backend.controller;
 
+import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.Product;
 import com.dsi.backend.service.AdminService;
 import com.dsi.backend.service.AppUserService;
@@ -29,8 +30,8 @@ public class AdminController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginAdmin(@RequestParam String email, @RequestParam String password){
-        return appUserService.loginAppUser(email,password);
+    public ResponseEntity<?> loginAdmin(@RequestBody AppUser appUser){
+        return appUserService.loginAppUser(appUser.getEmail(),appUser.getPassword());
     }
 
     @PutMapping("/products/{id}")

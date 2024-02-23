@@ -6,6 +6,7 @@ import com.dsi.backend.model.TokenResponse;
 import com.dsi.backend.repository.AppUserRepository;
 import com.dsi.backend.repository.ImageRepository;
 import com.dsi.backend.service.AppUserService;
+import com.dsi.backend.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,9 @@ public class AppUserServiceImpl implements AppUserService{
     @Autowired
     private ImageRepository imageRepository;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @Override
     public AppUser registerAppUser(AppUser appUser){
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
@@ -65,8 +69,7 @@ public class AppUserServiceImpl implements AppUserService{
         if(appUser==null){
             return new ResponseEntity<>("Nothing to be updated with", HttpStatus.NO_CONTENT);
         }
-        AppUser updatedAppUser = appUserRepository.findById(appUser.getId())
-                .orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+        AppUser updatedAppUser = appUserRepository.findByEmail(appUser.getEmail());
 
         if(appUser.getName()!=null) {
             updatedAppUser.setName(appUser.getName());
@@ -92,25 +95,33 @@ public class AppUserServiceImpl implements AppUserService{
 
 
     @Override
-    public ResponseEntity<?> fetchInformation(Long id) {
-        AppUser appUser = appUserRepository.findById(id)
-                .orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+    public ResponseEntity<?> fetchInformation(AppUser appUser) {
+        appUser = appUserRepository.findByEmail(appUser.getEmail());
         return ResponseEntity.ok(appUser);
     }
 
     @Override
-    public AppUser uploadImage(MultipartFile imageFile, Long id) throws IOException {
+    public AppUser uploadImage(MultipartFile imageFile, AppUser appUser) throws IOException {
         ImageModel imageModel = new ImageModel(imageFile.getOriginalFilename(),
                 imageFile.getContentType(),
                 imageFile.getBytes());
         imageModel = imageRepository.save(imageModel);
 
-        AppUser appUser = appUserRepository.findById(id)
-                .orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+        appUser = appUserRepository.findByEmail(appUser.getEmail());
         appUser.setProfilePicture(imageModel);
 
         return appUserRepository.save(appUser);
     }
+
+//    @Override
+//    public ResponseEntity<?> deleteAccount(AppUser appUser) {
+////        appUser = appUserRepository.findById(appUser.getId())
+////                .orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+//
+//        appUser = appUserRepository.findByEmail(appUser.getEmail());
+//        notificationService.clearAllNotification(appUser.getId());
+//        return ResponseEntity.ok("Account deleted successfully");
+//    }
 
 
 }
