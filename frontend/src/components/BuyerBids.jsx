@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import Button from "@/components/Button";
 import Status from "@/components/Status";
-const ProductDetailBox = ({name,location,time,description,category,price,username}) =>
+const BuyerBids = ({name,location,time,description,category,price,username}) =>
 {
     return(
         <>
@@ -58,4 +58,4 @@ const ProductDetailBox = ({name,location,time,description,category,price,usernam
     )
 
 }
-export default ProductDetailBox
+export default BuyerBids

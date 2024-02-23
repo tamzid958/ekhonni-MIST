@@ -4,16 +4,19 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PostApprovalbox from "@/components/PostApprovalbox";
 import React, { useState } from 'react';
+import BuyerBids from "@/components/BuyerBids";
 export default function AdminPage(){
 
     return(
         <>
 
-            <div className="w-screen h-[700px] justify-center items-center ">
+            <div>
+                <p className="font-bold text-3xl ml-[300px] mt-4 ">Posts to Approve</p>
+            </div>
+            <div className="w-screen h-[700px] flex flex-col justify-start items-center ">
 
-                <p className="font-bold text-3xl mx-[300px] mt-4 ">Posts to approve</p>
-                <PostApprovalbox className="absolute"/>
 
+                <PostApprovalbox/>
             </div>
 
 
