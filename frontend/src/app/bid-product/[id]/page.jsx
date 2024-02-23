@@ -30,6 +30,7 @@ const ProductBidPage = ({ params }) => {
     //      seller = false;
     // }
     return (
+
         <div className="w-screen h-[700px] flex justify-center items-center">
             <div className="w-4/5 h-5/6 border-2 border-black flex flex-row justify-start items-center rounded-lg">
                 <div className="w-1/2 h-full  flex justify-center items-center">

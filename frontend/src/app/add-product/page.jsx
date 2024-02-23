@@ -5,7 +5,9 @@ import {useEffect, useRef, useState} from "react";
 import CategoryDropdown from "@/components/CategoryDropdown";
 import Image from "next/image";
 import axios from "axios";
+import Header from "@/components/Header";
 import TwoRadioButtons from "@/components/TwoRadioButtons";
+
 
 const AddProductPage = () => {
 
@@ -107,6 +109,9 @@ const AddProductPage = () => {
     // )
     // export default api;
     return (
+
+        <>
+        <Header />
         <form onSubmit={handleSubmit}>
             <div className="w-screen h-[700px] flex justify-center items-start">
                 <div className="w-4/6 h-full">
@@ -141,18 +146,17 @@ const AddProductPage = () => {
                                     <TwoRadioButtons label={"Condition"} inputLabel1={"Used"} inputLabel2={"New"} value={usedCondition} setValue={setUsedCondition} />
                                     <TwoRadioButtons label={"Bidding"} inputLabel1={"Public"} inputLabel2={"Private"} value={isVisible} setValue={setIsVisible}/>
                                 </div>
-
+                            </div>
+                        </div>
+                        <div className="w-full h-[10%]  flex justify-end items-center">
+                            <div className="w-fit h-fit mr-2 mb-3">
+                                <Button value={"Post Ad"} option={1} type={"submit"}/>
                             </div>
                         </div>
                     </div>
-                    <div className="w-full h-[10%]  flex justify-end items-center">
-                        <div className="w-fit h-fit mr-2 mb-3">
-                            <Button value={"Post Ad"} option={1} type={"submit"}/>
-                        </div>
-                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </>
     )
 }
 
