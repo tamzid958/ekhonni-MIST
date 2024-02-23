@@ -20,39 +20,49 @@ const SingleProduct = ({name,location,time,description,category,price,username})
                 {/*details info div*/}
                 <div className="w-2/3 h-[90%]  justify-center items-center flex flex-col">
 
-                    <div className=" w-full h-[25%]  flex flex-row ">
-                        <div className=" w-4/5 h-2/8 justify-items-start ">
-                            <p className="  text-2xl font-semibold ml-5 overflow-hidden">Product Name</p>
+                    <div className=" w-full h-[25%]  border-2 border-black flex flex-row ">
+                        <div className=" w-4/5 h-2/8 border-2 border-black justify-items-start ">
+                            <p className="  text-2xl font-semibold ml-5 text-ellipsis overflow-hidden">Product Name</p>
                         </div>
 
-                        <div className=" w-1/5 h-fit flex justify-end items-end mr-2">
+                        <div className=" w-1/5 h-fit border-2 border-black flex justify-end items-end ">
                             <Status value={"Status"} option={"1"} type={"button"}/>
                         </div>
                     </div>
                     {/*info div*/}
-                    <div className="w-full h-[62.5%] ">
-                        <div className="w-full h-1/5">
+                    <div className="w-full h-[62.5%] border-2 border-black ">
+                        <div className="w-full h-[40%] overflow-hidden border-2 border-black">
                             <p className="pl-5">Description:</p>
                         </div>
-                        <div className="w-full h-1/4">
-                            <p className="pl-5">Price:</p>
+                        <div className="w-full h-[20%] border-2 border-black">
+                            <p className="pl-5">Start Price:</p>
                         </div>
-                        <div className="w-full h-1/4">
-                            <p className="pl-5"> Category:</p>
+                        <div className="w-full h-[20%] flex flex-row border-2 border-black">
+
+                            <div className="w-[50%] h-full ">
+                                <p className="pl-5"> Max Bid:</p>
+                            </div>
+                            <div className="w-[50%] h-full ">
+                                <p className="pl-5">Total Bids:</p>
+                            </div>
                         </div>
 
-                        <div className="w-full h-1/4">
+                        <div className="w-full h-[20%] border-2 border-black ">
                             <p className="pl-5"> Last Bid Time:</p>
                         </div>
                     </div>
-                    <div className="w-full h-[12.5%] ml-8 flex items-end">
-                        <Button value={"Details"} option={"1"} type={"button"}/>
+
+                    <div className="w-full h-[12.5%] border-2 border-black flex flex-row justify-start items-start">
+                        <div className="w-[25%] h-full pl-4 ">
+                            <Button value={"Details"} option={"1"} type={"button"}/>
+                        </div>
+                        <div className="w-[25%] h-full">
+                            <Button value={"Revert"} option={"1"} type={"button"}/>
+                        </div>
+
                     </div>
                 </div>
-
-
             </div>
-
         </>
     )
 

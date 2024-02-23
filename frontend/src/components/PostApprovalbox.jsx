@@ -37,15 +37,11 @@ const PostApprovalbox = ({name,location,time,description,category,price,username
                                 <p className="pl-5">Time</p>
                             </div>
                         </div>
-                        {/*<div className="w-full  h-[20%]">*/}
-                        {/*    <p className="pl-5"> Category:</p>*/}
-                        {/*</div>*/}
-
                         <div className="w-full  h-[16.3%] flex flex-row">
                             <div className="w-[50%] h-full items-start">
                                 <p className="pl-5"> Initial price:</p>
                             </div>
-                            <div className="w-[50%] h-[16.3%] items-end">
+                            <div className="w-[50%] h-full items-end">
                                 <p className="pl-5 "> -Username</p>
                             </div>
 

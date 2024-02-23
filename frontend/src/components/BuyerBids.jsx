@@ -25,27 +25,27 @@ const BuyerBids = ({name,location,time,description,category,price,username}) =>
                             <p className="  text-2xl font-semibold ml-5 overflow-hidden">Product Name</p>
                         </div>
 
-                        <div className=" w-1/5 h-fit flex justify-end items-end mr-2">
+                        <div className=" w-1/5 h-full flex justify-end items-end mr-2">
                             <Status value={"Status"} option={"1"} type={"button"}/>
                         </div>
                     </div>
                     {/*info div*/}
                     <div className="w-full h-[62.5%] ">
-                        <div className="w-full h-1/5">
+                        <div className="w-full h-[40%] ">
                             <p className="pl-5">Description:</p>
                         </div>
-                        <div className="w-full h-1/4">
+                        <div className="w-full h-[20%] ">
                             <p className="pl-5">Price:</p>
                         </div>
-                        <div className="w-full h-1/4">
+                        <div className="w-full h-[20%] ">
                             <p className="pl-5"> Category:</p>
                         </div>
 
-                        <div className="w-full h-1/4">
+                        <div className="w-full h-[20%] ">
                             <p className="pl-5"> Last Bid Time:</p>
                         </div>
                     </div>
-                    <div className="w-full h-[12.5%] ml-8 flex items-end">
+                    <div className="w-full h-[12.5%] ml-8 mt-5 flex items-end ">
                         <Button value={"Details"} option={"1"} type={"button"}/>
                     </div>
                 </div>
