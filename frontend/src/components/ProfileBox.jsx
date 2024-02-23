@@ -1,12 +1,31 @@
 "use client"
 
-
+import React,{useState,useEffect} from "react";
 import Image from "next/image";
 import Button from "@/components/Button";
 import ProfileDiv from "@/components/ProfileDiv";
 import Link from "next/link";
+import axios from "axios";
 
-const ProfileBox = ()=>{
+const ProfileBox = ({email})=>{
+
+    useEffect(() => {
+        axios.get("http://localhost:4000/api/v1/user/profile/", {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+            .then((res) => {
+                console.log("user data: "+res.data);
+
+            })
+            .catch((err) => {
+                console.error("Error fetching data:", err);
+            });
+    }, []);
+
+
+
     return (
         <>
             <div className="w-[300px] top-16 absolute z-10 bg-white border-2 border-black overflow-hidden float-right right-1 rounded-lg m-3">
@@ -17,7 +36,7 @@ const ProfileBox = ()=>{
                                    className={"rounded-full px-1 py-2"}/>
                         </div>
                         <div className={"w-2/3 h-full flex justify-start items-center pl-4"}>
-                            <h1 className={"tracking-widest text-xl font-semibold"}>Shahabuddin akhon</h1>
+                            <h1 className={"tracking-widest text-xl font-semibold"}>{email}</h1>
                         </div>
                     </div>
                 </Link>
