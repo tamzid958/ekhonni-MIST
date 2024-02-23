@@ -17,7 +17,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findByIsApprovedByAdminTrue();
 
+
     List<Product> findByIsApprovedByAdminIsNullOrderByProductTimeAsc();
+
+    Product findByNameAndDescriptionAndSize(String name, String description, String size);
+
+    List<Product> findByIsApprovedByAdminIsNull();
+
 
     List<Product> findByIsApprovedByAdminTrueOrderByStartingPriceAsc();
 

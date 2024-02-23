@@ -8,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.awt.print.Book;
+
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -29,7 +29,8 @@ public class AppUser extends BaseEntity<Long> implements UserDetails, Serializab
     private String address;
     private String division;
     private String password;
-    private String profilePicture;
+    @OneToOne
+    private ImageModel profilePicture;
     private String clientStatus;
     private String role;
 //    private final static String ROLE="ROLE_USER";

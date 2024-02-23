@@ -4,6 +4,7 @@ import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.FilterRequest;
 import com.dsi.backend.model.ImageModel;
 import com.dsi.backend.model.Product;
+import com.dsi.backend.service.ImageModelService;
 import com.dsi.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,14 +29,18 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private ImageModelService imageModelService;
 
-    @PostMapping("/user/products/save")
-    public ResponseEntity<?> saveProduct(@RequestBody Product product) {
-        Product savedProduct = productService.saveProduct(product);
+    @PostMapping(value = "/user/products/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> saveProduct(@RequestPart("product") Product product,
+                                         @RequestPart("imageFile") MultipartFile[] file) {
+        Product savedProduct = productService.saveProduct(product, file);
+
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
 
-    @GetMapping("/products")
+    @GetMapping("")
     public List<Product> fetchAllProduct() {
         return productService.fetchAllProducts();
     }
@@ -61,3 +66,4 @@ public class ProductController {
     }
 
 }
+
