@@ -1,15 +1,14 @@
 "use client"
 
-
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import DivisionDropdown from "@/components/DivisionDropdown";
 import React, { useState } from 'react';
 import {toast, Toaster} from "sonner";
-
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import Header from "@/components/Header";
+import axios from "axios";
 
 const AccountCreationPage = () =>
 {
@@ -27,26 +26,25 @@ const AccountCreationPage = () =>
         event.preventDefault();
         if(password === confirmPassword) {
             const formDataObject = {
-                name : name,
-                contact : contact,
-                email : email,
-                address : address,
-                division : division,
-                password : password
+                name: name,
+                contact: contact,
+                email: email,
+                address: address,
+                division: division,
+                password: password
             };
             const formData = JSON.stringify(formDataObject);
             console.log(formData);
 
 
-            const response = await axios.post('http://localhost:8080/api/register' , formDataObject);
+            const response = await axios.post('http://localhost:8080/api/register', formDataObject);
+
             if (response.ok) {
                 await router.push("/login");
                 toast.success("Account created successfully");
+            } else {
+                toast.error("Passwords must match");
             }
-
-        }
-        else {
-            toast.error("Passwords must match");
         }
     }
     return(
