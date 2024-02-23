@@ -32,9 +32,9 @@ public class AppUserController {
 
     }
 
-    @GetMapping("/user/profile/{id}")
-    public ResponseEntity<?> fetchInformation(@PathVariable Long id){
-        return appUserService.fetchInformation(id);
+    @GetMapping("/user/profile")
+    public ResponseEntity<?> fetchInformation(@RequestBody AppUser appUser){
+        return appUserService.fetchInformation(appUser);
     }
 
     @PutMapping("/user/profile/update")
@@ -45,14 +45,19 @@ public class AppUserController {
     @PutMapping(value="/user/profile/upload-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadImage(@RequestPart MultipartFile imageFile, @RequestPart AppUser appUser){
         try{
-            System.out.println(appUser.getId());
+//            System.out.println(appUser.getId());
 
-            return ResponseEntity.ok(appUserService.uploadImage(imageFile, appUser.getId()));
+            return ResponseEntity.ok(appUserService.uploadImage(imageFile, appUser));
         }
         catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Image upload failed"));
         }
     }
+
+//    @DeleteMapping("/user/profile/delete-account")
+//    public ResponseEntity<?> deleteAccount(@RequestBody AppUser appUser){
+//        return appUserService.deleteAccount(appUser);
+//    }
 
 }

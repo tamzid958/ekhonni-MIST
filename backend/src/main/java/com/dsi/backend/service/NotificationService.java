@@ -9,6 +9,7 @@ import java.util.List;
 @Service
 public interface NotificationService {
     Notification saveNotification(Notification notification);
+
     List<Notification> fetchNotification(Long id);
 
     String clearAllNotification(Long id);
