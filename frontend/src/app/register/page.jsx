@@ -8,7 +8,6 @@ import React, { useState } from 'react';
 import {toast, Toaster} from "sonner";
 
 import Link from "next/link";
-import axios from "axios";
 import {useRouter} from "next/navigation";
 import Header from "@/components/Header";
 
@@ -38,11 +37,13 @@ const AccountCreationPage = () =>
             const formData = JSON.stringify(formDataObject);
             console.log(formData);
 
+
             const response = await axios.post('http://localhost:8080/api/register' , formDataObject);
             if (response.ok) {
                 await router.push("/login");
                 toast.success("Account created successfully");
             }
+
         }
         else {
             toast.error("Passwords must match");
