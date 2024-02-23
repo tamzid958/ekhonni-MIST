@@ -2,11 +2,9 @@ package com.dsi.backend.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
-import javax.swing.text.StyledEditorKit;
-import java.io.Serializable;
-import java.util.Set;
+import java.time.LocalDateTime;
+
 
 @Setter
 @Getter
@@ -28,4 +26,15 @@ public class Product extends BaseEntity<Long>{
     private Boolean isApprovedByAdmin; // true-> will show in product list
     @ManyToOne @JoinColumn (name = "seller_id", referencedColumnName = "id", columnDefinition = "bigint")
     private AppUser seller;
+    private Boolean isSold;
+    private Boolean isBidActive;
+    private LocalDateTime productTime;
+    private Boolean isVisible;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "product_image",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "image_id")
+    )
+    private Set<ImageModel> productImage;
 }

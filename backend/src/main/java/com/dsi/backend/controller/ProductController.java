@@ -3,6 +3,7 @@ package com.dsi.backend.controller;
 import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.ImageModel;
 import com.dsi.backend.model.Product;
+import com.dsi.backend.service.ImageModelService;
 import com.dsi.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,16 +25,20 @@ import java.util.Set;
 public class ProductController {
 
     @Autowired
-    public ProductService productService;
+    private ProductService productService;
 
+    @Autowired
+    private ImageModelService imageModelService;
 
-    @PostMapping("/user/products/save")
-    public ResponseEntity<?> saveProduct(@RequestBody Product product) {
-        Product savedProduct = productService.saveProduct(product);
+    @PostMapping(value = "/user/products/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity<?> saveProduct(@RequestPart("product") Product product,
+                                         @RequestPart("imageFile") MultipartFile[] file) {
+        Product savedProduct = productService.saveProduct(product, file);
+
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
 
-    @GetMapping("/products")
+    @GetMapping("")
     public List<Product> fetchAllProduct() {
         return productService.fetchAllProducts();
     }
@@ -41,6 +46,11 @@ public class ProductController {
     @GetMapping(value = "/products/{id}")
     public Product getProductById(@PathVariable("id") Long id) {
         return productService.getProductById(id);
+    }
+
+    @GetMapping("/products/sort")
+    public List<Product> findSortedProducts(@RequestParam String field,@RequestParam Boolean direction) {
+        return productService.findSortedProducts(field,direction); //0-> asc, 1->desc
     }
 
 

@@ -11,7 +11,7 @@ import java.util.function.Function;
 
 @Service
 public class JwtTokenService {
-    private static final int ACCESS_TOKEN_VALIDITY_SECONDS = 3000;
+    private static final int ACCESS_TOKEN_VALIDITY_SECONDS = 300000;
     private static final byte[] SIGNING_KEY = "This_is_simple_signature_key_Just_change_it".getBytes();
 
     public String getUsernameFromToken(String token) {

@@ -1,9 +1,10 @@
 "use client"
-import React,{useState} from "react";
+import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import Filter from "@/components/Filter";
 import LargeCard from "@/components/LargeCard";
 import Pagination from "@/components/Pagination";
+import axios from "axios";
 
 const Product = ()=>{
     const [pages,setPages] = useState([]);
@@ -18,6 +19,21 @@ const Product = ()=>{
         {img:"/DSLR2.jpg",name:"Canon Eos 4000D 18MP 2.7inch Display With 18-55mm Lens Dslr Camera",desc:"18 megapixel APS-C sensor",price:"50000"},
         {img:"/bike.jpg",name:"Yamaha R15 V4",desc:"150cc Sports Bike,2021",price:"530000"},
     ]
+
+
+    // useEffect(()=>{
+    //     const fetchProduct = async ()=> {
+    //         try {
+    //             const response = await axios.get("http://localhost:8080/api/v1/products")
+    //             console.log(response);
+    //         }catch (e){
+    //             console.log("Not found")
+    //         }
+    //     }
+    //     fetchProduct();
+    // },[])
+
+
     const records = Products.slice(pages[0],pages[1]);
     return (
         <>

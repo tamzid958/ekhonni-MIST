@@ -9,9 +9,9 @@ const Categories =()=>{
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) =>
-                prevIndex === category.length - 1 ? 0 : prevIndex + 1
+                prevIndex === 1 ? 0 : prevIndex + 0.1
             );
-        }, 2000); // Change slide every 1 seconds
+        }, 200); // Change slide every 1 seconds
 
         return () => clearInterval(interval);
     }, []);
@@ -74,7 +74,7 @@ const Categories =()=>{
                     </div>
                 </div>
                 <div className={" relative overflow-hidden"}>
-                    <div className="mx-8 flex  transition ease-out duration-500" style={{transform: `translateX(-${currentIndex * 20}%)`}}>
+                    <div className="mx-8 flex  transition ease-out duration-1000" style={{transform: `translateX(-${currentIndex * 5}%)`}}>
                         {category.map((data, index) => <CategoryCard key={index} img={data.img} categories={data.category}
                                                                      item={data.item}/>)}
                     </div>
