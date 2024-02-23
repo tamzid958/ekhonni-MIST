@@ -10,11 +10,7 @@ import {toast, Toaster} from "sonner";
 import Link from "next/link";
 
 import {useRouter} from "next/navigation";
-
 import axios from "axios";
-
-
-
 const AccountCreationPage = () =>
 {
     const router = useRouter();
@@ -41,7 +37,9 @@ const AccountCreationPage = () =>
             const formData = JSON.stringify(formDataObject);
             console.log(formData);
 
+
             const response = await axios.post('http://localhost:8080/api/register', formDataObject);
+
             if (response.ok) {
                 await router.push("/login");
                 toast.success("Account created successfully");
