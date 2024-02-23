@@ -5,15 +5,23 @@ import {useEffect, useRef, useState} from "react";
 import CategoryDropdown from "@/components/CategoryDropdown";
 import Image from "next/image";
 import axios from "axios";
+import TwoRadioButtons from "@/components/TwoRadioButtons";
 
 const AddProductPage = () => {
+
+    //const sellerEmail = localStorage.getItem("currentUserEmail");
+    const sellerEmail = "demoEmail";
+    const seller = {
+        email : sellerEmail
+    }
     const [category , setCategory] = useState("");
     const [subCategory , setSubCategory] = useState("")
     const [name , setName] = useState("");
     const [size , setSize] = useState("");
     const [description , setDescription] = useState("");
-    const [startingPrice , setStartingPrice] = useState("");
-    const [used , setUsed] = useState(false);
+    const [startingPrice , setStartingPrice] = useState(null);
+    const [usedCondition , setUsedCondition] = useState(false);
+    const [isVisible , setIsVisible] = useState(false);
     const [image , setImage] = useState('');
 
     // const formData = new FormData();
@@ -33,7 +41,9 @@ const AddProductPage = () => {
         formData.append("size" , size);
         formData.append("description" , description);
         formData.append("startingPrice" , startingPrice);
-        formData.append("used" , used);
+        formData.append("email" , seller);
+        formData.append("usedCondition" , usedCondition);
+        formData.append("isVisible" , isVisible);
         formData.append("image", image);
 
         for (const [key, value] of formData.entries()) {
@@ -48,7 +58,9 @@ const AddProductPage = () => {
         formData.append("size" , size);
         formData.append("description" , description);
         formData.append("startingPrice" , startingPrice);
-        formData.append("used" , used);
+        formData.append("email" , seller);
+        formData.append("usedCondition" , usedCondition);
+        formData.append("isVisible" , isVisible);
         formData.append("image", image);
         // const formData = JSON.stringify(formDataObject);
         for (const [key, value] of formData.entries()) {
@@ -118,24 +130,18 @@ const AddProductPage = () => {
                                 <div className="w-5/6 h-[10%] flex justify-center items-center">
                                     <p className="text-lg mt-4 text-white font-light">Enter Your Product Information Below</p>
                                 </div>
-                                <div className="w-5/6 h-[77.5%] flex flex-col justify-start items-center">
+                                <div className="w-5/6 h-[75%] flex flex-col justify-start items-center">
                                     <CategoryDropdown name={"category"} setCategory={(setCategory)} setSubCategory={setSubCategory}/>
                                     <TextField placeholder={"Product Name"} type={"text"} name={"name"} value={name} onChange={(e) => {setName(e.target.value)}}/>
                                     <TextField placeholder={"Product Size"} type={"text"} name={"size"} value={size} onChange={(e) => {setSize(e.target.value)}}/>
                                     <TextField placeholder={"Description"} type={"text"} name={"description"} value={description} onChange={(e) => {setDescription(e.target.value)}}/>
-                                    <TextField placeholder={"Starting Price"} type={"text"} name={"startingPrice"} value={startingPrice} onChange={(e) => {setStartingPrice(e.target.value)}}/>
+                                    <TextField placeholder={"Starting Price"} type={"number"} name={"startingPrice"} value={startingPrice} onChange={(e) => {setStartingPrice(e.target.value)}}/>
                                 </div>
-                                <div className="w-5/6 h-[15%] flex flex-col justify-center items-start">
-                                    <div className="w-full h-1/2 flex justify-center items-start">
-                                        <p className="text-white text-lg font-light text-left">Condition</p>
-                                    </div>
-                                    <div className="w-full h-1/2 flex flex-row justify-center items-start">
-                                        <input className="w-6 h-6 mr-2 cursor-pointer" type="radio" required name="used" value={used} onChange={(e) => {setUsed(true)}} id="used"/>
-                                        <label className="text-white font-light mr-32 cursor-pointer" htmlFor="used">Used</label>
-                                        <input className="w-6 h-6 mr-2 cursor-pointer" type="radio" required name="used" value={used} onChange={(e) => {setUsed(false)}} id="new"/>
-                                        <label className="text-white font-light cursor-pointer" htmlFor="new">New</label>
-                                    </div>
+                                <div className="w-5/6 h-[15%] flex justify-start items-center">
+                                    <TwoRadioButtons label={"Condition"} inputLabel1={"Used"} inputLabel2={"New"} value={usedCondition} setValue={setUsedCondition} />
+                                    <TwoRadioButtons label={"Bidding"} inputLabel1={"Public"} inputLabel2={"Private"} value={isVisible} setValue={setIsVisible}/>
                                 </div>
+
                             </div>
                         </div>
                     </div>
