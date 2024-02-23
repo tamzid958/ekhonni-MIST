@@ -1,16 +1,15 @@
 "use client"
 
-
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import DivisionDropdown from "@/components/DivisionDropdown";
 import React, { useState } from 'react';
 import {toast, Toaster} from "sonner";
-
 import Link from "next/link";
-
 import {useRouter} from "next/navigation";
+import Header from "@/components/Header";
 import axios from "axios";
+
 const AccountCreationPage = () =>
 {
     const router = useRouter();
@@ -50,6 +49,7 @@ const AccountCreationPage = () =>
     }
     return(
         <>
+            <Header />
             <Toaster expand={false} position={"top-right"} richColors />
             <form onSubmit={handleSubmit}>
                 <div className="w-screen h-[700px] flex justify-center items-center">

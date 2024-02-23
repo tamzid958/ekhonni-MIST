@@ -5,6 +5,7 @@ import Filter from "@/components/Filter";
 import LargeCard from "@/components/LargeCard";
 import Pagination from "@/components/Pagination";
 import axios from "axios";
+import Header from "@/components/Header";
 
 const Product = ()=>{
     const [pages,setPages] = useState([]);
@@ -37,6 +38,7 @@ const Product = ()=>{
     const records = Products.slice(pages[0],pages[1]);
     return (
         <>
+            <Header />
             <div className="w-11/12 mx-auto ">
                 <div className={"w-full h-96 my-3 relative"}>
                     <div className="w-full h-full absolute">

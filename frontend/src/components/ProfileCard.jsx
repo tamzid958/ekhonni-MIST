@@ -12,28 +12,16 @@ const ProfileCard =()=>{
     const formData = new FormData();
     useEffect(()=>{
         formData.append("Image",img);
-        formData.append("name","img");
+
         for (const [key, value] of formData.entries()) {
             console.log(key + ": " + value);
         }
 
-
     },[img])
-    const imagebase64 = async (file)=>{
-        const reader= new FileReader()
-        await reader.readAsDataURL(file)
-        const data = new Promise((resolve,reject)=>{
-            reader.onload = ()=> resolve(reader.result)
-            reader.onerror = (err)=> reject(err)
-        })
-        return data
-    }
+
     const handleChange = async (e)=>{
         const files = e.target.files[0];
-        const base = imagebase64(files);
-        console.log(base);
         setimg(files);
-
     }
     return (
         <>
@@ -48,7 +36,7 @@ const ProfileCard =()=>{
                         </div>
                     </div>
                     <div className="w-full text-center py-2 ">
-                        <h1 className="text-2xl font-semibold tracking-wider">Shahabuddin akhon</h1>
+                        <h1 className="text-2xl font-semibold tracking-wider mb-3">Shahabuddin akhon</h1>
                         <div onClick={imageClick}>
                             <input name="img" className={"hidden"} type={"file"} ref={inputRef}
                                    onChange={handleChange}/>
