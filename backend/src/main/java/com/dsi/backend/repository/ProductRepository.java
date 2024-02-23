@@ -35,6 +35,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findByIsApprovedByAdminTrue(Pageable pageable);
 
+    List<Product> findByIsApprovedByAdminTrueAndCategoryCategory(String category);
+
 //    Optional<Product> findFirstByCategoryCategoryAndIsApprovedByAdminTrueOrderByStartingPriceDesc(String category);
 
 //    List<Product> findByIsApprovedByAdminTrueAndCategory_CategoryInOrCategory_SubCategoryIn(List<String> categories, List<String> subcategories);

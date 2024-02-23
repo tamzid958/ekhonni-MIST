@@ -26,14 +26,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
-import java.util.Set;
 import java.util.stream.Collectors;
-
-import java.util.Objects;
+import java.util.stream.IntStream;
 
 
 @Service
@@ -129,51 +125,6 @@ public class ProductServiceImpl implements ProductService {
         return categories.stream().map(Category::getCategory).collect(Collectors.toSet());
     }
 
-//    public List<Product> filterProducts(FilterRequest filter) {
-//        List<Product> filteredProducts;
-//
-//        filteredProducts = productRepository.findByIsApprovedByAdminTrue();
-//
-//        Set<String> categoriesWithSubcategories = getCategoriesBySubcategories(filter.getSubcategories());
-//
-//        if (filter.getSubcategories() != null && !filter.getSubcategories().isEmpty()) {
-//            List<Product> subCategoryFilteredProducts = productRepository.findByIsApprovedByAdminTrueAndCategorySubCategoryIn(filter.getSubcategories());
-//            Set<Product> subCategoryFilteredProductsSet = new HashSet<>(subCategoryFilteredProducts);
-//            filteredProducts = filteredProducts.stream()
-//                    .filter(subCategoryFilteredProductsSet::contains)
-//                    .collect(Collectors.toList());
-//        }
-//
-//        if (filter.getCategories() != null && !filter.getCategories().isEmpty()) {
-//            List<String> category = filter.getCategories();
-//            category.removeAll(categoriesWithSubcategories);
-//            List<Product> categoryFilteredProducts = productRepository.findByIsApprovedByAdminTrueAndCategoryCategoryIn(category);
-//            Set<Product> categoryFilteredProductsSet = new HashSet<>(categoryFilteredProducts);
-//            filteredProducts.addAll(categoryFilteredProductsSet);
-//
-//            }
-//
-//        if (filter.getDivision() != null && !filter.getDivision().isEmpty()) {
-//            List<Product> districtFilteredProducts = productRepository.findByIsApprovedByAdminTrueAndSellerDivisionIn(filter.getDivision());
-//            Set<Product> districtFilteredProductsSet = new HashSet<>(districtFilteredProducts);
-//            filteredProducts = filteredProducts.stream()
-//                    .filter(districtFilteredProductsSet::contains)
-//                    .collect(Collectors.toList());
-//        }
-//
-//        if (filter.getPrice() != null && filter.getPrice().size() == 2) {
-//            Double minPrice = filter.getPrice().get(0);
-//            Double maxPrice = filter.getPrice().get(1);
-//            List<Product> priceFilteredProducts = productRepository.findByIsApprovedByAdminTrueAndStartingPriceBetween(minPrice, maxPrice);
-//            Set<Product> priceFilteredProductsSet = new HashSet<>(priceFilteredProducts);
-//            filteredProducts = filteredProducts.stream()
-//                    .filter(priceFilteredProductsSet::contains)
-//                    .collect(Collectors.toList());
-//        }
-//
-//        return filteredProducts;
-//    }
-
     public List<Product> filterProducts(FilterRequest filter) {
         List<Product> filteredProducts = new ArrayList<>();
         Set<String> categoriesWithSubcategories = getCategoriesBySubcategories(filter.getSubcategories());
@@ -215,5 +166,15 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return filteredProducts;
+    }
+
+    public Map<String,Long> countProducts() {
+        List<Product> product= productRepository.findByIsApprovedByAdminTrue();
+        Map<String, Long> map=product.stream().collect(Collectors.groupingBy(Product::getCategoryName, Collectors.counting()));
+        return map;
+    }
+
+    public List<Product> showByCategory(String category){
+        return productRepository.findByIsApprovedByAdminTrueAndCategoryCategory(category);
     }
 }

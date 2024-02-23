@@ -38,4 +38,11 @@ public class Product extends BaseEntity<Long>{
             inverseJoinColumns = @JoinColumn(name = "image_id")
     )
     private Set<ImageModel> productImage;
+
+    public String getCategoryName() {
+        if (this.category != null) {
+            return this.category.getCategory();
+        }
+        return null;
+    }
 }

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 
@@ -63,6 +64,17 @@ public class ProductController {
     @GetMapping("/products/filter")
     public List<Product> filterProducts(@RequestBody FilterRequest filterRequest) {
         return productService.filterProducts(filterRequest);
+    }
+
+    @GetMapping("/products/count")
+    public Map<String,Long> countProducts() {
+        return productService.countProducts();
+    }
+    @GetMapping("/products/category")
+    public ResponseEntity<List<Product>> showByCategories(@RequestParam String category) {
+//        System.out.println(category);
+        List<Product> products = productService.showByCategory(category);
+        return ResponseEntity.ok(products);
     }
 
 }
