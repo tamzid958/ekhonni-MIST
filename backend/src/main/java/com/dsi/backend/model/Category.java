@@ -16,9 +16,6 @@ import java.util.List;
 @Entity
 public class Category extends BaseEntity<Long>{
 
-//    @OneToMany
-//    @JoinColumn(referencedColumnName = "id")
-//    private List<Product> product;
     @Column
     private String category;
     private String subCategory;

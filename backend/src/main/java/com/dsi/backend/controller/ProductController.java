@@ -1,10 +1,12 @@
 package com.dsi.backend.controller;
 
 import com.dsi.backend.model.AppUser;
+import com.dsi.backend.model.FilterRequest;
 import com.dsi.backend.model.ImageModel;
 import com.dsi.backend.model.Product;
 import com.dsi.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,7 @@ import java.util.Set;
 public class ProductController {
 
     @Autowired
-    public ProductService productService;
+    private ProductService productService;
 
 
     @PostMapping("/user/products/save")
@@ -46,6 +48,16 @@ public class ProductController {
     @GetMapping("/products/sort")
     public List<Product> findSortedProducts(@RequestParam String field,@RequestParam Boolean direction) {
         return productService.findSortedProducts(field,direction); //0-> asc, 1->desc
+    }
+
+    @GetMapping("/products/pagination")
+    public Page<Product> findProductsWithPagination(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
+        return productService.findProductsWithPagination(page,size);
+    }
+
+    @GetMapping("/products/filter")
+    public List<Product> filterProducts(@RequestBody FilterRequest filterRequest) {
+        return productService.filterProducts(filterRequest);
     }
 
 }
