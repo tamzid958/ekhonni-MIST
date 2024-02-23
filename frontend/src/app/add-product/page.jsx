@@ -5,6 +5,7 @@ import {useEffect, useRef, useState} from "react";
 import CategoryDropdown from "@/components/CategoryDropdown";
 import Image from "next/image";
 import axios from "axios";
+import Header from "@/components/Header";
 
 const AddProductPage = () => {
     const [category , setCategory] = useState("");
@@ -95,58 +96,89 @@ const AddProductPage = () => {
     // )
     // export default api;
     return (
-        <form onSubmit={handleSubmit}>
-            <div className="w-screen h-[700px] flex justify-center items-start">
-                <div className="w-4/6 h-full">
-                    <div className="w-full h-[5%] my-3 flex justify-center items-center">
-                        <h1 className="text-3xl font-semibold ">Product Details</h1>
-                    </div>
-                    <div className="w-full h-[85%] bg-gray-600 border-2 border-black drop-shadow-lg flex justify-center items-center rounded-lg">
-                        <div className="w-[97%] h-[92%]  flex flex-row">
-                            <div className="w-1/2 h-full border-2 border-black bg-white rounded-l-lg">
-                                <div className="rounded-lg cursor-pointer w-full h-full flex flex-col justify-center items-center text-lg" onClick={imageClick}>
-                                    <input className="hidden" name="img" type="file" required ref={inputRef} onChange={handleImageInput}/>
-                                    {image? <img className="w-full h-full" src={URL.createObjectURL(image)} alt='' /> :
-                                    <>
-                                        <Image src={"/upload_image.svg"} alt={"upload"} width={40} height={40}/>
-                                        <p className="text-neutral-900 mt-5">Enter Product Image</p>
-                                    </>}
-                                    {/*<p className="mt-5 text-white text-lg">Enter Product Image</p>*/}
-                                </div>
-                            </div>
-                            <div className="w-1/2 h-full bg-neutral-900 rounded-r-lg flex flex-col items-center">
-                                <div className="w-5/6 h-[10%] flex justify-center items-center">
-                                    <p className="text-lg mt-4 text-white font-light">Enter Your Product Information Below</p>
-                                </div>
-                                <div className="w-5/6 h-[77.5%] flex flex-col justify-start items-center">
-                                    <CategoryDropdown name={"category"} setCategory={(setCategory)} setSubCategory={setSubCategory}/>
-                                    <TextField placeholder={"Product Name"} type={"text"} name={"name"} value={name} onChange={(e) => {setName(e.target.value)}}/>
-                                    <TextField placeholder={"Product Size"} type={"text"} name={"size"} value={size} onChange={(e) => {setSize(e.target.value)}}/>
-                                    <TextField placeholder={"Description"} type={"text"} name={"description"} value={description} onChange={(e) => {setDescription(e.target.value)}}/>
-                                    <TextField placeholder={"Starting Price"} type={"text"} name={"startingPrice"} value={startingPrice} onChange={(e) => {setStartingPrice(e.target.value)}}/>
-                                </div>
-                                <div className="w-5/6 h-[15%] flex flex-col justify-center items-start">
-                                    <div className="w-full h-1/2 flex justify-center items-start">
-                                        <p className="text-white text-lg font-light text-left">Condition</p>
+        <>
+            <Header/>
+            <form onSubmit={handleSubmit}>
+                <div className="w-screen h-[700px] flex justify-center items-start">
+                    <div className="w-4/6 h-full">
+                        <div className="w-full h-[5%] my-3 flex justify-center items-center">
+                            <h1 className="text-3xl font-semibold ">Product Details</h1>
+                        </div>
+                        <div
+                            className="w-full h-[85%] bg-gray-600 border-2 border-black drop-shadow-lg flex justify-center items-center rounded-lg">
+                            <div className="w-[97%] h-[92%]  flex flex-row">
+                                <div className="w-1/2 h-full border-2 border-black bg-white rounded-l-lg">
+                                    <div
+                                        className="rounded-lg cursor-pointer w-full h-full flex flex-col justify-center items-center text-lg"
+                                        onClick={imageClick}>
+                                        <input className="hidden" name="img" type="file" required ref={inputRef}
+                                               onChange={handleImageInput}/>
+                                        {image ?
+                                            <img className="w-full h-full" src={URL.createObjectURL(image)} alt=''/> :
+                                            <>
+                                                <Image src={"/upload_image.svg"} alt={"upload"} width={40} height={40}/>
+                                                <p className="text-neutral-900 mt-5">Enter Product Image</p>
+                                            </>}
+                                        {/*<p className="mt-5 text-white text-lg">Enter Product Image</p>*/}
                                     </div>
-                                    <div className="w-full h-1/2 flex flex-row justify-center items-start">
-                                        <input className="w-6 h-6 mr-2 cursor-pointer" type="radio" required name="used" value={used} onChange={(e) => {setUsed(true)}} id="used"/>
-                                        <label className="text-white font-light mr-32 cursor-pointer" htmlFor="used">Used</label>
-                                        <input className="w-6 h-6 mr-2 cursor-pointer" type="radio" required name="used" value={used} onChange={(e) => {setUsed(false)}} id="new"/>
-                                        <label className="text-white font-light cursor-pointer" htmlFor="new">New</label>
+                                </div>
+                                <div className="w-1/2 h-full bg-neutral-900 rounded-r-lg flex flex-col items-center">
+                                    <div className="w-5/6 h-[10%] flex justify-center items-center">
+                                        <p className="text-lg mt-4 text-white font-light">Enter Your Product Information
+                                            Below</p>
+                                    </div>
+                                    <div className="w-5/6 h-[77.5%] flex flex-col justify-start items-center">
+                                        <CategoryDropdown name={"category"} setCategory={(setCategory)}
+                                                          setSubCategory={setSubCategory}/>
+                                        <TextField placeholder={"Product Name"} type={"text"} name={"name"} value={name}
+                                                   onChange={(e) => {
+                                                       setName(e.target.value)
+                                                   }}/>
+                                        <TextField placeholder={"Product Size"} type={"text"} name={"size"} value={size}
+                                                   onChange={(e) => {
+                                                       setSize(e.target.value)
+                                                   }}/>
+                                        <TextField placeholder={"Description"} type={"text"} name={"description"}
+                                                   value={description} onChange={(e) => {
+                                            setDescription(e.target.value)
+                                        }}/>
+                                        <TextField placeholder={"Starting Price"} type={"text"} name={"startingPrice"}
+                                                   value={startingPrice} onChange={(e) => {
+                                            setStartingPrice(e.target.value)
+                                        }}/>
+                                    </div>
+                                    <div className="w-5/6 h-[15%] flex flex-col justify-center items-start">
+                                        <div className="w-full h-1/2 flex justify-center items-start">
+                                            <p className="text-white text-lg font-light text-left">Condition</p>
+                                        </div>
+                                        <div className="w-full h-1/2 flex flex-row justify-center items-start">
+                                            <input className="w-6 h-6 mr-2 cursor-pointer" type="radio" required
+                                                   name="used" value={used} onChange={(e) => {
+                                                setUsed(true)
+                                            }} id="used"/>
+                                            <label className="text-white font-light mr-32 cursor-pointer"
+                                                   htmlFor="used">Used</label>
+                                            <input className="w-6 h-6 mr-2 cursor-pointer" type="radio" required
+                                                   name="used" value={used} onChange={(e) => {
+                                                setUsed(false)
+                                            }} id="new"/>
+                                            <label className="text-white font-light cursor-pointer"
+                                                   htmlFor="new">New</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="w-full h-[10%]  flex justify-end items-center">
-                        <div className="w-fit h-fit mr-2 mb-3">
-                            <Button value={"Post Ad"} option={1} type={"submit"}/>
+                        <div className="w-full h-[10%]  flex justify-end items-center">
+                            <div className="w-fit h-fit mr-2 mb-3">
+                                <Button value={"Post Ad"} option={1} type={"submit"}/>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </>
+
     )
 }
 

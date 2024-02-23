@@ -2,10 +2,12 @@ import Button from "@/components/Button";
 import Image from "next/image";
 import ProfileCard from "@/components/ProfileCard";
 import InputBox from "@/components/InputBox";
+import Header from "@/components/Header";
 
 const Profile =()=>{
     return (
         <>
+            <Header />
             <div className="w-11/12 mx-auto">
                 <div className={'w-full h-[70px] flex justify-center items-center border-b-2 border-black mt-2'}>
                     <h1 className="text-2xl font-bold tracking-wider">Your Profile</h1>
