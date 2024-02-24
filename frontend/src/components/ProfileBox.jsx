@@ -9,20 +9,29 @@ import axios from "axios";
 
 const ProfileBox = ({email})=>{
 
+    const data = {
+        "email": email
+    }
+
     useEffect(() => {
-        axios.get("http://localhost:4000/api/v1/user/profile/", {
+        console.log(data);
+        const token = localStorage.getItem("token");
+
+        axios.get("http://localhost:8080/api/v1/user/profile",{
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json' // Specify content type if required
             }
         })
             .then((res) => {
-                console.log("user data: "+res.data);
-
+                console.log("user data: " + JSON.stringify(res.data)); // Assuming res.data is an object or array
             })
             .catch((err) => {
                 console.error("Error fetching data:", err);
             });
     }, []);
+
+
 
 
 
