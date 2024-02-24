@@ -32,9 +32,9 @@ public class AppUserController {
 
     }
 
-    @GetMapping("/user/profile")
-    public ResponseEntity<?> fetchInformation(@RequestBody AppUser appUser){
-        return appUserService.fetchInformation(appUser);
+    @GetMapping("/user/profile/{email}")
+    public ResponseEntity<?> fetchInformation(@PathVariable String email){
+        return appUserService.fetchInformation(email);
     }
 
     @PutMapping("/user/profile/update")

@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.dsi.backend.service.JwtTokenService;
@@ -95,8 +94,8 @@ public class AppUserServiceImpl implements AppUserService{
 
 
     @Override
-    public ResponseEntity<?> fetchInformation(AppUser appUser) {
-        appUser = appUserRepository.findByEmail(appUser.getEmail());
+    public ResponseEntity<?> fetchInformation(String email) {
+        AppUser appUser = appUserRepository.findByEmail(email);
         return ResponseEntity.ok(appUser);
     }
 
