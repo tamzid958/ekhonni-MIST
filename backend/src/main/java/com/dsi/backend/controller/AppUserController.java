@@ -27,16 +27,14 @@ public class AppUserController {
     }
     @PostMapping("/user/login")
     public ResponseEntity<?> loginAppUser(@RequestBody AppUser appUser){
-<<<<<<< HEAD
-        return appUserService.loginAppUser(appUser.getEmail(), appUser.getPassword());
-=======
+
         return appUserService.loginAppUser(appUser.getEmail(),appUser.getPassword());
->>>>>>> 81673e04df9345076c02d9578fe20cf1df0ebb7c
+
     }
 
-    @GetMapping("/user/profile")
-    public ResponseEntity<?> fetchInformation(@RequestBody AppUser appUser){
-        return appUserService.fetchInformation(appUser);
+    @GetMapping("/user/profile/{email}")
+    public ResponseEntity<?> fetchInformation(@PathVariable String email){
+        return appUserService.fetchInformation(email);
     }
 
     @PutMapping("/user/profile/update")

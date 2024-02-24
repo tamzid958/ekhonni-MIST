@@ -11,6 +11,7 @@ import Link from "next/link";
 
 import {useRouter} from "next/navigation";
 import axios from "axios";
+import Header from "@/components/Header";
 const AccountCreationPage = () =>
 {
     const router = useRouter();
@@ -50,6 +51,7 @@ const AccountCreationPage = () =>
     }
     return(
         <>
+            <Header />
             <Toaster expand={false} position={"top-right"} richColors />
             <form onSubmit={handleSubmit}>
                 <div className="w-screen h-[700px] flex justify-center items-center">

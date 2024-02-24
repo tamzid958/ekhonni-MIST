@@ -15,7 +15,7 @@ public interface AppUserService {
 
     ResponseEntity<?> updateProfile(AppUser appUser);
 
-    ResponseEntity<?> fetchInformation(AppUser appUser);
+    ResponseEntity<?> fetchInformation(String email);
 
     AppUser uploadImage(MultipartFile imageFile, AppUser appUser) throws IOException;
 

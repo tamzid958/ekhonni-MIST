@@ -11,6 +11,7 @@ const Categories =()=>{
             setCurrentIndex((prevIndex) =>
                 prevIndex === 1 ? 0 : prevIndex + 0.1
             );
+
         }, 200); // Change slide every 1 seconds
 
         return () => clearInterval(interval);
