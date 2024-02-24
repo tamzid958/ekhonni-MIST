@@ -8,8 +8,9 @@ import Button from "@/components/Button";
 
 const ProductBidPage = ({ params }) => {
 
+    let seller = false;
+    const [modalOpen , setModalOpen] = useState(false);
     const currentUserEmail = localStorage.getItem("currentUserEmail");
-    let seller = false
     const [data , setData] = useState([]);
     const product_id = params.id;
     // const  fetchProductDetails = async () => {
