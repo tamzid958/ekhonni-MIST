@@ -1,6 +1,7 @@
 package com.dsi.backend.service;
 
 import com.dsi.backend.model.AppUser;
+import jakarta.mail.MessagingException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +19,10 @@ public interface AppUserService {
     ResponseEntity<?> fetchInformation(AppUser appUser);
 
     AppUser uploadImage(MultipartFile imageFile, AppUser appUser) throws IOException;
+
+    AppUser findUser(String email);
+
+    void generateLink(String email) throws MessagingException;
 
 //    ResponseEntity<?> deleteAccount(AppUser appUser);
 }

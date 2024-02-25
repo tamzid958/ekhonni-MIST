@@ -46,6 +46,13 @@ public class JwtTokenService {
                 .signWith(SignatureAlgorithm.HS256, SIGNING_KEY).compact();
     }
 
+    public String createLinkToken(String subject) {
+        Claims claims = Jwts.claims().setSubject(subject);
+        return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 300))
+                .signWith(SignatureAlgorithm.HS256, SIGNING_KEY).compact();
+    }
+
     public String doGenerateToken(String subject) {
         Claims claims = Jwts.claims().setSubject(subject);
         return Jwts.builder()

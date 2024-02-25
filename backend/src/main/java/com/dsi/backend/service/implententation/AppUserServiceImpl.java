@@ -6,7 +6,9 @@ import com.dsi.backend.model.TokenResponse;
 import com.dsi.backend.repository.AppUserRepository;
 import com.dsi.backend.repository.ImageRepository;
 import com.dsi.backend.service.AppUserService;
+import com.dsi.backend.service.MailSenderService;
 import com.dsi.backend.service.NotificationService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.dsi.backend.service.JwtTokenService;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.util.Map;
@@ -41,6 +44,12 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Autowired
     private NotificationService notificationService;
+
+    @Autowired
+    private MailSenderService mailSenderService;
+
+    private String baseURL="http://localhost:8080";
+
 
     @Override
     public AppUser registerAppUser(AppUser appUser){
@@ -111,6 +120,19 @@ public class AppUserServiceImpl implements AppUserService{
         appUser.setProfilePicture(imageModel);
 
         return appUserRepository.save(appUser);
+    }
+
+    @Override
+    public AppUser findUser(String email) {
+        return appUserRepository.findByEmail(email);
+    }
+
+    @Override
+    public void generateLink(String email) throws MessagingException {
+        String token = jwtTokenService.createLinkToken(email);
+        String url = UriComponentsBuilder.fromHttpUrl(baseURL).path("/api/v1/reset-password").queryParam("token",token).toUriString();
+        String link = baseURL + "/api/v1/reset-password/?token=" + token;
+        mailSenderService.sendMail(email,"Reset Your Password", link);
     }
 
 //    @Override
