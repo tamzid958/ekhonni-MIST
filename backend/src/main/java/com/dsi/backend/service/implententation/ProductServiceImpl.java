@@ -140,7 +140,7 @@ public class ProductServiceImpl implements ProductService {
             else if (field.equalsIgnoreCase("Low_to_high")) filteredProducts.sort(Comparator.comparing(Product::getStartingPrice));
             else if (field.equalsIgnoreCase("Old_to_new")) filteredProducts.sort(Comparator.comparing(Product::getProductTime));
             else if (field.equalsIgnoreCase("New_to_old")) filteredProducts.sort(Comparator.comparing(Product::getProductTime).reversed());
-        }
+    }
 
         List<ProductView> productViews = filteredProducts.stream()
                 .map(ProductViewImpl::new)
