@@ -36,7 +36,6 @@ public class ProductController {
     @PostMapping(value = "/user/products/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> saveProduct(@RequestPart("product") Product product,
                                          @RequestPart("imageFile") MultipartFile[] file) {
-        System.out.println(product);
         Product savedProduct = productService.saveProduct(product, file);
 
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
