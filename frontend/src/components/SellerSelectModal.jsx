@@ -1,9 +1,19 @@
+"use client"
+
 import {toast , Toaster} from "sonner";
 import BidderList from "@/components/BidderList";
 import SmallButton from "@/components/SmallButton";
+import {useState} from "react";
+import ToggleSwitch from "@/components/ToggleSwitch";
+
+const SellerSelectModal = ({maxBid , isBidActive}) => {
 
 
-const SellerSelectModal = ({maxBid}) => {
+    const [bidIsActive , setBidIsActive] = useState(isBidActive)
+
+    const handleBiddingStatusChange = (e) => {
+        setBidIsActive(!bidIsActive);
+    }
 
     const bidders = [
         {id: "1",
@@ -42,14 +52,17 @@ const SellerSelectModal = ({maxBid}) => {
                                         <p className="text-md font-medium text-black text-nowrap truncate">Max Bid = Tk {maxBid}</p>
                                     </div>
                                     <div  className="w-5/6 h-2/3 border border-neutral-300 flex flex-col justify-center items-center  bg-slate-100 shadow-lg shadow-slate-300 rounded-lg transition ease-in-out duration-500 hover:scale-105">
-                                        <p className="font-medium text-xl">Bidding Control</p>
+                                        <p className="h-1/3 border-2 border-neutral-700 flex items-center font-medium text-xl">Bidding Control</p>
+                                        <p className="h-1/3 border-2 border-neutral-700 flex items-center font-medium text-md">Bidding Status : &nbsp;
+                                            { bidIsActive ?
+                                                (<span className="bg-slate-800 text-white px-3 py-1 shadow-md shadow-slate-400 rounded-3xl"> Active </span>)
+                                                :
+                                                (<span className="bg-slate-500 text-white px-3 py-1 shadow-md shadow-slate-400 rounded-3xl"> Inactive </span>)
+                                            }
+                                        </p>
                                         <div className="w-[90%] h-1/3 flex flex-row justify-center items-center border-2 border-black">
-
-                                            <div className="w-1/2 h-full flex justify-center items-center">
-                                                <SmallButton value={"Enable"} option={1}/>
-                                            </div>
-                                            <div className="w-1/2 h-full flex justify-center items-center">
-                                                <SmallButton value={"Disable"} option={0}/>
+                                            <div className="w-1/2 h-full flex flex-row justify-center items-center">
+                                                <ToggleSwitch initialState={bidIsActive} onClick={handleBiddingStatusChange}/>
                                             </div>
                                         </div>
                                     </div>

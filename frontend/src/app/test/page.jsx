@@ -6,7 +6,7 @@ const TestPage = () => {
     return (
         <>
             {/*<BuyerBidModal visibility={true} maxBid={420} />*/}
-            <SellerSelectModal maxBid={420}/>
+            <SellerSelectModal maxBid={420} isBidActive={true}/>
         </>
     )
 }
