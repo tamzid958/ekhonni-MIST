@@ -37,9 +37,9 @@ public class AppUserController {
         return appUserService.fetchInformation(email);
     }
 
-    @PutMapping("/user/profile/update")
-    public ResponseEntity<?> updateProfile(@RequestBody AppUser appUser){
-        return appUserService.updateProfile(appUser);
+    @PutMapping("/user/profile/update/{email}")
+    public ResponseEntity<?> updateProfile(@PathVariable String email, @RequestBody AppUser appUser){
+        return appUserService.updateProfile(email,appUser);
     }
 
     @PutMapping(value="/user/profile/upload-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

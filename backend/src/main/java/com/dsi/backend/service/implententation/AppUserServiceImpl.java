@@ -64,11 +64,11 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
     @Override
-    public ResponseEntity<?> updateProfile(AppUser appUser) {
+    public ResponseEntity<?> updateProfile(String email, AppUser appUser) {
         if(appUser==null){
             return new ResponseEntity<>("Nothing to be updated with", HttpStatus.NO_CONTENT);
         }
-        AppUser updatedAppUser = appUserRepository.findByEmail(appUser.getEmail());
+        AppUser updatedAppUser = appUserRepository.findByEmail(email);
 
         if(appUser.getName()!=null) {
             updatedAppUser.setName(appUser.getName());
