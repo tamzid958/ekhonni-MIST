@@ -7,6 +7,7 @@ import com.dsi.backend.service.AppUserService;
 import com.dsi.backend.service.ProductService;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,5 +44,23 @@ public class AdminController {
     public List<Product> fetchAllRequest() {
         return productService.fetchAllRequests();
     }
+
+    @PostMapping("/add-admin")
+    public ResponseEntity<?> addAdmin(@RequestBody AppUser appUser) {
+        return new ResponseEntity<>(appUserService.addAdmin(appUser), HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/fetch-admin")
+    public ResponseEntity<?> fetchAdmin(@RequestParam String email) {
+        return new ResponseEntity<>(appUserService.fetchOtherAdmins(email), HttpStatus.CREATED);
+    }
+
+
+    @PostMapping("/delete-admin")
+    public ResponseEntity<?> deleteAdmin(@RequestParam String email) {
+        return new ResponseEntity<>(appUserService.deleteAdmin(email), HttpStatus.CREATED);
+    }
+
 
 }
