@@ -2,6 +2,7 @@ package com.dsi.backend.controller;
 
 import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.Product;
+import com.dsi.backend.model.ProductView;
 import com.dsi.backend.service.AdminService;
 import com.dsi.backend.service.AppUserService;
 import com.dsi.backend.service.ProductService;
@@ -40,7 +41,7 @@ public class AdminController {
     }
 
     @GetMapping("/products/review")
-    public List<Product> fetchAllRequest() {
+    public List<ProductView> fetchAllRequest() {
         return productService.fetchAllRequests();
     }
 

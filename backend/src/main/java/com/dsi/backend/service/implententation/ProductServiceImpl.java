@@ -1,13 +1,8 @@
 package com.dsi.backend.service.implententation;
 
 import com.dsi.backend.exception.ProductNotFoundException;
-import com.dsi.backend.model.AppUser;
-import com.dsi.backend.model.Category;
-import com.dsi.backend.model.FilterRequest;
+import com.dsi.backend.model.*;
 
-import com.dsi.backend.model.ImageModel;
-
-import com.dsi.backend.model.Product;
 import com.dsi.backend.repository.AppUserRepository;
 import com.dsi.backend.repository.CategoryRepository;
 import com.dsi.backend.repository.ProductRepository;
@@ -17,11 +12,10 @@ import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +23,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 
 @Service
@@ -47,10 +40,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private EntityManager entityManager;
 
-
     @Autowired
     private ImageModelService imageModelService;
-
 
 
     public Product saveProduct(Product product, MultipartFile[] file) {
@@ -85,39 +76,16 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(existingProduct);
     }
 
-    public List<Product> fetchAllRequests() {
+    public List<ProductView> fetchAllRequests() {
         return productRepository.findByIsApprovedByAdminIsNullOrderByProductTimeAsc();
     }
 
-    public List<Product> fetchAllProducts() {
-        return productRepository.findByIsApprovedByAdminTrue();
-    }
+//    public List<Product> fetchAllProducts() {
+//        return productRepository.findByIsApprovedByAdminTrue();
+//    }
 
     public Product getProductById(Long id) {
         return productRepository.findById(id).orElseThrow(()->new ProductNotFoundException("Product not found by id: "+id));
-    }
-
-    public List<Product> findSortedProducts(String field, Boolean direction) {
-       if (field.equalsIgnoreCase("startingPrice"))
-       {
-           if(!direction)
-               return productRepository.findByIsApprovedByAdminTrueOrderByStartingPriceAsc();
-           else
-               return productRepository.findByIsApprovedByAdminTrueOrderByStartingPriceDesc();
-       }
-       else if (field.equalsIgnoreCase("productTime")) {
-           if (!direction)
-               return productRepository.findByIsApprovedByAdminTrueOrderByProductTimeAsc();
-           else
-               return productRepository.findByIsApprovedByAdminTrueOrderByProductTimeDesc();
-       }
-
-       else return null;
-    }
-
-    public Page<Product> findProductsWithPagination(int page, int size) {
-        PageRequest pageable = PageRequest.of(page, size);
-        return productRepository.findByIsApprovedByAdminTrue(pageable);
     }
 
     public Set<String> getCategoriesBySubcategories(List<String> subcategories) {
@@ -125,7 +93,7 @@ public class ProductServiceImpl implements ProductService {
         return categories.stream().map(Category::getCategory).collect(Collectors.toSet());
     }
 
-    public List<Product> filterProducts(FilterRequest filter) {
+    public Page<ProductView> fetchProducts(int page, FilterRequest filter) {
         List<Product> filteredProducts = new ArrayList<>();
         Set<String> categoriesWithSubcategories = getCategoriesBySubcategories(filter.getSubcategories());
 
@@ -161,17 +129,37 @@ public class ProductServiceImpl implements ProductService {
                     .collect(Collectors.toList());
             }
         }
-        else if ((filter.getSubcategories().isEmpty()) && (filter.getCategories().isEmpty()) && (filter.getDivision().isEmpty()) && (filter.getPrice().isEmpty())) {
-            filteredProducts.addAll(productRepository.findByIsApprovedByAdminTrue());
+        else {
+            if ((filter.getSubcategories().isEmpty()) && (filter.getCategories().isEmpty()) && (filter.getDivision().isEmpty()) && (filter.getPrice().isEmpty())) {
+                filteredProducts.addAll(productRepository.findByIsApprovedByAdminTrue());
+            }
+        }
+        if (filter.getSort() != null) {
+            String field = filter.getSort();
+            if (field.equalsIgnoreCase("High_to_low")) filteredProducts.sort(Comparator.comparing(Product::getStartingPrice).reversed());
+            else if (field.equalsIgnoreCase("Low_to_high")) filteredProducts.sort(Comparator.comparing(Product::getStartingPrice));
+            else if (field.equalsIgnoreCase("Old_to_new")) filteredProducts.sort(Comparator.comparing(Product::getProductTime));
+            else if (field.equalsIgnoreCase("New_to_old")) filteredProducts.sort(Comparator.comparing(Product::getProductTime).reversed());
         }
 
-        return filteredProducts;
+        List<ProductView> productViews = filteredProducts.stream()
+                .map(ProductViewImpl::new)
+                .collect(Collectors.toList());
+        int startIndex = page * 5;
+        int endIndex = Math.min(startIndex + 5, filteredProducts.size());
+        List<ProductView> productsForPage = productViews.subList(startIndex, endIndex);
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        return new PageImpl<>(productsForPage, PageRequest.of(page, 5, sort), filteredProducts.size());
     }
 
-    public Map<String,Long> countProducts() {
-        List<Product> product= productRepository.findByIsApprovedByAdminTrue();
-        Map<String, Long> map=product.stream().collect(Collectors.groupingBy(Product::getCategoryName, Collectors.counting()));
-        return map;
+    public Map<String,Long> countProducts(String division) {
+        List<Product> product;
+        if(Objects.equals(division, "")) {
+            product =productRepository.findByIsApprovedByAdminTrue();
+        } else {
+            product= productRepository.findByIsApprovedByAdminTrueAndSellerDivision(division);
+        }
+        return product.stream().collect(Collectors.groupingBy(Product::getCategoryName, Collectors.counting()));
     }
 
     public List<Product> showByCategory(String category){
