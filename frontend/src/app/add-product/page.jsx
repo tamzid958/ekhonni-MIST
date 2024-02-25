@@ -25,6 +25,7 @@ const AddProductPage = () => {
     const [usedCondition , setUsedCondition] = useState(false);
     const [isVisible , setIsVisible] = useState(false);
     const [image , setImage] = useState('');
+    const [product, setProduct] = useState({});
 
     // const formData = new FormData();
     const inputRef = useRef(null);
@@ -37,38 +38,62 @@ const AddProductPage = () => {
     }
     const formData =new FormData();
     useEffect(() => {
-        formData.append("category" , category);
-        formData.append("subCategory" , subCategory);
-        formData.append("name" , name);
-        formData.append("size" , size);
-        formData.append("description" , description);
-        formData.append("startingPrice" , startingPrice);
-        formData.append("email" , seller);
-        formData.append("usedCondition" , usedCondition);
-        formData.append("isVisible" , isVisible);
-        formData.append("image", image);
+        setProduct({
+            "category" : {
+                "category" : category,
+                "subCategory" : subCategory
+            },
+            "name" : name,
+            "size" : size,
+            "description" : description,
+            "startingPrice" : startingPrice,
+            "usedCondition" : usedCondition,
+            "seller" : {
+                "email" : localStorage.getItem('currentUserEmail')
+            },
+            "isVisible" : isVisible
+        });
+        formData.append("product", new Blob([JSON.stringify(product)],{type: 'application/json'}));
+        // Explicitly creating Blob (Binary Large Object) to mention the type json, otherwise it will take it as application/octet-stream
+        formData.append("imageFile", image);
 
-        for (const [key, value] of formData.entries()) {
-            console.log(key + ": " + value);
-        }
+        // for (const [key, value] of formData.entries()) {
+        //     console.log(key + ": " + value);
+        // }
     }, [image]);
     const handleSubmit = (e) => {
         e.preventDefault();
-        formData.append("category" , category);
-        formData.append("subCategory" , subCategory);
-        formData.append("name" , name);
-        formData.append("size" , size);
-        formData.append("description" , description);
-        formData.append("startingPrice" , startingPrice);
-        formData.append("email" , seller);
-        formData.append("usedCondition" , usedCondition);
-        formData.append("isVisible" , isVisible);
-        formData.append("image", image);
-        // const formData = JSON.stringify(formDataObject);
-        for (const [key, value] of formData.entries()) {
-            console.log(key + ": " + value);
-        }
-        // const response = await axios.post("/api/v1/user/products/save" , formData);
+        setProduct({
+            "category" : {
+                "category" : category,
+                "subCategory" : subCategory
+            },
+            "name" : name,
+            "size" : size,
+            "description" : description,
+            "startingPrice" : startingPrice,
+            "usedCondition" : usedCondition,
+            "seller" : {
+                "email" : localStorage.getItem('currentUserEmail')
+            },
+            "isVisible" : isVisible
+        });
+        formData.append("product", new Blob([JSON.stringify(product)],{type: 'application/json'}));
+        formData.append("imageFile", image);
+        // for (const [key, value] of formData.entries()) {
+        //     console.log(key + ": " + value);
+        // }
+        axios.post("http://localhost:8080/api/v1/user/products/save", formData, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+            .then(response =>{
+                console.log(response);
+            })
+            .catch(error=>{
+                console.log("error saving products", error);
+            });
     }
 
     // const api = axios.create({
