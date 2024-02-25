@@ -8,23 +8,21 @@ import Link from "next/link";
 import axios from "axios";
 
 const ProfileBox = ({email})=>{
-
-    const data = {
-        "email": email
-    }
-
+    const [data,setData] = useState();
+    const token = localStorage.getItem("token");
     useEffect(() => {
-        console.log(data);
-        const token = localStorage.getItem("token");
 
-        axios.get("http://localhost:8080/api/v1/user/profile",{
+
+        axios.get(`http://localhost:8080/api/v1/user/profile/${email}`,{
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json' // Specify content type if required
             }
         })
             .then((res) => {
-                console.log("user data: " + JSON.stringify(res.data)); // Assuming res.data is an object or array
+
+                setData(res.data)
+
             })
             .catch((err) => {
                 console.error("Error fetching data:", err);
@@ -41,11 +39,11 @@ const ProfileBox = ({email})=>{
                 <Link href={"/profile"}>
                     <div className="w-full h-[110px] flex border-b-2 border-black">
                         <div className="w-1/3 h-full relative">
-                            <Image src={"/bike.jpg"} alt={"Profile"} fill objectFit={"cover"}
+                            <Image src={(data && data.profilePicture)? data.profilePicture : "/avatar.png"} alt={"Profile"} fill objectFit={"cover"}
                                    className={"rounded-full px-1 py-2"}/>
                         </div>
                         <div className={"w-2/3 h-full flex justify-start items-center pl-4"}>
-                            <h1 className={"tracking-widest text-xl font-semibold"}>{email}</h1>
+                            <h1 className={"tracking-widest text-xl font-semibold"}>{data? data.name : ''}</h1>
                         </div>
                     </div>
                 </Link>
