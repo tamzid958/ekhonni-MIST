@@ -1,7 +1,7 @@
 import SmallButton from "@/components/SmallButton";
 
 
-const BidderListItem = ({bidderName , bidderId , bid , option}) => {
+const BidderListItem = ({bidderName , bidderId , bid , optiongit }) => {
 
     return (
         <>
