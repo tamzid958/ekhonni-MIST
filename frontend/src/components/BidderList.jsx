@@ -17,11 +17,11 @@ const BidderList = ({visibility , bidders , view}) => {
 
                             {view === "buyerView" ? (
                                 bidders.map((bidder) => (
-                                        <BidderListItem key={bidder.id} bidderId={bidder.id} bidderName={bidder.name} bid={bidder.bid} option={"buyerView"}/>
+                                        <BidderListItem key={bidder.id} bidderId={bidder.id} bidderName={bidder.name} bid={bidder.bid} option={"buyerView"} />
                                     ))
                             ) : (
                                 bidders.map((bidder) => (
-                                        <BidderListItem key={bidder.id} bidderId={bidder.id} bidderName={bidder.name} bid={bidder.bid} option={"sellerView"}/>
+                                        <BidderListItem key={bidder.id} bidderId={bidder.id} bidderName={bidder.name} bid={bidder.bid} option={"sellerView"} isSelected={bidder.isSelected}/>
                                     ))
                             )}
                         </ul>

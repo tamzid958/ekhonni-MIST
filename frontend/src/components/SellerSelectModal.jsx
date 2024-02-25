@@ -17,23 +17,25 @@ const SellerSelectModal = ({maxBid , isBidActive}) => {
 
     const bidders = [
         {id: "1",
-            name: "Buyer 1",
-            bid: 10000},
+         name: "Buyer 1",
+         bid: 10000,
+         isSelected: false},
         {id: "2",
-            name: "Buyer 2",
-            bid: 30000},
+         name: "Buyer 2",
+         bid: 30000,
+         isSelected: false},
         {id: "3",
-            name: "Buyer 3",
-            bid: 25000},
+         name: "Buyer 3",
+         bid: 25000,
+         isSelected: true},
         {id: "4",
-            name: "Buyer 4",
-            bid: 25000},
+         name: "Buyer 4",
+         bid: 25000,
+         isSelected: false},
         {id: "5",
-            name: "Buyer 5",
-            bid: 25000},
-        {id: "6",
-            name: "Buyer 6",
-            bid: 25000},
+         name: "Buyer 5",
+         bid: 25000,
+         isSelected: false}
     ];
     return (
         <>
@@ -49,15 +51,15 @@ const SellerSelectModal = ({maxBid , isBidActive}) => {
                             <div className="w-full h-[75%] flex flex-row justify-center items-center">
                                 <div className="w-1/2 h-full  flex flex-col justify-center items-start ">
                                     <div className="w-5/6 h-1/4 border border-neutral-300 my-[5%] flex justify-center items-center bg-slate-100 shadow-lg shadow-slate-300 rounded-lg transition ease-in-out duration-500 hover:scale-105">
-                                        <p className="text-md font-medium text-black text-nowrap truncate">Max Bid = Tk {maxBid}</p>
+                                        <p className="text-lg font-medium text-black text-nowrap truncate">Max Bid = Tk {maxBid}</p>
                                     </div>
                                     <div  className="w-5/6 h-2/3 border border-neutral-300 flex flex-col justify-center items-center  bg-slate-100 shadow-lg shadow-slate-300 rounded-lg transition ease-in-out duration-500 hover:scale-105">
                                         <p className="h-1/3 border-2 border-neutral-700 flex items-center font-medium text-xl">Bidding Control</p>
                                         <p className="h-1/3 border-2 border-neutral-700 flex items-center font-medium text-md">Bidding Status : &nbsp;
                                             { bidIsActive ?
-                                                (<span className="bg-slate-800 text-white px-3 py-1 shadow-md shadow-slate-400 rounded-3xl"> Active </span>)
+                                                (<span className="bg-slate-800 text-white px-3 py-1 shadow-md shadow-slate-400 rounded-full"> Active </span>)
                                                 :
-                                                (<span className="bg-slate-500 text-white px-3 py-1 shadow-md shadow-slate-400 rounded-3xl"> Inactive </span>)
+                                                (<span className="bg-slate-500 text-white px-3 py-1 shadow-md shadow-slate-400 rounded-full"> Inactive </span>)
                                             }
                                         </p>
                                         <div className="w-[90%] h-1/3 flex flex-row justify-center items-center border-2 border-black">
