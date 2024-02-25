@@ -42,8 +42,7 @@ public class AppUserController {
         return appUserService.updateProfile(email,appUser);
     }
 
-    @PutMapping(value="" +
-            "", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value="/user/profile/upload-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadImage(@RequestPart MultipartFile imageFile, @RequestPart AppUser appUser){
         try{
 //            System.out.println(appUser.getId());

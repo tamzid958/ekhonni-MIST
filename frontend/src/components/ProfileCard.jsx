@@ -25,19 +25,30 @@ const ProfileCard =()=>{
 
 
     useEffect(()=>{
-        formData.append("ImageFile",img);
-        const email = {"email":Email}
-        formData.append("appUser",email);
+
+
+        formData.append("imageFile", img);
+        const email = { "email": Email };
+        formData.append("appUser", JSON.stringify(email)); // Convert object to string before appending
+
+        // for (const [key, value] of formData.entries()) {
+        //     if (value instanceof File) {
+        //         console.log(key + ": " + value.name); // Accessing file name
+        //     } else if (typeof value === 'string') {
+        //         console.log(key + ": " + value);
+        //     } else {
+        //         console.log(key + ": " + JSON.stringify(value)); // Convert object to string
+        //     }
+        // }
 
         axios.put(`http://localhost:8080/api/v1/user/profile/upload-image`,formData,{
             headers: {
                 Authorization: `Bearer ${token}`,
+                'Content-Type': 'multipart/form-data'
             }
         })
             .then((res) => {
                 console.log(res);
-                console.log(formData);
-
             })
             .catch((err) => {
                 console.error("Error fetching data:", err);
