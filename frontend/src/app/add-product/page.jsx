@@ -136,6 +136,7 @@ const AddProductPage = () => {
     return (
 
         <>
+
         <Header />
         <form onSubmit={handleSubmit}>
             <div className="w-screen h-[700px] flex justify-center items-start">
@@ -200,8 +201,8 @@ const AddProductPage = () => {
                         </div>
                     </div>
                 </div>
-            </div>
         </form>
+
         </>
     )
 }

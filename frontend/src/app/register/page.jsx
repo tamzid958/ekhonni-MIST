@@ -10,7 +10,6 @@ import {useRouter} from "next/navigation";
 import Header from "@/components/Header";
 import axios from "axios";
 
-
 const AccountCreationPage = () =>
 {
     const router = useRouter();

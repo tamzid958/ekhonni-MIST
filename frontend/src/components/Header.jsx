@@ -52,7 +52,7 @@ const Header = () => {
                         </Link> : <Link href={"/login"}><Button value="Log in" option={1} type={"submit"} /></Link>}
                     </div>
                 </div>
-                {profileModel && <ProfileBox/> }
+                {profileModel && <ProfileBox email = {Email} /> }
             </div>
         </>
     )
