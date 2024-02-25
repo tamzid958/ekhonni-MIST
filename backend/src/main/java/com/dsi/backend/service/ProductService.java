@@ -1,12 +1,9 @@
 package com.dsi.backend.service;
 
-import com.dsi.backend.model.AppUser;
-import com.dsi.backend.model.FilterRequest;
-import com.dsi.backend.model.Product;
-import com.dsi.backend.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.dsi.backend.model.*;
 import org.springframework.data.domain.Page;
 import com.dsi.backend.model.Product;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,4 +31,9 @@ public interface ProductService {
     Map<String,Long> countProducts();
 
     List<Product> showByCategory(String category);
+
+    Category insertCategory(Category category);
+
+    ResponseEntity<?> removeCategory(Category category);
+
 }
