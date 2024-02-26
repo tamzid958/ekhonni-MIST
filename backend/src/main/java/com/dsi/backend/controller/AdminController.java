@@ -1,6 +1,7 @@
 package com.dsi.backend.controller;
 
 import com.dsi.backend.model.AppUser;
+import com.dsi.backend.model.Category;
 import com.dsi.backend.model.Product;
 import com.dsi.backend.model.ProductView;
 import com.dsi.backend.service.AdminService;
@@ -8,6 +9,7 @@ import com.dsi.backend.service.AppUserService;
 import com.dsi.backend.service.ProductService;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +45,16 @@ public class AdminController {
     @GetMapping("/products/review")
     public List<ProductView> fetchAllRequest() {
         return productService.fetchAllRequests();
+    }
+
+    @PostMapping("/add-category")
+    public ResponseEntity<?> insertCategory(@RequestBody Category category) {
+        return new ResponseEntity<>(productService.insertCategory(category), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/delete-category")
+    public ResponseEntity<?> removeCategory(@RequestBody Category category) {
+        return new ResponseEntity<>(productService.removeCategory(category), HttpStatus.OK);
     }
 
 }

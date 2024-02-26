@@ -6,7 +6,7 @@ import Button from "@/components/Button";
 import {toast, Toaster} from "sonner";
 import SmallButton from "@/components/SmallButton";
 
-const BuyerBidModal = ({visibility , maxBid , productID}) => {
+const BuyerBidModal = ({setModalOpen , visibility , maxBid , productID}) => {
 
     const [bid , setBid] = useState(null);
     const bidders = [
@@ -47,12 +47,16 @@ const BuyerBidModal = ({visibility , maxBid , productID}) => {
         }
 
     }
+    const handleModalCloseOnBgClick = (e) => {
+        if (e.target.id === "backgroundBlur")
+            setModalOpen(false);
+    }
     return (
         <>
             <Toaster richColors position={"top-right"}/>
-            <div className="fixed inset-0 bg-black bg-opacity-20 backdrop-blur-[1px] flex justify-center items-center">
+            <div className="fixed inset-0 z-10 bg-black bg-opacity-20 backdrop-blur-[1px] flex justify-center items-center" id="backgroundBlur" onClick={(e)=> {handleModalCloseOnBgClick(e)}}>
                 <div className="w-[40%] h-[60%] flex flex-col">
-                    <button className="text-white text-lg font-semibold ml-3 place-self-end transition ease-in-out duration-500 hover:scale-110 active:scale-90">X</button>
+                    <button className="text-white text-lg font-semibold ml-3 place-self-end transition ease-in-out duration-500 hover:scale-110 active:scale-90" onClick={() => {setModalOpen(false)}}>X</button>
                     <div className="w-full h-full border border-neutral-700 bg-white shadow-lg shadow-slate-500 flex justify-center items-center rounded-lg">
                         <div className="w-[90%] h-[90%] flex flex-col justify-start items-center">
                             <div className="w-full h-[25%] border border-neutral-300 overflow-hidden flex justify-start items-center bg-slate-100 shadow-lg shadow-slate-300 rounded-lg transition ease-in-out duration-500 hover:scale-105">

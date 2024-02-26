@@ -1,9 +1,10 @@
 import BidderListItem from "@/components/BidderListItem";
+import SelectedBidderListItem from "@/components/SelectedBidderListItem";
 
 
-const BidderList = ({visibility , bidders , view}) => {
+const BidderList = ({visibility , bidders , view , finalBuyerID}) => {
 
-
+    const bidderSelected = finalBuyerID !== null;
     return ( <>
         {visibility &&
             <ul className="w-full mt-[5%] rounded-lg ">
@@ -14,15 +15,20 @@ const BidderList = ({visibility , bidders , view}) => {
                         </label>
                     <div className="w-full max-h-0 overflow-hidden peer-checked:max-h-52 hover:overflow-y-scroll transition-all ease-in-out duration-1000">
                         <ul className="w-full flex flex-col items-center">
-
                             {view === "buyerView" ? (
                                 bidders.map((bidder) => (
                                         <BidderListItem key={bidder.id} bidderId={bidder.id} bidderName={bidder.name} bid={bidder.bid} option={"buyerView"} />
                                     ))
                             ) : (
-                                bidders.map((bidder) => (
-                                        <BidderListItem key={bidder.id} bidderId={bidder.id} bidderName={bidder.name} bid={bidder.bid} option={"sellerView"} isSelected={bidder.isSelected}/>
-                                    ))
+                                bidderSelected ? (
+                                        bidders.map((bidder) => (
+                                            <SelectedBidderListItem key={bidder.id} bidderId={bidder.id} bidderName={bidder.name} bid={bidder.bid} option={"sellerView"} finalBuyerID={finalBuyerID}/>
+                                        ))
+                                    ) : (
+                                        bidders.map((bidder) => (
+                                            <BidderListItem key={bidder.id} bidderId={bidder.id} bidderName={bidder.name} bid={bidder.bid} option={"sellerView"}/>
+                                        ))
+                                    )
                             )}
                         </ul>
                     </div>

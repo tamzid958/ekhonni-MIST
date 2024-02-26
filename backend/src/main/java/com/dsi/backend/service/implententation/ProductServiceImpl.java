@@ -16,6 +16,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import org.springframework.data.domain.Sort;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -221,5 +225,16 @@ public class ProductServiceImpl implements ProductService {
 
     public List<Product> showByCategory(String category){
         return productRepository.findByIsApprovedByAdminTrueAndCategoryCategory(category);
+    }
+
+    @Override
+    public Category insertCategory(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    @Override
+    public ResponseEntity<?> removeCategory(Category category) {
+        categoryRepository.delete(category);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
