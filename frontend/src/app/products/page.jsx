@@ -1,14 +1,19 @@
 "use client"
 import React, {useEffect, useState} from "react";
+import {useDispatch,useSelector} from "react-redux";
 import Image from "next/image";
 import Filter from "@/components/Filter";
 import LargeCard from "@/components/LargeCard";
 import Pagination from "@/components/Pagination";
 import axios from "axios";
 import Header from "@/components/Header";
+import {addSort} from "@/Actions/product";
+
 
 const Product = ()=>{
     const [pages,setPages] = useState([]);
+    const dispatch = useDispatch()
+
     function setPageFunction(data){
         setPages(data)
     }
@@ -59,6 +64,7 @@ const Product = ()=>{
                                 <select
                                     name="Sort"
                                     className="border-2 w-44"
+                                    onChange={(e)=> dispatch(addSort(e.target.value))}
                                 >
                                     <option value="Sort">Sort</option>
                                     <option value="High_to_low">Price(High to Low)</option>

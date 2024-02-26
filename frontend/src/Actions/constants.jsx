@@ -1,0 +1,7 @@
+export const ADD_CATEGORY_FILTER = "add category filter"
+export const ADD_SUBCATEGORY_FILTER = "add subcategory filter"
+export const ADD_DIVISION_FILTER = "add division filter"
+export const ADD_PRICE_FILTER = "add price filter"
+export const ADD_SORT_FILTER = "add sorting filter"
+export const CLEAR_ALL_FILTER = "clear all filter"
+export const DELETE_INDIVIDUAL_PRODUCT = "delete individual product"

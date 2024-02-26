@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import CategoryCard from "@/components/CategoryCard";
+
 const Categories =()=>{
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -77,7 +78,7 @@ const Categories =()=>{
                 <div className={" relative overflow-hidden"}>
                     <div className="mx-8 flex  transition ease-out duration-1000" style={{transform: `translateX(-${currentIndex * 5}%)`}}>
                         {category.map((data, index) => <CategoryCard key={index} img={data.img} categories={data.category}
-                                                                     item={data.item}/>)}
+                                                                     item={data.item}  />)}
                     </div>
                     <div>
                         <button
