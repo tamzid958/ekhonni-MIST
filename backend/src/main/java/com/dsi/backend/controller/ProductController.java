@@ -47,9 +47,14 @@ public class ProductController {
         return productService.getProductById(id);
     }
 
-    @GetMapping("/products")
-    public Page<ProductView> filterProducts(@RequestParam(defaultValue = "0") int page,@RequestBody FilterRequest filterRequest) {
-        return productService.fetchProducts(page, filterRequest);
+//    @GetMapping("/products")
+//    public Page<ProductView> filterProducts(@RequestParam(defaultValue = "0") int page,@RequestBody FilterRequest filterRequest) {
+//        return productService.fetchProducts(page, filterRequest);
+//    }
+
+    @GetMapping("/products/page/{page}")
+    public Page<ProductView> filterProducts(@PathVariable int page,@RequestParam(required = false) List<String> categories,@RequestParam(required = false) List<String> subCategories,@RequestParam(required = false) List<String> division,@RequestParam(required = false) List<Double> price,@RequestParam(required = false) String sort) {
+        return productService.fetchProducts(page, categories, subCategories, division, price, sort);
     }
 
     @GetMapping("/products/count")
