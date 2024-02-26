@@ -1,6 +1,7 @@
 package com.dsi.backend.controller;
 
 import com.dsi.backend.model.AppUser;
+import com.dsi.backend.model.Category;
 import com.dsi.backend.model.Product;
 import com.dsi.backend.service.AdminService;
 import com.dsi.backend.service.AppUserService;
@@ -62,5 +63,15 @@ public class AdminController {
         return new ResponseEntity<>(appUserService.deleteAdmin(email), HttpStatus.CREATED);
     }
 
+
+    @PostMapping("/add-category")
+    public ResponseEntity<?> insertCategory(@RequestBody Category category) {
+        return new ResponseEntity<>(productService.insertCategory(category), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/delete-category")
+    public ResponseEntity<?> removeCategory(@RequestBody Category category) {
+        return new ResponseEntity<>(productService.removeCategory(category), HttpStatus.OK);
+    }
 
 }
