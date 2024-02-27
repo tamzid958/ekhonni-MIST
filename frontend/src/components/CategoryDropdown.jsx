@@ -111,7 +111,7 @@ const CategoryDropdown = ({name , setCategory , setSubCategory}) => {
     ];
     return (
         <div>
-            <select className="w-[350px] h-12 border-2 my-3 border-neutral-900 rounded-lg pl-2" required name={name}
+            <select className="w-[350px] h-12 border-2 my-3 border-neutral-900 rounded-lg pl-2 shadow-md shadow-slate-300" required name={name}
                     onChange={(e) =>
                     {setCategory(e.target.value);
                         setSelectedCategory(e.target.value);
@@ -123,7 +123,7 @@ const CategoryDropdown = ({name , setCategory , setSubCategory}) => {
                 ))}
             </select>
             <div>
-                <select className="w-[350px] h-12 border-2  my-3 border-neutral-900 rounded-lg pl-2" required
+                <select className="w-[350px] h-12 border-2  my-3 border-neutral-900 rounded-lg pl-2 shadow-md shadow-slate-300" required
                         name="subcategory"
                         onChange={(e) => {setSubCategory(e.target.value)}}
                 >

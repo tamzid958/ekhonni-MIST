@@ -2,12 +2,10 @@ package com.dsi.backend.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 
-import javax.swing.text.StyledEditorKit;
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Set;
+
 
 @Setter
 @Getter
@@ -24,7 +22,6 @@ public class Product extends BaseEntity<Long>{
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
     private Double startingPrice;
-    private String image;
     private Boolean usedCondition;
     private Boolean isApprovedByAdmin; // true-> will show in product list
     @ManyToOne @JoinColumn (name = "seller_id", referencedColumnName = "id", columnDefinition = "bigint")
@@ -40,4 +37,11 @@ public class Product extends BaseEntity<Long>{
             inverseJoinColumns = @JoinColumn(name = "image_id")
     )
     private Set<ImageModel> productImage;
+
+    public String getCategoryName() {
+        if (this.category != null) {
+            return this.category.getCategory();
+        }
+        return null;
+    }
 }

@@ -2,11 +2,8 @@ package com.dsi.backend.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import lombok.*;
 
-import java.util.List;
 
 @Getter
 @Setter
@@ -16,9 +13,6 @@ import java.util.List;
 @Entity
 public class Category extends BaseEntity<Long>{
 
-//    @OneToMany
-//    @JoinColumn(referencedColumnName = "id")
-//    private List<Product> product;
     @Column
     private String category;
     private String subCategory;
