@@ -50,7 +50,6 @@ const ProductDetailBox = ({name,location,time,description,category,price,usernam
                     </div>
                 </div>
 
-
             </div>
 
 
