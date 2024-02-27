@@ -107,7 +107,7 @@ public class ProductServiceImpl implements ProductService {
         }
         if (division!= null && !division.isEmpty()) {
             List<Product> districtFilteredProducts = productRepository.findByIsApprovedByAdminTrueAndSellerDivisionIn(division);
-            if ((subCategories==null) && (categories==null)) {
+            if ((subCategories==null || subCategories.isEmpty()) && (categories==null || categories.isEmpty())) {
                 filteredProducts.addAll(districtFilteredProducts);
             }
             else {
@@ -120,7 +120,7 @@ public class ProductServiceImpl implements ProductService {
             Double minPrice = price.get(0);
             Double maxPrice = price.get(1);
             List<Product> priceFilteredProducts = productRepository.findByIsApprovedByAdminTrueAndStartingPriceBetween(minPrice, maxPrice);
-            if ((subCategories==null) && (categories==null) && (division==null)) {
+            if ((subCategories==null || subCategories.isEmpty()) && (categories==null || categories.isEmpty()) && (division==null || division.isEmpty())) {
                 filteredProducts.addAll(priceFilteredProducts);
             }
             else {
@@ -129,10 +129,10 @@ public class ProductServiceImpl implements ProductService {
                         .collect(Collectors.toList());
             }
         }
-        if ((subCategories==null) && (categories==null) && (division==null) && (price==null)) {
+        if ((subCategories==null || subCategories.isEmpty()) && (categories==null || categories.isEmpty()) && (division==null || division.isEmpty()) && (price==null || price.isEmpty())) {
             filteredProducts.addAll(productRepository.findByIsApprovedByAdminTrue());
         }
-        if (sort != null) {
+        if (sort != null || !sort.isEmpty()) {
             if (sort.equalsIgnoreCase("High_to_low")) filteredProducts.sort(Comparator.comparing(Product::getStartingPrice).reversed());
             else if (sort.equalsIgnoreCase("Low_to_high")) filteredProducts.sort(Comparator.comparing(Product::getStartingPrice));
             else if (sort.equalsIgnoreCase("Old_to_new")) filteredProducts.sort(Comparator.comparing(Product::getProductTime));
@@ -219,7 +219,8 @@ public class ProductServiceImpl implements ProductService {
         return product.stream().collect(Collectors.groupingBy(Product::getCategoryName, Collectors.counting()));
     }
 
-    public List<Product> showByCategory(String category){
+    public List<ProductView> showByCategory(String category){
         return productRepository.findByIsApprovedByAdminTrueAndCategoryCategory(category);
     }
+
 }
