@@ -1,6 +1,5 @@
 package com.dsi.backend.service;
 
-import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.Notification;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +9,7 @@ import java.util.List;
 public interface NotificationService {
     Notification saveNotification(Notification notification);
 
-    List<Notification> fetchNotification(Long id);
+    List<Notification> fetchNotification(String email);
 
-    String clearAllNotification(Long id);
+    String clearAllNotification(String email);
 }

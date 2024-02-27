@@ -26,7 +26,7 @@ public class NotificationServiceImpl implements NotificationService {
     public Notification saveNotification(Notification notification) {
         Message message = notification.getMessage();
         messageRepository.save(message);
-        AppUser receiver = appUserRepository.findById(notification.getReceiver().getId()).orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+        AppUser receiver = appUserRepository.findByEmail(notification.getReceiver().getEmail());
         notification.setReceiver(receiver);
         notification.setNotificationTime(LocalDateTime.now());
         notification.setSeen(false);
@@ -34,14 +34,14 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<Notification> fetchNotification(Long id) {
-        AppUser receiver = appUserRepository.findById(id).orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+    public List<Notification> fetchNotification(String email) {
+        AppUser receiver = appUserRepository.findByEmail(email);
         return notificationRepository.findByReceiver(receiver);
     }
 
     @Override
-    public String clearAllNotification(Long id) {
-        AppUser receiver = appUserRepository.findById(id).orElseThrow(()->new UsernameNotFoundException("Person does not exist"));
+    public String clearAllNotification(String email) {
+        AppUser receiver = appUserRepository.findByEmail(email);
         List<Notification> notifications = notificationRepository.findByReceiver(receiver);
         notificationRepository.deleteAll(notifications);
         return "Deleted successfully";

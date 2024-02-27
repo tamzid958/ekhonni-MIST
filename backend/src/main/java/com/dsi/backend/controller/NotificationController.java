@@ -17,13 +17,13 @@ public class NotificationController {
         return ResponseEntity.ok(notificationService.saveNotification(notification));
     }
 
-    @GetMapping("/user/notification/fetch/{id}")
-    public ResponseEntity<?> fetchNotification(@PathVariable Long id){
-        return ResponseEntity.ok(notificationService.fetchNotification(id));
+    @GetMapping("/user/notification/fetch/{email}")
+    public ResponseEntity<?> fetchNotification(@PathVariable String email){
+        return ResponseEntity.ok(notificationService.fetchNotification(email));
     }
 
-    @DeleteMapping("/user/notification/delete/{id}")
-    public ResponseEntity<?> clearAllNotification(@PathVariable Long id){
-        return ResponseEntity.ok(notificationService.clearAllNotification(id));
+    @DeleteMapping("/user/notification/delete/{email}")
+    public ResponseEntity<?> clearAllNotification(@PathVariable String email){
+        return ResponseEntity.ok(notificationService.clearAllNotification(email));
     }
 }
