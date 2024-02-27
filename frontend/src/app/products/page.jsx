@@ -66,11 +66,11 @@ const Product = ()=>{
                                     className="border-2 w-44"
                                     onChange={(e)=> dispatch(addSort(e.target.value))}
                                 >
-                                    <option value="Sort">Sort</option>
+                                    <option value="">Sort</option>
                                     <option value="High_to_low">Price(High to Low)</option>
                                     <option value="Low_to_high">Price(Low to High)</option>
                                     <option value="Old_to_new">Date(Oldest to Newest)</option>
-                                    <option value="Net_to_old">Date(Newest to Oldest)</option>
+                                    <option value="New_to_old">Date(Newest to Oldest)</option>
 
                                 </select>
                             </div>

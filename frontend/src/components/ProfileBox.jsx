@@ -10,6 +10,7 @@ import axios from "axios";
 const ProfileBox = ({email})=>{
     const [data,setData] = useState();
     const token = localStorage.getItem("token");
+    const imageUrl = (data && data.profilePicture) ? URL.createObjectURL(new Blob([data.profilePicture.imageByte], { type: data.profilePicture.type })) : "/avatar.png";
     useEffect(() => {
 
 
@@ -20,7 +21,7 @@ const ProfileBox = ({email})=>{
             }
         })
             .then((res) => {
-
+                console.log(res.data.profilePicture);
                 setData(res.data)
 
             })
@@ -39,7 +40,7 @@ const ProfileBox = ({email})=>{
                 <Link href={"/profile"}>
                     <div className="w-full h-[110px] flex border-b-2 border-black">
                         <div className="w-1/3 h-full relative">
-                            <Image src={(data && data.profilePicture)? data.profilePicture : "/avatar.png"} alt={"Profile"} fill objectFit={"cover"}
+                            <Image src={(data && data.profilePicture) ? URL.createObjectURL(new Blob([data.profilePicture.imageByte], { type: data.profilePicture.type })) : "/avatar.png"} alt={"Profile"} fill objectFit={"cover"}
                                    className={"rounded-full px-1 py-2"}/>
                         </div>
                         <div className={"w-2/3 h-full flex justify-start items-center pl-4"}>
