@@ -12,7 +12,7 @@ import Header from "@/components/Header";
 const ProductPage = ({ params }) => {
 
     const userIsSeller = true;
-    const biddingActive = false;
+    const biddingActive = true;
     const isSold = false;
     const [modalIsOpen , setModalIsOpen] = useState(false);
     const currentUserEmail = localStorage.getItem("currentUserEmail");

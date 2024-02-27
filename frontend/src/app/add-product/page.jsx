@@ -201,8 +201,8 @@ const AddProductPage = () => {
                         </div>
                     </div>
                 </div>
+            </div>
         </form>
-
         </>
     )
 }

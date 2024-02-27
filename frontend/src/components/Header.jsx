@@ -4,12 +4,13 @@ import Button from "@/components/Button";
 import {useState,useEffect} from "react";
 import ProfileBox from "@/components/ProfileBox";
 import Link from "next/link";
+import NotificationListModal from "@/components/NotificationListModal";
 
 
 const Header = () => {
     const [profileModel,setProfileModel] = useState(false);
     const [Email,setEmail] = useState(false);
-
+    const [notificationModalOpen , setNotificationModalOpen] = useState(false);
 
     useEffect(() => {
         const localStorageEmail = localStorage.getItem('currentUserEmail');
@@ -20,6 +21,9 @@ const Header = () => {
     const CloseModel = ()=>{
         if(profileModel){
             setProfileModel(false);
+        }
+        if(notificationModalOpen){
+            setNotificationModalOpen(false);
         }
     }
     return (
@@ -39,7 +43,7 @@ const Header = () => {
                         </div>
                     </div>
                     <div className="flex my-auto">
-                        <div className="flex my-auto px-5">
+                        <div className="flex my-auto px-5 cursor-pointer" onClick={() => {setNotificationModalOpen(!notificationModalOpen)}}>
                             <Image src={"./notification.svg"} alt={"message"} width={20} height={20} className=" mr-4"/>
                             <p className=" text-lg font-semibold">Notifications</p>
                         </div>
@@ -53,6 +57,7 @@ const Header = () => {
                     </div>
                 </div>
                 {profileModel && <ProfileBox email = {Email} /> }
+                {notificationModalOpen && <NotificationListModal setModalOpen={setNotificationModalOpen}/>}
             </div>
         </>
     )
