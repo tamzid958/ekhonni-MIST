@@ -19,6 +19,12 @@ public interface AppUserService {
 
     AppUser uploadImage(MultipartFile imageFile, AppUser appUser) throws IOException;
 
+    AppUser addAdmin(AppUser appUser);
+
+    AppUser deleteAdmin(String email);
+
+    ResponseEntity<?> fetchOtherAdmins(String email);
+
 //    ResponseEntity<?> deleteAccount(AppUser appUser);
 }
 
