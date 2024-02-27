@@ -22,7 +22,6 @@ public class Product extends BaseEntity<Long>{
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
     private Double startingPrice;
-    private String image;
     private Boolean usedCondition;
     private Boolean isApprovedByAdmin; // true-> will show in product list
     @ManyToOne @JoinColumn (name = "seller_id", referencedColumnName = "id", columnDefinition = "bigint")

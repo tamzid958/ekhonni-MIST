@@ -1,9 +1,10 @@
 import BidderListItem from "@/components/BidderListItem";
+import SelectedBidderListItem from "@/components/SelectedBidderListItem";
 
 
-const BidderList = ({visibility , bidders}) => {
+const BidderList = ({visibility , bidders , view , finalBuyerID}) => {
 
-
+    const bidderSelected = finalBuyerID !== null;
     return ( <>
         {visibility &&
             <ul className="w-full mt-[5%] rounded-lg ">
@@ -14,9 +15,21 @@ const BidderList = ({visibility , bidders}) => {
                         </label>
                     <div className="w-full max-h-0 overflow-hidden peer-checked:max-h-52 hover:overflow-y-scroll transition-all ease-in-out duration-1000">
                         <ul className="w-full flex flex-col items-center">
-                        {bidders.map((bidder) => (
-                            <BidderListItem key={bidder.id} bidderId={bidder.id} bidderName={bidder.name} bid={bidder.bid} />
-                        ))}
+                            {view === "buyerView" ? (
+                                bidders.map((bidder) => (
+                                        <BidderListItem key={bidder.id} bidderId={bidder.id} bidderName={bidder.name} bid={bidder.bid} option={"buyerView"} />
+                                    ))
+                            ) : (
+                                bidderSelected ? (
+                                        bidders.map((bidder) => (
+                                            <SelectedBidderListItem key={bidder.id} bidderId={bidder.id} bidderName={bidder.name} bid={bidder.bid} option={"sellerView"} finalBuyerID={finalBuyerID}/>
+                                        ))
+                                    ) : (
+                                        bidders.map((bidder) => (
+                                            <BidderListItem key={bidder.id} bidderId={bidder.id} bidderName={bidder.name} bid={bidder.bid} option={"sellerView"}/>
+                                        ))
+                                    )
+                            )}
                         </ul>
                     </div>
                 </li>
@@ -24,7 +37,7 @@ const BidderList = ({visibility , bidders}) => {
             </ul>
         }
             {!visibility &&
-                <div className="w-full p-2 m-2 list-none rounded-lg bg-red-200 shadow-lg shadow-slate-300 transition ease-in-out duration-500 hover:scale-105 cursor-pointer">
+                <div className="w-full p-2 mt-[5%] list-none rounded-lg bg-red-200 shadow-lg shadow-slate-300 transition ease-in-out duration-500 hover:scale-105 cursor-pointer">
                     <p>Seller has chosen to hide visibility of bidders</p>
                 </div>
             }
