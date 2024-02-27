@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React,{useEffect,useState} from "react";
 import {useDispatch,useSelector} from "react-redux";
-import {addCategory} from "@/Actions/product";
+import {addCategory} from "@/Actions/filter";
 import Link from "next/link";
 
 

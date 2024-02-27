@@ -3,7 +3,9 @@ import CrossButton from "@/components/CrossButton";
 import Range from "@/components/Range";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addCategory, addDivision, addPrice, addSubCategory, clearAll} from "@/Actions/product";
+import {addCategory, addDivision, addPrice, addSubCategory, clearAll} from "@/Actions/filter";
+import {fetchProduct} from "@/Actions/fetchProduct";
+import {data} from "autoprefixer";
 
 
 const Filter = () => {
@@ -11,11 +13,13 @@ const Filter = () => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const dispatch = useDispatch();
     const filteredItem = useSelector((state) => state.filter);
+
     const {category, division, subCategory} = filteredItem;
     const combinedArray = [...category, ...division, ...subCategory];
 
     useEffect(() => {
         console.log(filteredItem)
+        dispatch(fetchProduct({id: "1",filter:filteredItem}))
     }, [filteredItem]);
 
 

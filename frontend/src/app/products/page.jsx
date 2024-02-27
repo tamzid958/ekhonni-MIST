@@ -7,13 +7,14 @@ import LargeCard from "@/components/LargeCard";
 import Pagination from "@/components/Pagination";
 import axios from "axios";
 import Header from "@/components/Header";
-import {addSort} from "@/Actions/product";
+import {addSort} from "@/Actions/filter";
 
 
 const Product = ()=>{
     const [pages,setPages] = useState([]);
     const dispatch = useDispatch()
-
+    const {error,isLoading,products} = useSelector(state => state.product)
+    console.log(products)
     function setPageFunction(data){
         setPages(data)
     }
@@ -77,6 +78,9 @@ const Product = ()=>{
                         </div>
                         <div className={"w-4/5 mx-auto box-border"}>
                             {records.map((product,index)=>(<LargeCard key={index} img={product.img} name={product.name} desc={product.desc} price={product.price} />))}
+                            {/*{*/}
+                            {/*    isLoading ? <><p>Loading</p></> : products.content.map((product,index)=>(<LargeCard key={index} img={product.img} name={product.name} desc={product.description} price={product.startingPrice} />))*/}
+                            {/*}*/}
                         </div>
                         <Pagination data={setPageFunction} length={Products.length} />
                     </div>

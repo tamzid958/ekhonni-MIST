@@ -13,7 +13,7 @@ const initialState = {
     subCategory: [],
     division: [],
     price: [],
-    sort: []
+    sort: ""
 };
 
 const filterReducer = (state = initialState, action) => {

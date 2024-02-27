@@ -1,6 +1,6 @@
 "use client"
 import {useDispatch} from "react-redux";
-import {deleteIndividual} from "@/Actions/product";
+import {deleteIndividual} from "@/Actions/filter";
 
 const CrossButton = ({text})=>{
     const dispatch = useDispatch();
