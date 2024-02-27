@@ -47,6 +47,24 @@ public class AdminController {
         return productService.fetchAllRequests();
     }
 
+    @PostMapping("/add-admin")
+    public ResponseEntity<?> addAdmin(@RequestBody AppUser appUser) {
+        return new ResponseEntity<>(appUserService.addAdmin(appUser), HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/fetch-admin")
+    public ResponseEntity<?> fetchAdmin(@RequestParam String email) {
+        return new ResponseEntity<>(appUserService.fetchOtherAdmins(email), HttpStatus.CREATED);
+    }
+
+
+    @PostMapping("/delete-admin")
+    public ResponseEntity<?> deleteAdmin(@RequestParam String email) {
+        return new ResponseEntity<>(appUserService.deleteAdmin(email), HttpStatus.CREATED);
+    }
+
+
     @PostMapping("/add-category")
     public ResponseEntity<?> insertCategory(@RequestBody Category category) {
         return new ResponseEntity<>(productService.insertCategory(category), HttpStatus.CREATED);

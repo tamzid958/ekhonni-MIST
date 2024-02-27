@@ -18,6 +18,7 @@ import com.dsi.backend.service.JwtTokenService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -110,6 +111,30 @@ public class AppUserServiceImpl implements AppUserService{
         appUser.setProfilePicture(imageModel);
 
         return appUserRepository.save(appUser);
+    }
+
+    @Override
+    public AppUser addAdmin(AppUser appUser) {
+        appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
+        appUser.setRole("ROLE_ADMIN");
+        return appUserRepository.save(appUser);
+    }
+
+    @Override
+    public AppUser deleteAdmin(String email) {
+
+        AppUser admin = appUserRepository.findByEmail(email);
+        appUserRepository.delete(admin);
+
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<?> fetchOtherAdmins(String email) {
+        AppUser loggedAdmin = appUserRepository.findByEmail(email);
+        List<AppUser> userList= appUserRepository.findAllByRole("ROLE_ADMIN");
+        userList.remove(loggedAdmin);
+        return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
 //    @Override
