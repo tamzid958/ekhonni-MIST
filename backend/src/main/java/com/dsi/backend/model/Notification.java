@@ -20,7 +20,6 @@ public class Notification extends BaseEntity<Long>{
     @JoinColumn
     private AppUser receiver;
     private LocalDateTime notificationTime;
-    private boolean isSeen;
 
 
 }
