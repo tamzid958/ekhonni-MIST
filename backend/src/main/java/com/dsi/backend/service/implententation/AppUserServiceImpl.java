@@ -46,11 +46,12 @@ public class AppUserServiceImpl implements AppUserService{
     private NotificationService notificationService;
 
     @Override
-    public AppUser registerAppUser(AppUser appUser){
+    public AppUserView registerAppUser(AppUser appUser){
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
         appUser.setClientStatus("verified");
         appUser.setRole("ROLE_USER");
-        return appUserRepository.save(appUser);
+        AppUser savedAppUser = appUserRepository.save(appUser);
+        return new SpelAwareProxyProjectionFactory().createProjection(AppUserView.class,savedAppUser);
     }
 
     @Override
@@ -110,7 +111,7 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
     @Override
-    public AppUser uploadImage(MultipartFile imageFile, AppUser appUser) throws IOException {
+    public AppUserView uploadImage(MultipartFile imageFile, AppUser appUser) throws IOException {
         ImageModel imageModel = new ImageModel(imageFile.getOriginalFilename(),
                 imageFile.getContentType(),
                 imageFile.getBytes());
@@ -118,8 +119,9 @@ public class AppUserServiceImpl implements AppUserService{
 
         appUser = appUserRepository.findByEmail(appUser.getEmail());
         appUser.setProfilePicture(imageModel);
+        AppUser savedAppUser = appUserRepository.save(appUser);
 
-        return appUserRepository.save(appUser);
+        return new SpelAwareProxyProjectionFactory().createProjection(AppUserView.class, savedAppUser);
     }
 
     @Override

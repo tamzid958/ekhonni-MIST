@@ -1,6 +1,7 @@
 package com.dsi.backend.service;
 
 import com.dsi.backend.model.AppUser;
+import com.dsi.backend.model.AppUserView;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,7 +10,7 @@ import java.io.IOException;
 
 public interface AppUserService {
 
-    AppUser registerAppUser(AppUser appUser);
+    AppUserView registerAppUser(AppUser appUser);
 
     ResponseEntity<?> loginAppUser(String email, String password);
 
@@ -17,7 +18,7 @@ public interface AppUserService {
 
     ResponseEntity<?> fetchInformation(String email);
 
-    AppUser uploadImage(MultipartFile imageFile, AppUser appUser) throws IOException;
+    AppUserView uploadImage(MultipartFile imageFile, AppUser appUser) throws IOException;
 
     AppUser addAdmin(AppUser appUser);
 

@@ -1,6 +1,7 @@
 package com.dsi.backend.controller;
 
 import com.dsi.backend.model.AppUser;
+import com.dsi.backend.model.AppUserView;
 import com.dsi.backend.service.AppUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ public class AppUserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> registerAppUser(@RequestBody AppUser appUser) {
-        AppUser registeredUser = appUserService.registerAppUser(appUser);
+        AppUserView registeredUser = appUserService.registerAppUser(appUser);
         return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
     }
     @PostMapping("/user/login")
