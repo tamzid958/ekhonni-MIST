@@ -7,9 +7,12 @@ import ProfileDiv from "@/components/ProfileDiv";
 import Link from "next/link";
 import axios from "axios";
 
+
 const ProfileBox = ({email})=>{
     const [data,setData] = useState();
+    const [imageUrl,setImageUrl] = useState();
     const token = localStorage.getItem("token");
+
     useEffect(() => {
 
 
@@ -21,13 +24,16 @@ const ProfileBox = ({email})=>{
         })
             .then((res) => {
 
+                const imageBlob = new Blob([res.data.profilePicture.imageByte], { type: 'text/plain' });
+                setImageUrl(URL.createObjectURL(imageBlob))
                 setData(res.data)
+                console.log(imageUrl);
 
             })
             .catch((err) => {
                 console.error("Error fetching data:", err);
             });
-    }, []);
+    }, [imageUrl]);
 
 
 
@@ -39,7 +45,7 @@ const ProfileBox = ({email})=>{
                 <Link href={"/profile"}>
                     <div className="w-full h-[110px] flex border-b-2 border-black">
                         <div className="w-1/3 h-full relative">
-                            <Image src={(data && data.profilePicture)? data.profilePicture : "/avatar.png"} alt={"Profile"} fill objectFit={"cover"}
+                            <Image src={(imageUrl) ? imageUrl : "/avatar.png"} alt={"Profile"} fill objectFit={"cover"}
                                    className={"rounded-full px-1 py-2"}/>
                         </div>
                         <div className={"w-2/3 h-full flex justify-start items-center pl-4"}>

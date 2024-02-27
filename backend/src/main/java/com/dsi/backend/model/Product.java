@@ -38,6 +38,10 @@ public class Product extends BaseEntity<Long>{
     )
     private Set<ImageModel> productImage;
 
+//    @OneToMany(mappedBy = "product")
+//    @JoinColumn(referencedColumnName = "product_id")
+//    private Set<ImageModel> productImage;
+
     public String getCategoryName() {
         if (this.category != null) {
             return this.category.getCategory();
