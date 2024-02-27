@@ -3,11 +3,14 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import CategoryCard from "@/components/CategoryCard";
+import {useSelector,useDispatch} from "react-redux";
 import axios from "axios";
+import {fetchProduct} from "@/Actions/fetchProduct";
 
 const Categories =()=>{
     const [currentIndex, setCurrentIndex] = useState(0);
     const [Categories,setCategories] = useState([])
+    const dispatch = useDispatch();
 
     useEffect(() => {
         axios.get("http://localhost:8080/api/v1/products/count")
@@ -28,6 +31,13 @@ const Categories =()=>{
         }, 200); // Change slide every 1 seconds
 
         return () => clearInterval(interval);
+    }, []);
+    const filterItem = useSelector(state => state.filter);
+    const product = useSelector(state => state.product);
+    useEffect(() => {
+
+        dispatch(fetchProduct({id:0,filter:filterItem}))
+
     }, []);
 
     const prevImage = () => {

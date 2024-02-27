@@ -8,16 +8,18 @@ import Pagination from "@/components/Pagination";
 import axios from "axios";
 import Header from "@/components/Header";
 import {addSort} from "@/Actions/filter";
+import {fetchProduct} from "@/Actions/fetchProduct";
 
 
 const Product = ()=>{
-    const [pages,setPages] = useState([]);
     const dispatch = useDispatch()
     const {error,isLoading,products} = useSelector(state => state.product)
-    console.log(products)
-    function setPageFunction(data){
-        setPages(data)
-    }
+    const filterItem = useSelector(state => state.filter)
+    // console.log(products)
+    useEffect(() => {
+
+    }, [filterItem]);
+
     const Products = [
         {img:"/mobile.jpg",name:"iphone 15 pro max",desc:"4GB/65GB",price:"150000"},
         {img:"/DSLR2.jpg",name:"Canon Eos 4000D 18MP 2.7inch Display With 18-55mm Lens Dslr Camera",desc:"18 megapixel APS-C sensor",price:"50000"},
@@ -28,20 +30,6 @@ const Product = ()=>{
     ]
 
 
-    // useEffect(()=>{
-    //     const fetchProduct = async ()=> {
-    //         try {
-    //             const response = await axios.get("http://localhost:8080/api/v1/products")
-    //             console.log(response);
-    //         }catch (e){
-    //             console.log("Not found")
-    //         }
-    //     }
-    //     fetchProduct();
-    // },[])
-
-
-    const records = Products.slice(pages[0],pages[1]);
     return (
         <>
             <Header />
@@ -77,12 +65,12 @@ const Product = ()=>{
                             </div>
                         </div>
                         <div className={"w-4/5 mx-auto box-border"}>
-                            {records.map((product,index)=>(<LargeCard key={index} img={product.img} name={product.name} desc={product.desc} price={product.price} />))}
-                            {/*{*/}
-                            {/*    isLoading ? <><p>Loading</p></> : products.content.map((product,index)=>(<LargeCard key={index} img={product.img} name={product.name} desc={product.description} price={product.startingPrice} />))*/}
-                            {/*}*/}
+                            {/*{records.map((product,index)=>(<LargeCard key={index} img={product.img} name={product.name} desc={product.desc} price={product.price} />))}*/}
+                            {
+                                (isLoading && products.content) ? <><p>Loading.................</p></> : products.content.map((product,index)=>(<LargeCard key={index} img="/bike.jpg" name={product.name} desc={product.description} price={product.startingPrice} />))
+                            }
                         </div>
-                        <Pagination data={setPageFunction} length={Products.length} />
+                        <Pagination  />
                     </div>
 
                 </div>

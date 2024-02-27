@@ -12,7 +12,7 @@ const initialState = {
     category: [],
     subCategory: [],
     division: [],
-    price: [],
+    price: [0,100000],
     sort: ""
 };
 
@@ -63,7 +63,9 @@ const filterReducer = (state = initialState, action) => {
         case DELETE_INDIVIDUAL_PRODUCT:
             const updatedState = { ...state };
             for (const key in updatedState) {
-                updatedState[key] = updatedState[key].filter(item => item !== action.payload);
+                if(Array.isArray(updatedState[key])){
+                    updatedState[key] = updatedState[key].filter(item => item !== action.payload);
+                }
             }
             return updatedState;
         default:

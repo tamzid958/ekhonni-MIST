@@ -13,13 +13,15 @@ const Filter = () => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const dispatch = useDispatch();
     const filteredItem = useSelector((state) => state.filter);
+    const product = useSelector((state) => state.product);
 
     const {category, division, subCategory} = filteredItem;
     const combinedArray = [...category, ...division, ...subCategory];
 
     useEffect(() => {
         console.log(filteredItem)
-        dispatch(fetchProduct({id: "1",filter:filteredItem}))
+        dispatch(fetchProduct({id:0,filter:filteredItem}))
+        console.log(product)
     }, [filteredItem]);
 
 
@@ -159,7 +161,10 @@ const Filter = () => {
                 <div className={"w-full"}>
                     <div className="flex justify-between border-b-2 pb-2">
                         <h1 className="font-bold font-lg">Filter</h1>
-                        <p className="text-blue-500 cursor-pointer" onClick={() => dispatch(clearAll())}>CLEAR ALL</p>
+                        <p className="text-blue-500 cursor-pointer" onClick={() => {
+                            dispatch(clearAll())
+
+                        } }>CLEAR ALL</p>
                     </div>
                     <div className="my-1 flex flex-wrap flex-shrink-0">
                         {
