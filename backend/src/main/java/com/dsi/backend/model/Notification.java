@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Setter
 @Getter
@@ -16,11 +17,13 @@ public class Notification extends BaseEntity<Long>{
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn
     private Message message;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn
     private AppUser receiver;
     private LocalDateTime notificationTime;
-    private boolean isSeen;
 
+    public String getFormattedTime(){
+        return getNotificationTime().format(DateTimeFormatter.ofPattern("hh:mm a dd MMM, yyyy"));
+    }
 
 }
