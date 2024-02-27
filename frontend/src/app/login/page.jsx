@@ -38,16 +38,13 @@ const LoginPage = () => {
                 console.error("Err :"+err);
                 toast.error("UnAuthorized")
             })
-
-
-
     }
     return (
         <>
             <Header />
             <Toaster richColors position={"top-right"}/>
             <form onSubmit={handleSubmit}>
-                <div className="w-screen h-[700px] flex justify-center items-center">
+                <div className="w-full h-[700px] flex justify-center items-center">
                     <div
                         className="w-[750px] h-[450px] border-2 border-black flex flex-row justify-center items-center rounded-lg">
                         {/*Login Div*/}
