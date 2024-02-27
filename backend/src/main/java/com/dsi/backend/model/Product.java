@@ -31,9 +31,6 @@ public class Product extends BaseEntity<Long>{
     private LocalDateTime productTime;
     private Boolean isVisible;
 
-    @OneToMany(cascade=CascadeType.ALL)
-    private Set<ImageModel> productImage;
-
     public String getCategoryName() {
         if (this.category != null) {
             return this.category.getCategory();

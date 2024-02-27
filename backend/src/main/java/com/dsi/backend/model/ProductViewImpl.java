@@ -70,8 +70,8 @@ public class ProductViewImpl implements ProductView {
         return product.getProductTime();
     }
 
-    @Override
-    public Set<ImageModel> getProductImage() {
-        return product.getProductImage();
-    }
+//    @Override
+//    public Set<ImageModel> getProductImage() {
+//        return product.getProductImage();
+//    }
 }

@@ -102,7 +102,7 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Override
     public AppUser uploadImage(MultipartFile imageFile, AppUser appUser) throws IOException {
-        ImageModel imageModel = new ImageModel(imageFile.getOriginalFilename(),
+        ImageModel imageModel = new ImageModel(null,imageFile.getOriginalFilename(),
                 imageFile.getContentType(),
                 imageFile.getBytes());
         imageModel = imageRepository.save(imageModel);

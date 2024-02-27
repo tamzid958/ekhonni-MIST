@@ -23,7 +23,7 @@ public class ImageModelServiceImpl implements ImageModelService {
         Set<ImageModel> image = new HashSet<>();
 
         for (MultipartFile file: multipartFiles) {
-            ImageModel imageModel = new ImageModel(file.getOriginalFilename(),
+            ImageModel imageModel = new ImageModel(product, file.getOriginalFilename(),
                     file.getContentType(),
                     file.getBytes());
             image.add(imageModel);
@@ -34,8 +34,9 @@ public class ImageModelServiceImpl implements ImageModelService {
 
     @Override
     public Set<ImageModel> downloadImage(Product product) {
-        List<Long> imageId= product.getProductImage().stream().map(BaseEntity::getId).toList();
-
-        return imageModelRepository.findImageModelByIdIsIn(imageId);
+//        List<Long> imageId= product.getProductImage().stream().map(BaseEntity::getId).toList();
+//
+//        return imageModelRepository.findImageModelByIdIsIn(imageId);
+        return null;
     }
 }
