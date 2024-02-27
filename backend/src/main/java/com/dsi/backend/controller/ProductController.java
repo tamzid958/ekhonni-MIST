@@ -50,9 +50,10 @@ public class ProductController {
 //    }
 
     @GetMapping("/products/page/{page}")
-    public Page<ProductView> filterProducts(@PathVariable int page,@RequestParam(required = false) List<String> categories,@RequestParam(required = false) List<String> subCategories,@RequestParam(required = false) List<String> division,@RequestParam(required = false) List<Double> price,@RequestParam(required = false) String sort) {
-        return productService.fetchProducts(page, categories, subCategories, division, price, sort);
+    public Page<ProductView> filterProducts(@PathVariable int page,@RequestParam(required = false) List<String> categories,@RequestParam(required = false) List<String> subCategories,@RequestParam(required = false) List<String> division,@RequestParam(required = false) List<Double> price,@RequestParam(required = false) String sort,@RequestParam(defaultValue = "") String searchKey) {
+        return productService.fetchProducts(page, categories, subCategories, division, price, sort,searchKey);
     }
+
 
     @GetMapping("/products/count")
     public Map<String,Long> countProducts(@RequestParam(defaultValue = "") String division) {
