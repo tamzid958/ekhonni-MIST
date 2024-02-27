@@ -12,4 +12,5 @@ public interface AppUserView {
     String getAddress();
     String getDivision();
     String getClientStatus();
+    ImageModel getProfilePicture();
 }

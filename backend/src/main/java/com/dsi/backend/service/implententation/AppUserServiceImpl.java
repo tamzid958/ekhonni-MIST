@@ -1,6 +1,7 @@
 package com.dsi.backend.service.implententation;
 
 import com.dsi.backend.model.AppUser;
+import com.dsi.backend.model.AppUserView;
 import com.dsi.backend.model.ImageModel;
 import com.dsi.backend.model.TokenResponse;
 import com.dsi.backend.repository.AppUserRepository;
@@ -8,6 +9,8 @@ import com.dsi.backend.repository.ImageRepository;
 import com.dsi.backend.service.AppUserService;
 import com.dsi.backend.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.projection.ProjectionFactory;
+import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -89,15 +92,21 @@ public class AppUserServiceImpl implements AppUserService{
         else{
             return new ResponseEntity<>("Nothing to be updated with", HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(appUserRepository.save(updatedAppUser),HttpStatus.OK);
+        AppUser savedAppUser = appUserRepository.save(updatedAppUser);
+//        return new ResponseEntity<>(appUserRepository.getByEmail(savedAppUser.getEmail()),HttpStatus.OK);
+//        ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
+        AppUserView appUserView = new SpelAwareProxyProjectionFactory().createProjection(AppUserView.class, savedAppUser);
+        return new ResponseEntity<>(appUserView,HttpStatus.OK);
+
     }
 
 
 
     @Override
     public ResponseEntity<?> fetchInformation(String email) {
-        AppUser appUser = appUserRepository.findByEmail(email);
-        return ResponseEntity.ok(appUser);
+//        AppUser appUser = appUserRepository.findByEmail(email);
+        AppUserView appUserView = appUserRepository.getByEmail(email);
+        return ResponseEntity.ok(appUserView);
     }
 
     @Override

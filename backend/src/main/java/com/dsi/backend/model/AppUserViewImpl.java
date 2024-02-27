@@ -41,4 +41,9 @@ class AppUserViewImpl implements AppUserView {
     public String getClientStatus() {
         return appUser.getClientStatus();
     }
+
+    @Override
+    public ImageModel getProfilePicture() {
+        return appUser.getProfilePicture();
+    }
 }
