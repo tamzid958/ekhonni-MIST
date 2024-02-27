@@ -94,7 +94,7 @@ export default function AdminPage(){
             <div className="w-full h-auto flex flex-col justify-start items-center ">
 
                 {data.map((item) => (
-                    <PostApprovalbox key={item.id} id={item.id} name={item.name} username={item.email} description={item.description} price={item.startingPrice} category={item.category.category} time={new Date(item.productTime).toLocaleDateString('en-GB')}/>
+                    <PostApprovalbox key={item.id} id={item.id} name={item.name} username={item.seller.name} description={item.description} price={item.startingPrice} category={item.category.category} subCategory={item.category.subCategory} location={item.seller.division} time={new Date(item.productTime).toLocaleDateString('en-GB')}/>
                 ))}
             </div>
 
