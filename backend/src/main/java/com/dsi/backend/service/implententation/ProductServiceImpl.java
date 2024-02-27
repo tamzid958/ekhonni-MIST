@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
         product.setSeller(seller);
 
         try {
-            Set<ImageModel> image = imageModelService.uploadImage(file);
+            Set<ImageModel> image = imageModelService.uploadImage(product,file);
             product.setProductImage(image);
 
         } catch (Exception exception) {

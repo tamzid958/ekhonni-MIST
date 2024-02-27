@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Service
 public interface ImageModelService {
-    Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException;
+    Set<ImageModel> uploadImage(Product product, MultipartFile[] multipartFiles) throws IOException;
 
     Set<ImageModel> downloadImage(Product product);
 

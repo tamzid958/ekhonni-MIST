@@ -19,7 +19,7 @@ public class ImageModelServiceImpl implements ImageModelService {
     private ImageModelRepository imageModelRepository;
 
     @Override
-    public Set<ImageModel> uploadImage(MultipartFile[] multipartFiles) throws IOException {
+    public Set<ImageModel> uploadImage(Product product, MultipartFile[] multipartFiles) throws IOException {
         Set<ImageModel> image = new HashSet<>();
 
         for (MultipartFile file: multipartFiles) {
