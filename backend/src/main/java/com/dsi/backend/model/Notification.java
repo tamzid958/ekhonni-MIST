@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Setter
 @Getter
@@ -21,5 +22,8 @@ public class Notification extends BaseEntity<Long>{
     private AppUser receiver;
     private LocalDateTime notificationTime;
 
+    public String getFormattedTime(){
+        return getNotificationTime().format(DateTimeFormatter.ofPattern("hh:mm a dd MMM, yyyy"));
+    }
 
 }

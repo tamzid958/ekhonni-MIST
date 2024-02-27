@@ -43,10 +43,9 @@ public class NotificationServiceImpl implements NotificationService {
     public List<NotificationView> fetchNotification(String email) {
         AppUser receiver = appUserRepository.findByEmail(email);
         List<Notification> notifications = notificationRepository.findByReceiver(receiver);
-        List<NotificationView> notificationViews = notifications.stream()
+        return notifications.stream()
                 .map(notification -> new SpelAwareProxyProjectionFactory().createProjection(NotificationView.class,notification))
                 .toList();
-        return notificationViews;
     }
 
     @Override
