@@ -3,6 +3,7 @@ package com.dsi.backend.controller;
 import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.Category;
 import com.dsi.backend.model.Product;
+import com.dsi.backend.model.ProductView;
 import com.dsi.backend.service.AdminService;
 import com.dsi.backend.service.AppUserService;
 import com.dsi.backend.service.ProductService;
@@ -42,9 +43,27 @@ public class AdminController {
     }
 
     @GetMapping("/products/review")
-    public List<Product> fetchAllRequest() {
+    public List<ProductView> fetchAllRequest() {
         return productService.fetchAllRequests();
     }
+
+    @PostMapping("/add-admin")
+    public ResponseEntity<?> addAdmin(@RequestBody AppUser appUser) {
+        return new ResponseEntity<>(appUserService.addAdmin(appUser), HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/fetch-admin")
+    public ResponseEntity<?> fetchAdmin(@RequestParam String email) {
+        return new ResponseEntity<>(appUserService.fetchOtherAdmins(email), HttpStatus.CREATED);
+    }
+
+
+    @PostMapping("/delete-admin")
+    public ResponseEntity<?> deleteAdmin(@RequestParam String email) {
+        return new ResponseEntity<>(appUserService.deleteAdmin(email), HttpStatus.CREATED);
+    }
+
 
     @PostMapping("/add-category")
     public ResponseEntity<?> insertCategory(@RequestBody Category category) {
