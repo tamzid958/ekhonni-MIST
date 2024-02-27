@@ -4,9 +4,16 @@ import Button from "@/components/Button";
 
 import SmallButton from "@/components/SmallButton";
 import Image from "next/image";
+import axios from "axios";
 
 const PostApprovalbox = ({id,name,location,time,description,category,price,username}) =>
 {
+    const handleAccept = (status) => {
+        const params = {
+            "isApprovedByAdmin" : status
+        };
+       const response = axios.post(`http://localhost:8080/api/v1/admin/products/${id}`, params);
+    }
     return(
         <>
 
@@ -52,10 +59,14 @@ const PostApprovalbox = ({id,name,location,time,description,category,price,usern
                     </div>
                     <div className="w-full h-[12.5%] -mt-3 flex flex-row justify-start items-start">
                         <div className="w-[25%] pl-4">
-                            <SmallButton value={"Approve"} option={"1"} type={"button"}/>
+                            <SmallButton
+                                onClick={handleAccept(true)}
+                                value={"Approve"} option={"1"} type={"button"}/>
                         </div>
                        <div className="w-[25%]">
-                           <SmallButton value={"Decline"} option={"1"} type={"button"}/>
+                           <SmallButton
+                               onClick={handleAccept(false)}
+                               value={"Decline"} option={"1"} type={"button"}/>
                        </div>
 
                     </div>
