@@ -4,7 +4,6 @@ import BuyerBidModal from "@/components/BuyerBidModal";
 import SellerSelectModal from "@/components/SellerSelectModal";
 import {useState} from "react";
 
-
 const TestPage = () => {
     const biddingActive = true;
     const [modalIsOpen , setModalIsOpen] = useState(true);

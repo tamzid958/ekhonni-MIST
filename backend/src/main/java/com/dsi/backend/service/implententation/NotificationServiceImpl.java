@@ -8,10 +8,10 @@ import com.dsi.backend.projection.NotificationView;
 import com.dsi.backend.repository.AppUserRepository;
 import com.dsi.backend.repository.MessageRepository;
 import com.dsi.backend.repository.NotificationRepository;
+import com.dsi.backend.service.JwtTokenService;
 import com.dsi.backend.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,11 +28,14 @@ public class NotificationServiceImpl implements NotificationService {
     @Autowired
     private AppUserRepository appUserRepository;
 
+    @Autowired
+    private JwtTokenService jwtTokenService;
+
     @Override
-    public NotificationView saveNotification(Notification notification) {
+    public NotificationView saveNotification(String token, Notification notification) {
         Message message = notification.getMessage();
         messageRepository.save(message);
-        AppUser receiver = appUserRepository.findByEmail(notification.getReceiver().getEmail());
+        AppUser receiver = appUserRepository.findByEmail(jwtTokenService.getUsernameFromToken(token.substring(7)));
         notification.setReceiver(receiver);
         notification.setNotificationTime(LocalDateTime.now());
         Notification savedNotification = notificationRepository.save(notification);
@@ -40,8 +43,8 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public List<NotificationView> fetchNotification(String email) {
-        AppUser receiver = appUserRepository.findByEmail(email);
+    public List<NotificationView> fetchNotification(String token) {
+        AppUser receiver = appUserRepository.findByEmail(jwtTokenService.getUsernameFromToken(token.substring(7)));
         List<Notification> notifications = notificationRepository.findByReceiver(receiver);
         return notifications.stream()
                 .map(notification -> new SpelAwareProxyProjectionFactory().createProjection(NotificationView.class,notification))
@@ -49,8 +52,8 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     @Override
-    public String clearAllNotification(String email) {
-        AppUser receiver = appUserRepository.findByEmail(email);
+    public String clearAllNotification(String token) {
+        AppUser receiver = appUserRepository.findByEmail(jwtTokenService.getUsernameFromToken(token.substring(7)));
         List<Notification> notifications = notificationRepository.findByReceiver(receiver);
         notificationRepository.deleteAll(notifications);
         return "All notifications cleared";

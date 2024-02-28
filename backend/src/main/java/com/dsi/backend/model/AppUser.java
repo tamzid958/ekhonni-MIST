@@ -29,7 +29,7 @@ public class AppUser extends BaseEntity<Long> implements UserDetails, Serializab
     private String address;
     private String division;
     private String password;
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL)
     private ImageModel profilePicture;
     private String clientStatus;
     private String role;
