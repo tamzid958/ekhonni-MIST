@@ -1,14 +1,35 @@
 "use client"
 import CrossButton from "@/components/CrossButton";
 import Range from "@/components/Range";
-import {useState,useEffect} from "react";
-import Image from "next/image";
-const Filter = ()=>{
-    const [RangeValue,setRangeValue] = useState([]);
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {addCategory, addDivision, addPrice, addSubCategory, clearAll} from "@/Actions/filter";
+import {fetchProduct} from "@/Actions/fetchProduct";
+import {data} from "autoprefixer";
+
+
+const Filter = () => {
+    const [RangeValue, setRangeValue] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState(null);
-    function valueFunction(msg){
+    const dispatch = useDispatch();
+    const filteredItem = useSelector((state) => state.filter);
+    const product = useSelector((state) => state.product);
+
+    const {category, division, subCategory} = filteredItem;
+    const combinedArray = [...category, ...division, ...subCategory];
+
+    useEffect(() => {
+        console.log(filteredItem)
+        dispatch(fetchProduct({id:0,filter:filteredItem}))
+        console.log(product)
+    }, [filteredItem]);
+
+
+    function valueFunction(msg) {
         setRangeValue(msg);
+        dispatch(addPrice(RangeValue))
     }
+
     const handleCategoryClick = (index) => {
         if (selectedCategory === index) {
             // If the clicked category is already selected, deselect it
@@ -19,14 +40,14 @@ const Filter = ()=>{
         }
     };
     const divisions = [
-        {name:"Dhaka"},
-        {name:"Chittagong"},
-        {name:"Rajshahi"},
-        {name:"Khulna"},
-        {name:"Barishal"},
-        {name:"Sylhet"},
-        {name:"Rangpur"},
-        {name:"Mymenshing"},
+        {name: "Dhaka"},
+        {name: "Chattogram"},
+        {name: "Rajshahi"},
+        {name: "Khulna"},
+        {name: "Barishal"},
+        {name: "Sylhet"},
+        {name: "Rangpur"},
+        {name: "Mymensingh"},
     ]
 
     const Categories = [
@@ -120,7 +141,7 @@ const Filter = ()=>{
         {
             category: "Toy",
             SubCategories: [
-                "Action Figures & Playsets",
+                "Actions Figures & Playsets",
                 "Dolls & Accessories",
                 "Educational Toys",
                 "Building Blocks & Construction Sets",
@@ -140,11 +161,17 @@ const Filter = ()=>{
                 <div className={"w-full"}>
                     <div className="flex justify-between border-b-2 pb-2">
                         <h1 className="font-bold font-lg">Filter</h1>
-                        <p className="text-blue-500">CLEAR ALL</p>
+                        <p className="text-blue-500 cursor-pointer" onClick={() => {
+                            dispatch(clearAll())
+
+                        } }>CLEAR ALL</p>
                     </div>
                     <div className="my-1 flex flex-wrap flex-shrink-0">
-                        <CrossButton text={"Furniture"}/>
-                        <CrossButton text={"4⭐"}/>
+                        {
+                            combinedArray && combinedArray.map((data, index) => (
+                                <CrossButton key={index} text={combinedArray[index]}/>
+                            ))
+                        }
                     </div>
                 </div>
                 <div>
@@ -155,10 +182,12 @@ const Filter = ()=>{
                         <select
                             name="division"
                             className="border-2 w-full"
+                            onChange={(e) => dispatch(addDivision(e.target.value))}
                         >
-                            <option value="" >Select Division</option>
+                            <option value="">Select Division</option>
                             {divisions.map((division) => (
-                                <option key={division.name} value={division.name}>
+                                <option key={division.name} value={division.name}
+                                        onClick={() => (dispatch(addDivision(division.name)))}>
                                     {division.name}
                                 </option>
                             ))}
@@ -172,17 +201,22 @@ const Filter = ()=>{
                     <div>
                         <ul>
                             {Categories.map((data, index) => (
-                                <li key={index} className={"ml-2"} onClick={() => handleCategoryClick(index)}>
+                                <li key={index} className={"ml-2"} onClick={() => {
+                                    handleCategoryClick(index)
+                                    dispatch(addCategory(Categories[index].category))
+
+                                }}>
                                     <div className={"flex"}>
                                         <p className={"mr-2 font-bold text-xl"}>
                                             {selectedCategory === index ? '⇩' : '⇨'}
                                         </p>
-                                        <p className={`cursor-pointer ${selectedCategory === index ? 'text-black font-bold':'text-gray-500'}`}>{data.category}</p>
+                                        <p className={`cursor-pointer ${selectedCategory === index ? 'text-black font-bold' : 'text-gray-500'}`}>{data.category}</p>
                                     </div>
                                     {selectedCategory === index && (
                                         <ul className="">
                                             {data.SubCategories.map((subcategory, subIndex) => (
-                                                <li key={subIndex} className="ml-10 text-gray-500">{subcategory}</li>
+                                                <li key={subIndex} className="ml-10 text-gray-500 cursor-pointer"
+                                                    onClick={() => dispatch(addSubCategory(Categories[index].SubCategories[subIndex]))}>{subcategory}</li>
                                             ))}
                                         </ul>
                                     )}
