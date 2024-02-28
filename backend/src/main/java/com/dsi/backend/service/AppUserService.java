@@ -14,11 +14,11 @@ public interface AppUserService {
 
     ResponseEntity<?> loginAppUser(String email, String password);
 
-    ResponseEntity<?> updateProfile(String email, AppUser appUser);
+    ResponseEntity<?> updateProfile(String token, AppUser appUser);
 
-    ResponseEntity<?> fetchInformation(String email);
+    ResponseEntity<?> fetchInformation(String token);
 
-    AppUserView uploadImage(MultipartFile imageFile, AppUser appUser) throws IOException;
+    AppUserView uploadImage(MultipartFile imageFile, String token) throws IOException;
 
     AppUser addAdmin(AppUser appUser);
 

@@ -3,7 +3,9 @@ package com.dsi.backend.controller;
 import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.AppUserView;
 import com.dsi.backend.service.AppUserService;
+import com.dsi.backend.service.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,22 +35,22 @@ public class AppUserController {
 
     }
 
-    @GetMapping("/user/profile/{email}")
-    public ResponseEntity<?> fetchInformation(@PathVariable String email){
-        return appUserService.fetchInformation(email);
+    @GetMapping("/user/profile")
+    public ResponseEntity<?> fetchInformation(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        return appUserService.fetchInformation(token);
     }
 
-    @PutMapping("/user/profile/update/{email}")
-    public ResponseEntity<?> updateProfile(@PathVariable String email, @RequestBody AppUser appUser){
-        return appUserService.updateProfile(email,appUser);
+    @PutMapping("/user/profile/update")
+    public ResponseEntity<?> updateProfile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody AppUser appUser){
+        return appUserService.updateProfile(token,appUser);
     }
 
     @PutMapping(value="/user/profile/upload-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> uploadImage(@RequestPart MultipartFile imageFile, @RequestPart AppUser appUser){
+    public ResponseEntity<?> uploadImage(@RequestPart MultipartFile imageFile, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         try{
 //            System.out.println(appUser.getId());
 
-            return ResponseEntity.ok(appUserService.uploadImage(imageFile, appUser));
+            return ResponseEntity.ok(appUserService.uploadImage(imageFile, token));
         }
         catch (Exception e){
             e.printStackTrace();
