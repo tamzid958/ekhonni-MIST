@@ -8,11 +8,11 @@ import java.util.List;
 
 @Service
 public interface NotificationService {
-    NotificationView saveNotification(Notification notification);
+    NotificationView saveNotification(String token, Notification notification);
 
-    List<NotificationView> fetchNotification(String email);
+    List<NotificationView> fetchNotification(String token);
 
-    String clearAllNotification(String email);
+    String clearAllNotification(String token);
 
     String clearNotification(Long id);
 }

@@ -1,6 +1,7 @@
 package com.dsi.backend.projection.implementation;
 
 import com.dsi.backend.model.AppUser;
+import com.dsi.backend.model.ImageModel;
 import com.dsi.backend.projection.AppUserView;
 
 class AppUserViewImpl implements AppUserView {
@@ -43,5 +44,10 @@ class AppUserViewImpl implements AppUserView {
     @Override
     public String getClientStatus() {
         return appUser.getClientStatus();
+    }
+
+    @Override
+    public ImageModel getProfilePicture() {
+        return appUser.getProfilePicture();
     }
 }
