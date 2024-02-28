@@ -27,17 +27,19 @@ public class AppUserController {
     }
     @PostMapping("/user/login")
     public ResponseEntity<?> loginAppUser(@RequestBody AppUser appUser){
+
         return appUserService.loginAppUser(appUser.getEmail(), appUser.getPassword());
+
     }
 
-    @GetMapping("/user/profile")
-    public ResponseEntity<?> fetchInformation(@RequestBody AppUser appUser){
-        return appUserService.fetchInformation(appUser);
+    @GetMapping("/user/profile/{email}")
+    public ResponseEntity<?> fetchInformation(@PathVariable String email){
+        return appUserService.fetchInformation(email);
     }
 
-    @PutMapping("/user/profile/update")
-    public ResponseEntity<?> updateProfile(@RequestBody AppUser appUser){
-        return appUserService.updateProfile(appUser);
+    @PutMapping("/user/profile/update/{email}")
+    public ResponseEntity<?> updateProfile(@PathVariable String email, @RequestBody AppUser appUser){
+        return appUserService.updateProfile(email,appUser);
     }
 
     @PutMapping(value="/user/profile/upload-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

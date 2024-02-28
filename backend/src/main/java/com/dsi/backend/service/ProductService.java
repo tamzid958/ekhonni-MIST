@@ -1,12 +1,12 @@
 package com.dsi.backend.service;
 
-import com.dsi.backend.model.AppUser;
-import com.dsi.backend.model.FilterRequest;
-import com.dsi.backend.model.Product;
+import com.dsi.backend.model.*;
 import com.dsi.backend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import com.dsi.backend.model.Product;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,19 +19,18 @@ public interface ProductService {
 
     Product updateProduct(Long id, Boolean isApprovedByAdmin);
 
-    List<Product> fetchAllRequests();
+    List<ProductView> fetchAllRequests();
 
-    List<Product> fetchAllProducts();
+//    List<ProductView> fetchAllProducts();
 
     Product getProductById(Long id);
 
-    List<Product> findSortedProducts(String field, Boolean direction);
+//    Page<ProductView> fetchProducts(int page, FilterRequest filter);
+    Page<ProductView> fetchProducts(int page, List<String> categories, List<String> subCategories, List<String> division, List<Double> price, String sort,String searchKey);
+    Map<String,Long> countProducts(String division);
+    List<ProductView> showByCategory(String category);
 
-    Page<Product> findProductsWithPagination(int offset, int pageSize);
+    Category insertCategory(Category category);
 
-    List<Product> filterProducts(FilterRequest filter);
-
-    Map<String,Long> countProducts();
-
-    List<Product> showByCategory(String category);
+    ResponseEntity<?> removeCategory(Category category);
 }

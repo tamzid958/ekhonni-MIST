@@ -14,4 +14,5 @@ public class FilterRequest {
         private List<String> subcategories;
         private List<String> division;
         private List<Double> price;
+        private String sort;
 }

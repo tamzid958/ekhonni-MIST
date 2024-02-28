@@ -14,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.dsi.backend.service.JwtTokenService;
@@ -22,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -74,11 +74,11 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
     @Override
-    public ResponseEntity<?> updateProfile(AppUser appUser) {
+    public ResponseEntity<?> updateProfile(String email, AppUser appUser) {
         if(appUser==null){
             return new ResponseEntity<>("Nothing to be updated with", HttpStatus.NO_CONTENT);
         }
-        AppUser updatedAppUser = appUserRepository.findByEmail(appUser.getEmail());
+        AppUser updatedAppUser = appUserRepository.findByEmail(email);
 
         if(appUser.getName()!=null) {
             updatedAppUser.setName(appUser.getName());
@@ -104,8 +104,8 @@ public class AppUserServiceImpl implements AppUserService{
 
 
     @Override
-    public ResponseEntity<?> fetchInformation(AppUser appUser) {
-        appUser = appUserRepository.findByEmail(appUser.getEmail());
+    public ResponseEntity<?> fetchInformation(String email) {
+        AppUser appUser = appUserRepository.findByEmail(email);
         return ResponseEntity.ok(appUser);
     }
 
@@ -123,6 +123,7 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
     @Override
+
     public AppUser findUser(String email) {
         return appUserRepository.findByEmail(email);
     }
@@ -130,9 +131,33 @@ public class AppUserServiceImpl implements AppUserService{
     @Override
     public void generateLink(String email) throws MessagingException {
         String token = jwtTokenService.createLinkToken(email);
-        String url = UriComponentsBuilder.fromHttpUrl(baseURL).path("/api/v1/reset-password").queryParam("token",token).toUriString();
+        String url = UriComponentsBuilder.fromHttpUrl(baseURL).path("/api/v1/reset-password").queryParam("token", token).toUriString();
         String link = baseURL + "/api/v1/reset-password/?token=" + token;
-        mailSenderService.sendMail(email,"Reset Your Password", link);
+        mailSenderService.sendMail(email, "Reset Your Password", link);
+    }
+
+    @Override
+    public AppUser addAdmin(AppUser appUser) {
+        appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
+        appUser.setRole("ROLE_ADMIN");
+        return appUserRepository.save(appUser);
+    }
+
+    @Override
+    public AppUser deleteAdmin(String email) {
+
+        AppUser admin = appUserRepository.findByEmail(email);
+        appUserRepository.delete(admin);
+
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<?> fetchOtherAdmins(String email) {
+        AppUser loggedAdmin = appUserRepository.findByEmail(email);
+        List<AppUser> userList= appUserRepository.findAllByRole("ROLE_ADMIN");
+        userList.remove(loggedAdmin);
+        return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
 //    @Override

@@ -14,15 +14,21 @@ public interface AppUserService {
 
     ResponseEntity<?> loginAppUser(String email, String password);
 
-    ResponseEntity<?> updateProfile(AppUser appUser);
+    ResponseEntity<?> updateProfile(String email, AppUser appUser);
 
-    ResponseEntity<?> fetchInformation(AppUser appUser);
+    ResponseEntity<?> fetchInformation(String email);
 
     AppUser uploadImage(MultipartFile imageFile, AppUser appUser) throws IOException;
 
     AppUser findUser(String email);
 
     void generateLink(String email) throws MessagingException;
+
+    AppUser addAdmin(AppUser appUser);
+
+    AppUser deleteAdmin(String email);
+
+    ResponseEntity<?> fetchOtherAdmins(String email);
 
 //    ResponseEntity<?> deleteAccount(AppUser appUser);
 }

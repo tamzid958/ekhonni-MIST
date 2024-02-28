@@ -1,9 +1,6 @@
 package com.dsi.backend.controller;
 
-import com.dsi.backend.model.AppUser;
-import com.dsi.backend.model.FilterRequest;
-import com.dsi.backend.model.ImageModel;
-import com.dsi.backend.model.Product;
+import com.dsi.backend.model.*;
 import com.dsi.backend.service.ImageModelService;
 import com.dsi.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +14,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 
 @RestController
@@ -40,42 +34,36 @@ public class ProductController {
 
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
-
-    @GetMapping("")
-    public List<Product> fetchAllProduct() {
-        return productService.fetchAllProducts();
-    }
+//    @GetMapping("/products")
+//    public List<ProductView> fetchAllProduct() {
+//        return productService.fetchAllProducts();
+//    }
 
     @GetMapping(value = "/products/{id}")
     public Product getProductById(@PathVariable("id") Long id) {
         return productService.getProductById(id);
     }
 
-    @GetMapping("/products/sort")
-    public List<Product> findSortedProducts(@RequestParam String field,@RequestParam Boolean direction) {
-        return productService.findSortedProducts(field,direction); //0-> asc, 1->desc
+//    @GetMapping("/products/page/{page}")
+//    public Page<ProductView> filterProducts(@PathVariable int page, @RequestParam FilterRequest filterRequest) {
+//        return productService.fetchProducts(page, filterRequest);
+//    }
+
+    @GetMapping("/products/page/{page}")
+    public Page<ProductView> filterProducts(@PathVariable int page,@RequestParam(required = false) List<String> categories,@RequestParam(required = false) List<String> subCategories,@RequestParam(required = false) List<String> division,@RequestParam(required = false) List<Double> price,@RequestParam(required = false) String sort,@RequestParam(defaultValue = "") String searchKey) {
+        return productService.fetchProducts(page, categories, subCategories, division, price, sort,searchKey);
     }
 
-    @GetMapping("/products/pagination")
-    public Page<Product> findProductsWithPagination(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
-        return productService.findProductsWithPagination(page,size);
-    }
-
-    @GetMapping("/products/filter")
-    public List<Product> filterProducts(@RequestBody FilterRequest filterRequest) {
-        return productService.filterProducts(filterRequest);
-    }
 
     @GetMapping("/products/count")
-    public Map<String,Long> countProducts() {
-        return productService.countProducts();
+    public Map<String,Long> countProducts(@RequestParam(defaultValue = "") String division) {
+        return productService.countProducts(division);
     }
     @GetMapping("/products/category")
-    public ResponseEntity<List<Product>> showByCategories(@RequestParam String category) {
-//        System.out.println(category);
-        List<Product> products = productService.showByCategory(category);
+    public ResponseEntity<List<ProductView>> showByCategories(@RequestParam String category) {
+        List<ProductView> products = productService.showByCategory(category);
         return ResponseEntity.ok(products);
     }
 
 }
-
+ 
