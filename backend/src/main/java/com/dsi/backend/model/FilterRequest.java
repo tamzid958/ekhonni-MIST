@@ -4,15 +4,11 @@ import lombok.*;
 
 import java.util.List;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@ToString
-@AllArgsConstructor
-public class FilterRequest {
-        private List<String> categories;
-        private List<String> subcategories;
-        private List<String> division;
-        private List<Double> price;
-        private String sort;
+
+public record FilterRequest(
+        List<String> categories,
+        List<String> subcategories,
+        List<String> division,
+        List<Double> price,
+        String sort) {
 }

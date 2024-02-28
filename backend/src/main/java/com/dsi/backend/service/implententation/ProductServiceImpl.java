@@ -42,9 +42,6 @@ public class ProductServiceImpl implements ProductService {
     private AppUserRepository appUserRepository;
 
     @Autowired
-    private EntityManager entityManager;
-
-    @Autowired
     private ImageModelService imageModelService;
 
 
