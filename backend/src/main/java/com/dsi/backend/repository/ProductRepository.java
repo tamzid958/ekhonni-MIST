@@ -1,7 +1,7 @@
 package com.dsi.backend.repository;
 
 import com.dsi.backend.model.Product;
-import com.dsi.backend.model.ProductView;
+import com.dsi.backend.projection.ProductView;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
