@@ -12,6 +12,6 @@ import java.util.Set;
 public interface ImageModelService {
     Set<ImageModel> uploadImage(Product product, MultipartFile[] multipartFiles) throws IOException;
 
-    Set<ImageModel> downloadImage(Product product);
+    Set<ImageModel> downloadImage(Long id);
 
 }

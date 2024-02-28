@@ -6,6 +6,7 @@ import java.util.Set;
 public class ProductViewImpl implements ProductView {
     private final Product product;
 
+
     public ProductViewImpl(Product product) {
         this.product = product;
     }
@@ -70,8 +71,8 @@ public class ProductViewImpl implements ProductView {
         return product.getProductTime();
     }
 
-//    @Override
-//    public Set<ImageModel> getProductImage() {
-//        return product.getProductImage();
-//    }
+    @Override
+    public Set<ImageModel> getProductImage() {
+        return null;
+    }
 }

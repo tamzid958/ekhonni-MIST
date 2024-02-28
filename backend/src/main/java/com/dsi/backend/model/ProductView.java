@@ -20,5 +20,7 @@ public interface ProductView {
     Boolean getIsBidActive();
     Boolean getIsVisible();
     LocalDateTime getProductTime();
-//    Set<ImageModel> getProductImage();
+    default Set<ImageModel> getProductImage() {
+        return null;
+    }
 }

@@ -18,6 +18,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.stereotype.Service;
@@ -60,6 +61,8 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(category);
         product.setSeller(seller);
 
+        productRepository.save(product);
+
         try {
             Set<ImageModel> image = imageModelService.uploadImage(product,file);
 //            product.setProductImage(image);
@@ -69,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
 
-        return productRepository.save(product);
+        return product;
     }
 
     public Product updateProduct(Long id, Boolean isApprovedByAdmin) {
@@ -88,8 +91,14 @@ public class ProductServiceImpl implements ProductService {
 //        return productRepository.findByIsApprovedByAdminTrue();
 //    }
 
-    public Product getProductById(Long id) {
-        return productRepository.findById(id).orElseThrow(()->new ProductNotFoundException("Product not found by id: "+id));
+    public ResponseEntity<?> getProductById(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(()->new ProductNotFoundException("Product not found by id: "+id));
+        Set<ImageModel> image = imageModelService.downloadImage(id);
+        Map<Product, Set<ImageModel>> result = new HashMap<>();
+        result.put(product, image);
+        return ResponseEntity.status(HttpStatus.OK)
+                //.contentType(MediaType.valueOf("multipart/form-data"))
+                .body(result);
     }
 
     public Set<String> getCategoriesBySubcategories(List<String> subcategories) {

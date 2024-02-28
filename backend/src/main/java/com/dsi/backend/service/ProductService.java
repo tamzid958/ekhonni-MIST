@@ -23,7 +23,7 @@ public interface ProductService {
 
 //    List<ProductView> fetchAllProducts();
 
-    Product getProductById(Long id);
+    ResponseEntity<?> getProductById(Long id);
 
 //    Page<ProductView> fetchProducts(int page, FilterRequest filter);
     Page<ProductView> fetchProducts(int page, List<String> categories, List<String> subCategories, List<String> division, List<Double> price, String sort,String searchKey);

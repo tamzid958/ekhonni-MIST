@@ -5,6 +5,7 @@ import com.dsi.backend.model.ImageModel;
 import com.dsi.backend.model.Product;
 import com.dsi.backend.repository.ImageModelRepository;
 import com.dsi.backend.service.ImageModelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,8 @@ import java.util.Set;
 @Service
 public class ImageModelServiceImpl implements ImageModelService {
 
+
+    @Autowired
     private ImageModelRepository imageModelRepository;
 
     @Override
@@ -26,6 +29,7 @@ public class ImageModelServiceImpl implements ImageModelService {
             ImageModel imageModel = new ImageModel(product, file.getOriginalFilename(),
                     file.getContentType(),
                     file.getBytes());
+            imageModelRepository.save(imageModel);
             image.add(imageModel);
         }
 
@@ -33,10 +37,7 @@ public class ImageModelServiceImpl implements ImageModelService {
     }
 
     @Override
-    public Set<ImageModel> downloadImage(Product product) {
-//        List<Long> imageId= product.getProductImage().stream().map(BaseEntity::getId).toList();
-//
-//        return imageModelRepository.findImageModelByIdIsIn(imageId);
-        return null;
+    public Set<ImageModel> downloadImage(Long id) {
+        return imageModelRepository.findAllByProductId(id);
     }
 }
