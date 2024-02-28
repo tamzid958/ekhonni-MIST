@@ -1,4 +1,10 @@
-package com.dsi.backend.model;
+package com.dsi.backend.projection.implementation;
+
+import com.dsi.backend.model.Category;
+import com.dsi.backend.model.ImageModel;
+import com.dsi.backend.model.Product;
+import com.dsi.backend.projection.AppUserView;
+import com.dsi.backend.projection.ProductView;
 
 import java.time.LocalDateTime;
 import java.util.Set;

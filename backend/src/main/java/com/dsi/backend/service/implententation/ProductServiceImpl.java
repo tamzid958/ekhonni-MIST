@@ -3,12 +3,14 @@ package com.dsi.backend.service.implententation;
 import com.dsi.backend.exception.ProductNotFoundException;
 import com.dsi.backend.model.*;
 
+import com.dsi.backend.projection.ProductView;
+import com.dsi.backend.projection.implementation.ProductViewImpl;
 import com.dsi.backend.repository.AppUserRepository;
 import com.dsi.backend.repository.CategoryRepository;
 import com.dsi.backend.repository.ProductRepository;
 import com.dsi.backend.service.ImageModelService;
+import com.dsi.backend.service.JwtTokenService;
 import com.dsi.backend.service.ProductService;
-import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -17,6 +19,8 @@ import org.springframework.data.domain.PageRequest;
 
 import org.springframework.data.domain.Sort;
 
+import org.springframework.data.projection.ProjectionFactory;
+import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -42,13 +46,12 @@ public class ProductServiceImpl implements ProductService {
     private AppUserRepository appUserRepository;
 
     @Autowired
-    private EntityManager entityManager;
-
-    @Autowired
     private ImageModelService imageModelService;
 
+    @Autowired
+    private JwtTokenService jwtTokenService;
 
-    public Product saveProduct(Product product, MultipartFile[] file) {
+    public ProductView saveProduct(Product product, MultipartFile[] file, String token) {
         product.setIsApprovedByAdmin(null);
         product.setIsSold(false);
         product.setProductTime(LocalDateTime.now());
@@ -56,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
         if (category == null) {
             throw new IllegalArgumentException("Invalid category name");
         }
-        AppUser seller = appUserRepository.findByEmail(product.getSeller().getEmail());
+        AppUser seller = appUserRepository.findByEmail(jwtTokenService.getUsernameFromToken(token.substring(7)));
         product.setCategory(category);
         product.setSeller(seller);
 
@@ -68,8 +71,9 @@ public class ProductServiceImpl implements ProductService {
             System.out.println(exception.getMessage());
             return null;
         }
-
-        return productRepository.save(product);
+        productRepository.save(product);
+        ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
+        return projectionFactory.createProjection(ProductView.class, product);
     }
 
     public Product updateProduct(Long id, Boolean isApprovedByAdmin) {
