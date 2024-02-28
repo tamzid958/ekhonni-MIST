@@ -1,23 +1,16 @@
 "use client"
+
 import BuyerBidModal from "@/components/BuyerBidModal";
 import SellerSelectModal from "@/components/SellerSelectModal";
-import AdminModal from "@/components/AdminModal";
 import {useState} from "react";
-import Header from "@/components/Header";
 
-
-
-const TestPage =() =>
-{
-    const [showModal,setShowModal]=useState(false)
-
-
+const TestPage = () => {
+    const biddingActive = true;
+    const [modalIsOpen , setModalIsOpen] = useState(true);
     return (
         <>
-         <Header/>
-         <AdminModal isVisible={showModal}/>
-
-
+            {/*<BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={false} productID={productID} />*/}
+            <SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={biddingActive}/>
         </>
     )
 }
