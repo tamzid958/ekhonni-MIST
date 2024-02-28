@@ -31,15 +31,22 @@ public class MailSenderServiceImpl implements MailSenderService {
     @Override
     public String sendMail(String mailto, String subject, String message) {
 
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        try{
+            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 
-        simpleMailMessage.setFrom("ekhonni.official@gmail.com");
-        simpleMailMessage.setTo(mailto);
-        simpleMailMessage.setSubject(subject);
-        simpleMailMessage.setText(message);
 
-        this.mailSender.send(simpleMailMessage);
-        return "Email Sent";
+            simpleMailMessage.setFrom("ekhonni.official@gmail.com");
+            simpleMailMessage.setTo(mailto);
+            simpleMailMessage.setSubject(subject);
+            simpleMailMessage.setText(message);
+
+            this.mailSender.send(simpleMailMessage);
+            return "Email Sent";
+        }
+        catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+        return null;
     }
 
 }
