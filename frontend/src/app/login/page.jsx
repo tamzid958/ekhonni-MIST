@@ -10,6 +10,7 @@ import {toast, Toaster} from "sonner";
 import {Router} from "next/router";
 import {Toast} from "next/dist/client/components/react-dev-overlay/internal/components/Toast";
 import Header from "@/components/Header";
+import ForgetPass from "@/app/forget-password/page";
 
 
 const LoginPage = () => {
@@ -65,6 +66,11 @@ const LoginPage = () => {
                                            onChange={(e) => {
                                                setPassword(e.target.value)
                                            }}/>
+                            </div>
+                            <div className="pl-36">
+                                <Link  href="/forget-password" >
+                                    <p className="text-cyan-950">Forgot your password?</p>
+                                </Link>
                             </div>
                             <div className=" w-full h-1/5 mt-2 flex flex-col justify-start items-center">
                                 <Button value={"Login"} option={1} type={"submit"}/>

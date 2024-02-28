@@ -1,4 +1,4 @@
-package com.dsi.backend.model;
+package com.dsi.backend.projection;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.OneToOne;
