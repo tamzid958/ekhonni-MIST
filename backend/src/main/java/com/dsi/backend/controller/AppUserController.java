@@ -1,7 +1,7 @@
 package com.dsi.backend.controller;
 
 import com.dsi.backend.model.AppUser;
-import com.dsi.backend.model.AppUserView;
+import com.dsi.backend.projection.AppUserView;
 import com.dsi.backend.service.AppUserService;
 import com.dsi.backend.service.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;

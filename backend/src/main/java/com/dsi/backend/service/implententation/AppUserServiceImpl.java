@@ -1,7 +1,7 @@
 package com.dsi.backend.service.implententation;
 
 import com.dsi.backend.model.AppUser;
-import com.dsi.backend.model.AppUserView;
+import com.dsi.backend.projection.AppUserView;
 import com.dsi.backend.model.ImageModel;
 import com.dsi.backend.model.TokenResponse;
 import com.dsi.backend.repository.AppUserRepository;

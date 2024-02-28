@@ -1,5 +1,6 @@
 package com.dsi.backend.projection;
 
+import com.dsi.backend.model.ImageModel;
 import jakarta.persistence.Column;
 import jakarta.persistence.OneToOne;
 

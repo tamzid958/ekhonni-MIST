@@ -1,6 +1,7 @@
 package com.dsi.backend.projection.implementation;
 
 import com.dsi.backend.model.AppUser;
+import com.dsi.backend.model.ImageModel;
 import com.dsi.backend.projection.AppUserView;
 
 class AppUserViewImpl implements AppUserView {

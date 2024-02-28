@@ -1,7 +1,7 @@
 package com.dsi.backend.service;
 
 import com.dsi.backend.model.AppUser;
-import com.dsi.backend.model.AppUserView;
+import com.dsi.backend.projection.AppUserView;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 

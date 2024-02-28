@@ -1,7 +1,7 @@
 package com.dsi.backend.repository;
 
 import com.dsi.backend.model.AppUser;
-import com.dsi.backend.model.AppUserView;
+import com.dsi.backend.projection.AppUserView;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
