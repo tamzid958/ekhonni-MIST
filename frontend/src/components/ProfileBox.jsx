@@ -8,7 +8,7 @@ import Link from "next/link";
 import axios from "axios";
 
 
-const ProfileBox = ({email})=>{
+const ProfileBox = ()=>{
     const [data,setData] = useState();
     const [imageUrl,setImageUrl] = useState();
     const token = localStorage.getItem("token");
@@ -16,7 +16,7 @@ const ProfileBox = ({email})=>{
     useEffect(() => {
 
 
-        axios.get(`http://localhost:8080/api/v1/user/profile/${email}`,{
+        axios.get(`http://localhost:8080/api/v1/user/profile`,{
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json' // Specify content type if required

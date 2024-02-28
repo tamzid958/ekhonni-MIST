@@ -12,11 +12,10 @@ import {UserContext} from "@/Context/UserContext.jsx";
 const Profile =()=>{
     const [data,setData] = useState();
     const token = localStorage.getItem("token");
-    const email = localStorage.getItem("currentUserEmail");
     useEffect(() => {
 
 
-        axios.get(`http://localhost:8080/api/v1/user/profile/${email}`,{
+        axios.get(`http://localhost:8080/api/v1/user/profile`,{
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json' // Specify content type if required
