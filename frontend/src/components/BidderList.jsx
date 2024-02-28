@@ -8,12 +8,12 @@ const BidderList = ({visibility , bidders , view , finalBuyerID}) => {
     return ( <>
         {visibility &&
             <ul className="w-full mt-[5%] rounded-lg ">
-                <li className="w-full p-2 list-none rounded-lg bg-slate-100 border border-neutral-300 shadow-lg shadow-slate-300 group transition ease-in-out duration-500 hover:scale-105">
+                <li className="w-full p-2 list-none rounded-lg bg-slate-100 border border-neutral-300 shadow-lg shadow-slate-300 group transition ease-in-out duration-500 hover:scale-[103%]">
                     <input type={"checkbox"} name="bidderList" id="first" className="hidden peer"/>
                     <label htmlFor={"first"}
                            className="w-full flex items-center mb-2 p-1 cursor-pointer peer-checked:before:content-['-'] before:content-['+'] before:mr-3 before:font-semibold before:text-lg shadow-lg shadow-slate-300 rounded-lg">Bidder List
                         </label>
-                    <div className="w-full max-h-0 overflow-hidden peer-checked:max-h-52 hover:overflow-y-scroll transition-all ease-in-out duration-1000">
+                    <div className="w-full max-h-0 overflow-hidden peer-checked:max-h-72 hover:overflow-y-scroll transition-all ease-in-out duration-1000">
                         <ul className="w-full flex flex-col items-center">
                             {view === "buyerView" ? (
                                 bidders.map((bidder) => (
