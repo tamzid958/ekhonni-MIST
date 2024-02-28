@@ -30,13 +30,13 @@ const ForgetPass = () => {
                 localStorage.setItem("token" , token);
                 localStorage.setItem("currentUserEmail" , email);
                 console.log(token);
-                toast.success("Logged in Successfully")
+                toast.success("We have sent you an email please check it")
                 router.push('/');
 
             })
             .catch((err)=>{
                 console.error("Err :"+err);
-                toast.error("UnAuthorized")
+                toast.error("Invalid Username")
             })
 
 
@@ -49,12 +49,12 @@ const ForgetPass = () => {
             <form onSubmit={handleSubmit}>
                 <div className="w-full h-[700px] flex justify-center items-center">
                     <div
-                        className="w-[750px] h-[450px] border-2 border-black flex flex-row justify-center items-center rounded-lg">
+                        className="w-[450px] h-[450px] border-2 border-black flex flex-row justify-center items-center bg-gradient-radial from-slate-500 to-slate-700 rounded-lg">
                         {/*Forgot Password Div*/}
-                        <div className="w-1/2 h-full rounded-l-lg">
-                            <div className=" w-full h-2/5 flex flex-col justify-end items-center">
-                                <h1 className="font-bold text-4xl mb-10 ">Forgot Password</h1>
-                                <p className="font-light text-lg mb-4">Please enter your Username</p>
+                        <div className="w-full h-full rounded-l-lg">
+                            <div className=" w-full h-2/5 flex flex-col justify-center items-center">
+                                <h1 className=" w-full  h-full font-bold text-3xl mt-7 flex justify-center items-center text-amber-50">Forgot Password</h1>
+                                <p className="text-white text-2xl mb-4">Please enter your Username</p>
                             </div>
                             <div className=" w-full h-2/5 flex flex-col justify-start items-center mt-7">
                                 <TextField placeholder={"Email"} type={"text"} name={"email"} value={email}
@@ -64,37 +64,37 @@ const ForgetPass = () => {
 
                             </div>
                             <div className=" w-full h-1/5 flex flex-col justify-start items-center -mt-7">
-                                <Button  value={"Forgot Password"} option={1} type={"submit"}/>
+                                <Button  value={"Submit"} option={0} type={"submit"}/>
                             </div>
                         </div>
                         {/*{Reset Password Div}*/}
-                        <div
-                            className="w-1/2 h-full flex items-center bg-gradient-radial from-slate-500 to-slate-700 rounded-r-md">
-                            <div className="w-full h-3/5 flex flex-col items-center justify-center">
-                                <h1 className="font-bold text-4xl text-white mb-8 "> Reset Password </h1>
-                                <p className="text-center text-white text-lg mb-4">Enter new password and reset it </p>
-                                <div className="pl-3">
-                                    <TextField placeholder={"Password"} type={"password"} name={"password"}
-                                               value={password}
-                                               onChange={(e) => {
-                                                   setPassword(e.target.value)
-                                               }}/>
+                        {/*<div*/}
+                        {/*    className="w-1/2 h-full flex items-center bg-gradient-radial from-slate-500 to-slate-700 rounded-r-md">*/}
+                        {/*    <div className="w-full h-3/5 flex flex-col items-center justify-center">*/}
+                        {/*        <h1 className="font-bold text-4xl text-white mb-8 "> Reset Password </h1>*/}
+                        {/*        <p className="text-center text-white text-lg mb-4">Enter new password and reset it </p>*/}
+                        {/*        <div className="pl-3">*/}
+                        {/*            <TextField placeholder={"Password"} type={"password"} name={"password"}*/}
+                        {/*                       value={password}*/}
+                        {/*                       onChange={(e) => {*/}
+                        {/*                           setPassword(e.target.value)*/}
+                        {/*                       }}/>*/}
 
 
-                                    <TextField placeholder={"Confirm Password"} type={"password"} name={"password"}
-                                               value={password}
-                                               onChange={(e) => {
-                                                   setPassword(e.target.value)
-                                               }}/>
-                                </div>
-                                <div className="mt-8">
-                                    <Link href="/">
-                                        <Button value={"Reset Password"} option={0} type={"button"}/>
-                                    </Link>
-                                </div>
+                        {/*            <TextField placeholder={"Confirm Password"} type={"password"} name={"password"}*/}
+                        {/*                       value={password}*/}
+                        {/*                       onChange={(e) => {*/}
+                        {/*                           setPassword(e.target.value)*/}
+                        {/*                       }}/>*/}
+                        {/*        </div>*/}
+                        {/*        <div className="mt-8">*/}
+                        {/*            <Link href="/">*/}
+                        {/*                <Button value={"Reset Password"} option={0} type={"button"}/>*/}
+                        {/*            </Link>*/}
+                        {/*        </div>*/}
 
-                            </div>
-                        </div>
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
                 </div>
             </form>
