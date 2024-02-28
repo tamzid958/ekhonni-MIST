@@ -6,9 +6,11 @@ import java.util.List;
 
 
 public record FilterRequest(
-        List<String> categories,
-        List<String> subcategories,
+        int pageNumber,
+        List<CategoryRecord> categories,
+        double startPrice, double endPrice,
+        String search,
         List<String> division,
-        List<Double> price,
-        String sort) {
+        String sort
+        ) {
 }
