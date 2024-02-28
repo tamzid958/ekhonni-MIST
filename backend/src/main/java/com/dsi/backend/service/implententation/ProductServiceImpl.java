@@ -248,4 +248,9 @@ public class ProductServiceImpl implements ProductService {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Override
+    public Page<ProductView> filterProduct(FilterRequest filterRequest) {
+        return productRepository.filter(filterRequest);
+    }
+
 }
