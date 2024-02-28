@@ -20,8 +20,7 @@ const Footer = ()=>{
                     <p>House # 177,Lane #2</p>
                     <p>Mohakhali-DOHS</p>
                     <p>Dhaka-1236</p>
-                    <p>Email:</p>
-                    <p>support@ekonni.com</p>
+                    <p>Email: ekhonni.official@gmail.com</p>
                 </div>
                 <div className=" w-1/3 h-full text-center">
                     <div className=" w-2/5 mx-auto text-left">

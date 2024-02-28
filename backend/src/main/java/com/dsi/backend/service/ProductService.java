@@ -26,12 +26,11 @@ public interface ProductService {
     Product getProductById(Long id);
 
 //    Page<ProductView> fetchProducts(int page, FilterRequest filter);
-    Page<ProductView> fetchProducts(int page, List<String> categories, List<String> subCategories, List<String> division, List<Double> price, String sort);
+    Page<ProductView> fetchProducts(int page, List<String> categories, List<String> subCategories, List<String> division, List<Double> price, String sort,String searchKey);
     Map<String,Long> countProducts(String division);
     List<ProductView> showByCategory(String category);
 
     Category insertCategory(Category category);
 
     ResponseEntity<?> removeCategory(Category category);
-
 }

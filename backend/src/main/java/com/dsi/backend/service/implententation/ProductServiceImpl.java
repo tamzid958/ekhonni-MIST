@@ -97,7 +97,7 @@ public class ProductServiceImpl implements ProductService {
         return categories.stream().map(Category::getCategory).collect(Collectors.toSet());
     }
 
-    public Page<ProductView> fetchProducts(int page, List<String> categories, List<String> subCategories, List<String> division, List<Double> price, String sort) {
+    public Page<ProductView> fetchProducts(int page, List<String> categories, List<String> subCategories, List<String> division, List<Double> price, String sort, String searchKey) {
         List<Product> filteredProducts = new ArrayList<>();
         Set<String> categoriesWithSubcategories = new HashSet<>();
 
@@ -135,6 +135,12 @@ public class ProductServiceImpl implements ProductService {
         }
         if ((subCategories==null || subCategories.isEmpty()) && (categories==null || categories.isEmpty()) && (division==null || division.isEmpty()) && (price==null || price.isEmpty())) {
             filteredProducts.addAll(productRepository.findByIsApprovedByAdminTrue());
+        }
+        if(searchKey != null && !searchKey.isEmpty()){
+            List<Product> searchedProducts = productRepository.findByIsApprovedByAdminTrueAndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(searchKey,searchKey);
+            filteredProducts = filteredProducts.stream()
+                    .filter(searchedProducts::contains)
+                    .collect(Collectors.toList());
         }
         if (sort != null || !sort.isEmpty()) {
             if (sort.equalsIgnoreCase("High_to_low")) filteredProducts.sort(Comparator.comparing(Product::getStartingPrice).reversed());
@@ -237,4 +243,5 @@ public class ProductServiceImpl implements ProductService {
         categoryRepository.delete(category);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

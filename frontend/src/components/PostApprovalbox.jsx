@@ -4,9 +4,25 @@ import Button from "@/components/Button";
 
 import SmallButton from "@/components/SmallButton";
 import Image from "next/image";
+import axios from "axios";
+import {toast} from "sonner";
 
-const PostApprovalbox = ({id,name,location,time,description,category,price,username}) =>
+const PostApprovalbox = ({id, name, location, time, description, category, subCategory, price, username}) =>
 {
+    const handleAccept = (status) => {
+       //const response = axios.post(`http://localhost:8080/api/v1/admin/products/${id}`, params);
+
+        axios.put(`http://localhost:8080/api/v1/admin/products/${id}?isApprovedByAdmin=${status}`)
+            .then((res)=>{
+                console.log(res);
+                //router.push('/');
+
+            })
+            .catch((err)=>{
+                console.error("Err :"+err);
+                toast.error("Not working")
+            })
+    }
     return(
         <>
 
@@ -33,8 +49,8 @@ const PostApprovalbox = ({id,name,location,time,description,category,price,usern
                             <p className="pl-5">{description}</p>
                         </div>
                         <div className="w-full h-[25%] flex flex-row">
-                            <div className="w-[50%] h-[16.3%]">
-                                <p className="pl-5">Category:{category}</p>
+                            <div className="w-[100%] h-[16.3%]">
+                                <p className="pl-5">Category: {category} - {subCategory}</p>
                             </div>
                             <div className="w-[50%]  h-[16.3%] items-end">
                                 <p className="pl-5">Time:{time}</p>
@@ -42,20 +58,29 @@ const PostApprovalbox = ({id,name,location,time,description,category,price,usern
                         </div>
                         <div className="w-full  h-[16.3%] flex flex-row">
                             <div className="w-[50%] h-full items-start">
-                                <p className="pl-5">Price :&nbsp; <span className="text-cyan-950 font-medium">{price}</span></p>
-                            </div>
-                            <div className="w-[50%] h-full items-end">
-                                <p className="pl-5 "> -{username}</p>
+                                <p className="pl-5">Price :&nbsp; <span
+                                    className="text-cyan-950 font-medium">{price}</span></p>
                             </div>
 
+                            <div className="w-[50%] h-full items-end">
+                                <p className="pl-5 ">Division - {location}</p>
+                            </div>
+
+                            <div className="w-[50%] h-full items-end">
+                                <p className="pl-5 ">Seller - {username}</p>
+                            </div>
                         </div>
                     </div>
                     <div className="w-full h-[12.5%] -mt-3 flex flex-row justify-start items-start">
                         <div className="w-[25%] pl-4">
-                            <SmallButton value={"Approve"} option={"1"} type={"button"}/>
+                            <SmallButton
+                                onClick={(e)=>handleAccept(true)}
+                                value={"Approve"} option={"1"} type={"button"}/>
                         </div>
                        <div className="w-[25%]">
-                           <SmallButton value={"Decline"} option={"1"} type={"button"}/>
+                           <SmallButton
+                               onClick={(e)=>handleAccept(false)}
+                               value={"Decline"} option={"1"} type={"button"}/>
                        </div>
 
                     </div>
