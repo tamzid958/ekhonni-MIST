@@ -31,6 +31,18 @@ public class Product extends BaseEntity<Long>{
     private LocalDateTime productTime;
     private Boolean isVisible;
 
+
+//    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinTable(name = "product_image",
+//            joinColumns = @JoinColumn(name = "product_id"),
+//            inverseJoinColumns = @JoinColumn(name = "image_id")
+//    )
+//    private Set<ImageModel> productImage;
+
+    @OneToMany(mappedBy = "product")
+    @JoinColumn(referencedColumnName = "product_id")
+    private Set<ImageModel> productImage;
+
     public String getCategoryName() {
         if (this.category != null) {
             return this.category.getCategory();

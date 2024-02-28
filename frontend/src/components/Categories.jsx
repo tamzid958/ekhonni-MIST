@@ -3,18 +3,41 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import CategoryCard from "@/components/CategoryCard";
+import {useSelector,useDispatch} from "react-redux";
+import axios from "axios";
+import {fetchProduct} from "@/Actions/fetchProduct";
+
 const Categories =()=>{
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [Categories,setCategories] = useState([])
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/api/v1/products/count")
+            .then((res)=>{
+                setCategories(res.data)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+    }, []);
 
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) =>
-                prevIndex === 1 ? 0 : prevIndex + 0.1
+                prevIndex === 110 ? 0 : prevIndex + 1
             );
 
         }, 200); // Change slide every 1 seconds
 
         return () => clearInterval(interval);
+    }, []);
+    const filterItem = useSelector(state => state.filter);
+    const product = useSelector(state => state.product);
+    useEffect(() => {
+
+        dispatch(fetchProduct({id:0,filter:filterItem}))
+
     }, []);
 
     const prevImage = () => {
@@ -31,39 +54,20 @@ const Categories =()=>{
 
 
     const category = [
-        {img:"/computer.svg",category:"Electronics",item:"110"},
-        {img:"/vehicle.svg",category:"Vehicle",item:"260"},
-        {img:"/clothing.svg",category:"Clothing",item:"190"},
-        {img:"/decor.svg",category:"Home Decor",item:"100"},
-        {img:"/furniture.svg",category:"Furniture",item:"10"},
-        {img:"/sports_item.svg",category:"Sports item",item:"210"},
-        {img:"/properties.svg",category:"Properties",item:"51"},
-        {img:"/toy.svg",category:"Toy",item:"340"},
-        {img:"/computer.svg",category:"Electronics",item:"110"},
-        {img:"/vehicle.svg",category:"Vehicle",item:"260"},
-        {img:"/clothing.svg",category:"Clothing",item:"190"},
-        {img:"/decor.svg",category:"Home Decor",item:"100"},
-        {img:"/furniture.svg",category:"Furniture",item:"10"},
-        {img:"/sports_item.svg",category:"Sports item",item:"210"},
-        {img:"/properties.svg",category:"Properties",item:"51"},
-        {img:"/toy.svg",category:"Toy",item:"340"},
-        {img:"/computer.svg",category:"Electronics",item:"110"},
-        {img:"/vehicle.svg",category:"Vehicle",item:"260"},
-        {img:"/clothing.svg",category:"Clothing",item:"190"},
-        {img:"/decor.svg",category:"Home Decor",item:"100"},
-        {img:"/furniture.svg",category:"Furniture",item:"10"},
-        {img:"/sports_item.svg",category:"Sports item",item:"210"},
-        {img:"/properties.svg",category:"Properties",item:"51"},
-        {img:"/toy.svg",category:"Toy",item:"340"},
-        {img:"/computer.svg",category:"Electronics",item:"110"},
-        {img:"/vehicle.svg",category:"Vehicle",item:"260"},
-        {img:"/clothing.svg",category:"Clothing",item:"190"},
-        {img:"/decor.svg",category:"Home Decor",item:"100"},
-        {img:"/furniture.svg",category:"Furniture",item:"10"},
-        {img:"/sports_item.svg",category:"Sports item",item:"210"},
-        {img:"/properties.svg",category:"Properties",item:"51"},
-        {img:"/toy.svg",category:"Toy",item:"340"},
-    ]
+        { img: "/computer.svg", category: "Electronics" },
+        { img: "/vehicle.svg", category: "Vehicle" },
+        { img: "/clothing.svg", category: "Clothing" },
+        { img: "/furniture.svg", category: "Furniture" },
+        { img: "/sports_item.svg", category: "Sports Item" },
+        { img: "/properties.svg", category: "Properties" },
+        { img: "/toy.svg", category: "Toy" }
+    ];
+    const updatedCategory = category.map(item => ({
+        ...item,
+        item: Categories[item.category]
+    }));
+
+
     return (
         <>
             <div className="w-11/12 mx-auto border-black my-2 flex flex-col flex-nowrap">
@@ -75,9 +79,9 @@ const Categories =()=>{
                     </div>
                 </div>
                 <div className={" relative overflow-hidden"}>
-                    <div className="mx-8 flex  transition ease-out duration-1000" style={{transform: `translateX(-${currentIndex * 5}%)`}}>
-                        {category.map((data, index) => <CategoryCard key={index} img={data.img} categories={data.category}
-                                                                     item={data.item}/>)}
+                    <div className="mx-8 flex  transition ease-out duration-1000" style={{transform: `translateX(-${currentIndex * 0.5}%)`}}>
+                        {updatedCategory.map((data, index) => <CategoryCard key={index} img={data.img} categories={data.category}
+                                                                     item={data.item}  />)}
                     </div>
                     <div>
                         <button

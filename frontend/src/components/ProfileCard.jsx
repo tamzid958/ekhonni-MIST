@@ -29,7 +29,7 @@ const ProfileCard =()=>{
 
         formData.append("imageFile", img);
         const email = { "email": Email };
-        formData.append("appUser", JSON.stringify(email)); // Convert object to string before appending
+        formData.append("appUser", new Blob([JSON.stringify(email)],{type: 'application/json'}));
 
         // for (const [key, value] of formData.entries()) {
         //     if (value instanceof File) {
@@ -44,7 +44,6 @@ const ProfileCard =()=>{
         axios.put(`http://localhost:8080/api/v1/user/profile/upload-image`,formData,{
             headers: {
                 Authorization: `Bearer ${token}`,
-                'Content-Type': 'multipart/form-data'
             }
         })
             .then((res) => {
