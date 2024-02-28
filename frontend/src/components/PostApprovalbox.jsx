@@ -11,7 +11,7 @@ const PostApprovalbox = ({id,name,location,time,description,category,price,usern
         <>
 
             {/*the main box*/}
-            <div className="w-7/12 h-56 border-black border-2 my-4 flex flex-row justify-center items-center ">
+            <div className="w-7/12 h-56 border-black border-2 my-4 flex flex-row justify-center items-center ml-16 ">
                 {/*Image box*/}
                 <div
                     className="w-1/4 h-[82%]  relative my-3 border-2 border-black flex justify-start items-start -ml-5 ">

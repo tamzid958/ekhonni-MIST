@@ -3,10 +3,16 @@ import Button from "@/components/Button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PostApprovalbox from "@/components/PostApprovalbox";
-import React, { useState } from 'react';
+import { useState } from 'react';
 import BuyerBids from "@/components/BuyerBids";
+import AdminModal from "@/components/AdminModal";
+import React, {useEffect} from 'react';
+import SmallButton from "@/components/SmallButton";
+import button from "@/components/Button";
 export default function AdminPage(){
+    const [modalIsOpen , setModalIsOpen]=useState(false);
     // = ({name,location,time,description,category,price,username,time}) =>
+
 
    const data =[
        {
@@ -60,19 +66,25 @@ export default function AdminPage(){
    ]
     return(
         <>
+            <Header/>
+
+            {modalIsOpen && <AdminModal setModalOpen={setModalIsOpen}/>}
 
             <div>
-                <p className="font-bold text-3xl ml-[300px] my-4 ">Posts to Approve</p>
+                <p className="font-bold text-3xl ml-[340px] my-4 ">Posts to Approve</p>
+                <div className="absolute right-0">
+                    <SmallButton option={1} value={"Button"} type={button} onClick={()=> {setModalIsOpen(true)}}/>
+                </div>
+
             </div>
             <div className="w-full h-auto flex flex-col justify-start items-center ">
+
 
                 {data.map((item) => (
                     <PostApprovalbox key={item.id} id={item.id} name={item.name} username={item.username} description={item.description} price={item.price} category={item.category} time={item.time}/>
                 ))}
 
             </div>
-
-
         </>
     )
 }
