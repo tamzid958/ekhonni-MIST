@@ -5,9 +5,7 @@ import "./globals.css";
 const montserrat = Montserrat({ subsets: ["latin"] });
 
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import Search from "@/components/Search";
-import {Toaster} from "sonner";
+import {StoreProvider} from "@/Store/StoreProvider";
 
 
 export const metadata = {
@@ -18,11 +16,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
 
   return (
-    <html lang="en">
-      <body className={montserrat.className}>
-          {children}
-          <Footer/>
-      </body>
-    </html>
+      <StoreProvider>
+          <html lang="en">
+              <body className={montserrat.className}>
+                  {children}
+                  <Footer/>
+              </body>
+          </html>
+      </StoreProvider>
   );
 }

@@ -96,7 +96,7 @@ const CategoryDropdown = ({name , setCategory , setSubCategory}) => {
         {
             category: "Toy",
             SubCategories: [
-                "Action Figures & Playsets",
+                "Actions Figures & Playsets",
                 "Dolls & Accessories",
                 "Educational Toys",
                 "Building Blocks & Construction Sets",
