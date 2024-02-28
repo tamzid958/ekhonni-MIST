@@ -1,10 +1,11 @@
-import ProfileBox from "@/components/ProfileBox";
+import AdminNav from "@/components/AdminNav";
 
-const Checkout = ()=>{
+
+const Checkout = () => {
+
+
     return (
-        <>
-
-        </>
+        <AdminNav/>
     )
 }
 export default Checkout;
