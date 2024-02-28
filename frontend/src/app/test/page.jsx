@@ -9,8 +9,8 @@ const TestPage = () => {
     const [modalIsOpen , setModalIsOpen] = useState(true);
     return (
         <>
-            {/*<BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={false} productID={productID} />*/}
-            <SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={biddingActive}/>
+            <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={false} productID={2} />
+            {/*<SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={biddingActive}/>*/}
         </>
     )
 }
