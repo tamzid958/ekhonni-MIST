@@ -12,7 +12,6 @@ const ProfileCard =()=>{
     const inputRef = useRef(null);
     const [img,setimg] = useState("");
     const token = localStorage.getItem("token");
-    const Email = localStorage.getItem("currentUserEmail");
     const imageClick = ()=>{
         inputRef.current.click();
     }
@@ -28,8 +27,7 @@ const ProfileCard =()=>{
 
 
         formData.append("imageFile", img);
-        const email = { "email": Email };
-        formData.append("appUser", new Blob([JSON.stringify(email)],{type: 'application/json'}));
+
 
         // for (const [key, value] of formData.entries()) {
         //     if (value instanceof File) {
