@@ -28,7 +28,6 @@ const LoginPage = () => {
             .then((res)=>{
                 const { token } = res.data;
                 localStorage.setItem("token" , token);
-                localStorage.setItem("currentUserEmail" , email);
                 console.log(token);
                 toast.success("Logged in Successfully")
                 router.push('/');
