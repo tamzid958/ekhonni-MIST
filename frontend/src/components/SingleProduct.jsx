@@ -60,9 +60,9 @@ const SingleProduct = ({name,location,time,description,category,price, maxbid,to
                         <div className="w-[25%] h-full pl-4 ">
                             <SmallButton value={"Details"} option={"1"} type={"button"}/>
                         </div>
-                        <div className="w-[25%] h-full">
-                            <SmallButton value={"Revert"} option={"1"} type={"button"}/>
-                        </div>
+                        {/*<div className="w-[25%] h-full">*/}
+                        {/*    <SmallButton value={"Revert"} option={"1"} type={"button"}/>*/}
+                        {/*</div>*/}
 
                     </div>
                 </div>
