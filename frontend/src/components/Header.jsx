@@ -4,16 +4,19 @@ import Button from "@/components/Button";
 import {useState,useEffect} from "react";
 import ProfileBox from "@/components/ProfileBox";
 import Link from "next/link";
+import NotificationListModal from "@/components/NotificationListModal";
 
 
 const Header = () => {
     const [profileModel,setProfileModel] = useState(false);
+
     const [Token,setToken] = useState(false);
 
+    const [notificationModalOpen , setNotificationModalOpen] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        setToken(token);
+        setToken(true);
     }, []);
 
 
@@ -21,7 +24,40 @@ const Header = () => {
         if(profileModel){
             setProfileModel(false);
         }
+        if(notificationModalOpen){
+            setNotificationModalOpen(false);
+        }
     }
+
+    const notificationList = [
+        {id : "1",
+            message : "Your product has been approved",
+            link : "link",
+            buttonText: "Go to your products",
+            time : "3:52 PM"},
+        {id : "2",
+            message : "Your product has been sold",
+            link : "link",
+            buttonText: "Go to your products",
+            time : "4:35 PM"},
+        {id : "3",
+            message : "Your bid has been selected",
+            link : "link",
+            buttonText: "Go to your bids",
+            time : "5:09 PM"},
+        {id : "4",
+            message : "Your product has been approved",
+            link : "link",
+            buttonText: "Go to your products",
+            time : "6:15 PM"},
+        {id : "5",
+            message : "Your product has been rejected",
+            link : "link",
+            buttonText: "Go to your products",
+            time : "7:30 PM"}
+    ]
+    const notificationsNo = notificationList.length;
+    const [notifications , setNotifications] = useState(notificationsNo);
     return (
         <>
             <div onClick={CloseModel}>
@@ -39,12 +75,19 @@ const Header = () => {
                         </div>
                     </div>
                     <div className="flex my-auto">
-                        <div className="flex my-auto px-5">
-                            <Image src={"./notification.svg"} alt={"message"} width={20} height={20} className=" mr-4"/>
+                        <div className="flex my-auto px-5 cursor-pointer relative" onClick={() => {setNotificationModalOpen(!notificationModalOpen)}}>
+                            <Image src={"./notification.svg"} alt={"message"} width={20} height={20} className="mr-4"/>
+                            {notifications !== 0 && !notificationModalOpen && (
+                                <div className="absolute -top-2 right-36 w-5 h-5 flex items-center justify-center text-white bg-rose-600 opacity-85 text-xs rounded-full">
+                                    <span>{notifications}</span>
+                                </div>
+                            )
+                            }
                             <p className=" text-lg font-semibold">Notifications</p>
                         </div>
-                        <div className="flex my-auto px-5 cursor-pointer" onClick={() => setProfileModel(prevState => !prevState)}>
-                            <Image src={"./user.svg"} alt={"message"} width={20} height={20} className=" mr-4"/>
+                        <div className="flex my-auto px-5 cursor-pointer"
+                             onClick={() => setProfileModel(prevState => !prevState)}>
+                        <Image src={"./user.svg"} alt={"message"} width={20} height={20} className=" mr-4"/>
                             <p className=" text-lg font-semibold">Account</p>
                         </div>
                         {Token? <Link href={"/add-product"}>
@@ -53,6 +96,8 @@ const Header = () => {
                     </div>
                 </div>
                 {profileModel && <ProfileBox /> }
+                {notificationModalOpen && <NotificationListModal setModalOpen={setNotificationModalOpen} setNotifications={setNotifications} notificationList={notificationList}/>}
+
             </div>
         </>
     )

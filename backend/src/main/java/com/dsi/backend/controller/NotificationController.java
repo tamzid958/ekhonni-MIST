@@ -3,6 +3,7 @@ package com.dsi.backend.controller;
 import com.dsi.backend.model.Notification;
 import com.dsi.backend.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,19 +13,19 @@ public class NotificationController {
     @Autowired
     NotificationService notificationService;
     @PostMapping("/save")
-    public ResponseEntity<?> saveNotification(@RequestBody Notification notification){
+    public ResponseEntity<?> saveNotification(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestBody Notification notification){
 
-        return ResponseEntity.ok(notificationService.saveNotification(notification));
+        return ResponseEntity.ok(notificationService.saveNotification(token, notification));
     }
 
-    @GetMapping("/fetch/{email}")
-    public ResponseEntity<?> fetchNotification(@PathVariable String email){
-        return ResponseEntity.ok(notificationService.fetchNotification(email));
+    @GetMapping("/fetch")
+    public ResponseEntity<?> fetchNotification(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        return ResponseEntity.ok(notificationService.fetchNotification(token));
     }
 
-    @DeleteMapping("/delete/all/{email}")
-    public ResponseEntity<?> clearAllNotification(@PathVariable String email){
-        return ResponseEntity.ok(notificationService.clearAllNotification(email));
+    @DeleteMapping("/delete/all")
+    public ResponseEntity<?> clearAllNotification(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        return ResponseEntity.ok(notificationService.clearAllNotification(token));
     }
 
     @DeleteMapping("/delete/{id}")

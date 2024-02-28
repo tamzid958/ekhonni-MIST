@@ -1,14 +1,14 @@
 package com.dsi.backend.repository;
 
 import com.dsi.backend.model.Product;
-import com.dsi.backend.model.ProductView;
+import com.dsi.backend.projection.ProductView;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long>, CustomRepository {
 
     List<Product> findByIsApprovedByAdminFalse();
     List<Product> findByIsApprovedByAdminTrue();
