@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 //projection using interface
 public interface ProductView {
-    String getId();
+    Long getId();
     String getName();
     String getSize();
     String getDescription();
