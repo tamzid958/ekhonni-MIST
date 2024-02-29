@@ -6,7 +6,7 @@ import jakarta.persistence.OneToOne;
 
 public interface AppUserView {
 
-    String getId();
+    Long getId();
     String getName();
     String getEmail();
     String getContact();

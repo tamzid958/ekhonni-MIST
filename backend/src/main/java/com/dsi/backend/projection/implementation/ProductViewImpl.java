@@ -17,8 +17,8 @@ public class ProductViewImpl implements ProductView {
     }
 
     @Override
-    public String getId() {
-        return String.valueOf(product.getId());
+    public Long getId() {
+        return product.getId();
     }
 
     @Override

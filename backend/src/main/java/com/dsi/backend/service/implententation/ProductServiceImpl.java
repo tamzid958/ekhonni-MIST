@@ -92,8 +92,12 @@ public class ProductServiceImpl implements ProductService {
 //        return productRepository.findByIsApprovedByAdminTrue();
 //    }
 
-    public Product getProductById(Long id) {
-        return productRepository.findById(id).orElseThrow(()->new ProductNotFoundException("Product not found by id: "+id));
+    public ProductView getProductById(Long id) {
+        Product product = productRepository.findById(id).orElseThrow(()->new ProductNotFoundException("Product not found by id: "+id));
+//        Product product = productRepository.findById(id);
+        ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
+        return projectionFactory.createProjection(ProductView.class, product);
+
     }
 
     public Set<String> getCategoriesBySubcategories(List<String> subcategories) {

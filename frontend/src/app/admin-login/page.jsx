@@ -1,29 +1,30 @@
 "use client"
 
-import {FormEvent, useState} from "react";
-import { useRouter } from "next/navigation"
+import {useState} from "react";
+import {useRouter} from "next/navigation"
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import axios from "axios";
-import {router} from "next/client";
+
 import {toast, Toaster} from "sonner";
 
 const AdminLogin = () => {
-    const [email , setEmail] = useState("");
-    const [password , setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const router = useRouter()
     const [route, setRoute] = useState()
+
     async function handleSubmit(event) {
         event.preventDefault();
         const formDataObject = {
-            email : email,
-            password : password
+            email: email,
+            password: password
         };
-       // const formData = JSON.stringify(formDataObject);
+        // const formData = JSON.stringify(formDataObject);
         // console.log(formData);
-        axios.post('http://localhost:8080/api/v1/admin/login' , formDataObject)
-            .then((response)=>{
-                if(response.status === 200) {
+        axios.post('http://localhost:8080/api/v1/admin/login', formDataObject)
+            .then((response) => {
+                if (response.status === 200) {
                     localStorage.setItem("token", response.data.token);
                     localStorage.setItem("currentUserEmail", email);
 
@@ -32,19 +33,20 @@ const AdminLogin = () => {
                     router.push("/admin-page");
                 }
             })
-            .catch((err)=>{
-                console.error("Err :"+err);
+            .catch((err) => {
+                console.error("Err :" + err);
                 toast.error("Incorrect Credential.")
             })
 
     }
+
     return (
 
 
         <>
             <Toaster richColors position={"top-right"}/>
             <form onSubmit={handleSubmit}>
-                <div className="w-screen h-[700px] flex justify-center items-center">
+                <div className="w-full h-[700px] flex justify-center items-center">
 
                     <div
                         className="w-[690px] h-[400px] border-2 border-black flex flex-row justify-start items-center rounded-lg">
@@ -58,14 +60,14 @@ const AdminLogin = () => {
                                 <TextField placeholder={"Email"} type={"text"} name={"email"} value={email}
                                            onChange={(e) => {
                                                setEmail(e.target.value)
-                                            }}/>
+                                           }}/>
                                 <TextField placeholder={"Password"} type={"password"} name={"password"} value={password}
                                            onChange={(e) => {
                                                setPassword(e.target.value)
                                            }}/>
                             </div>
                             <div className=" w-full h-1/5 flex flex-col justify-start items-center">
-                                <Button value={"Login"} option={1} type={"submit"} />
+                                <Button value={"Login"} option={1} type={"submit"}/>
                             </div>
                         </div>
                         {/*{New Here Div}*/}

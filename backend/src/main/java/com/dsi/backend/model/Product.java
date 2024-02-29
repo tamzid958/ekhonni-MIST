@@ -30,6 +30,7 @@ public class Product extends BaseEntity<Long>{
     private Boolean isBidActive;
     private LocalDateTime productTime;
     private Boolean isVisible;
+    private Long finalBuyerId;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "product_image",

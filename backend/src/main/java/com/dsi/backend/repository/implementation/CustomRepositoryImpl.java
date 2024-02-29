@@ -37,7 +37,7 @@ public class CustomRepositoryImpl implements CustomRepository {
         List<String> categoryNames = new ArrayList<>();
         List<String> subCategoryNames = new ArrayList<>();
 
-        if (f.categories() != null) {
+        if (f.categories() != null && !f.categories().isEmpty()) {
             for (CategoryRecord c : f.categories()) {
                 if (c.subcategories() != null && !c.subcategories().isEmpty()) {
                     subCategoryNames.addAll(c.subcategories());
@@ -87,13 +87,18 @@ public class CustomRepositoryImpl implements CustomRepository {
         return new PageImpl<>(productViews, pageable, total);
     }
 
+//    @Override
+//    public void toggleIsBidActive(Long id) {
+//
+//    }
+
     private void populateParams(TypedQuery<?> query, FilterRequest f, Pageable pageable, List<String> categoryNames, List<String> subCategoryNames ) {
         if (f.startPrice() < f.endPrice()) {
             query.setParameter("start_price", f.startPrice());
             query.setParameter("end_price", f.endPrice());
         }
 
-        if (f.categories() != null) {
+        if (f.categories() != null && !f.categories().isEmpty()) {
             if (!categoryNames.isEmpty() && !subCategoryNames.isEmpty()) {
                 query.setParameter("category_names", categoryNames);
                 query.setParameter("sub_category_names", subCategoryNames);

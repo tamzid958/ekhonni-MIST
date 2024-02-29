@@ -1,8 +1,7 @@
 "use client"
 
 import Image from "next/image";
-import axios from "axios";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Button from "@/components/Button";
 import SellerSelectModal from "@/components/SellerSelectModal";
 import BuyerBidModal from "@/components/BuyerBidModal";
@@ -73,12 +72,13 @@ const ProductPage = ({params}) => {
 
     return (
         <>
+
             <Header/>
             {userIsSeller && modalIsOpen &&
                 <SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={isBidActive}/>}
             {!userIsSeller && modalIsOpen &&
-                <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={isVisible}
-                               productID={productID}/>}
+                <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={isVisible} productID={productID}/>}
+
             <div className="w-full h-[700px] flex flex-col justify-center items-center">
                 <div className="flex w-full justify-center items-center ">
                     <h1 className="font-semibold text-4xl mb-[1%]">Product Details</h1>
@@ -124,19 +124,13 @@ const ProductPage = ({params}) => {
                             </div>
                             <div className="w-full h-1/5 flex justify-center items-center border-b">
                                 {userIsSeller && !isSold &&
-                                    (<Button value={"View Bids"} option={1} type={"button"} onClick={() => {
-                                        setModalIsOpen(true)
-                                    }}/>)}
+                                    (<Button value={"View Bids"} option={1} type={"button"} onClick={() => {setModalIsOpen(true)}}/>)}
                                 {!userIsSeller && isBidActive && !isSold &&
-                                    (<Button value={"Bid"} option={1} type={"button"}
-                                             onClick={() => setModalIsOpen(true)}/>)}
+                                    (<Button value={"Bid"} option={1} type={"button"} onClick={() => setModalIsOpen(true)}/>)}
                                 {!userIsSeller && !isBidActive && !isSold &&
-                                    (
-                                        <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding
-                                            Is Off</p>)}
+                                    (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding Is Off</p>)}
                                 {isSold &&
-                                    (
-                                        <p className="px-4 py-1 cursor-default bg-black text-white text-2xl font-medium shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
+                                    (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl font-medium shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
                             </div>
                         </div>
                     </div>
