@@ -34,4 +34,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, CustomR
     @Query(value = "UPDATE product p SET is_bid_active = NOT(is_bid_active) WHERE p.id = :id", nativeQuery = true) // nativeQuery = true means it implements SQL query based on whatever DB we are using. In our case PostgresSQL
     void toggleIsBidActive(@Param("id") Long id);
 
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE product p SET is_visible = NOT(is_visible) WHERE p.id = :id", nativeQuery = true)
+    void toggleIsBidVisibility(Long id);
 }

@@ -46,5 +46,14 @@ public class BidController {
         else return new ResponseEntity<>("Unauthorized action.", HttpStatus.UNAUTHORIZED);
     }
 
+    @PostMapping("/visibility")
+    public ResponseEntity<?> changeBidVisibility(@RequestParam Long id, String token) {
+        String email = jwtTokenService.getUsernameFromToken(token);
+        Boolean result = bidService.changeBidVisibilityStatus(id, email);
+        if (result !=null)
+            return new ResponseEntity<>("Visibility status change successful. Current Status :"+ result, HttpStatus.OK);
+        else return new ResponseEntity<>("Unauthorized action.", HttpStatus.UNAUTHORIZED);
+    }
+
 
 }

@@ -89,4 +89,15 @@ public class BidServiceImpl implements BidService{
         }
         return null;
     }
+
+    @Override
+    public Boolean changeBidVisibilityStatus(Long id, String email) {
+        Product product = productService.getProductById(id);
+
+        if (Objects.equals(product.getSeller().getEmail(), email)){
+            productRepository.toggleIsBidVisibility(id);
+            return !product.getIsVisible();
+        }
+        return null;
+    }
 }

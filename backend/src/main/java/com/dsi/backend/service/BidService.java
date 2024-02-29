@@ -10,4 +10,6 @@ public interface BidService {
     List<Bid> fetchBids(Long id, String email);
 
     Boolean changeBidActiveStatus(Long id, String email);
+
+    Boolean changeBidVisibilityStatus(Long id, String email);
 }
