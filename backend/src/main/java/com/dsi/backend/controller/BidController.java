@@ -66,9 +66,18 @@ public class BidController {
 
         AppUser result = bidService.updateFinalBuyer(id, sellerEmail, buyerEmail);
         if (result !=null)
-            return new ResponseEntity<>("Buyer added successfully. Current Status : " + result, HttpStatus.OK);
+            return new ResponseEntity<>("Buyer added successfully. Current Buyer : " + result, HttpStatus.OK);
         else return new ResponseEntity<>("Unauthorized action.", HttpStatus.UNAUTHORIZED);
     }
 
+    @PostMapping("/revert-buyer")
+    public ResponseEntity<?> revertBuyer(@RequestParam Long id, String token) {
+        String sellerEmail = jwtTokenService.getUsernameFromToken(token);
+
+        Boolean result = bidService.revertFinalBuyer(id, sellerEmail);
+        if (result)
+            return new ResponseEntity<>("Buyer reverted successfully", HttpStatus.OK);
+        else return new ResponseEntity<>("Unauthorized action.", HttpStatus.UNAUTHORIZED);
+    }
 
 }

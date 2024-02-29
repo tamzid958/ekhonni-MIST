@@ -48,4 +48,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>, CustomR
     @Transactional
     @Query(value = "UPDATE product p SET final_buyer_id = :buyer_id WHERE p.id = :product_id", nativeQuery = true)
     void updateFinalBuyerId(Long buyer_id, Long product_id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE product p SET final_buyer_id = NULL WHERE p.id = :product_id", nativeQuery = true)
+    void revertFinalBuyerId(Long product_id);
 }

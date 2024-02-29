@@ -112,4 +112,15 @@ public class BidServiceImpl implements BidService{
         }
         return null;
     }
+
+    @Override
+    public Boolean revertFinalBuyer(Long id, String sellerEmail) {
+        Product product = productService.getProductById(id);
+
+        if (Objects.equals(product.getSeller().getEmail(), sellerEmail)){
+            productRepository.revertFinalBuyerId(id);
+            return true;
+        }
+        return false;
+    }
 }

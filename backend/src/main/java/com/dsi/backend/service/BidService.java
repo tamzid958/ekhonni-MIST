@@ -16,4 +16,6 @@ public interface BidService {
 
     AppUser updateFinalBuyer(Long id, String sellerEmail, String buyerEmail);
 
+    Boolean revertFinalBuyer(Long id, String sellerEmail);
+
 }
