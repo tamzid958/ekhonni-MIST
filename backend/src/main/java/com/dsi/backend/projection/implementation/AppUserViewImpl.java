@@ -12,8 +12,8 @@ class AppUserViewImpl implements AppUserView {
     }
 
     @Override
-    public String getId() {
-        return String.valueOf(appUser.getId());
+    public Long getId() {
+        return appUser.getId();
     }
 
     @Override

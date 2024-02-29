@@ -48,9 +48,6 @@ const AddProductPage = () => {
             "description" : description,
             "startingPrice" : startingPrice,
             "usedCondition" : usedCondition,
-            "seller" : {
-                "email" : localStorage.getItem('currentUserEmail')
-            },
             "isVisible" : isVisible
         });
         formData.append("product", new Blob([JSON.stringify(product)],{type: 'application/json'}));
@@ -73,9 +70,6 @@ const AddProductPage = () => {
             "description" : description,
             "startingPrice" : startingPrice,
             "usedCondition" : usedCondition,
-            "seller" : {
-                "email" : localStorage.getItem('currentUserEmail')
-            },
             "isVisible" : isVisible
         });
         formData.append("product", new Blob([JSON.stringify(product)],{type: 'application/json'}));
