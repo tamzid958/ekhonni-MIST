@@ -8,13 +8,17 @@ import NotificationListModal from "@/components/NotificationListModal";
 
 
 const Header = () => {
+
     const [profileModel, setProfileModel] = useState(false);
-    const [Email, setEmail] = useState(false);
+
+    const [Token, setToken] = useState(false);
+
     const [notificationModalOpen, setNotificationModalOpen] = useState(false);
 
+
     useEffect(() => {
-        const localStorageEmail = localStorage.getItem('currentUserEmail');
-        setEmail(localStorageEmail);
+        const token = localStorage.getItem("token");
+        setToken(token);
     }, []);
 
 
@@ -102,15 +106,18 @@ const Header = () => {
                             <Image src={"./user.svg"} alt={"message"} width={20} height={20} className=" mr-4"/>
                             <p className=" text-lg font-semibold">Account</p>
                         </div>
-                        {Email ? <Link href={"/add-product"}>
+
+                        {Token ? <Link href={"/add-product"}>
                             <Button value="Post Ad" option={1} type={"submit"}/>
                         </Link> : <Link href={"/login"}><Button value="Log in" option={1} type={"submit"}/></Link>}
                     </div>
                 </div>
-                {profileModel && <ProfileBox email={Email}/>}
+                {profileModel && <ProfileBox/>}
+
                 {notificationModalOpen &&
                     <NotificationListModal setModalOpen={setNotificationModalOpen} setNotifications={setNotifications}
                                            notificationList={notificationList}/>}
+
             </div>
         </>
     )

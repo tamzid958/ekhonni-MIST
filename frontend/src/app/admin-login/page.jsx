@@ -46,7 +46,7 @@ const AdminLogin = () => {
         <>
             <Toaster richColors position={"top-right"}/>
             <form onSubmit={handleSubmit}>
-                <div className="w-screen h-[700px] flex justify-center items-center">
+                <div className="w-full h-[700px] flex justify-center items-center">
 
                     <div
                         className="w-[690px] h-[400px] border-2 border-black flex flex-row justify-start items-center rounded-lg">

@@ -7,7 +7,6 @@ const InputBox = ({Name, value, type}) => {
     const [edit, setEdit] = useState(false);
     const [data, setData] = useState(value);
     const user = useContext(UserContext);
-    const email = localStorage.getItem("currentUserEmail");
     const token = localStorage.getItem("token");
     const handleEdit = () => {
         setEdit(!edit);
@@ -21,7 +20,8 @@ const InputBox = ({Name, value, type}) => {
                 [name]: data
             }
             console.log(JSON.stringify(UpdateValue));
-            axios.put(`http://localhost:8080/api/v1/user/profile/update/${email}`, UpdateValue, {
+            axios.put(`http://localhost:8080/api/v1/user/profile/update`, UpdateValue, {
+
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json' // Specify content type if required

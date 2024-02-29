@@ -10,7 +10,7 @@ import Header from "@/components/Header";
 
 const ProductPage = ({params}) => {
 
-    const userIsSeller = true;
+    const userIsSeller = false;
     const biddingActive = true;
     const isSold = false;
     const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -34,11 +34,13 @@ const ProductPage = ({params}) => {
     // }
     return (
         <>
+
             <Header/>
             {userIsSeller && modalIsOpen &&
                 <SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={biddingActive}/>}
             {!userIsSeller && modalIsOpen &&
-                <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={false} productID={productID}/>}
+                <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={true} productID={productID}/>}
+
             <div className="w-full h-[700px] flex flex-col justify-center items-center">
                 <div className="flex items-center justify-start ">
                     <h1 className="font-semibold text-4xl mb-[1%]">Product Details</h1>
