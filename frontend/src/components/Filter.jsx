@@ -15,42 +15,54 @@ const Filter = () => {
     const filteredItem = useSelector((state) => state.filter);
     const product = useSelector((state) => state.product);
 
-    let combinations = [];
+    let allFilter = [];
+    const initialState = {
+        pageNumber:0,
+        categories: [
+            {
+                name: "Electronics",
+                subCategories: ["Smartphones & Tablets"]
+            },
+            {
+                name: "Furniture",
+                subCategories: ["Table"]
+            },
 
-// Loop through categories and their subcategories
-//     filteredItem.categories.forEach(category => {
-//         category.subCategories.forEach(subCategory => {
-//             combinations.push({
-//                 category: category.name,
-//                 subCategory: subCategory,
-//             });
-//         });
-//     });
-//     filteredItem.division.forEach(division => {
-//         // Push the combination to the combinations array
-//
-//     });
+        ],
+        startPrice:2000,
+        endPrice: 100000,
+        search:null,
+        division:["Dhaka","Khulna"],
+        sort:"High to low"
 
+    };
+    const {categories,division} = filteredItem;
+
+    categories.map((category,index)=>{
+        allFilter.push(category.name);
+        category.subCategories.forEach((subCategories)=>{
+            allFilter.push(subCategories);
+        })
+    })
+    allFilter = [...allFilter,...division];
     useEffect(() => {
-        console.log(combinations)
-        console.log(filteredItem)
+        dispatch(addPrice(RangeValue))
+    }, [RangeValue]);
+    useEffect(() => {
+        // console.log(allFilter)
         dispatch(fetchProduct({filter:filteredItem}))
-        console.log(product)
     }, [filteredItem]);
 
 
     function valueFunction(msg) {
         setRangeValue(msg);
-        console.log("Filter: "+msg);
-        dispatch(addPrice(RangeValue))
+        // dispatch(addPrice(msg))
     }
 
     const handleCategoryClick = (index) => {
         if (selectedCategory === index) {
-            // If the clicked category is already selected, deselect it
             setSelectedCategory(null);
         } else {
-            // Otherwise, select the clicked category
             setSelectedCategory(index);
         }
     };
@@ -183,8 +195,8 @@ const Filter = () => {
                     </div>
                     <div className="my-1 flex flex-wrap flex-shrink-0">
                         {
-                            combinations && combinations.map((data, index) => (
-                                <CrossButton key={index} text={combinations[index]}/>
+                            allFilter && allFilter.map((data, index) => (
+                                <CrossButton key={index} text={data} />
                             ))
                         }
                     </div>
@@ -247,7 +259,7 @@ const Filter = () => {
                         <h3 className="my-1 text-gray-400">Current Range: ৳ {RangeValue[1] - RangeValue[0]}</h3>
                     </div>
                     <div className={"pb-5"}>
-                        <Range max={5000} min={0} valueFunction={valueFunction}/>
+                        <Range max={1000000} min={0} valueFunction={valueFunction}/>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,7 @@ import {deleteIndividual} from "@/Actions/filter";
 
 const CrossButton = ({text})=>{
     const dispatch = useDispatch();
+
     return (
         <>
             <button className="bg-gray-100 p-2 flex rounded-md mx-2 my-3">

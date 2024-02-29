@@ -5,18 +5,18 @@ import {
     ADD_SORT_FILTER,
     ADD_SUBCATEGORY_FILTER,
     CLEAR_ALL_FILTER,
-    DELETE_INDIVIDUAL_PRODUCT, SEARCH_PRODUCT
+    DELETE_INDIVIDUAL_PRODUCT, SEARCH_PRODUCT, UPDATE_PAGE
 } from "@/Actions/constants";
 
 
 const initialState = {
     pageNumber:0,
     categories: [],
-    startPrice:0,
-    endPrice: 100000,
+    startPrice:null,
+    endPrice: null,
     search:null,
     division:[],
-    sort:""
+    sort:null
 
 };
 
@@ -63,7 +63,7 @@ const filterReducer = (state = initialState, action) => {
                 endPrice: action.payload[1],
             };
         case ADD_SORT_FILTER:
-            if (state.sort.includes(action.payload)) {
+            if (state.sort !== null ) {
                 return state;
             }
             return {
@@ -75,13 +75,30 @@ const filterReducer = (state = initialState, action) => {
                 ...state,
                 search: action.payload
             }
+        case UPDATE_PAGE:
+            return {
+                ...state,
+                pageNumber: action.payload
+            }
         case CLEAR_ALL_FILTER:
             return initialState;
         case DELETE_INDIVIDUAL_PRODUCT:
             const updatedState = { ...state };
             for (const key in updatedState) {
-                if(Array.isArray(updatedState[key])){
-                    updatedState[key] = updatedState[key].filter(item => item !== action.payload);
+                if (Array.isArray(updatedState[key])) {
+                    if (key === 'categories') {
+                        updatedState[key] = updatedState[key].map(category => {
+                            const updatedCategory = { ...category };
+                            if (updatedCategory.name === action.payload) {
+                                return null;
+                            } else {
+                                updatedCategory.subCategories = updatedCategory.subCategories.filter(subCategory => subCategory !== action.payload);
+                                return updatedCategory;
+                            }
+                        }).filter(category => category !== null);
+                    } else {
+                        updatedState[key] = updatedState[key].filter(item => item !== action.payload);
+                    }
                 }
             }
             return updatedState;

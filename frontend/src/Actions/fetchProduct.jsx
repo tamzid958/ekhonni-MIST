@@ -8,7 +8,12 @@ const initialState = {
         {
             name: "Electronics",
             subCategories: ["Smartphones & Tablets"]
-        }
+        },
+        {
+            name: "Furniture",
+            subCategories: ["Table"]
+        },
+
     ],
     startPrice:2000,
     endPrice: 100000,
@@ -19,25 +24,15 @@ const initialState = {
 };
 
 export const fetchProduct = ({filter})=>{
-    // console.log(id)
-    // Object.keys(filter).forEach(key => {
-    //     if (Array.isArray(filter[key])) {
-    //         console.log(`${key}:`);
-    //         filter[key].forEach(item => {
-    //             console.log(item);
-    //         });
-    //     } else {
-    //         console.log(`${key}: ${filter[key]}`);
-    //     }
-    // });
-//    const url = `${api}/${id}?categories=${filter.category.join('&categories=')}&subCategories=${filter.subCategory.join('&subCategories=')}&division=${filter.division.join('&division=')}&price=${filter.price.join('&price=')}&sort=${filter.sort}`;
     const api = "http://localhost:8080/api/v1/products/filter"
-
+    // for (let key in filter) {
+    //     console.log(`${key}:`, filter[key]);
+    // }
     return (dispatch)=>{
         dispatch(getProductRequest())
         axios.post(api,filter)
             .then(res =>{
-                console.log(res.data);
+                // console.log(res.data);
                 const products = res.data;
                 dispatch(getProductSuccess(products))
             })

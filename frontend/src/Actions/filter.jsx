@@ -6,7 +6,7 @@ import {
     ADD_SUBCATEGORY_FILTER,
     CLEAR_ALL_FILTER,
     DELETE_INDIVIDUAL_PRODUCT,
-    SEARCH_PRODUCT
+    SEARCH_PRODUCT, UPDATE_PAGE
 } from "@/Actions/constants";
 
 export const addCategory = (category) => {
@@ -55,5 +55,11 @@ export const deleteIndividual = (data) => {
     return {
         type: DELETE_INDIVIDUAL_PRODUCT,
         payload: data
+    }
+}
+export const updatePage = (page) => {
+    return {
+        type: UPDATE_PAGE,
+        payload: page
     }
 }
