@@ -11,11 +11,10 @@ import Header from "@/components/Header";
 
 const ProductPage = ({ params }) => {
 
-    const userIsSeller = true;
-    const biddingActive = false;
+    const userIsSeller = false;
+    const biddingActive = true;
     const isSold = false;
     const [modalIsOpen , setModalIsOpen] = useState(false);
-    const currentUserEmail = localStorage.getItem("currentUserEmail");
     const [data , setData] = useState([]);
     const productID = params.id;
     // const  fetchProductDetails = async () => {
@@ -40,7 +39,9 @@ const ProductPage = ({ params }) => {
             {userIsSeller && modalIsOpen && <SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={biddingActive}/>}
             {!userIsSeller && modalIsOpen && <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={true} productID={productID} />}
             <div className="w-full h-[700px] flex flex-col justify-center items-center">
-                <h1 className="font-semibold text-4xl mb-[1%]">Product Details</h1>
+                <div className="flex items-center justify-start ">
+                    <h1 className="font-semibold text-4xl mb-[1%]">Product Details</h1>
+                </div>
                 <div className="w-4/5 h-5/6 border-2 border-black flex flex-row justify-start items-center rounded-lg">
                     <div className="w-1/2 h-full  flex justify-center items-center">
                         <div className="w-[95%] h-[95%] -z-10 relative">
