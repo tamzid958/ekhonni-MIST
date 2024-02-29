@@ -23,4 +23,5 @@ public interface ProductRepository extends JpaRepository<Product, Long>, CustomR
     List<Product> findByIsApprovedByAdminTrueAndSellerDivisionIn(List<String> division);
     List<Product> findByIsApprovedByAdminTrueAndStartingPriceBetween(Double minPrice, Double maxPrice);
     List<Product> findByIsApprovedByAdminTrueAndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String searchKey1,String searchKey2);
+    //Product findById(Long id);
 }

@@ -3,6 +3,7 @@ package com.dsi.backend.controller;
 import com.dsi.backend.model.Bid;
 import com.dsi.backend.model.Product;
 import com.dsi.backend.service.BidService;
+import com.dsi.backend.service.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +16,19 @@ public class BidController {
     @Autowired
     public BidService bidService;
 
+    @Autowired
+    private JwtTokenService jwtTokenService;
+
     @PostMapping("/save")
-    public ResponseEntity<?> saveBid(@RequestBody Bid bid) {
-        return new ResponseEntity<>(bidService.saveBid(bid), HttpStatus.CREATED);
+    public ResponseEntity<?> saveBid(@RequestParam Long id, String token, Double offeredPrice) {
+        String email = jwtTokenService.getUsernameFromToken(token);
+        return new ResponseEntity<>(bidService.saveBid(id, email, offeredPrice), HttpStatus.CREATED);
     }
 
     @GetMapping("/fetch")
-    public ResponseEntity<?> fetchBids(@RequestBody Product product) {
-        return new ResponseEntity<>(bidService.fetchBids(product), HttpStatus.OK);
+    public ResponseEntity<?> fetchBids(@RequestParam Long id, String token) {
+        String email = jwtTokenService.getUsernameFromToken(token);
+        return new ResponseEntity<>(bidService.fetchBids(id, email), HttpStatus.OK);
     }
 
 
