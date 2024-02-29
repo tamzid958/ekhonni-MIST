@@ -15,7 +15,6 @@ const Profile =()=>{
     const email = localStorage.getItem("currentUserEmail");
     useEffect(() => {
 
-
         axios.get(`http://localhost:8080/api/v1/user/profile/${email}`,{
             headers: {
                 Authorization: `Bearer ${token}`,
