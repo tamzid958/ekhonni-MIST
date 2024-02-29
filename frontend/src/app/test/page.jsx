@@ -7,10 +7,11 @@ import {useState} from "react";
 const TestPage = () => {
     const biddingActive = true;
     const [modalIsOpen , setModalIsOpen] = useState(true);
+
     return (
         <>
-            {/*<BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={false} productID={productID} />*/}
-            <SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={biddingActive}/>
+            <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={true} productID={"2"} />
+            {/*<SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={biddingActive}/>*/}
         </>
     )
 }
