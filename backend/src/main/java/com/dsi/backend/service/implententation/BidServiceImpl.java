@@ -100,4 +100,16 @@ public class BidServiceImpl implements BidService{
         }
         return null;
     }
+
+    @Override
+    public AppUser updateFinalBuyer(Long id, String sellerEmail, String buyerEmail) {
+        Product product = productService.getProductById(id);
+        AppUser buyer = appUserRepository.findByEmail(buyerEmail);
+
+        if (Objects.equals(product.getSeller().getEmail(), sellerEmail)){
+            productRepository.updateFinalBuyerId(buyer.getId(), id);
+            return buyer;
+        }
+        return null;
+    }
 }
