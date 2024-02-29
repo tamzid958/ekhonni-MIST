@@ -37,5 +37,11 @@ public class BidController {
         return new ResponseEntity<>(bidService.fetchBids(id, email), HttpStatus.OK);
     }
 
+    @PostMapping("/activity")
+    public ResponseEntity<?> changeBidActivity(@RequestParam Long id, String token) {
+        String email = jwtTokenService.getUsernameFromToken(token);
+        return new ResponseEntity<>(bidService.changeBidActiveStatus(id, email), HttpStatus.OK);
+    }
+
 
 }

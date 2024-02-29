@@ -78,4 +78,15 @@ public class BidServiceImpl implements BidService{
             }
         }
     }
+
+    @Override
+    public Boolean changeBidActiveStatus(Long id, String email) {
+        Product product = productService.getProductById(id);
+
+        if (Objects.equals(product.getSeller().getEmail(), email)){
+            productRepository.toggleIsBidActive(id);
+            return true;
+        }
+        return null;
+    }
 }
