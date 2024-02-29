@@ -85,7 +85,7 @@ public class BidServiceImpl implements BidService{
 
         if (Objects.equals(product.getSeller().getEmail(), email)){
             productRepository.toggleIsBidActive(id);
-            return true;
+            return !product.getIsBidActive();
         }
         return null;
     }

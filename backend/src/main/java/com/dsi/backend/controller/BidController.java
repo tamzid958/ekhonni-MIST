@@ -40,7 +40,10 @@ public class BidController {
     @PostMapping("/activity")
     public ResponseEntity<?> changeBidActivity(@RequestParam Long id, String token) {
         String email = jwtTokenService.getUsernameFromToken(token);
-        return new ResponseEntity<>(bidService.changeBidActiveStatus(id, email), HttpStatus.OK);
+        Boolean result = bidService.changeBidActiveStatus(id, email);
+        if (result !=null)
+            return new ResponseEntity<>("Activity status change successful. Current Status :"+ result, HttpStatus.OK);
+        else return new ResponseEntity<>("Unauthorized action.", HttpStatus.UNAUTHORIZED);
     }
 
 
