@@ -4,6 +4,7 @@ import Button from "@/components/Button";
 import {useState,useEffect} from "react";
 import ProfileBox from "@/components/ProfileBox";
 import Link from "next/link";
+import AdminModal from "@/components/AdminModal";
 
 
 const AdminNav = () => {
@@ -25,11 +26,13 @@ const AdminNav = () => {
     }
     return (
         <>
+            {barClicked && <AdminModal/>}
             <div onClick={CloseModel}>
-                <div className=" px-6 w-full overflow-x-hidden h-[100px] border-black flex justify-between bg-slate-100">
+
+                <div className=" px-6 w-full overflow-x-hidden h-[100px] border-black flex justify-between bg-slate-100 ">
                     <div className="flex">
                         <div className="flex my-auto px-5" onClick={() => setBarClicked((state) => !state)}>
-                            {barClicked? <Image src={"./bar-staggered.svg"} alt={"bars"} width={30} height={30} className=" mr-4 cursor-pointer"/> : <Image src={"./bars.svg"} alt={"bars"} width={30} height={30} className=" mr-4 cursor-pointer"/>}
+                            {barClicked? <Image src={"./bar-staggered.svg"} alt={"bars"} width={30} height={30} className=" mr-4 cursor-pointer" /> : <Image src={"./bars.svg"} alt={"bars"} width={30} height={30} className=" mr-4 cursor-pointer" />}
                         </div>
                         <Link href={"/"} className={"my-auto"}>
                             <div className=" my-auto">

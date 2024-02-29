@@ -4,6 +4,8 @@ import SellerSelectModal from "@/components/SellerSelectModal";
 import AdminModal from "@/components/AdminModal";
 import {useState} from "react";
 import Header from "@/components/Header";
+import AddAdminModal from "@/components/AddAdminModal";
+import RemoveAdminModal from "@/components/RemoveAdminModal";
 
 
 
@@ -15,7 +17,7 @@ const TestPage =() =>
     return (
         <>
          <Header/>
-         <AdminModal isVisible={showModal}/>
+         <RemoveAdminModal isVisible={showModal}/>
 
 
         </>
