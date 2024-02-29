@@ -37,7 +37,7 @@ public class CustomRepositoryImpl implements CustomRepository {
         List<String> categoryNames = new ArrayList<>();
         List<String> subCategoryNames = new ArrayList<>();
 
-        if (f.categories() != null) {
+        if (f.categories() != null && !f.categories().isEmpty()) {
             for (CategoryRecord c : f.categories()) {
                 if (c.subcategories() != null && !c.subcategories().isEmpty()) {
                     subCategoryNames.addAll(c.subcategories());
