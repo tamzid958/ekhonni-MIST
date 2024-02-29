@@ -22,7 +22,13 @@ public class BidController {
     @PostMapping("/save")
     public ResponseEntity<?> saveBid(@RequestParam Long id, String token, Double offeredPrice) {
         String email = jwtTokenService.getUsernameFromToken(token);
-        return new ResponseEntity<>(bidService.saveBid(id, email, offeredPrice), HttpStatus.CREATED);
+        Bid bid = bidService.saveBid(id, email, offeredPrice);
+        if (bid != null) {
+            return new ResponseEntity<>(bid, HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @GetMapping("/fetch")

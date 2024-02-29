@@ -11,10 +11,7 @@ import com.dsi.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class BidServiceImpl implements BidService{
@@ -47,6 +44,10 @@ public class BidServiceImpl implements BidService{
         Product product = productService.getProductById(id);
         AppUser buyer = appUserRepository.findByEmail(email);
 
+        if (Objects.equals(product.getSeller().getEmail(), email)){
+            return null;
+        }
+
         Bid bid = bidRepository.findByProductIdAndBuyerEmail(id, email);
         if (bid != null) {
             bidRepository.delete(bid);
@@ -55,23 +56,26 @@ public class BidServiceImpl implements BidService{
         return bidRepository.save(newBid);
     }
 
-//    @Override
-//    public Set<Bid> fetchBids(Long id, String email) {
-//
-//        Product product = productService.getProductById(id);
-//
-//        if(Objects.equals(product.getSeller().getEmail(), email)) {
-//            return bidRepository.findAllByProductIdOrderByOfferedPriceDesc(product.getId());
-//        }
-//        else {
-//            if (product.getIsVisible()) {
-//                return bidRepository.findAllByProductIdOrderByOfferedPriceDesc(product.getId());
-//            }
-//            else {
-//                Set<Bid> bidList = new HashSet<>();
-//                bidList.add(bidRepository.findByProductIdAndBuyerEmail(id, email));
-//                return bidList;
-//            }
-//        }
-//    }
+    @Override
+    public List<Bid> fetchBids(Long id, String email) {
+
+        Product product = productService.getProductById(id);
+
+        if(Objects.equals(product.getSeller().getEmail(), email)) {
+            return bidRepository.findAllByProductIdOrderByOfferedPriceDesc(product.getId());
+        }
+        else {
+            if (product.getIsVisible()) {
+                return bidRepository.findAllByProductIdOrderByOfferedPriceDesc(product.getId());
+            }
+            else {
+                List<Bid> bidList = new ArrayList<>();
+                bidList.add(bidRepository.findByProductIdAndBuyerEmail(id, email));
+                bidList.add(bidRepository.findByProductIdOrderByOfferedPriceDesc(product.getId()));
+
+                bidList.sort(Comparator.comparingDouble(Bid::getOfferedPrice));
+                return bidList;
+            }
+        }
+    }
 }
