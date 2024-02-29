@@ -65,12 +65,12 @@ const Product = ()=>{
                             </div>
                         </div>
                         <div className={"w-4/5 mx-auto box-border"}>
-                            {/*{records.map((product,index)=>(<LargeCard key={index} img={product.img} name={product.name} desc={product.desc} price={product.price} />))}*/}
-                            {
-                                (isLoading && products.content) ? <><p>Loading.................</p></> : products.content.map((product,index)=>(<LargeCard key={index} img="/bike.jpg" name={product.name} desc={product.description} price={product.startingPrice} />))
-                            }
+                            {Products.map((product,index)=>(<LargeCard key={index} img={product.img} name={product.name} desc={product.desc} price={product.price} />))}
+                            {/*{*/}
+                            {/*    (isLoading && products.content) ? <><p>Loading.................</p></> : products.content.map((product,index)=>(<LargeCard key={index} img="/bike.jpg" name={product.name} desc={product.description} price={product.startingPrice} />))*/}
+                            {/*}*/}
                         </div>
-                        <Pagination  />
+                        {/*<Pagination  />*/}
                     </div>
 
                 </div>

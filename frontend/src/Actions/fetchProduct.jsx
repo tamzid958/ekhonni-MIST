@@ -1,9 +1,24 @@
 import {getProductRequest,getProductFailed,getProductSuccess} from "@/Actions/product";
 import axios from "axios";
 import categories from "@/components/Categories";
-const api = "http://localhost:8080/api/v1/products/page"
 
-export const fetchProduct = ({id,filter})=>{
+const initialState = {
+    pageNumber:0,
+    categories: [
+        {
+            name: "Electronics",
+            subCategories: ["Smartphones & Tablets"]
+        }
+    ],
+    startPrice:2000,
+    endPrice: 100000,
+    search:null,
+    division:["Dhaka","Khulna"],
+    sort:"High to low"
+
+};
+
+export const fetchProduct = ({filter})=>{
     // console.log(id)
     // Object.keys(filter).forEach(key => {
     //     if (Array.isArray(filter[key])) {
@@ -15,12 +30,14 @@ export const fetchProduct = ({id,filter})=>{
     //         console.log(`${key}: ${filter[key]}`);
     //     }
     // });
-    const url = `${api}/${id}?categories=${filter.category.join('&categories=')}&subCategories=${filter.subCategory.join('&subCategories=')}&division=${filter.division.join('&division=')}&price=${filter.price.join('&price=')}&sort=${filter.sort}`;
+//    const url = `${api}/${id}?categories=${filter.category.join('&categories=')}&subCategories=${filter.subCategory.join('&subCategories=')}&division=${filter.division.join('&division=')}&price=${filter.price.join('&price=')}&sort=${filter.sort}`;
+    const api = "http://localhost:8080/api/v1/products/filter"
 
     return (dispatch)=>{
         dispatch(getProductRequest())
-        axios.get(url)
+        axios.post(api,filter)
             .then(res =>{
+                console.log(res.data);
                 const products = res.data;
                 dispatch(getProductSuccess(products))
             })

@@ -11,6 +11,11 @@ const PriceRangeSlider = ({min,max,valueFunction}) => {
         // console.log(max/2-minPrice);
     },[minPrice,maxPrice])
 
+    useEffect(()=>{
+        valueFunction([max/2-minPrice,maxPrice]);
+        // console.log(max/2-minPrice);
+    },[])
+
 
     const handleMinChange = (e) => {
         setMinPrice(parseInt(e.target.value));

@@ -15,18 +15,33 @@ const Filter = () => {
     const filteredItem = useSelector((state) => state.filter);
     const product = useSelector((state) => state.product);
 
-    const {category, division, subCategory} = filteredItem;
-    const combinedArray = [...category, ...division, ...subCategory];
+    let combinations = [];
+
+// Loop through categories and their subcategories
+//     filteredItem.categories.forEach(category => {
+//         category.subCategories.forEach(subCategory => {
+//             combinations.push({
+//                 category: category.name,
+//                 subCategory: subCategory,
+//             });
+//         });
+//     });
+//     filteredItem.division.forEach(division => {
+//         // Push the combination to the combinations array
+//
+//     });
 
     useEffect(() => {
+        console.log(combinations)
         console.log(filteredItem)
-        dispatch(fetchProduct({id:0,filter:filteredItem}))
+        dispatch(fetchProduct({filter:filteredItem}))
         console.log(product)
     }, [filteredItem]);
 
 
     function valueFunction(msg) {
         setRangeValue(msg);
+        console.log("Filter: "+msg);
         dispatch(addPrice(RangeValue))
     }
 
@@ -168,8 +183,8 @@ const Filter = () => {
                     </div>
                     <div className="my-1 flex flex-wrap flex-shrink-0">
                         {
-                            combinedArray && combinedArray.map((data, index) => (
-                                <CrossButton key={index} text={combinedArray[index]}/>
+                            combinations && combinations.map((data, index) => (
+                                <CrossButton key={index} text={combinations[index]}/>
                             ))
                         }
                     </div>
@@ -216,7 +231,7 @@ const Filter = () => {
                                         <ul className="">
                                             {data.SubCategories.map((subcategory, subIndex) => (
                                                 <li key={subIndex} className="ml-10 text-gray-500 cursor-pointer"
-                                                    onClick={() => dispatch(addSubCategory(Categories[index].SubCategories[subIndex]))}>{subcategory}</li>
+                                                    onClick={() => dispatch(addSubCategory(Categories[index].category,Categories[index].SubCategories[subIndex]))}>{subcategory}</li>
                                             ))}
                                         </ul>
                                     )}

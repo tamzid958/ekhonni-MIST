@@ -5,34 +5,48 @@ import {
     ADD_SORT_FILTER,
     ADD_SUBCATEGORY_FILTER,
     CLEAR_ALL_FILTER,
-    DELETE_INDIVIDUAL_PRODUCT
+    DELETE_INDIVIDUAL_PRODUCT, SEARCH_PRODUCT
 } from "@/Actions/constants";
 
+
 const initialState = {
-    category: [],
-    subCategory: [],
-    division: [],
-    price: [0,100000],
-    sort: ""
+    pageNumber:0,
+    categories: [],
+    startPrice:0,
+    endPrice: 100000,
+    search:null,
+    division:[],
+    sort:""
+
 };
+
+
+
+
+
 
 const filterReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_CATEGORY_FILTER:
-            if (state.category.includes(action.payload)) {
+            if (state.categories.some(category => category.name === action.payload)) {
                 return state;
             }
             return {
                 ...state,
-                category: [...state.category, action.payload]
+                categories: [...state.categories, { name: action.payload, subCategories: [] }]
             };
         case ADD_SUBCATEGORY_FILTER:
-            if (state.subCategory.includes(action.payload)) {
-                return state;
-            }
             return {
                 ...state,
-                subCategory: [...state.subCategory, action.payload]
+                categories: state.categories.map(category => {
+                    if (action.trace === category.name && !category.subCategories.includes(action.payload)) {
+                        return {
+                            ...category,
+                            subCategories: [...category.subCategories, action.payload]
+                        };
+                    }
+                    return category;
+                })
             };
         case ADD_DIVISION_FILTER:
             if (state.division.includes(action.payload)) {
@@ -43,12 +57,10 @@ const filterReducer = (state = initialState, action) => {
                 division: [...state.division, action.payload]
             };
         case ADD_PRICE_FILTER:
-            if (state.price.includes(action.payload)) {
-                return state;
-            }
             return {
                 ...state,
-                price: action.payload
+                startPrice: action.payload[0],
+                endPrice: action.payload[1],
             };
         case ADD_SORT_FILTER:
             if (state.sort.includes(action.payload)) {
@@ -58,6 +70,11 @@ const filterReducer = (state = initialState, action) => {
                 ...state,
                 sort: action.payload
             };
+        case SEARCH_PRODUCT:
+            return {
+                ...state,
+                search: action.payload
+            }
         case CLEAR_ALL_FILTER:
             return initialState;
         case DELETE_INDIVIDUAL_PRODUCT:
