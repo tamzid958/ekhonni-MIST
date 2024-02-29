@@ -1,7 +1,7 @@
 import NotificationListItem from "@/components/NotificationListItem";
 
 
-const NotificationListModal = ({setModalOpen , notificationList}) => {
+const NotificationListModal = ({setModalOpen, notificationList}) => {
 
     const handleClearAll = () => {
 
@@ -18,14 +18,17 @@ const NotificationListModal = ({setModalOpen , notificationList}) => {
                                                   time={notification.time}/>
                         ))}
                     </ul>
-                    <button className="text-black px-2 py-0.5 mt-1 mr-1 border border-neutral-300 shadow-md shadow-slate-400 text-md bg-white rounded-full  transition duration-500 hover:scale-[103%] hover:-translate-y-1 active:translate-y-2"
-                            onClick={handleClearAll}
-                    >Clear All</button>
+                    <button
+                        className="text-black px-2 py-0.5 mt-1 mr-1 border border-neutral-300 shadow-md shadow-slate-400 text-md bg-white rounded-full  transition duration-500 hover:scale-[103%] hover:-translate-y-1 active:translate-y-2"
+                        onClick={handleClearAll}
+                    >Clear All
+                    </button>
                 </>)
             }
             {!notifications &&
                 (<>
-                    <div className="w-60 h-12 mr-16 cursor-default flex justify-center items-center bg-white border border-neutral-300 shadow-md shadow-slate-300 rounded-lg transition ease-in-out duration-500 hover:scale-y-[102%] hover:-translate-y-1">
+                    <div
+                        className="w-60 h-12 mr-16 cursor-default flex justify-center items-center bg-white border border-neutral-300 shadow-md shadow-slate-300 rounded-lg transition ease-in-out duration-500 hover:scale-y-[102%] hover:-translate-y-1">
                         <p className="font-medium">No Notifications</p>
                     </div>
                 </>)

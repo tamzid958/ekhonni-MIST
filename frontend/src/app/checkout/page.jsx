@@ -1,6 +1,4 @@
-import ProfileBox from "@/components/ProfileBox";
-
-const Checkout = ()=>{
+const Checkout = () => {
     return (
         <>
 

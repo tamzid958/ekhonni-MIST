@@ -5,7 +5,6 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addCategory, addDivision, addPrice, addSubCategory, clearAll} from "@/Actions/filter";
 import {fetchProduct} from "@/Actions/fetchProduct";
-import {data} from "autoprefixer";
 
 
 const Filter = () => {
@@ -20,7 +19,7 @@ const Filter = () => {
 
     useEffect(() => {
         console.log(filteredItem)
-        dispatch(fetchProduct({id:0,filter:filteredItem}))
+        dispatch(fetchProduct({id: 0, filter: filteredItem}))
         console.log(product)
     }, [filteredItem]);
 
@@ -164,7 +163,7 @@ const Filter = () => {
                         <p className="text-blue-500 cursor-pointer" onClick={() => {
                             dispatch(clearAll())
 
-                        } }>CLEAR ALL</p>
+                        }}>CLEAR ALL</p>
                     </div>
                     <div className="my-1 flex flex-wrap flex-shrink-0">
                         {

@@ -1,35 +1,29 @@
 "use client"
-import React,{useRef,useState,useEffect,useContext} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import {UserContext} from "@/Context/UserContext.jsx";
 import Button from "@/components/Button";
 import Image from "next/image";
-import {data} from "autoprefixer";
 import axios from "axios";
 
-const ProfileCard =()=>{
+const ProfileCard = () => {
     const user = useContext(UserContext);
 
     const inputRef = useRef(null);
-    const [img,setimg] = useState("");
+    const [img, setimg] = useState("");
     const token = localStorage.getItem("token");
     const Email = localStorage.getItem("currentUserEmail");
-    const imageClick = ()=>{
+    const imageClick = () => {
         inputRef.current.click();
     }
     const formData = new FormData();
 
 
-
-
-
-
-
-    useEffect(()=>{
+    useEffect(() => {
 
 
         formData.append("imageFile", img);
-        const email = { "email": Email };
-        formData.append("appUser", new Blob([JSON.stringify(email)],{type: 'application/json'}));
+        const email = {"email": Email};
+        formData.append("appUser", new Blob([JSON.stringify(email)], {type: 'application/json'}));
 
         // for (const [key, value] of formData.entries()) {
         //     if (value instanceof File) {
@@ -41,7 +35,7 @@ const ProfileCard =()=>{
         //     }
         // }
 
-        axios.put(`http://localhost:8080/api/v1/user/profile/upload-image`,formData,{
+        axios.put(`http://localhost:8080/api/v1/user/profile/upload-image`, formData, {
             headers: {
                 Authorization: `Bearer ${token}`,
             }
@@ -53,13 +47,10 @@ const ProfileCard =()=>{
                 console.error("Error fetching data:", err);
             });
 
-    },[img])
+    }, [img])
 
 
-
-
-
-    const handleChange = async (e)=>{
+    const handleChange = async (e) => {
         const files = e.target.files[0];
         setimg(files);
     }
@@ -71,12 +62,13 @@ const ProfileCard =()=>{
                         <div className="w-1/2 h-[200px]  relative">
                             {img ? <img src={URL.createObjectURL(img)} alt='Image'
                                         className={"w-full h-full rounded-full"}/> :
-                                <Image src={(user && user.profilePicture)? user.profilePicture : '/avatar.png'} alt={"Profile"} objectFit={"cover"} fill sizes={"100px"}
+                                <Image src={(user && user.profilePicture) ? user.profilePicture : '/avatar.png'}
+                                       alt={"Profile"} objectFit={"cover"} fill sizes={"100px"}
                                        className="rounded-full"/>}
                         </div>
                     </div>
                     <div className="w-full text-center py-2 ">
-                        <h1 className="text-2xl font-semibold tracking-wider mb-3">{user? user.name : ''}</h1>
+                        <h1 className="text-2xl font-semibold tracking-wider mb-3">{user ? user.name : ''}</h1>
                         <div onClick={imageClick}>
                             <input name="img" className={"hidden"} type={"file"} ref={inputRef}
                                    onChange={handleChange}/>

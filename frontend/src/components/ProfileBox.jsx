@@ -1,6 +1,6 @@
 "use client"
 
-import React,{useState,useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import Button from "@/components/Button";
 import ProfileDiv from "@/components/ProfileDiv";
@@ -8,15 +8,15 @@ import Link from "next/link";
 import axios from "axios";
 
 
-const ProfileBox = ({email})=>{
-    const [data,setData] = useState();
-    const [imageUrl,setImageUrl] = useState();
+const ProfileBox = ({email}) => {
+    const [data, setData] = useState();
+    const [imageUrl, setImageUrl] = useState();
     const token = localStorage.getItem("token");
 
     useEffect(() => {
 
 
-        axios.get(`http://localhost:8080/api/v1/user/profile/${email}`,{
+        axios.get(`http://localhost:8080/api/v1/user/profile/${email}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json' // Specify content type if required
@@ -24,7 +24,7 @@ const ProfileBox = ({email})=>{
         })
             .then((res) => {
 
-                const imageBlob = new Blob([res.data.profilePicture.imageByte], { type: 'text/plain' });
+                const imageBlob = new Blob([res.data.profilePicture.imageByte], {type: 'text/plain'});
                 setImageUrl(URL.createObjectURL(imageBlob))
                 setData(res.data)
                 console.log(imageUrl);
@@ -36,12 +36,10 @@ const ProfileBox = ({email})=>{
     }, [imageUrl]);
 
 
-
-
-
     return (
         <>
-            <div className="w-[300px] top-16 absolute z-10 bg-white border-2 border-black overflow-hidden float-right right-1 rounded-lg m-3">
+            <div
+                className="w-[300px] top-16 absolute z-10 bg-white border-2 border-black overflow-hidden float-right right-1 rounded-lg m-3">
                 <Link href={"/profile"}>
                     <div className="w-full h-[110px] flex border-b-2 border-black">
                         <div className="w-1/3 h-full relative">
@@ -49,7 +47,7 @@ const ProfileBox = ({email})=>{
                                    className={"rounded-full px-1 py-2"}/>
                         </div>
                         <div className={"w-2/3 h-full flex justify-start items-center pl-4"}>
-                            <h1 className={"tracking-widest text-xl font-semibold"}>{data? data.name : ''}</h1>
+                            <h1 className={"tracking-widest text-xl font-semibold"}>{data ? data.name : ''}</h1>
                         </div>
                     </div>
                 </Link>

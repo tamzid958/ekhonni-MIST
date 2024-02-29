@@ -40,15 +40,15 @@ public class BidServiceImpl implements BidService{
 //    }
 
     @Override
-    public Bid saveBid(Long id, String email, Double offeredPrice) {
+    public Bid saveBid(Long id, String buyerEmail, Double offeredPrice) {
         Product product = productService.getProductById(id);
-        AppUser buyer = appUserRepository.findByEmail(email);
+        AppUser buyer = appUserRepository.findByEmail(buyerEmail);
 
-        if (Objects.equals(product.getSeller().getEmail(), email)){
+        if (Objects.equals(product.getSeller().getEmail(), buyerEmail)){
             return null;
         }
 
-        Bid bid = bidRepository.findByProductIdAndBuyerEmail(id, email);
+        Bid bid = bidRepository.findByProductIdAndBuyerEmail(id, buyerEmail);
         if (bid != null) {
             bidRepository.delete(bid);
         }
@@ -80,10 +80,10 @@ public class BidServiceImpl implements BidService{
     }
 
     @Override
-    public Boolean changeBidActiveStatus(Long id, String email) {
+    public Boolean changeBidActiveStatus(Long id, String sellerEmail) {
         Product product = productService.getProductById(id);
 
-        if (Objects.equals(product.getSeller().getEmail(), email)){
+        if (Objects.equals(product.getSeller().getEmail(), sellerEmail)){
             productRepository.toggleIsBidActive(id);
             return !product.getIsBidActive();
         }
@@ -91,10 +91,10 @@ public class BidServiceImpl implements BidService{
     }
 
     @Override
-    public Boolean changeBidVisibilityStatus(Long id, String email) {
+    public Boolean changeBidVisibilityStatus(Long id, String sellerEmail) {
         Product product = productService.getProductById(id);
 
-        if (Objects.equals(product.getSeller().getEmail(), email)){
+        if (Objects.equals(product.getSeller().getEmail(), sellerEmail)){
             productRepository.toggleIsBidVisibility(id);
             return !product.getIsVisible();
         }
@@ -119,6 +119,18 @@ public class BidServiceImpl implements BidService{
 
         if (Objects.equals(product.getSeller().getEmail(), sellerEmail)){
             productRepository.revertFinalBuyerId(id);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean changeIsSold(Long id, String buyerEmail) {
+        Product product = productService.getProductById(id);
+        AppUser buyer = appUserRepository.findByEmail(buyerEmail);
+
+        if (Objects.equals(product.getFinalBuyerId(), buyer.getId())){
+            productRepository.changeIsSoldToTrue(id);
             return true;
         }
         return false;
