@@ -26,6 +26,8 @@ public interface AppUserService {
 
     ResponseEntity<?> fetchOtherAdmins(String email);
 
+    String getEmail(String token);
+
 //    ResponseEntity<?> deleteAccount(AppUser appUser);
 }
 

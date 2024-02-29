@@ -58,6 +58,11 @@ public class AppUserController {
         }
     }
 
+    @GetMapping("/user/get-email")
+    public ResponseEntity<?> getEmail(@RequestHeader (HttpHeaders.AUTHORIZATION) String token) {
+        return ResponseEntity.ok(appUserService.getEmail(token));
+    }
+
 //    @DeleteMapping("/user/profile/delete-account")
 //    public ResponseEntity<?> deleteAccount(@RequestBody AppUser appUser){
 //        return appUserService.deleteAccount(appUser);

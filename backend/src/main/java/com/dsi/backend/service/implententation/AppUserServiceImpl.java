@@ -147,6 +147,11 @@ public class AppUserServiceImpl implements AppUserService{
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
+    @Override
+    public String getEmail(String token) {
+        return jwtTokenService.getUsernameFromToken(token.substring(7));
+    }
+
 //    @Override
 //    public ResponseEntity<?> deleteAccount(AppUser appUser) {
 ////        appUser = appUserRepository.findById(appUser.getId())
