@@ -48,9 +48,6 @@ const AddProductPage = () => {
             "description" : description,
             "startingPrice" : startingPrice,
             "usedCondition" : usedCondition,
-            "seller" : {
-                "email" : localStorage.getItem('currentUserEmail')
-            },
             "isVisible" : isVisible
         });
         formData.append("product", new Blob([JSON.stringify(product)],{type: 'application/json'}));
@@ -73,9 +70,6 @@ const AddProductPage = () => {
             "description" : description,
             "startingPrice" : startingPrice,
             "usedCondition" : usedCondition,
-            "seller" : {
-                "email" : localStorage.getItem('currentUserEmail')
-            },
             "isVisible" : isVisible
         });
         formData.append("product", new Blob([JSON.stringify(product)],{type: 'application/json'}));
@@ -139,7 +133,7 @@ const AddProductPage = () => {
 
         <Header />
         <form onSubmit={handleSubmit}>
-            <div className="w-screen h-[700px] flex justify-center items-start">
+            <div className="w-full h-[700px] flex justify-center items-start">
                 <div className="w-4/6 h-full">
                     <div className="w-full h-[5%] my-3 flex justify-center items-center">
                         <h1 className="text-3xl font-semibold ">Product Details</h1>
@@ -201,8 +195,8 @@ const AddProductPage = () => {
                         </div>
                     </div>
                 </div>
+            </div>
         </form>
-
         </>
     )
 }
