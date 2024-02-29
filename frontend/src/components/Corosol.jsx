@@ -19,19 +19,19 @@ const Corosol = () => {
             image: "/discover.jpg",
             heading: "Discover Treasures, Rekindle Stories",
             description: "Your One-Stop Re-Sell Haven!",
-            button_text:"Buy"
+            button_text: "Buy"
         },
         {
             image: "/bidding.jpg",
             heading: "Revive, Reuse, Re-Sell",
             description: "Where Every Item Tells a New Story!",
-            button_text:"Bid now"
+            button_text: "Bid now"
         },
         {
             image: "/savings.jpg",
             heading: "Secondhand Splendor",
             description: "Elevate Your Lifestyle, One Find at a Time!",
-            button_text:"Sell"
+            button_text: "Sell"
         },
     ];
     return (
@@ -41,7 +41,8 @@ const Corosol = () => {
                      style={{transform: `translateX(-${currentIndex * 100}%)`}}>
                     {
                         textData.map((data, index) => <ScrollCard key={index} img={data.image} header={data.heading}
-                                                                  description={data.description} button_text={data.button_text}/>)
+                                                                  description={data.description}
+                                                                  button_text={data.button_text}/>)
                     }
                 </div>
             </div>

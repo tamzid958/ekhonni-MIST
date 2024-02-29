@@ -1,12 +1,11 @@
 "use client"
-import React, { useState } from 'react';
-import Button from "@/components/Button";
+import React from 'react';
 import Status from "@/components/Status";
 import Image from "next/image";
 import SmallButton from "@/components/SmallButton";
-const BuyerBids = ({id,name,time,description,category,price}) =>
-{
-    return(
+
+const BuyerBids = ({id, name, time, description, category, price}) => {
+    return (
         <>
 
             {/*the main box*/}
@@ -14,7 +13,7 @@ const BuyerBids = ({id,name,time,description,category,price}) =>
                 {/*Image box*/}
                 <div
                     className="w-1/4 h-[82%] relative my-3 border-2 border-black flex justify-start items-start -ml-5 ">
-                    <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"} />
+                    <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"}/>
                 </div>
                 {/*implementation of status*/}
 
@@ -37,7 +36,8 @@ const BuyerBids = ({id,name,time,description,category,price}) =>
                             <p className="pl-5 overflow-hidden">{description}</p>
                         </div>
                         <div className="w-full h-[20%] ">
-                            <p className="pl-5">Price :&nbsp;<span className="text-cyan-950 font-medium">{price}</span></p>
+                            <p className="pl-5">Price :&nbsp;<span className="text-cyan-950 font-medium">{price}</span>
+                            </p>
                         </div>
                         <div className="w-full h-[20%] ">
                             <p className="pl-5"> Category:{category}</p>

@@ -87,6 +87,11 @@ public class CustomRepositoryImpl implements CustomRepository {
         return new PageImpl<>(productViews, pageable, total);
     }
 
+//    @Override
+//    public void toggleIsBidActive(Long id) {
+//
+//    }
+
     private void populateParams(TypedQuery<?> query, FilterRequest f, Pageable pageable, List<String> categoryNames, List<String> subCategoryNames ) {
         if (f.startPrice() < f.endPrice()) {
             query.setParameter("start_price", f.startPrice());

@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const Footer = ()=>{
+const Footer = () => {
     return (
         <>
             <div className="w-full overflow-x-hidden h-[200px] bg-black flex text-white p-4 my-3">

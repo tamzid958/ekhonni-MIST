@@ -1,14 +1,12 @@
 "use client"
 // import React, { useState } from 'react';
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
+import React from 'react';
 import Status from "@/components/Status";
 import SmallButton from "@/components/SmallButton";
 import Image from "next/image";
 
-const SingleProduct = ({name,location,time,description,category,price, maxbid,totalbid}) =>
-{
-    return(
+const SingleProduct = ({name, location, time, description, category, price, maxbid, totalbid}) => {
+    return (
         <>
 
             {/*the main box*/}
@@ -16,7 +14,7 @@ const SingleProduct = ({name,location,time,description,category,price, maxbid,to
                 {/*Image box*/}
                 <div
                     className="w-1/4 h-[82%] my-3 relative border-2 border-black flex justify-start items-start -ml-5 ">
-                    <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"} />
+                    <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"}/>
                 </div>
                 {/*implementation of status*/}
 
