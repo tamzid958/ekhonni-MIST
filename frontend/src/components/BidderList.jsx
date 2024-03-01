@@ -3,7 +3,7 @@ import SelectedBidderListItem from "@/components/SelectedBidderListItem";
 import {useState} from "react";
 
 
-const BidderList = ({visibility, bidders, view, finalBuyerID}) => {
+const BidderList = ({isVisible, bidders, view, finalBuyerID}) => {
 
     const bidderSelected = finalBuyerID !== null;
 
@@ -14,7 +14,7 @@ const BidderList = ({visibility, bidders, view, finalBuyerID}) => {
     // clearTimeout(timeoutID);
 
     return (<>
-            {visibility &&
+            {isVisible &&
                 <ul className="w-full mt-[2%] rounded-lg ">
                     <li className="w-full p-2 flex flex-col items-center list-none rounded-lg bg-slate-100 border border-neutral-300 shadow-lg shadow-slate-300 group transition ease-in-out duration-500 hover:scale-[100.5%]">
                         <input type={"checkbox"} checked={expandList} name="bidderList" id="first"
@@ -53,7 +53,7 @@ const BidderList = ({visibility, bidders, view, finalBuyerID}) => {
 
                 </ul>
             }
-            {!visibility &&
+            {!isVisible &&
 
                 <div className="w-full flex ">
                     <div

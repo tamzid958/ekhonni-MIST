@@ -50,7 +50,7 @@ public class BidServiceImpl implements BidService{
     }
 
     @Override
-    public List<Bid> fetchBids(Long id, String email) {
+    public List<Optional<Bid>> fetchBids(Long id, String email) {
 
         Product product = productRepository.findProductById(id);
 
@@ -62,11 +62,21 @@ public class BidServiceImpl implements BidService{
                 return bidRepository.findAllByProductIdOrderByOfferedPriceDesc(product.getId());
             }
             else {
-                List<Bid> bidList = new ArrayList<>();
-                bidList.add(bidRepository.findByProductIdAndBuyerEmail(id, email));
-                bidList.add(bidRepository.findTopByProductIdOrderByOfferedPriceDesc(id));
+                List<Optional<Bid>> bidList = new ArrayList<>();
 
-                bidList.sort(Comparator.comparingDouble(Bid::getOfferedPrice));
+                Optional<Bid> maxBid = bidRepository.findTopByProductIdOrderByOfferedPriceDesc(id);
+                if (maxBid.isEmpty()) {
+                    return bidList;
+                }
+                bidList.add(maxBid);
+
+                Optional<Bid> buyerBid = Optional.ofNullable(bidRepository.findByProductIdAndBuyerEmail(id, email));
+                if (buyerBid.isEmpty()) {
+                    return bidList;
+                }
+                bidList.add(buyerBid);
+
+                //bidList.sort(Comparator.comparingDouble(Bid::getOfferedPrice));
                 return bidList;
             }
         }
