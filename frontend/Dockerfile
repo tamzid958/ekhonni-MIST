@@ -1,4 +1,13 @@
-FROM ubuntu:latest
-LABEL authors="shahabuddin akhon hr"
+FROM node:18
 
-ENTRYPOINT ["top", "-b"]
+WORKDIR /app
+
+COPY package.json .
+RUN npm install
+
+COPY . .
+
+EXPOSE 5000
+CMD ["npm","run","dev"]
+
+
