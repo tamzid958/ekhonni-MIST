@@ -4,22 +4,18 @@ import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import {useRouter} from "next/navigation";
 import axios from "axios";
-const AddAdminModal = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+const AddCategoryModal = () => {
+    const [category, setCategory] = useState("");
+    const [subcategory, setSubcategory] = useState("");
     const router = useRouter()
     const [route, setRoute] = useState()
-
-
-
-
-
 
     function handleSubmit(event) {
         event.preventDefault();
         const formDataObject = {
-            email: email,
-            password: password
+
+            category: category,
+            subcategory:subcategory
         };
         const handleModalCloseOnBgClick = (e) => {
             if (e.target.id === "") {
@@ -42,27 +38,27 @@ const AddAdminModal = () => {
                     <div
                         className="w-full h-full   flex flex-col justify-center items-center rounded-lg   shadow-md shadow-slate-500 ">
                         <div className="w-10/12 h-1/5  flex flex-col justify-center items-center mb-4 ">
-                            <p className="text-3xl font-medium my-3">New Admin Info</p>
-                            <p className="text-lg"> Enter Email and Password</p>
+                            <p className="text-3xl font-medium my-3">Add New Category</p>
+                            <p className="text-lg"> Enter Category and Subcategory</p>
                         </div>
 
 
                         <div className=" w-10/12 h-2/5 flex  flex-col justify-center items-center ">
-                            <TextField placeholder={"Email"} type={"text"}
-                                       name={"email"} value={email}
+                            <TextField placeholder={"Category"} type={"text"}
+                                       name={"category"} value={category}
                                        onChange={(e) => {
-                                           setEmail(e.target.value)
+                                           setCategory(e.target.value)
                                        }}
                             />
-                            <TextField placeholder={"Password"} type={"password"} name={"password"}
-                                       value={password}
+                            <TextField placeholder={"Subcategory"} type={"text"} name={"subcategory"}
+                                       value={subcategory}
                                        onChange={(e) => {
-                                           setPassword(e.target.value)
+                                           setSubcategory(e.target.value)
                                        }}
                             />
                         </div>
                         <div className=" w-10/12  h-1/5 flex flex-col justify-center items-end mr-6">
-                            <Button value={"Add Admin"} option={1} type={"submit"}/>
+                            <Button value={"Add Category"} option={1} type={"submit"}/>
                         </div>
 
                     </div>
@@ -75,4 +71,4 @@ const AddAdminModal = () => {
 
     );
 }
-export default AddAdminModal
+export default AddCategoryModal

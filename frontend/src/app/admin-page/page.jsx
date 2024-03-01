@@ -11,9 +11,16 @@ import React, {useEffect, useState} from 'react';
 import {toast, Toaster} from "sonner";
 import axios from "axios";
 import AdminNav from "@/components/AdminNav";
+import AddAdminModal from "@/components/AddAdminModal";
 
 export default function AdminPage(){
-    const [modalIsOpen , setModalIsOpen]=useState(false);
+    const [AdminModal , setModalIsOpen]=useState(false);
+    const [AddAdminModel , setAddAdminModel]=useState(false);
+
+    const addAdmin=(data)=>{
+        setAddAdminModel(data);
+    }
+
     // = ({name,location,time,description,category,price,username,time}) =>
     //
     // const query = new URLSearchParams(window.location.search);
@@ -109,8 +116,7 @@ export default function AdminPage(){
         <>
 
             <AdminNav/>
-
-            {modalIsOpen && <AdminModal setModalOpen={setModalIsOpen}/>}
+            {AdminModal && <AdminModal setModalOpen={setModalIsOpen}/>}
 
 
             <Toaster richColors position={"top-right"}/>
