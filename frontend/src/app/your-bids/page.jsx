@@ -5,7 +5,7 @@ import BuyerBids from "@/components/BuyerBids";
 import React from "react";
 
 export default function YourBids() {
-    // = ({name,location,time,description,category,price,username,time}) =>
+
 
     const data = [
         {
@@ -76,4 +76,3 @@ export default function YourBids() {
         </>
     )
 }
-// export default YourBids

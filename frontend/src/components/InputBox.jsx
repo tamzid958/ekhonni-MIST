@@ -29,7 +29,6 @@ const InputBox = ({Name, value, type}) => {
             })
                 .then((res) => {
                     window.location.reload();
-                    // console.log(res)
                 })
                 .catch((err) => {
                     console.error("Error fetching data:", err);

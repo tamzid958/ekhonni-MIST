@@ -50,13 +50,13 @@ const SellerSelectModal = ({setModalOpen, maxBid, isBidActive}) => {
     return (
         <>
             <Toaster richColors position={"top-right"}/>
-
             <div
                 className="fixed inset-0 z-10 bg-black bg-opacity-20 backdrop-blur-[1px] flex justify-center items-center"
                 id="backgroundBlur" onClick={(e) => {
                 handleModalCloseOnBgClick(e)
             }}>
-                <div className="w-[775px] h-[575px] flex flex-col">
+
+                <div className="w-[750px] h-[575px] flex flex-col">
                     <button
                         className="text-white text-lg font-semibold ml-3 place-self-end transition ease-in-out duration-500 hover:scale-110 active:scale-90"
                         onClick={() => {

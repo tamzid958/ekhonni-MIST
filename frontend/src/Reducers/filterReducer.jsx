@@ -5,24 +5,22 @@ import {
     ADD_SORT_FILTER,
     ADD_SUBCATEGORY_FILTER,
     CLEAR_ALL_FILTER,
-    DELETE_INDIVIDUAL_PRODUCT, SEARCH_PRODUCT, UPDATE_PAGE
+    DELETE_INDIVIDUAL_PRODUCT,
+    SEARCH_PRODUCT,
+    UPDATE_PAGE
 } from "@/Actions/constants";
 
 
 const initialState = {
-    pageNumber:0,
+    pageNumber: 0,
     categories: [],
-    startPrice:null,
+    startPrice: null,
     endPrice: null,
-    search:null,
-    division:[],
-    sort:null
+    search: null,
+    division: [],
+    sort: null
 
 };
-
-
-
-
 
 
 const filterReducer = (state = initialState, action) => {
@@ -33,7 +31,7 @@ const filterReducer = (state = initialState, action) => {
             }
             return {
                 ...state,
-                categories: [...state.categories, { name: action.payload, subCategories: [] }]
+                categories: [...state.categories, {name: action.payload, subCategories: []}]
             };
         case ADD_SUBCATEGORY_FILTER:
             return {
@@ -63,7 +61,7 @@ const filterReducer = (state = initialState, action) => {
                 endPrice: action.payload[1],
             };
         case ADD_SORT_FILTER:
-            if (state.sort !== null ) {
+            if (state.sort !== null) {
                 return state;
             }
             return {
@@ -88,7 +86,7 @@ const filterReducer = (state = initialState, action) => {
                 if (Array.isArray(updatedState[key])) {
                     if (key === 'categories') {
                         updatedState[key] = updatedState[key].map(category => {
-                            const updatedCategory = { ...category };
+                            const updatedCategory = {...category};
                             if (updatedCategory.name === action.payload) {
                                 return null;
                             } else {

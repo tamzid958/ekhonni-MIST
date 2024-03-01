@@ -12,7 +12,6 @@ const AdminLogin = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const router = useRouter()
-    const [route, setRoute] = useState()
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -20,8 +19,7 @@ const AdminLogin = () => {
             email: email,
             password: password
         };
-        // const formData = JSON.stringify(formDataObject);
-        // console.log(formData);
+
         axios.post('http://localhost:8080/api/v1/admin/login', formDataObject)
             .then((response) => {
                 if (response.status === 200) {
@@ -70,11 +68,11 @@ const AdminLogin = () => {
                                 <Button value={"Login"} option={1} type={"submit"}/>
                             </div>
                         </div>
-                        {/*{New Here Div}*/}
                         <div
                             className="w-2/5 h-full flex justify-center items-center bg-gradient-radial from-slate-500 to-slate-700 rounded-r-lg">
                             <div className="w-full h-3/5 flex flex-col items-center justify-center">
-                                <h1 className="font-bold text-2xl text-center text-white "> Can't Gain Access? </h1>
+                                <h1 className="font-bold text-2xl text-center text-white "> Can&apos;t Gain
+                                    Access? </h1>
                                 <p className="text-center text-white my-7">An admin must add you as an admin first</p>
 
                             </div>

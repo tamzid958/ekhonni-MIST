@@ -28,7 +28,7 @@ const Categories = () => {
                 prevIndex === 110 ? 0 : prevIndex + 1
             );
 
-        }, 200); // Change slide every 1 seconds
+        }, 200);
 
         return () => clearInterval(interval);
     }, []);
@@ -36,7 +36,7 @@ const Categories = () => {
     const product = useSelector(state => state.product);
     useEffect(() => {
         console.log(filterItem)
-        dispatch(fetchProduct({filter:filterItem}))
+        dispatch(fetchProduct({filter: filterItem}))
 
     }, [filterItem]);
 

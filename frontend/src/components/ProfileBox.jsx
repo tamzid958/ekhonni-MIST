@@ -11,11 +11,9 @@ import axios from "axios";
 const ProfileBox = () => {
     const [data, setData] = useState();
     const [imageUrl, setImageUrl] = useState();
-
     const token = localStorage.getItem("token");
 
     useEffect(() => {
-
         axios.get(`http://localhost:8080/api/v1/user/profile`, {
             headers: {
                 Authorization: `Bearer ${token}`,
