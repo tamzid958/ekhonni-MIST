@@ -6,7 +6,8 @@ import {
     ADD_SUBCATEGORY_FILTER,
     CLEAR_ALL_FILTER,
     DELETE_INDIVIDUAL_PRODUCT,
-    SEARCH_PRODUCT, UPDATE_PAGE
+    SEARCH_PRODUCT,
+    UPDATE_PAGE
 } from "@/Actions/constants";
 
 export const addCategory = (category) => {
@@ -15,7 +16,7 @@ export const addCategory = (category) => {
         payload: category
     }
 }
-export const addSubCategory = (category,subcategory) => {
+export const addSubCategory = (category, subcategory) => {
     return {
         type: ADD_SUBCATEGORY_FILTER,
         trace: category,

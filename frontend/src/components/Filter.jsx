@@ -5,7 +5,6 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addCategory, addDivision, addPrice, addSubCategory, clearAll} from "@/Actions/filter";
 import {fetchProduct} from "@/Actions/fetchProduct";
-import {data} from "autoprefixer";
 
 
 const Filter = () => {
@@ -17,7 +16,7 @@ const Filter = () => {
 
     let allFilter = [];
     const initialState = {
-        pageNumber:0,
+        pageNumber: 0,
         categories: [
             {
                 name: "Electronics",
@@ -29,28 +28,28 @@ const Filter = () => {
             },
 
         ],
-        startPrice:2000,
+        startPrice: 2000,
         endPrice: 100000,
-        search:null,
-        division:["Dhaka","Khulna"],
-        sort:"High to low"
+        search: null,
+        division: ["Dhaka", "Khulna"],
+        sort: "High to low"
 
     };
-    const {categories,division} = filteredItem;
+    const {categories, division} = filteredItem;
 
-    categories.map((category,index)=>{
+    categories.map((category, index) => {
         allFilter.push(category.name);
-        category.subCategories.forEach((subCategories)=>{
+        category.subCategories.forEach((subCategories) => {
             allFilter.push(subCategories);
         })
     })
-    allFilter = [...allFilter,...division];
+    allFilter = [...allFilter, ...division];
     useEffect(() => {
         dispatch(addPrice(RangeValue))
     }, [RangeValue]);
     useEffect(() => {
         // console.log(allFilter)
-        dispatch(fetchProduct({filter:filteredItem}))
+        dispatch(fetchProduct({filter: filteredItem}))
     }, [filteredItem]);
 
 
@@ -191,12 +190,12 @@ const Filter = () => {
                         <p className="text-blue-500 cursor-pointer" onClick={() => {
                             dispatch(clearAll())
 
-                        } }>CLEAR ALL</p>
+                        }}>CLEAR ALL</p>
                     </div>
                     <div className="my-1 flex flex-wrap flex-shrink-0">
                         {
                             allFilter && allFilter.map((data, index) => (
-                                <CrossButton key={index} text={data} />
+                                <CrossButton key={index} text={data}/>
                             ))
                         }
                     </div>
@@ -243,7 +242,7 @@ const Filter = () => {
                                         <ul className="">
                                             {data.SubCategories.map((subcategory, subIndex) => (
                                                 <li key={subIndex} className="ml-10 text-gray-500 cursor-pointer"
-                                                    onClick={() => dispatch(addSubCategory(Categories[index].category,Categories[index].SubCategories[subIndex]))}>{subcategory}</li>
+                                                    onClick={() => dispatch(addSubCategory(Categories[index].category, Categories[index].SubCategories[subIndex]))}>{subcategory}</li>
                                             ))}
                                         </ul>
                                     )}

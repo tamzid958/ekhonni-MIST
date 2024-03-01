@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const ProfileDiv = ({image,text,color})=>{
+const ProfileDiv = ({image, text, color}) => {
     return (
         <>
             <div className={`w-full py-1.5 pl-4  flex items-center border-black border gap-x-5 ${color}`}>
