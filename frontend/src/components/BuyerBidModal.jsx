@@ -6,7 +6,6 @@ import {toast, Toaster} from "sonner";
 import ButtonFull from "@/components/ButtonFull";
 
 const BuyerBidModal = ({setModalOpen, visibility, maxBid, productID}) => {
-
     const [bid, setBid] = useState(null);
     const [hasBid, setHasBid] = useState(true);
     const bidders = [

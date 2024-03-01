@@ -8,7 +8,6 @@ import BuyerBidModal from "@/components/BuyerBidModal";
 import Header from "@/components/Header";
 import axios from "axios";
 
-
 const ProductPage = ({params}) => {
 
     const token = localStorage.getItem("token");
@@ -35,7 +34,6 @@ const ProductPage = ({params}) => {
             } else {
                 setUserIsSeller(false);
             }
-
         }).catch((error) => {
             console.log("Error fetching current user data : ", error);
         })
@@ -60,8 +58,8 @@ const ProductPage = ({params}) => {
     useEffect(() => {
         fetchProductDetails()
             .then(r => {
-            console.log(r);
-        });
+                console.log(r);
+            });
     }, [productID]);
 
     useEffect(() => {
@@ -78,7 +76,6 @@ const ProductPage = ({params}) => {
                 <SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={data ? isBidActive : false}/>}
             {!userIsSeller && modalIsOpen &&
                 <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={data ? isVisible : false} productID={productID}/>}
-
             <div className="w-full h-[700px] flex flex-col justify-center items-center">
                 <div className="flex w-full justify-center items-center ">
                     <h1 className="font-semibold text-4xl mb-[1%]">Product Details</h1>
