@@ -1,23 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import {useEffect, useState} from "react";
 import Image from "next/image";
 import CategoryCard from "@/components/CategoryCard";
-import {useSelector,useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import {fetchProduct} from "@/Actions/fetchProduct";
 
-const Categories =()=>{
+const Categories = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [Categories,setCategories] = useState([])
+    const [Categories, setCategories] = useState([])
     const dispatch = useDispatch();
 
     useEffect(() => {
         axios.get("http://localhost:8080/api/v1/products/count")
-            .then((res)=>{
+            .then((res) => {
                 setCategories(res.data)
             })
-            .catch((err)=>{
+            .catch((err) => {
                 console.log(err)
             })
     }, []);
@@ -40,6 +40,7 @@ const Categories =()=>{
 
     }, [filterItem]);
 
+
     const prevImage = () => {
         setCurrentIndex((prevIndex) =>
             prevIndex === 0 ? category.length - 1 : prevIndex - 1
@@ -54,13 +55,13 @@ const Categories =()=>{
 
 
     const category = [
-        { img: "/computer.svg", category: "Electronics" },
-        { img: "/vehicle.svg", category: "Vehicle" },
-        { img: "/clothing.svg", category: "Clothing" },
-        { img: "/furniture.svg", category: "Furniture" },
-        { img: "/sports_item.svg", category: "Sports Item" },
-        { img: "/properties.svg", category: "Properties" },
-        { img: "/toy.svg", category: "Toy" }
+        {img: "/computer.svg", category: "Electronics"},
+        {img: "/vehicle.svg", category: "Vehicle"},
+        {img: "/clothing.svg", category: "Clothing"},
+        {img: "/furniture.svg", category: "Furniture"},
+        {img: "/sports_item.svg", category: "Sports Item"},
+        {img: "/properties.svg", category: "Properties"},
+        {img: "/toy.svg", category: "Toy"}
     ];
     const updatedCategory = category.map(item => ({
         ...item,
@@ -79,9 +80,11 @@ const Categories =()=>{
                     </div>
                 </div>
                 <div className={" relative overflow-hidden"}>
-                    <div className="mx-8 flex  transition ease-out duration-1000" style={{transform: `translateX(-${currentIndex * 0.5}%)`}}>
-                        {updatedCategory.map((data, index) => <CategoryCard key={index} img={data.img} categories={data.category}
-                                                                     item={data.item}  />)}
+                    <div className="mx-8 flex  transition ease-out duration-1000"
+                         style={{transform: `translateX(-${currentIndex * 0.5}%)`}}>
+                        {updatedCategory.map((data, index) => <CategoryCard key={index} img={data.img}
+                                                                            categories={data.category}
+                                                                            item={data.item}/>)}
                     </div>
                     <div>
                         <button

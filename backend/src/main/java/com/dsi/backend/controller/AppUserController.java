@@ -57,7 +57,6 @@ public class AppUserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "Image upload failed"));
         }
     }
-
 //    @DeleteMapping("/user/profile/delete-account")
 //    public ResponseEntity<?> deleteAccount(@RequestBody AppUser appUser){
 //        return appUserService.deleteAccount(appUser);

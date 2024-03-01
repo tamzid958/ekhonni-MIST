@@ -1,6 +1,6 @@
-import {getProductRequest,getProductFailed,getProductSuccess} from "@/Actions/product";
+import {getProductFailed, getProductRequest, getProductSuccess} from "@/Actions/product";
 import axios from "axios";
-import categories from "@/components/Categories";
+
 
 const initialState = {
     pageNumber:0,
@@ -36,7 +36,7 @@ export const fetchProduct = ({filter})=>{
                 const products = res.data;
                 dispatch(getProductSuccess(products))
             })
-            .catch(err =>{
+            .catch(err => {
                 dispatch(getProductFailed(err.message))
             })
     }

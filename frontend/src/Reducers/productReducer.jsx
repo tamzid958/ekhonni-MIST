@@ -1,11 +1,12 @@
-import {PRODUCT_REQUEST,PRODUCT_SUCCESSFULLY_FETCH,PRODUCT_FETCH_ERROR} from "@/Actions/constants";
-const initialState  = {
-    products:[],
+import {PRODUCT_FETCH_ERROR, PRODUCT_REQUEST, PRODUCT_SUCCESSFULLY_FETCH} from "@/Actions/constants";
+
+const initialState = {
+    products: [],
     isLoading: false,
     error: null
 }
 
-const productReducer = (state=initialState,action)=>{
+const productReducer = (state = initialState, action) => {
     switch (action.type) {
         case PRODUCT_REQUEST:
             return {
