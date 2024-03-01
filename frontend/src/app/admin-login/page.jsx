@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import axios from "axios";
-import {router} from "next/client";
+// import {router} from "next/client";
 import {toast, Toaster} from "sonner";
 
 const AdminLogin = () => {
