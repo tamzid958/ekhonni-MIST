@@ -53,4 +53,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, CustomR
     @Transactional
     @Query(value = "UPDATE product p SET is_sold = true WHERE p.id = :product_id", nativeQuery = true)
     void changeIsSoldToTrue(Long product_id);
+
+
 }

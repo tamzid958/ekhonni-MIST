@@ -10,6 +10,7 @@ import java.util.Set;
 @Repository
 public interface BidRepository extends JpaRepository<Bid, Long> {
     List<Bid> findAllByProductIdOrderByOfferedPriceDesc(Long product_id);
-    Bid findByProductIdOrderByOfferedPriceDesc(Long product_id);
+    //Bid findByProductIdOrderByOfferedPriceDesc(Long product_id);
+    Bid findTopByProductIdOrderByOfferedPriceDesc(Long product_id);
     Bid findByProductIdAndBuyerEmail(Long id, String email);
 }
