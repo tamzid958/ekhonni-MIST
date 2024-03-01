@@ -41,7 +41,7 @@ public class BidServiceImpl implements BidService{
 
     @Override
     public Bid saveBid(Long id, String buyerEmail, Double offeredPrice) {
-        Product product = productService.getProductById(id);
+        Product product = productRepository.findProductById(id);
         AppUser buyer = appUserRepository.findByEmail(buyerEmail);
 
         if (Objects.equals(product.getSeller().getEmail(), buyerEmail)){
@@ -59,7 +59,7 @@ public class BidServiceImpl implements BidService{
     @Override
     public List<Bid> fetchBids(Long id, String email) {
 
-        Product product = productService.getProductById(id);
+        Product product = productRepository.findProductById(id);
 
         if(Objects.equals(product.getSeller().getEmail(), email)) {
             return bidRepository.findAllByProductIdOrderByOfferedPriceDesc(product.getId());
@@ -81,7 +81,7 @@ public class BidServiceImpl implements BidService{
 
     @Override
     public Boolean changeBidActiveStatus(Long id, String sellerEmail) {
-        Product product = productService.getProductById(id);
+        Product product = productRepository.findProductById(id);
 
         if (Objects.equals(product.getSeller().getEmail(), sellerEmail)){
             productRepository.toggleIsBidActive(id);
@@ -92,7 +92,7 @@ public class BidServiceImpl implements BidService{
 
     @Override
     public Boolean changeBidVisibilityStatus(Long id, String sellerEmail) {
-        Product product = productService.getProductById(id);
+        Product product = productRepository.findProductById(id);
 
         if (Objects.equals(product.getSeller().getEmail(), sellerEmail)){
             productRepository.toggleIsBidVisibility(id);
@@ -103,7 +103,7 @@ public class BidServiceImpl implements BidService{
 
     @Override
     public AppUser updateFinalBuyer(Long id, String sellerEmail, String buyerEmail) {
-        Product product = productService.getProductById(id);
+        Product product = productRepository.findProductById(id);
         AppUser buyer = appUserRepository.findByEmail(buyerEmail);
 
         if (Objects.equals(product.getSeller().getEmail(), sellerEmail)){
@@ -115,7 +115,7 @@ public class BidServiceImpl implements BidService{
 
     @Override
     public Boolean revertFinalBuyer(Long id, String sellerEmail) {
-        Product product = productService.getProductById(id);
+        Product product = productRepository.findProductById(id);
 
         if (Objects.equals(product.getSeller().getEmail(), sellerEmail)){
             productRepository.revertFinalBuyerId(id);
@@ -126,7 +126,7 @@ public class BidServiceImpl implements BidService{
 
     @Override
     public Boolean changeIsSold(Long id, String buyerEmail) {
-        Product product = productService.getProductById(id);
+        Product product = productRepository.findProductById(id);
         AppUser buyer = appUserRepository.findByEmail(buyerEmail);
 
         if (Objects.equals(product.getFinalBuyerId(), buyer.getId())){

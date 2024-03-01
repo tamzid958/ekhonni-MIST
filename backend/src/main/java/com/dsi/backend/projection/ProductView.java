@@ -21,4 +21,5 @@ public interface ProductView {
     Boolean getIsVisible();
     LocalDateTime getProductTime();
     Set<ImageModel> getProductImage();
+    Long getFinalBuyerId();
 }
