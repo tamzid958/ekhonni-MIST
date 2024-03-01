@@ -1,11 +1,9 @@
 "use client"
 
+
 const AdminModal = () => {
-    const handleModalCloseOnBgClick = (e) => {
-        if (e.target.id === "") {
-            onClose();
-        }
-    };
+
+
         return (
 
             <>
@@ -34,12 +32,14 @@ const AdminModal = () => {
                             <span className="font-semibold">-&nbsp;</span>Remove Category
                         </div>
 
-                    </div>
 
+                    </div>
                 </div>
+
 
             </>
 
+
         );
 };
-export default AdminModal
+export default AdminModal;

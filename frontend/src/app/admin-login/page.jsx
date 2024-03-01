@@ -5,6 +5,7 @@ import {useRouter} from "next/navigation"
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import axios from "axios";
+
 import {toast, Toaster} from "sonner";
 
 const AdminLogin = () => {
@@ -12,13 +13,13 @@ const AdminLogin = () => {
     const [password, setPassword] = useState("");
     const router = useRouter()
 
-
     async function handleSubmit(event) {
         event.preventDefault();
         const formDataObject = {
             email: email,
             password: password
         };
+
         axios.post('http://localhost:8080/api/v1/admin/login', formDataObject)
             .then((response) => {
                 if (response.status === 200) {
@@ -43,7 +44,7 @@ const AdminLogin = () => {
         <>
             <Toaster richColors position={"top-right"}/>
             <form onSubmit={handleSubmit}>
-                <div className="w-screen h-[700px] flex justify-center items-center">
+                <div className="w-full h-[700px] flex justify-center items-center">
 
                     <div
                         className="w-[690px] h-[400px] border-2 border-black flex flex-row justify-start items-center rounded-lg">

@@ -14,8 +14,6 @@ const ProfileBox = () => {
     const token = localStorage.getItem("token");
 
     useEffect(() => {
-
-
         axios.get(`http://localhost:8080/api/v1/user/profile`, {
             headers: {
                 Authorization: `Bearer ${token}`,

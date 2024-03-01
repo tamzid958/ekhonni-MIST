@@ -97,6 +97,8 @@ const filterReducer = (state = initialState, action) => {
                     } else {
                         updatedState[key] = updatedState[key].filter(item => item !== action.payload);
                     }
+
+
                 }
             }
             return updatedState;

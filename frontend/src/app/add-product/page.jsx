@@ -7,10 +7,12 @@ import Image from "next/image";
 import axios from "axios";
 import Header from "@/components/Header";
 import TwoRadioButtons from "@/components/TwoRadioButtons";
-
+import {useRouter} from "next/navigation";
 
 const AddProductPage = () => {
 
+
+    const router = useRouter();
     const sellerEmail = "demoEmail";
     const seller = {
         email: sellerEmail
@@ -49,6 +51,7 @@ const AddProductPage = () => {
             "isVisible": isVisible
         });
         formData.append("product", new Blob([JSON.stringify(product)], {type: 'application/json'}));
+
         formData.append("imageFile", image);
 
     }, [image]);
@@ -75,53 +78,18 @@ const AddProductPage = () => {
         })
             .then(response => {
                 console.log(response);
+                router.push("/");
+
             })
             .catch(error => {
                 console.log("error saving products", error);
             });
     }
 
-    // const api = axios.create({
-    //     baseURL : "/api"
-    // });
-    //
-    // api.interceptors.request.use(
-    //     (config) => {
-    //         const token = localStorage.getItem("token");
-    //         if(token) {
-    //             config.headers.Authorization = `Bearer ${token}`
-    //         }
-    //         return config;
-    //     },
-    //     (error) => Promise.reject(error)
-    // );
-    // api.interceptors.response.use(
-    //     (response) => response,
-    //     async (error) => {
-    //         const originalRequest = error.config;
-    //         if (error.response.status === 401 && !originalRequest._retry) {
-    //             originalRequest._retry = true;
-    //             try {
-    //                 const refreshToken = localStorage.getItem("refreshToken");
-    //                 const response = await axios.post("/api/refresh-token" , { refreshToken });
-    //                 const {token} = response.data;
-    //
-    //                 localStorage.setItem("token" , token);
-    //
-    //                 originalRequest.headers.Authorization = `Bearer ${token}`;
-    //                 return axios(originalRequest);
-    //             } catch (error) {
-    //                 console.log(error);
-    //             }
-    //         }
-    //         return Promise.reject(error);
-    //     }
-    // )
-    // export default api;
+
     return (
 
         <>
-
             <Header/>
             <form onSubmit={handleSubmit}>
                 <div className="w-full h-[700px] flex justify-center items-start">

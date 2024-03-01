@@ -10,6 +10,7 @@ const SelectedBidderListItem = ({bidderName, bidderId, bid, finalBuyerID}) => {
                        className="flex items-center text-lg p-1 cursor-pointer before:content-['+'] before:mr-2 before:font-semibold before:text-lg">{bidderName}
                     <span className="font-medium absolute right-7"> Tk.{bid} </span></label>
                 {isSelected && (<>
+
                         <div
                             className="max-h-0 overflow-hidden mt-2 mr-3.5 peer-checked:max-h-10 flex flex-row justify-end items-center transition-all ease-in-out duration-500 ">
                             <SmallButton value={"Revert"} type={"button"} option={0}/>

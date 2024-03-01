@@ -6,6 +6,7 @@ import React from "react";
 
 export default function YourBids() {
 
+
     const data = [
         {
             id: '1',

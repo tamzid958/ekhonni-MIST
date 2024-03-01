@@ -40,6 +40,7 @@ const Categories = () => {
 
     }, [filterItem]);
 
+
     const prevImage = () => {
         setCurrentIndex((prevIndex) =>
             prevIndex === 0 ? category.length - 1 : prevIndex - 1

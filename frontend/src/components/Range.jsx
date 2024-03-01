@@ -4,7 +4,6 @@ import React, {useEffect, useState} from 'react';
 const PriceRangeSlider = ({min, max, valueFunction}) => {
     const [minPrice, setMinPrice] = useState(max / 2);
     const [maxPrice, setMaxPrice] = useState(max);
-
     useEffect(() => {
         valueFunction([max / 2 - minPrice, maxPrice]);
         // console.log(max/2-minPrice);

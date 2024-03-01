@@ -1,5 +1,6 @@
 "use client"
 import React, {useEffect} from "react";
+
 import {useDispatch, useSelector} from "react-redux";
 import Image from "next/image";
 import Filter from "@/components/Filter";
@@ -10,10 +11,12 @@ import Header from "@/components/Header";
 import {addSort} from "@/Actions/filter";
 
 
+
 const Product = () => {
     const dispatch = useDispatch()
     const {error, isLoading, products} = useSelector(state => state.product)
     const filterItem = useSelector(state => state.filter)
+
 
     return (
         <>

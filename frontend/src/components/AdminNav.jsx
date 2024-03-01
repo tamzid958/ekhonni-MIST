@@ -4,6 +4,7 @@ import Button from "@/components/Button";
 import {useEffect, useState} from "react";
 import ProfileBox from "@/components/ProfileBox";
 import Link from "next/link";
+import AdminModal from "@/components/AdminModal";
 
 
 const AdminNav = () => {
@@ -25,7 +26,9 @@ const AdminNav = () => {
     }
     return (
         <>
+            {barClicked && <AdminModal/>}
             <div onClick={CloseModel}>
+
                 <div
                     className=" px-6 w-full overflow-x-hidden h-[100px] border-black flex justify-between bg-slate-100">
                     <div className="flex">
@@ -34,6 +37,7 @@ const AdminNav = () => {
                                                  className=" mr-4 cursor-pointer"/> :
                                 <Image src={"./bars.svg"} alt={"bars"} width={30} height={30}
                                        className=" mr-4 cursor-pointer"/>}
+
                         </div>
                         <Link href={"/"} className={"my-auto"}>
                             <div className=" my-auto">
