@@ -1,12 +1,12 @@
 "use client"
 
+import Image from "next/image";
 import {useEffect, useState} from "react";
-import axios from "axios";
-import Header from "@/components/Header";
+import Button from "@/components/Button";
 import SellerSelectModal from "@/components/SellerSelectModal";
 import BuyerBidModal from "@/components/BuyerBidModal";
-import Button from "@/components/Button";
-
+import Header from "@/components/Header";
+import axios from "axios";
 
 const ProductPage = ({params}) => {
 
@@ -15,8 +15,9 @@ const ProductPage = ({params}) => {
     const [isBidActive, setIsBidActive] = useState(null);
     const [isVisible, setIsVisible] = useState(null);
     const [isSold, setIsSold] = useState(null);
+    const [finalBuyerSelected , setFinalBuyerSelected] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [data, setData] = useState({});
+    const [data, setData] = useState(null);
     const [currentUserEmail, setCurrentUserEmail] = useState("");
     const [sellerEmail, setSellerEmail] = useState("");
     const productID = params.id;
@@ -34,7 +35,6 @@ const ProductPage = ({params}) => {
             } else {
                 setUserIsSeller(false);
             }
-
         }).catch((error) => {
             console.log("Error fetching current user data : ", error);
         })
@@ -51,6 +51,7 @@ const ProductPage = ({params}) => {
             setIsSold(response.data.isSold);
             setIsBidActive(response.data.isBidActive);
             setIsVisible(response.data.isVisible);
+            setFinalBuyerSelected(response.data.finalBuyerId);
             setSellerEmail(response.data.seller.email);
         }).catch((error) => {
             console.log("Error Fetching Data : ", error);
@@ -72,14 +73,11 @@ const ProductPage = ({params}) => {
 
     return (
         <>
-
             <Header/>
             {userIsSeller && modalIsOpen &&
-                <SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={isBidActive}/>}
+                <SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={data ? isBidActive : false}/>}
             {!userIsSeller && modalIsOpen &&
-                <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={isVisible}
-                               productID={productID}/>}
-
+                <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={data ? isVisible : false} productID={productID}/>}
             <div className="w-full h-[700px] flex flex-col justify-center items-center">
                 <div className="flex w-full justify-center items-center ">
                     <h1 className="font-semibold text-4xl mb-[1%]">Product Details</h1>
@@ -94,50 +92,45 @@ const ProductPage = ({params}) => {
                     <div className="w-1/2 h-full flex justify-center items-center">
                         <div className="w-3/4 h-full flex flex-col justify-center items-center">
                             <div className="w-full h-1/5 flex justify-start items-center  border-b">
-                                <h1 className="text-3xl text-black font-medium text-left">{data.name}</h1>
+                                <h1 className="text-3xl text-black font-medium text-left">{data ? data.name : ""}</h1>
                             </div>
                             <div className="w-full h-1/5 flex flex-col justify-start items-center border-b">
                                 <div className="w-full h-1/3 flex">
-                                    <p className="text-base">{data.category.category} , {data.category.subCategory}</p>
+                                    <p className="text-base">{data ? data.category.category : ""} , {data ? data.category.subCategory : ""}</p>
                                 </div>
                                 <div className="w-full h-1/3 flex">
-                                    <p className="text-base">{data.seller.location}</p>
+                                    <p className="text-base">{data ? data.seller.location : ""}</p>
                                 </div>
                                 <div className="w-full h-1/3 flex">
-                                    <p className="text-base">For sale by {data.seller.name}</p>
+                                    <p className="text-base">For sale by {data ? data.seller.name : ""}</p>
                                 </div>
                             </div>
                             <div className="w-full h-1/5 flex items-center border-b">
-                                <p className="text-lg">{data.description}</p>
+                                <p className="text-lg">{data ? data.description : ""}</p>
                             </div>
                             <div className="w-full h-1/5 flex flex-col justify-center items-start border-b">
-                                <p className="text-lg mb-2">Starting Price : <span
-                                    className="font-medium">{data.startingPrice}</span></p>
-                                <p className="text-lg mb-2">Size : <span className="font-medium">{data.size}</span></p>
+                                <p className="text-lg mb-2">Starting Price : <span className="font-medium">{data ? data.startingPrice : ""}</span></p>
+                                <p className="text-lg mb-2">Size : <span className="font-medium">{data ? data.size : ""}</span></p>
                                 <p className="text-lg">Condition :
-                                    {data.usedCondition && (
+                                    {data && data.usedCondition && (
                                         <span className="font-medium">Used</span>
                                     )}
-                                    {!data.usedCondition && (
+                                    {data && !data.usedCondition && (
                                         <span className="font-medium">New</span>
                                     )}
                                 </p>
                             </div>
                             <div className="w-full h-1/5 flex justify-center items-center border-b">
-                                {userIsSeller && !isSold &&
-                                    (<Button value={"View Bids"} option={1} type={"button"} onClick={() => {
-                                        setModalIsOpen(true)
-                                    }}/>)}
-                                {!userIsSeller && isBidActive && !isSold &&
-                                    (<Button value={"Bid"} option={1} type={"button"}
-                                             onClick={() => setModalIsOpen(true)}/>)}
-                                {!userIsSeller && !isBidActive && !isSold &&
-                                    (
-                                        <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding
-                                            Is Off</p>)}
-                                {isSold &&
-                                    (
-                                        <p className="px-4 py-1 cursor-default bg-black text-white text-2xl font-medium shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
+                                {data && userIsSeller && !isSold &&
+                                    (<Button value={"View Bids"} option={1} type={"button"} onClick={() => {setModalIsOpen(true)}}/>)}
+                                {data && !userIsSeller && isBidActive && !isSold &&
+                                    (<Button value={"Bid"} option={1} type={"button"} onClick={() => setModalIsOpen(true)}/>)}
+                                {data && !userIsSeller && !isBidActive && !isSold &&
+                                    (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding Is Off</p>)}
+                                {data && !userIsSeller && !isBidActive && !isSold && finalBuyerSelected &&
+                                    (<Button value={"Buy Now"} option={0} type={"button"} />)}
+                                {data && isSold &&
+                                    (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl font-medium shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
                             </div>
                         </div>
                     </div>
