@@ -18,7 +18,7 @@ const Header = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
-        setToken(token);
+        setToken(true);
     }, []);
 
 
@@ -112,11 +112,9 @@ const Header = () => {
                         </Link> : <Link href={"/login"}><Button value="Log in" option={1} type={"submit"}/></Link>}
                     </div>
                 </div>
-                {profileModel && <ProfileBox/>}
+                {profileModel && <ProfileBox /> }
+                {notificationModalOpen && <NotificationListModal setModalOpen={setNotificationModalOpen} setNotifications={setNotifications} notificationList={notificationList}/>}
 
-                {notificationModalOpen &&
-                    <NotificationListModal setModalOpen={setNotificationModalOpen} setNotifications={setNotifications}
-                                           notificationList={notificationList}/>}
 
             </div>
         </>

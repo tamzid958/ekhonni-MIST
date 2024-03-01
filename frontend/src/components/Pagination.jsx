@@ -3,14 +3,20 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProduct} from "@/Actions/fetchProduct";
 
-const Pagination = () => {
-    const [currentPage, setCurrentPage] = useState(0);
+import {updatePage} from "@/Actions/filter";
+
+const Pagination = ()=>{
+    const [currentPage,setCurrentPage] = useState(0);
+
     const dispatch = useDispatch();
     const {error, isLoading, products} = useSelector(state => state.product);
     const filteredItem = useSelector(state => state.filter);
     const totalPage = products.totalPages;
     useEffect(() => {
-        dispatch(fetchProduct({id: currentPage, filter: filteredItem}))
+        dispatch(updatePage(currentPage));
+        dispatch(fetchProduct({filter:filteredItem}))
+        console.log(filteredItem)
+
     }, [currentPage]);
     const NextPage = () => {
         (currentPage === totalPage - 1 ? setCurrentPage(0) : setCurrentPage(currentPage + 1))
@@ -20,13 +26,6 @@ const Pagination = () => {
     }
 
 
-    // const recordsPerPage = 5;
-    // const lastIndex = currentPage * recordsPerPage;
-    // const firstIndex = lastIndex - recordsPerPage;
-    // const numOfPage = Math.ceil(length/recordsPerPage);
-    // useEffect(() => {
-    //     data([firstIndex,lastIndex]);
-    // }, [currentPage]);
 
 
     useEffect(() => {

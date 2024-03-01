@@ -1,22 +1,26 @@
 "use client"
 import React, {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
+
+import {useDispatch,useSelector} from "react-redux";
 import Image from "next/image";
 import Filter from "@/components/Filter";
 import LargeCard from "@/components/LargeCard";
 import Pagination from "@/components/Pagination";
+
 import Header from "@/components/Header";
 import {addSort} from "@/Actions/filter";
+
 
 
 const Product = () => {
     const dispatch = useDispatch()
     const {error, isLoading, products} = useSelector(state => state.product)
     const filterItem = useSelector(state => state.filter)
-    // console.log(products)
-    useEffect(() => {
 
-    }, [filterItem]);
+    useEffect(() => {
+        console.log(filterItem)
+        console.log(products)
+    }, [filterItem, products]);
 
     const Products = [
         {img: "/mobile.jpg", name: "iphone 15 pro max", desc: "4GB/65GB", price: "150000"},
@@ -73,7 +77,7 @@ const Product = () => {
                             </div>
                         </div>
                         <div className={"w-4/5 mx-auto box-border"}>
-                            {/*{records.map((product,index)=>(<LargeCard key={index} img={product.img} name={product.name} desc={product.desc} price={product.price} />))}*/}
+                            {/*{Products.map((product,index)=>(<LargeCard key={index} img={product.img} name={product.name} desc={product.desc} price={product.price} />))}*/}
                             {
                                 (isLoading && products.content) ? <>
                                     <p>Loading.................</p></> : products.content.map((product, index) => (

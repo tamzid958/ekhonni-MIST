@@ -35,10 +35,11 @@ const Categories = () => {
     const filterItem = useSelector(state => state.filter);
     const product = useSelector(state => state.product);
     useEffect(() => {
+        console.log(filterItem)
+        dispatch(fetchProduct({filter:filterItem}))
 
-        dispatch(fetchProduct({id: 0, filter: filterItem}))
+    }, [filterItem]);
 
-    }, []);
 
     const prevImage = () => {
         setCurrentIndex((prevIndex) =>
