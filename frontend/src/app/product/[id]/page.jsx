@@ -1,11 +1,11 @@
 "use client"
 
-import Image from "next/image";
-import {useState} from "react";
-import Button from "@/components/Button";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import Header from "@/components/Header";
 import SellerSelectModal from "@/components/SellerSelectModal";
 import BuyerBidModal from "@/components/BuyerBidModal";
-import Header from "@/components/Header";
+import Button from "@/components/Button";
 
 
 const ProductPage = ({params}) => {
@@ -16,7 +16,7 @@ const ProductPage = ({params}) => {
     const [isVisible, setIsVisible] = useState(null);
     const [isSold, setIsSold] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({});
     const [currentUserEmail, setCurrentUserEmail] = useState("");
     const [sellerEmail, setSellerEmail] = useState("");
     const productID = params.id;
@@ -59,8 +59,8 @@ const ProductPage = ({params}) => {
     useEffect(() => {
         fetchProductDetails()
             .then(r => {
-            console.log(r);
-        });
+                console.log(r);
+            });
     }, [productID]);
 
     useEffect(() => {
@@ -77,7 +77,8 @@ const ProductPage = ({params}) => {
             {userIsSeller && modalIsOpen &&
                 <SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={isBidActive}/>}
             {!userIsSeller && modalIsOpen &&
-                <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={isVisible} productID={productID}/>}
+                <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={isVisible}
+                               productID={productID}/>}
 
             <div className="w-full h-[700px] flex flex-col justify-center items-center">
                 <div className="flex w-full justify-center items-center ">
@@ -124,13 +125,19 @@ const ProductPage = ({params}) => {
                             </div>
                             <div className="w-full h-1/5 flex justify-center items-center border-b">
                                 {userIsSeller && !isSold &&
-                                    (<Button value={"View Bids"} option={1} type={"button"} onClick={() => {setModalIsOpen(true)}}/>)}
+                                    (<Button value={"View Bids"} option={1} type={"button"} onClick={() => {
+                                        setModalIsOpen(true)
+                                    }}/>)}
                                 {!userIsSeller && isBidActive && !isSold &&
-                                    (<Button value={"Bid"} option={1} type={"button"} onClick={() => setModalIsOpen(true)}/>)}
+                                    (<Button value={"Bid"} option={1} type={"button"}
+                                             onClick={() => setModalIsOpen(true)}/>)}
                                 {!userIsSeller && !isBidActive && !isSold &&
-                                    (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding Is Off</p>)}
+                                    (
+                                        <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding
+                                            Is Off</p>)}
                                 {isSold &&
-                                    (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl font-medium shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
+                                    (
+                                        <p className="px-4 py-1 cursor-default bg-black text-white text-2xl font-medium shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
                             </div>
                         </div>
                     </div>
