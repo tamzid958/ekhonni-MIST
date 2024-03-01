@@ -1,6 +1,4 @@
-
-
-const TwoRadioButtons = ({label , inputLabel1 , inputLabel2 , value , setValue}) => {
+const TwoRadioButtons = ({label, inputLabel1, inputLabel2, value, setValue}) => {
     return (
         <div className="w-full h-[50%] flex flex-col justify-center items-center">
             <div className="w-2/5 h-1/2 flex justify-start items-center">

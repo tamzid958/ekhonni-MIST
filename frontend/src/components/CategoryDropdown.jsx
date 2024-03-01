@@ -2,9 +2,9 @@
 
 import {useState} from "react";
 
-const CategoryDropdown = ({name , setCategory , setSubCategory}) => {
+const CategoryDropdown = ({name, setCategory, setSubCategory}) => {
 
-    const [selectedCategory , setSelectedCategory] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("");
     const Categories = [
         {
             category: "Furniture",
@@ -111,29 +111,35 @@ const CategoryDropdown = ({name , setCategory , setSubCategory}) => {
     ];
     return (
         <div>
-            <select className="w-[350px] h-12 border-2 my-3 border-neutral-900 rounded-lg pl-2 shadow-md shadow-slate-300" required name={name}
-                    onChange={(e) =>
-                    {setCategory(e.target.value);
-                        setSelectedCategory(e.target.value);
-                        setSubCategory("");
-                    }}>
+            <select
+                className="w-[350px] h-12 border-2 my-3 border-neutral-900 rounded-lg pl-2 shadow-md shadow-slate-300"
+                required name={name}
+                onChange={(e) => {
+                    setCategory(e.target.value);
+                    setSelectedCategory(e.target.value);
+                    setSubCategory("");
+                }}>
                 <option disabled selected>Select Category</option>
                 {Categories.map((item) => (
                     <option key={item.category} value={item.category}> {item.category} </option>
                 ))}
             </select>
             <div>
-                <select className="w-[350px] h-12 border-2  my-3 border-neutral-900 rounded-lg pl-2 shadow-md shadow-slate-300" required
-                        name="subcategory"
-                        onChange={(e) => {setSubCategory(e.target.value)}}
+                <select
+                    className="w-[350px] h-12 border-2  my-3 border-neutral-900 rounded-lg pl-2 shadow-md shadow-slate-300"
+                    required
+                    name="subcategory"
+                    onChange={(e) => {
+                        setSubCategory(e.target.value)
+                    }}
                 >
                     <option value="" disabled selected>Select Subcategory</option>
-                        {Categories.find((categoryObj) => categoryObj.category === selectedCategory)?.SubCategories.map(
-                            (subcategory) => (
-                                <option key={subcategory} value={subcategory}>
-                                    {subcategory}
-                                </option>
-                            ))}
+                    {Categories.find((categoryObj) => categoryObj.category === selectedCategory)?.SubCategories.map(
+                        (subcategory) => (
+                            <option key={subcategory} value={subcategory}>
+                                {subcategory}
+                            </option>
+                        ))}
                 </select>
             </div>
 

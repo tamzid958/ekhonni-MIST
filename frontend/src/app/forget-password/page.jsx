@@ -1,50 +1,48 @@
 "use client"
 
 import axios from "axios";
-import {FormEvent, useState} from "react";
-import { useRouter } from 'next/navigation'
+import {useState} from "react";
+import {useRouter} from 'next/navigation'
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
-import Link from "next/link";
 import {toast, Toaster} from "sonner";
-import {Router} from "next/router";
-import {Toast} from "next/dist/client/components/react-dev-overlay/internal/components/Toast";
 import Header from "@/components/Header";
 
 
 const ForgetPass = () => {
     const router = useRouter();
-    const [email , setEmail] = useState("");
-    const [password , setPassword] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
     async function handleSubmit(event) {
         event.preventDefault();
         const formDataObject = {
-            email : email,
-            password : password
+            email: email,
+            password: password
         };
 
 
         axios.post(`http://localhost:8080/api/v1/user/login`, formDataObject)
-            .then((res)=>{
-                const { token } = res.data;
-                localStorage.setItem("token" , token);
-                localStorage.setItem("currentUserEmail" , email);
+            .then((res) => {
+                const {token} = res.data;
+                localStorage.setItem("token", token);
+                localStorage.setItem("currentUserEmail", email);
                 console.log(token);
                 toast.success("We have sent you an email please check it")
                 router.push('/');
 
             })
-            .catch((err)=>{
-                console.error("Err :"+err);
+            .catch((err) => {
+                console.error("Err :" + err);
                 toast.error("Invalid Username")
             })
 
 
-
     }
+
     return (
         <>
-            <Header />
+            <Header/>
             <Toaster richColors position={"top-right"}/>
             <form onSubmit={handleSubmit}>
                 <div className="w-full h-[700px] flex justify-center items-center">
@@ -53,7 +51,8 @@ const ForgetPass = () => {
                         {/*Forgot Password Div*/}
                         <div className="w-full h-full rounded-l-lg">
                             <div className=" w-full h-2/5 flex flex-col justify-center items-center">
-                                <h1 className=" w-full  h-full font-bold text-3xl mt-7 flex justify-center items-center text-amber-50">Forgot Password</h1>
+                                <h1 className=" w-full  h-full font-bold text-3xl mt-7 flex justify-center items-center text-amber-50">Forgot
+                                    Password</h1>
                                 <p className="text-white text-2xl mb-4">Please enter your Username</p>
                             </div>
                             <div className=" w-full h-2/5 flex flex-col justify-start items-center mt-7">
@@ -64,7 +63,7 @@ const ForgetPass = () => {
 
                             </div>
                             <div className=" w-full h-1/5 flex flex-col justify-start items-center -mt-7">
-                                <Button  value={"Submit"} option={0} type={"submit"}/>
+                                <Button value={"Submit"} option={0} type={"submit"}/>
                             </div>
                         </div>
                         {/*{Reset Password Div}*/}

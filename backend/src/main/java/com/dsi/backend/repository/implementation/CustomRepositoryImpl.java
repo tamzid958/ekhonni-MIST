@@ -91,6 +91,7 @@ public class CustomRepositoryImpl implements CustomRepository {
     }
 
     private void populateParams(TypedQuery<?> query, FilterRequest f, List<String> categoryNames, List<String> subCategoryNames ) {
+
         if (f.startPrice() < f.endPrice()) {
             query.setParameter("start_price", f.startPrice());
             query.setParameter("end_price", f.endPrice());
