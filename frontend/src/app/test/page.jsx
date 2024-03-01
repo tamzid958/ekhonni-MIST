@@ -32,18 +32,21 @@
 
 
 
+
+import {useState} from "react";
 import Header from "@/components/Header";
-import AdminModal from "@/components/AdminModal";
-import AddAdminModal from "@/components/AddAdminModal";
-import AddCategoryModal from "@/components/AddCategoryModal";
 import RemoveAdminModal from "@/components/RemoveAdminModal";
 import RemoveCategoryModal from "@/components/RemoveCategoryModal";
 
-const test = ()=>{
+const TestPage = () => {
+    const biddingActive = true;
+
+    const [modalIsOpen, setModalIsOpen] = useState(true);
+
     return (
         <>
             <Header/>
-            <RemoveCategoryModal/>
+            <RemoveAdminModal/>
         </>
     )
 }

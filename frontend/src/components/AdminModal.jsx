@@ -1,4 +1,5 @@
 "use client"
+
 import {useState} from 'react';
 import AddAdminModal from "@/components/AddAdminModal";
 const AdminModal = ({isVisible,onClose}) => {
@@ -15,6 +16,7 @@ const AdminModal = ({isVisible,onClose}) => {
     // if (!isVisible) return null;
     return(
 
+
         <>
 
             <div className=" mt-[101px] absolute inset-0 flex justify-start items-center ">
@@ -22,6 +24,7 @@ const AdminModal = ({isVisible,onClose}) => {
 
 
                         <div className="w-[90%] h-32 pt-3 text-xl bg-white my-5 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">
+
                             <div className="w-full h-2/3 flex justify-start items-center overflow-hidden transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">
                                 <p className="w-full pl-2  mx-4  rounded shadow-md shadow-slate-400 text-wrap break-all text-base ">shadmanskystar@gmail.com</p>
                             </div>
@@ -34,13 +37,9 @@ const AdminModal = ({isVisible,onClose}) => {
                         <div className="w-[90%] h-12 pt-3 text-xl bg-white my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">&nbsp;&nbsp;<span className="font-semibold">+&nbsp;</span>Add Category</div>
                         <div className="w-[90%] h-12 pt-3 text-xl bg-white my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">&nbsp;&nbsp;<span className="font-semibold">-&nbsp;</span>Remove Category
                     </div>
-
                 </div>
-
             </div>
-
-        </>
-
+            </>
     );
 };
-export default AdminModal
+export default AdminModal;

@@ -1,15 +1,15 @@
 "use client"
-import React, { useState,useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 
-const PriceRangeSlider = ({min,max,valueFunction}) => {
-    const [minPrice, setMinPrice] = useState(max/2);
+const PriceRangeSlider = ({min, max, valueFunction}) => {
+    const [minPrice, setMinPrice] = useState(max / 2);
     const [maxPrice, setMaxPrice] = useState(max);
 
 
-    useEffect(()=>{
-        valueFunction([max/2-minPrice,maxPrice]);
+    useEffect(() => {
+        valueFunction([max / 2 - minPrice, maxPrice]);
         // console.log(max/2-minPrice);
-    },[minPrice,maxPrice])
+    }, [minPrice, maxPrice])
 
 
     const handleMinChange = (e) => {
@@ -28,11 +28,11 @@ const PriceRangeSlider = ({min,max,valueFunction}) => {
                     type="range"
                     id="minPrice"
                     min={min}
-                    max={max/2}
+                    max={max / 2}
                     value={minPrice}
                     onChange={handleMinChange}
                     className="block w-full mt-1 scale-x-[-1]"
-                    style={{ backgroundColor: 'white' }}
+                    style={{backgroundColor: 'white'}}
                 />
             </div>
             <div className="flex-1 -ml-2">
@@ -40,7 +40,7 @@ const PriceRangeSlider = ({min,max,valueFunction}) => {
                 <input
                     type="range"
                     id="maxPrice"
-                    min={max/2}
+                    min={max / 2}
                     max={max}
                     value={maxPrice}
                     onChange={handleMaxChange}
