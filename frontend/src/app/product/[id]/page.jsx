@@ -15,6 +15,7 @@ const ProductPage = ({params}) => {
     const [isBidActive, setIsBidActive] = useState(null);
     const [isVisible, setIsVisible] = useState(null);
     const [isSold, setIsSold] = useState(null);
+    const [finalBuyerSelected , setFinalBuyerSelected] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [data, setData] = useState(null);
     const [currentUserEmail, setCurrentUserEmail] = useState("");
@@ -50,6 +51,7 @@ const ProductPage = ({params}) => {
             setIsSold(response.data.isSold);
             setIsBidActive(response.data.isBidActive);
             setIsVisible(response.data.isVisible);
+            setFinalBuyerSelected(response.data.finalBuyerId);
             setSellerEmail(response.data.seller.email);
         }).catch((error) => {
             console.log("Error Fetching Data : ", error);
@@ -125,6 +127,8 @@ const ProductPage = ({params}) => {
                                     (<Button value={"Bid"} option={1} type={"button"} onClick={() => setModalIsOpen(true)}/>)}
                                 {data && !userIsSeller && !isBidActive && !isSold &&
                                     (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding Is Off</p>)}
+                                {data && !userIsSeller && !isBidActive && !isSold && finalBuyerSelected &&
+                                    (<Button value={"Buy Now"} option={0} type={"button"} />)}
                                 {data && isSold &&
                                     (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl font-medium shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
                             </div>
