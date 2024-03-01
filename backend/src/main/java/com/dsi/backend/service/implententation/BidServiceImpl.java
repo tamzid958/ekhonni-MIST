@@ -48,6 +48,10 @@ public class BidServiceImpl implements BidService{
             return null;
         }
 
+        if (!product.getIsBidActive() || product.getIsSold()){
+            return null;
+        }
+
         Bid bid = bidRepository.findByProductIdAndBuyerEmail(id, buyerEmail);
         if (bid != null) {
             bidRepository.delete(bid);

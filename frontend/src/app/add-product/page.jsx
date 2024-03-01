@@ -7,11 +7,11 @@ import Image from "next/image";
 import axios from "axios";
 import Header from "@/components/Header";
 import TwoRadioButtons from "@/components/TwoRadioButtons";
-
+import {useRouter} from "next/navigation";
 
 const AddProductPage = () => {
 
-    //const sellerEmail = localStorage.getItem("currentUserEmail");
+    const router = useRouter();
     const sellerEmail = "demoEmail";
     const seller = {
         email: sellerEmail
@@ -84,6 +84,8 @@ const AddProductPage = () => {
         })
             .then(response => {
                 console.log(response);
+                router.push("/");
+
             })
             .catch(error => {
                 console.log("error saving products", error);
@@ -130,7 +132,6 @@ const AddProductPage = () => {
     return (
 
         <>
-
             <Header/>
             <form onSubmit={handleSubmit}>
                 <div className="w-full h-[700px] flex justify-center items-start">
