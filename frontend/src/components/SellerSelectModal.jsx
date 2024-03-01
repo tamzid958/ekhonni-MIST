@@ -2,12 +2,16 @@
 
 import {Toaster} from "sonner";
 import BidderList from "@/components/BidderList";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ToggleSwitch from "@/components/ToggleSwitch";
+import useSWR from "swr";
 
-const SellerSelectModal = ({setModalOpen , productName , isBidActive , finalBuyerId , productID}) => {
+const fetcher = (...args) => fetch(...args).then(response => response.json());
+const baseUrl = `http://localhost:8080/api/v1/`;
+const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId, productID}) => {
 
-
+    const token = localStorage.getItem("token");
+    const {data, error, isLoading} = useSWR(`http://localhost:8080/api/v1/user/products/bid/fetch?id=${productID}&token=${token}`, fetcher);
     const [bidIsActive, setBidIsActive] = useState(isBidActive)
 
     const handleBiddingStatusChange = (e) => {
@@ -47,6 +51,11 @@ const SellerSelectModal = ({setModalOpen , productName , isBidActive , finalBuye
         if (e.target.id === "backgroundBlur")
             setModalOpen(false);
     }
+
+    useEffect(() => {
+
+    }, []);
+
     return (
         <>
             <Toaster richColors position={"top-right"}/>
@@ -66,7 +75,10 @@ const SellerSelectModal = ({setModalOpen , productName , isBidActive , finalBuye
                             </div>
                             <div className="w-full h-[75%] flex flex-row justify-center items-center">
                                 <div className="w-full h-full flex justify-end items-start">
-                                    <BidderList visibility={true} bidders={bidders} view={"sellerView"} finalBuyerID={finalBuyerID}/>
+
+                                    <BidderList isVisible={true} bidders={bidders} view={"sellerView"}
+                                                finalBuyerID={finalBuyerID}/>
+
                                 </div>
                             </div>
                         </div>
