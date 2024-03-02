@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import {useEffect, useState} from "react";
+
 import Button from "@/components/Button";
 import SellerSelectModal from "@/components/SellerSelectModal";
 import BuyerBidModal from "@/components/BuyerBidModal";
@@ -20,6 +21,7 @@ const ProductPage = ({params}) => {
     const [data, setData] = useState(null);
     const [currentUserEmail, setCurrentUserEmail] = useState("");
     const [sellerEmail, setSellerEmail] = useState("");
+
     const productID = params.id;
 
     const fetchCurrentUserDetails = async () => {

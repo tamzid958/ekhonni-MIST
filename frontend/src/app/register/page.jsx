@@ -67,7 +67,6 @@ const AccountCreationPage = () => {
                                 </Link>
                             </div>
                         </div>
-                        {/*For creating account /Sign Up Div*/}
                         <div className="w-3/5 h-full rounded-l-lg">
                             <div className="w-full h-1/8 flex flex-col justify-center items-center">
                                 <h1 className="font-bold mt-4 text-3xl my-3 ">Sign Up</h1>

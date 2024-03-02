@@ -1,5 +1,4 @@
 "use client"
-// import React, { useState } from 'react';
 import React from 'react';
 import Status from "@/components/Status";
 import SmallButton from "@/components/SmallButton";
@@ -8,18 +7,11 @@ import Image from "next/image";
 const SingleProduct = ({name, location, time, description, category, price, maxbid, totalbid}) => {
     return (
         <>
-
-            {/*the main box*/}
             <div className="w-7/12 h-56 border-black border-2 my-3 flex flex-row justify-center items-center ">
-                {/*Image box*/}
                 <div
                     className="w-1/4 h-[82%] my-3 relative border-2 border-black flex justify-start items-start -ml-5 ">
                     <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"}/>
                 </div>
-                {/*implementation of status*/}
-
-
-                {/*details info div*/}
                 <div className="w-2/3 h-[90%]  justify-center items-center flex flex-col">
 
                     <div className=" w-full h-[25%]   flex flex-row ">
@@ -31,7 +23,6 @@ const SingleProduct = ({name, location, time, description, category, price, maxb
                             <Status value={"Status"} option={"1"} type={"button"}/>
                         </div>
                     </div>
-                    {/*info div*/}
                     <div className="w-full h-[62.5%] ">
                         <div className="w-full h-[40%] overflow-hidden">
                             <p className="pl-5">{description}</p>
@@ -58,10 +49,6 @@ const SingleProduct = ({name, location, time, description, category, price, maxb
                         <div className="w-[25%] h-full pl-4 ">
                             <SmallButton value={"Details"} option={"1"} type={"button"}/>
                         </div>
-                        {/*<div className="w-[25%] h-full">*/}
-                        {/*    <SmallButton value={"Revert"} option={"1"} type={"button"}/>*/}
-                        {/*</div>*/}
-
                     </div>
                 </div>
             </div>

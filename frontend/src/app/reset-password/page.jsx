@@ -2,7 +2,8 @@
 
 import axios from "axios";
 import {useState} from "react";
-// import React,{useState} from "react";
+
+
 import {useRouter} from 'next/navigation'
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
@@ -10,12 +11,6 @@ import Link from "next/link";
 import {toast, Toaster} from "sonner";
 import Header from "@/components/Header";
 
-// const AlertMessage =() => {
-//     const [showMessage,setShowMessage] = useState(false);
-//     const handleButtonClick = () => {
-//       setShowMessage(true);
-//     };
-// }
 const ResetPass = () => {
     const router = useRouter();
     const [email, setEmail] = useState("");
@@ -55,8 +50,6 @@ const ResetPass = () => {
                 <div className="w-full h-[700px] flex justify-center items-center">
                     <div
                         className="w-[450px] h-[450px] border-2 border-black flex flex-row justify-center items-center bg-gradient-radial from-slate-500 to-slate-700 rounded-lg">
-
-                        {/*{Reset Password Div}*/}
                         <div
                             className="w-full h-full flex items-center bg-gradient-radial from-slate-500 to-slate-700 rounded-r-md">
                             <div className="w-full h-3/5 flex flex-col items-center justify-center">
