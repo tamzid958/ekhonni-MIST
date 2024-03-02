@@ -2,7 +2,6 @@
 import SingleProduct from "@/components/SingleProduct"
 
 export default function YourProducts() {
-    // = ({name,location,time,description,category,price,username,time}) =>
 
     const data = [
         {
@@ -68,8 +67,6 @@ export default function YourProducts() {
         }
     ]
 
-// const YourProducts = ({name,location,time,description,category,price,username}) =>
-// {
     return (
         <>
             <div>
@@ -86,4 +83,3 @@ export default function YourProducts() {
         </>
     )
 }
-// export default YourProducts

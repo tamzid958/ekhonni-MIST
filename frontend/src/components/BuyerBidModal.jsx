@@ -21,7 +21,6 @@ const BuyerBidModal = ({setModalOpen , productName , isVisible , productID}) => 
     }).then(res => res.data);
     const {data , error} = useSWR('localhost:8080/api/v1/user/products/bid/fetch' , fetcher);
     setBidData(data);
-
     const handleEnterBid = async (e) => {
         e.preventDefault();
         await axios.post(`http://localhost:8080/api/v1/user/products/bid/buyer/save?id=${productID}&token=${token}&offeredPrice${bid}` , {

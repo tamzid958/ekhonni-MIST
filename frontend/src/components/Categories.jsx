@@ -28,17 +28,18 @@ const Categories = () => {
                 prevIndex === 110 ? 0 : prevIndex + 1
             );
 
-        }, 200); // Change slide every 1 seconds
+        }, 200);
 
         return () => clearInterval(interval);
     }, []);
     const filterItem = useSelector(state => state.filter);
     const product = useSelector(state => state.product);
     useEffect(() => {
+        console.log(filterItem)
+        dispatch(fetchProduct({filter: filterItem}))
 
-        dispatch(fetchProduct({id: 0, filter: filterItem}))
+    }, [filterItem]);
 
-    }, []);
 
     const prevImage = () => {
         setCurrentIndex((prevIndex) =>

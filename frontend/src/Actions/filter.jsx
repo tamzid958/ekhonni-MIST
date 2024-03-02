@@ -5,7 +5,9 @@ import {
     ADD_SORT_FILTER,
     ADD_SUBCATEGORY_FILTER,
     CLEAR_ALL_FILTER,
-    DELETE_INDIVIDUAL_PRODUCT
+    DELETE_INDIVIDUAL_PRODUCT,
+    SEARCH_PRODUCT,
+    UPDATE_PAGE
 } from "@/Actions/constants";
 
 export const addCategory = (category) => {
@@ -14,9 +16,10 @@ export const addCategory = (category) => {
         payload: category
     }
 }
-export const addSubCategory = (subcategory) => {
+export const addSubCategory = (category, subcategory) => {
     return {
         type: ADD_SUBCATEGORY_FILTER,
+        trace: category,
         payload: subcategory
     }
 }
@@ -38,6 +41,12 @@ export const addSort = (sort) => {
         payload: sort
     }
 }
+export const addSearch = (search) => {
+    return {
+        type: SEARCH_PRODUCT,
+        payload: search
+    }
+}
 export const clearAll = () => {
     return {
         type: CLEAR_ALL_FILTER,
@@ -47,5 +56,11 @@ export const deleteIndividual = (data) => {
     return {
         type: DELETE_INDIVIDUAL_PRODUCT,
         payload: data
+    }
+}
+export const updatePage = (page) => {
+    return {
+        type: UPDATE_PAGE,
+        payload: page
     }
 }

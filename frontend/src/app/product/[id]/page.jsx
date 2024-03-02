@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import {useEffect, useState} from "react";
+
 import Button from "@/components/Button";
 import SellerSelectModal from "@/components/SellerSelectModal";
 import BuyerBidModal from "@/components/BuyerBidModal";

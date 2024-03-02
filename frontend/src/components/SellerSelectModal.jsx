@@ -75,10 +75,7 @@ const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId
                             </div>
                             <div className="w-full h-[75%] flex flex-row justify-center items-center">
                                 <div className="w-full h-full flex justify-end items-start">
-
-                                    <BidderList isVisible={true} bidders={bidders} view={"sellerView"}
-                                                finalBuyerID={finalBuyerID}/>
-
+                                    <BidderList isVisible={true} bidders={bidders} view={"sellerView"} finalBuyerID={finalBuyerID}/>
                                 </div>
                             </div>
                         </div>

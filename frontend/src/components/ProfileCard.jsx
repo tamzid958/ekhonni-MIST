@@ -13,26 +13,13 @@ const ProfileCard = () => {
     const token = localStorage.getItem("token");
 
     const imageClick = () => {
-
         inputRef.current.click();
     }
     const formData = new FormData();
 
 
     useEffect(() => {
-
-
         formData.append("imageFile", img);
-
-        // for (const [key, value] of formData.entries()) {
-        //     if (value instanceof File) {
-        //         console.log(key + ": " + value.name); // Accessing file name
-        //     } else if (typeof value === 'string') {
-        //         console.log(key + ": " + value);
-        //     } else {
-        //         console.log(key + ": " + JSON.stringify(value)); // Convert object to string
-        //     }
-        // }
 
         axios.put(`http://localhost:8080/api/v1/user/profile/upload-image`, formData, {
             headers: {
@@ -53,6 +40,7 @@ const ProfileCard = () => {
         const files = e.target.files[0];
         setimg(files);
     }
+
     return (
         <>
             <div className="w-2/5 flex justify-center">
@@ -64,6 +52,7 @@ const ProfileCard = () => {
                                 <Image src={(user && user.profilePicture) ? user.profilePicture : '/avatar.png'}
                                        alt={"Profile"} objectFit={"cover"} fill sizes={"100px"}
                                        className="rounded-full"/>}
+
                         </div>
                     </div>
                     <div className="w-full text-center py-2 ">
@@ -81,7 +70,6 @@ const ProfileCard = () => {
                     </div>
                 </div>
             </div>
-        </>
-    )
+        </>)
 }
 export default ProfileCard;

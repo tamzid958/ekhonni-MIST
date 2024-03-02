@@ -11,6 +11,7 @@ import {useRouter} from "next/navigation";
 
 const AddProductPage = () => {
 
+
     const router = useRouter();
     const sellerEmail = "demoEmail";
     const seller = {
@@ -27,7 +28,6 @@ const AddProductPage = () => {
     const [image, setImage] = useState('');
     const [product, setProduct] = useState({});
 
-    // const formData = new FormData();
     const inputRef = useRef(null);
     const imageClick = () => {
         inputRef.current.click();
@@ -51,12 +51,9 @@ const AddProductPage = () => {
             "isVisible": isVisible
         });
         formData.append("product", new Blob([JSON.stringify(product)], {type: 'application/json'}));
-        // Explicitly creating Blob (Binary Large Object) to mention the type json, otherwise it will take it as application/octet-stream
+
         formData.append("imageFile", image);
 
-        // for (const [key, value] of formData.entries()) {
-        //     console.log(key + ": " + value);
-        // }
     }, [image]);
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -74,9 +71,6 @@ const AddProductPage = () => {
         });
         formData.append("product", new Blob([JSON.stringify(product)], {type: 'application/json'}));
         formData.append("imageFile", image);
-        // for (const [key, value] of formData.entries()) {
-        //     console.log(key + ": " + value);
-        // }
         axios.post("http://localhost:8080/api/v1/user/products/save", formData, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -92,43 +86,7 @@ const AddProductPage = () => {
             });
     }
 
-    // const api = axios.create({
-    //     baseURL : "/api"
-    // });
-    //
-    // api.interceptors.request.use(
-    //     (config) => {
-    //         const token = localStorage.getItem("token");
-    //         if(token) {
-    //             config.headers.Authorization = `Bearer ${token}`
-    //         }
-    //         return config;
-    //     },
-    //     (error) => Promise.reject(error)
-    // );
-    // api.interceptors.response.use(
-    //     (response) => response,
-    //     async (error) => {
-    //         const originalRequest = error.config;
-    //         if (error.response.status === 401 && !originalRequest._retry) {
-    //             originalRequest._retry = true;
-    //             try {
-    //                 const refreshToken = localStorage.getItem("refreshToken");
-    //                 const response = await axios.post("/api/refresh-token" , { refreshToken });
-    //                 const {token} = response.data;
-    //
-    //                 localStorage.setItem("token" , token);
-    //
-    //                 originalRequest.headers.Authorization = `Bearer ${token}`;
-    //                 return axios(originalRequest);
-    //             } catch (error) {
-    //                 console.log(error);
-    //             }
-    //         }
-    //         return Promise.reject(error);
-    //     }
-    // )
-    // export default api;
+
     return (
 
         <>

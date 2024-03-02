@@ -2,16 +2,15 @@ import BidderListItem from "@/components/BidderListItem";
 import SelectedBidderListItem from "@/components/SelectedBidderListItem";
 import {useState} from "react";
 
-
-
 const BidderList = ({isVisible , bidderList , view , finalBuyerID}) => {
 
     const bidderSelected = finalBuyerID !== null;
     const [expandList, setExpandList] = useState(false);
+
     const timeoutID = setTimeout(() => {
         setExpandList(true)
     }, 50);
-    // clearTimeout(timeoutID);
+
 
     return (<>
             {isVisible &&
