@@ -15,14 +15,12 @@ const AdminLogin = () => {
 
     async function handleSubmit(event) {
         event.preventDefault();
-
         await signIn("credentials" , {
             email : email,
             password : password,
             redirect:true,
             callbackUrl: "/"
         })
-
         // const formDataObject = {
         //     email: email,
         //     password: password
