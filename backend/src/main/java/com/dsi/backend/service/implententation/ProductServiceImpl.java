@@ -12,12 +12,6 @@ import com.dsi.backend.service.JwtTokenService;
 import com.dsi.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-
-import org.springframework.data.domain.Sort;
-
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpStatus;
@@ -102,6 +96,12 @@ public class ProductServiceImpl implements ProductService {
     public Set<String> getCategoriesBySubcategories(List<String> subcategories) {
         List<Category> categories = categoryRepository.findBySubCategoryIn(subcategories);
         return categories.stream().map(Category::getCategory).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Product fetchProductById(Long id){
+        return productRepository.findById(id)
+                .orElseThrow(()->new ProductNotFoundException("Product not found by id: "+id));
     }
 
 //    public Page<ProductView> fetchProducts(int page, FilterRequest filter) {

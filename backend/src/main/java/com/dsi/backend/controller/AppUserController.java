@@ -37,7 +37,8 @@ public class AppUserController {
 
     @GetMapping("/user/profile")
     public ResponseEntity<?> fetchInformation(@RequestHeader(HttpHeaders.AUTHORIZATION) String token){
-        return appUserService.fetchInformation(token);
+        AppUser appUser = appUserService.fetchInformation(token);
+        return ResponseEntity.ok(appUserService.convertToView(appUser));
     }
 
     @PutMapping("/user/profile/update")
