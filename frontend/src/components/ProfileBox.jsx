@@ -12,7 +12,6 @@ import {fetcher} from "@/utils/fetcher";
 
 const ProfileBox = () => {
     const [imageUrl, setImageUrl] = useState();
-    const token = localStorage.getItem("token");
 
     const { data, error,isLoading } = useSWR('/user/profile', fetcher)
     console.log(data)
@@ -30,7 +29,7 @@ const ProfileBox = () => {
                                    className={"rounded-full px-1 py-2"}/>
                         </div>
                         <div className={"w-2/3 h-full flex justify-start items-center pl-4"}>
-                            <h1 className={"tracking-widest text-xl font-semibold"}>{data ? data.name : ''}</h1>
+                            <h1 className={"tracking-widest text-xl font-semibold"}>{(!isLoading && !error) ? data.name : ''}</h1>
                         </div>
                     </div>
                 </Link>
