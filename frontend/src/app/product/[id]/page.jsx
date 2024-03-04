@@ -8,10 +8,20 @@ import SellerSelectModal from "@/components/SellerSelectModal";
 import BuyerBidModal from "@/components/BuyerBidModal";
 import Header from "@/components/Header";
 import axios from "axios";
+import {useSession} from "next-auth/react";
+
+// const isSeller = () => {
+//     if() {
+//         return true;
+//     }
+//     else {
+//         return false;
+//     }
+// }
 
 const ProductPage = ({params}) => {
-
-    const token = localStorage.getItem("token");
+    const {data : session} = useSession();
+    session?.user.token;
     const [userIsSeller, setUserIsSeller] = useState(null);
     const [isBidActive, setIsBidActive] = useState(null);
     const [isVisible, setIsVisible] = useState(null);
