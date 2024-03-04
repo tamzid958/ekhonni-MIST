@@ -1,4 +1,5 @@
 import _axios from "axios";
+import {baseUrl} from "@/utils/baseUrl";
 import {
     throwApiError,
     throwNetworkError,
@@ -7,8 +8,8 @@ import {
 
 
 const axios = _axios.create({
-    timeout: Number(process.env.NEXT_PUBLIC_API_DEFAULT_TIMEOUT),
-    baseURL: process.env.BASE_URL
+    timeout: 5000,
+    baseURL: baseUrl
 });
 
 axios.interceptors.request.use(
@@ -119,9 +120,9 @@ export const getServerApi = async ({ req,url, params = {} }) => {
         };
         return { error };
     }
-
+    console.log(res)
     // NOTE: axios provides all header names in lower case
-    return { data: res.data };
+    return { data: res };
 };
 
 /**
