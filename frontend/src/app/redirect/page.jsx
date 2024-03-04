@@ -6,7 +6,7 @@ const RedirectPage = () => {
 
     const router = useRouter();
     const {data : session} = useSession();
-    if(session?.user.role === "Admin") {
+    if(session?.user.role === "ROLE_ADMIN") {
         router.push("/admin-page")
     }
     else {

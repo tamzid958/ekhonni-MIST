@@ -20,8 +20,6 @@ import {useSession} from "next-auth/react";
 // }
 
 const ProductPage = ({params}) => {
-    const {data : session} = useSession();
-    session?.user.token;
     const [userIsSeller, setUserIsSeller] = useState(null);
     const [isBidActive, setIsBidActive] = useState(null);
     const [isVisible, setIsVisible] = useState(null);
@@ -142,16 +140,11 @@ const ProductPage = ({params}) => {
                             </div>
                             <div className="w-full h-1/5 flex justify-center items-center border-b">
                                 {data && userIsSeller && !isSold &&
-                                    (<Button value={"View Bids"} option={1} type={"button"} onClick={() => {
-                                        setModalIsOpen(true)
-                                    }}/>)}
+                                    (<Button value={"View Bids"} option={1} type={"button"} onClick={() => {setModalIsOpen(true)}}/>)}
                                 {data && !userIsSeller && isBidActive && !isSold &&
-                                    (<Button value={"Bid"} option={1} type={"button"}
-                                             onClick={() => setModalIsOpen(true)}/>)}
+                                    (<Button value={"Bid"} option={1} type={"button"} onClick={() => setModalIsOpen(true)}/>)}
                                 {data && !userIsSeller && !isBidActive && !isSold &&
-                                    (
-                                        <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding
-                                            Is Off</p>)}
+                                    (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding Is Off</p>)}
                                 {data && !userIsSeller && !isBidActive && !isSold && finalBuyerSelected &&
                                     (<Button value={"Buy Now"} option={0} type={"button"}/>)}
                                 {data && isSold &&

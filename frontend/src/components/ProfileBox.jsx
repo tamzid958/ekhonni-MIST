@@ -14,10 +14,8 @@ const ProfileBox = () => {
     const [imageUrl, setImageUrl] = useState();
     const token = localStorage.getItem("token");
 
-    const { data, error,isLoading } = useSWR('/user/profile', fetcher)
+    const {data, error,isLoading } = useSWR('/user/profile', fetcher)
     console.log(data)
-
-
 
     return (
         <>

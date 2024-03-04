@@ -5,8 +5,8 @@ import {useRouter} from "next/navigation"
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import axios from "axios";
-
 import {toast, Toaster} from "sonner";
+import {signIn} from "next-auth/react";
 
 const AdminLogin = () => {
     const [email, setEmail] = useState("");
@@ -15,27 +15,33 @@ const AdminLogin = () => {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        const formDataObject = {
-            email: email,
-            password: password
-        };
 
-        axios.post('http://localhost:8080/api/v1/admin/login', formDataObject)
-            .then((response) => {
-                if (response.status === 200) {
-                    localStorage.setItem("token", response.data.token);
-                    localStorage.setItem("currentUserEmail", email);
+        await signIn("credentials" , {
+            email : email,
+            password : password,
+            redirect:true,
+            callbackUrl: "/"
+        })
 
-                    console.log(response);
-                    toast.success("Logged in Successfully")
-                    router.push("/admin-page");
-                }
-            })
-            .catch((err) => {
-                console.error("Err :" + err);
-                toast.error("Incorrect Credential.")
-            })
-
+        // const formDataObject = {
+        //     email: email,
+        //     password: password
+        // };
+        // axios.post('http://localhost:8080/api/v1/admin/login', formDataObject)
+        //     .then((response) => {
+        //         if (response.status === 200) {
+        //             localStorage.setItem("token", response.data.token);
+        //             localStorage.setItem("currentUserEmail", email);
+        //
+        //             console.log(response);
+        //             toast.success("Logged in Successfully")
+        //             router.push("/admin-page");
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.error("Err :" + err);
+        //         toast.error("Incorrect Credential.")
+        //     })
     }
 
     return (
