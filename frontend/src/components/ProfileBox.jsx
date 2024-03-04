@@ -6,32 +6,17 @@ import Button from "@/components/Button";
 import ProfileDiv from "@/components/ProfileDiv";
 import Link from "next/link";
 import axios from "axios";
+import useSWR from "swr";
+import {fetcher} from "@/utils/fetcher";
 
 
 const ProfileBox = () => {
-    const [data, setData] = useState();
     const [imageUrl, setImageUrl] = useState();
     const token = localStorage.getItem("token");
 
-    useEffect(() => {
-        axios.get(`http://localhost:8080/api/v1/user/profile`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json' // Specify content type if required
-            }
-        })
-            .then((res) => {
+    const { data, error,isLoading } = useSWR('/user/profile', fetcher)
+    console.log(data)
 
-                const imageBlob = new Blob([res.data.profilePicture.imageByte], {type: 'text/plain'});
-                setImageUrl(URL.createObjectURL(imageBlob))
-                setData(res.data)
-                console.log(imageUrl);
-
-            })
-            .catch((err) => {
-                console.error("Error fetching data:", err);
-            });
-    }, [imageUrl]);
 
 
     return (
