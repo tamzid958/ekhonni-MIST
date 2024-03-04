@@ -37,10 +37,6 @@ public class ProductController {
 
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
-//    @GetMapping("/products")
-//    public List<ProductView> fetchAllProduct() {
-//        return productService.fetchAllProducts();
-//    }
 
     @RequestMapping("/products/filter")
     public Page<ProductView> filterProduct(@RequestBody FilterRequest filterRequest) {
@@ -50,11 +46,6 @@ public class ProductController {
     public ProductView getProductById(@PathVariable("id") Long id) {
         return productService.getProductById(id);
     }
-
-//    @GetMapping("/products/page/{page}")
-//    public Page<ProductView> filterProducts(@PathVariable int page, @RequestParam FilterRequest filterRequest) {
-//        return productService.fetchProducts(page, filterRequest);
-//    }
 
     @GetMapping("/products/count")
     public Map<String,Long> countProducts(@RequestParam(defaultValue = "") String division) {
