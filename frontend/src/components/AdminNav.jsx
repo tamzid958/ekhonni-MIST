@@ -1,38 +1,37 @@
 "use client"
 import Image from "next/image";
 import Button from "@/components/Button";
-import {useState,useEffect} from "react";
+import {useEffect, useState} from "react";
 import ProfileBox from "@/components/ProfileBox";
 import Link from "next/link";
-import AdminModal from "@/components/AdminModal";
 
 
-const AdminNav = () => {
-    const [profileModel,setProfileModel] = useState(false);
-    const [Email,setEmail] = useState(false);
-    const [barClicked,setBarClicked] = useState(false);
+const AdminNav = ({Sidebar}) => {
+    const [profileModel, setProfileModel] = useState(false);
+    const [BarClicked, setBarClicked] = useState(false);
 
+    const Token = localStorage.getItem('token');
 
     useEffect(() => {
-        const localStorageEmail = localStorage.getItem('currentUserEmail');
-        setEmail(localStorageEmail);
-    }, []);
-
-
-    const CloseModel = ()=>{
-        if(profileModel){
+        Sidebar(BarClicked)
+    }, [BarClicked]);
+    const CloseModel = () => {
+        if (profileModel) {
             setProfileModel(false);
         }
     }
     return (
         <>
-            {barClicked && <AdminModal/>}
             <div onClick={CloseModel}>
 
-                <div className=" px-6 w-full overflow-x-hidden h-[100px] border-black flex justify-between bg-slate-100 ">
+                <div
+                    className=" px-6 w-full overflow-x-hidden h-[100px] border-black flex justify-between bg-slate-100 ">
                     <div className="flex">
                         <div className="flex my-auto px-5" onClick={() => setBarClicked((state) => !state)}>
-                            {barClicked? <Image src={"./bar-staggered.svg"} alt={"bars"} width={30} height={30} className=" mr-4 cursor-pointer" /> : <Image src={"./bars.svg"} alt={"bars"} width={30} height={30} className=" mr-4 cursor-pointer" />}
+                            {BarClicked ? <Image src={"./bar-staggered.svg"} alt={"bars"} width={30} height={30}
+                                                 className=" mr-4 cursor-pointer"/> :
+                                <Image src={"./bars.svg"} alt={"bars"} width={30} height={30}
+                                       className=" mr-4 cursor-pointer"/>}
                         </div>
                         <Link href={"/"} className={"my-auto"}>
                             <div className=" my-auto">
@@ -46,16 +45,17 @@ const AdminNav = () => {
                             <Image src={"./notification.svg"} alt={"message"} width={20} height={20} className=" mr-4"/>
                             <p className=" text-lg font-semibold">Notifications</p>
                         </div>
-                        <div className="flex my-auto px-5 cursor-pointer" onClick={() => setProfileModel(prevState => !prevState)}>
+                        <div className="flex my-auto px-5 cursor-pointer"
+                             onClick={() => setProfileModel(prevState => !prevState)}>
                             <Image src={"./user.svg"} alt={"message"} width={20} height={20} className=" mr-4"/>
                             <p className=" text-lg font-semibold">Account</p>
                         </div>
-                        {Email? <Link href={"/add-product"}>
-                            <Button value="Post Ad" option={1} type={"submit"} />
-                        </Link> : <Link href={"/login"}><Button value="Log in" option={1} type={"submit"} /></Link>}
+                        {Token ? <Link href={"/add-product"}>
+                            <Button value="Post Ad" option={1} type={"submit"}/>
+                        </Link> : <Link href={"/login"}><Button value="Log in" option={1} type={"submit"}/></Link>}
                     </div>
                 </div>
-                {profileModel && <ProfileBox email = {Email} /> }
+                {profileModel && <ProfileBox/>}
             </div>
         </>
     )
