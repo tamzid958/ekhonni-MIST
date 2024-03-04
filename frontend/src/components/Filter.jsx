@@ -5,7 +5,6 @@ import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {addCategory, addDivision, addPrice, addSubCategory, clearAll} from "@/Actions/filter";
 import {fetchProduct} from "@/Actions/fetchProduct";
-import {data} from "autoprefixer";
 
 
 const Filter = () => {
@@ -15,27 +14,54 @@ const Filter = () => {
     const filteredItem = useSelector((state) => state.filter);
     const product = useSelector((state) => state.product);
 
-    const {category, division, subCategory} = filteredItem;
-    const combinedArray = [...category, ...division, ...subCategory];
+    let allFilter = [];
+    const initialState = {
+        pageNumber: 0,
+        categories: [
+            {
+                name: "Electronics",
+                subCategories: ["Smartphones & Tablets"]
+            },
+            {
+                name: "Furniture",
+                subCategories: ["Table"]
+            },
 
+        ],
+        startPrice: 2000,
+        endPrice: 100000,
+        search: null,
+        division: ["Dhaka", "Khulna"],
+        sort: "High to low"
+
+    };
+    const {categories, division} = filteredItem;
+
+    categories.map((category, index) => {
+        allFilter.push(category.name);
+        category.subCategories.forEach((subCategories) => {
+            allFilter.push(subCategories);
+        })
+    })
+    allFilter = [...allFilter, ...division];
     useEffect(() => {
-        console.log(filteredItem)
-        dispatch(fetchProduct({id:0,filter:filteredItem}))
-        console.log(product)
+        dispatch(addPrice(RangeValue))
+    }, [RangeValue]);
+    useEffect(() => {
+        // console.log(allFilter)
+        dispatch(fetchProduct({filter: filteredItem}))
     }, [filteredItem]);
 
 
     function valueFunction(msg) {
         setRangeValue(msg);
-        dispatch(addPrice(RangeValue))
+        // dispatch(addPrice(msg))
     }
 
     const handleCategoryClick = (index) => {
         if (selectedCategory === index) {
-            // If the clicked category is already selected, deselect it
             setSelectedCategory(null);
         } else {
-            // Otherwise, select the clicked category
             setSelectedCategory(index);
         }
     };
@@ -164,12 +190,12 @@ const Filter = () => {
                         <p className="text-blue-500 cursor-pointer" onClick={() => {
                             dispatch(clearAll())
 
-                        } }>CLEAR ALL</p>
+                        }}>CLEAR ALL</p>
                     </div>
                     <div className="my-1 flex flex-wrap flex-shrink-0">
                         {
-                            combinedArray && combinedArray.map((data, index) => (
-                                <CrossButton key={index} text={combinedArray[index]}/>
+                            allFilter && allFilter.map((data, index) => (
+                                <CrossButton key={index} text={data}/>
                             ))
                         }
                     </div>
@@ -216,7 +242,7 @@ const Filter = () => {
                                         <ul className="">
                                             {data.SubCategories.map((subcategory, subIndex) => (
                                                 <li key={subIndex} className="ml-10 text-gray-500 cursor-pointer"
-                                                    onClick={() => dispatch(addSubCategory(Categories[index].SubCategories[subIndex]))}>{subcategory}</li>
+                                                    onClick={() => dispatch(addSubCategory(Categories[index].category, Categories[index].SubCategories[subIndex]))}>{subcategory}</li>
                                             ))}
                                         </ul>
                                     )}
@@ -232,7 +258,7 @@ const Filter = () => {
                         <h3 className="my-1 text-gray-400">Current Range: ৳ {RangeValue[1] - RangeValue[0]}</h3>
                     </div>
                     <div className={"pb-5"}>
-                        <Range max={5000} min={0} valueFunction={valueFunction}/>
+                        <Range max={1000000} min={0} valueFunction={valueFunction}/>
                     </div>
                 </div>
             </div>

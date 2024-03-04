@@ -8,3 +8,6 @@ export const DELETE_INDIVIDUAL_PRODUCT = "delete individual product"
 export const PRODUCT_REQUEST = "product request"
 export const PRODUCT_SUCCESSFULLY_FETCH = "product successfully fetch"
 export const PRODUCT_FETCH_ERROR = "can't fetch the product"
+export const SEARCH_PRODUCT = "search product"
+export const UPDATE_PAGE = "update page"
+

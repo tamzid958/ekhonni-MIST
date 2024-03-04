@@ -1,6 +1,7 @@
 package com.dsi.backend.service.implententation;
 
 import com.dsi.backend.model.AppUser;
+import com.dsi.backend.projection.AppUserView;
 import com.dsi.backend.model.ImageModel;
 import com.dsi.backend.model.TokenResponse;
 import com.dsi.backend.repository.AppUserRepository;
@@ -10,6 +11,7 @@ import com.dsi.backend.service.MailSenderService;
 import com.dsi.backend.service.NotificationService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -52,11 +54,12 @@ public class AppUserServiceImpl implements AppUserService{
 
 
     @Override
-    public AppUser registerAppUser(AppUser appUser){
+    public AppUserView registerAppUser(AppUser appUser){
         appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
         appUser.setClientStatus("verified");
         appUser.setRole("ROLE_USER");
-        return appUserRepository.save(appUser);
+        AppUser savedAppUser = appUserRepository.save(appUser);
+        return new SpelAwareProxyProjectionFactory().createProjection(AppUserView.class,savedAppUser);
     }
 
     @Override
@@ -74,11 +77,11 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
     @Override
-    public ResponseEntity<?> updateProfile(String email, AppUser appUser) {
+    public ResponseEntity<?> updateProfile(String token, AppUser appUser) {
         if(appUser==null){
             return new ResponseEntity<>("Nothing to be updated with", HttpStatus.NO_CONTENT);
         }
-        AppUser updatedAppUser = appUserRepository.findByEmail(email);
+        AppUser updatedAppUser = appUserRepository.findByEmail(jwtTokenService.getUsernameFromToken(token.substring(7)));
 
         if(appUser.getName()!=null) {
             updatedAppUser.setName(appUser.getName());
@@ -98,28 +101,35 @@ public class AppUserServiceImpl implements AppUserService{
         else{
             return new ResponseEntity<>("Nothing to be updated with", HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(appUserRepository.save(updatedAppUser),HttpStatus.OK);
+        AppUser savedAppUser = appUserRepository.save(updatedAppUser);
+//        return new ResponseEntity<>(appUserRepository.getByEmail(savedAppUser.getEmail()),HttpStatus.OK);
+//        ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
+        AppUserView appUserView = new SpelAwareProxyProjectionFactory().createProjection(AppUserView.class, savedAppUser);
+        return new ResponseEntity<>(appUserView,HttpStatus.OK);
+
     }
 
 
 
     @Override
-    public ResponseEntity<?> fetchInformation(String email) {
-        AppUser appUser = appUserRepository.findByEmail(email);
-        return ResponseEntity.ok(appUser);
+    public ResponseEntity<?> fetchInformation(String token) {
+//        AppUser appUser = appUserRepository.findByEmail(email);
+        AppUserView appUserView = appUserRepository.getByEmail(jwtTokenService.getUsernameFromToken(token.substring(7)));
+        return ResponseEntity.ok(appUserView);
     }
 
     @Override
-    public AppUser uploadImage(MultipartFile imageFile, AppUser appUser) throws IOException {
+    public AppUserView uploadImage(MultipartFile imageFile, String token) throws IOException {
         ImageModel imageModel = new ImageModel(imageFile.getOriginalFilename(),
                 imageFile.getContentType(),
                 imageFile.getBytes());
         imageModel = imageRepository.save(imageModel);
 
-        appUser = appUserRepository.findByEmail(appUser.getEmail());
+        AppUser appUser = appUserRepository.findByEmail(jwtTokenService.getUsernameFromToken(token.substring(7)));
         appUser.setProfilePicture(imageModel);
+        AppUser savedAppUser = appUserRepository.save(appUser);
 
-        return appUserRepository.save(appUser);
+        return new SpelAwareProxyProjectionFactory().createProjection(AppUserView.class, savedAppUser);
     }
 
     @Override

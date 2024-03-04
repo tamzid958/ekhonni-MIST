@@ -1,20 +1,19 @@
-import axios from "axios";
-import {PRODUCT_REQUEST,PRODUCT_SUCCESSFULLY_FETCH,PRODUCT_FETCH_ERROR} from "@/Actions/constants";
+import {PRODUCT_FETCH_ERROR, PRODUCT_REQUEST, PRODUCT_SUCCESSFULLY_FETCH} from "@/Actions/constants";
 
-export const getProductRequest = ()=>{
+export const getProductRequest = () => {
     return {
-        type:PRODUCT_REQUEST
+        type: PRODUCT_REQUEST
     }
 }
-export const getProductFailed = (error)=>{
+export const getProductFailed = (error) => {
     return {
-        type:PRODUCT_FETCH_ERROR,
-        payload:error
+        type: PRODUCT_FETCH_ERROR,
+        payload: error
     }
 }
-export const getProductSuccess = (product)=>{
+export const getProductSuccess = (product) => {
     return {
-        type:PRODUCT_SUCCESSFULLY_FETCH,
-        payload:product
+        type: PRODUCT_SUCCESSFULLY_FETCH,
+        payload: product
     }
 }

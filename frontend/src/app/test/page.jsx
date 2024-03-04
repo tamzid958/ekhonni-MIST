@@ -1,12 +1,14 @@
-import BuyerBidModal from "@/components/BuyerBidModal";
-import SellerSelectModal from "@/components/SellerSelectModal";
+"use client"
 
+import SellerSelectModal from "@/components/SellerSelectModal";
+import {useState} from "react";
 
 const TestPage = () => {
+    const biddingActive = true;
+    const [modalIsOpen, setModalIsOpen] = useState(true);
     return (
         <>
-            {/*<BuyerBidModal visibility={true} maxBid={420} />*/}
-            <SellerSelectModal maxBid={420} isBidActive={true}/>
+            <SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={biddingActive}/>
         </>
     )
 }

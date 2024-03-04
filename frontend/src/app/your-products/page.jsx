@@ -1,76 +1,73 @@
 "use client"
 import SingleProduct from "@/components/SingleProduct"
-import Button from "@/components/Button";
-import BuyerBids from "@/components/BuyerBids";
-import PostApprovalbox from "@/components/PostApprovalbox";
 
-export default function YourProducts(){
-    // = ({name,location,time,description,category,price,username,time}) =>
+export default function YourProducts() {
 
-    const data =[
+    const data = [
         {
-            id : '1',
-            name : 'Product1',
+            id: '1',
+            name: 'Product1',
             location: 'Dhaka',
             time: '12.00',
             description: 'This is good',
             category: 'phone',
             price: '122222',
             maxbid: '1298766',
-            totalbid:'33',
-            username:'Shadman'
+            totalbid: '33',
+            username: 'Shadman'
 
         },
         {
-            id : '2',
-            name : 'Product2',
+            id: '2',
+            name: 'Product2',
             location: 'Chittagong',
             time: '12.10',
             description: 'This is good',
             category: 'phone',
             price: '122222',
             maxbid: '1298766',
-            totalbid:'33',
-            username:'Shafeen'
+            totalbid: '33',
+            username: 'Shafeen'
         },
-        {   id : '3',
-            name : 'Product3',
+        {
+            id: '3',
+            name: 'Product3',
             location: 'Khulna',
             time: '12.40',
             description: 'This is good',
             category: 'phone',
             price: '122222',
             maxbid: '1298766',
-            totalbid:'33',
-            username:'Khan'
+            totalbid: '33',
+            username: 'Khan'
         },
-        {   id : '4',
-            name : 'Product4',
+        {
+            id: '4',
+            name: 'Product4',
             location: 'Khulna',
             time: '12.44',
             description: 'This is not good',
             category: 'phone',
             price: '122222',
             maxbid: '1298766',
-            totalbid:'33',
-            username:'Sadia'
+            totalbid: '33',
+            username: 'Sadia'
         },
-        {   id : '5',
-            name : 'Product5',
+        {
+            id: '5',
+            name: 'Product5',
             location: 'Khulna',
             time: '12.45',
             description: 'This is good',
             category: 'phone',
             price: '122222',
             maxbid: '1298766',
-            totalbid:'33',
-            username:'Shitol'
+            totalbid: '33',
+            username: 'Shitol'
         }
     ]
 
-// const YourProducts = ({name,location,time,description,category,price,username}) =>
-// {
-    return(
+    return (
         <>
             <div>
                 <p className="font-bold text-3xl ml-[300px] my-4 ">Your Products</p>
@@ -78,11 +75,11 @@ export default function YourProducts(){
             <div className="w-full h-auto flex flex-col justify-start items-center ">
 
                 {data.map((item) => (
-                    <SingleProduct key={item.id} id={item.id} name={item.name} description={item.description}  totalbid={item.totalbid} price={item.price}  time={item.time} maxbid={item.maxbid}/>
+                    <SingleProduct key={item.id} id={item.id} name={item.name} description={item.description}
+                                   totalbid={item.totalbid} price={item.price} time={item.time} maxbid={item.maxbid}/>
                 ))}
 
             </div>
         </>
     )
 }
-// export default YourProducts
