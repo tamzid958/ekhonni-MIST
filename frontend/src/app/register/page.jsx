@@ -33,17 +33,17 @@ const AccountCreationPage = () => {
                 password: password
             };
             const formData = JSON.stringify(formDataObject);
-            console.log(formData);
-
-
-            const response = await axios.post('http://localhost:8080/api/register', formDataObject);
-
-            if (response.ok) {
+            const response = await axios.post('http://localhost:8080/api/v1/register', formDataObject);
+            console.log(response)
+            if (response.status === 201) {
                 await router.push("/login");
-                toast.success("Account created successfully");
-            } else {
-                toast.error("Passwords must match");
+                setTimeout(()=> {
+                    toast.success("Account created successfully");
+                } , 1000)
             }
+        }
+        else {
+            toast.error("Passwords must match");
         }
     }
 
@@ -52,7 +52,7 @@ const AccountCreationPage = () => {
             <Header/>
             <Toaster expand={false} position={"top-right"} richColors/>
             <form onSubmit={handleSubmit}>
-                <div className="w-screen h-[700px] flex justify-center items-center">
+                <div className="w-full h-[700px] flex justify-center items-center">
                     <div
                         className="w-[850px] h-[650px] border-2 border-black flex flex-row justify-start items-center rounded-lg">
                         {/*If already have an account / Log in section*/}
@@ -67,11 +67,10 @@ const AccountCreationPage = () => {
                                 </Link>
                             </div>
                         </div>
-                        {/*For creating account /Sign Up Div*/}
                         <div className="w-3/5 h-full rounded-l-lg">
                             <div className="w-full h-1/8 flex flex-col justify-center items-center">
                                 <h1 className="font-bold mt-4 text-3xl my-3 ">Sign Up</h1>
-                                <p className="font-light ">Please enter your Username and Password</p>
+                                <p className="font-light ">Please enter your Personal Information</p>
                             </div>
                             <div className="w-full h-6/8 flex flex-col justify-center items-center">
                                 <TextField placeholder={"Name"} type={"text"} name={"name"} value={name}

@@ -27,7 +27,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, CustomR
     List<Product> findByIsApprovedByAdminTrueAndSellerDivisionIn(List<String> division);
     List<Product> findByIsApprovedByAdminTrueAndStartingPriceBetween(Double minPrice, Double maxPrice);
     List<Product> findByIsApprovedByAdminTrueAndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String searchKey1,String searchKey2);
-    //Product findById(Long id);
+    Product findProductById(Long id);
 
     @Modifying
     @Transactional
@@ -53,4 +53,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, CustomR
     @Transactional
     @Query(value = "UPDATE product p SET is_sold = true WHERE p.id = :product_id", nativeQuery = true)
     void changeIsSoldToTrue(Long product_id);
+
+
 }
