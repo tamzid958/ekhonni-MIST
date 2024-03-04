@@ -25,6 +25,8 @@ public interface AppUserService {
 
     void generateLink(String email) throws MessagingException;
 
+    ResponseEntity<?> validateToken(String token);
+
     AppUser addAdmin(AppUser appUser);
 
     AppUser deleteAdmin(String email);
@@ -32,5 +34,7 @@ public interface AppUserService {
     ResponseEntity<?> fetchOtherAdmins(String email);
 
 //    ResponseEntity<?> deleteAccount(AppUser appUser);
+
+    ResponseEntity<?> resetPassword(String email, String password);
 }
 

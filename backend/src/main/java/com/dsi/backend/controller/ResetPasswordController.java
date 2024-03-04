@@ -29,23 +29,16 @@ public class ResetPasswordController {
             appUserService.generateLink(email);
             return new ResponseEntity<>(user,HttpStatus.OK);
         }
-        return new ResponseEntity<>(user,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/reset-password")
     public ResponseEntity<?> checkLink(@RequestParam(required = false) String token) {
-        return null;
+        return appUserService.validateToken(token);
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestBody String email, String password, HttpSession session) {
-        AppUser user = appUserService.findUser(email);
-        if ( user != null) {
-            user.setPassword(password);
-            session.setAttribute("message", "Password changed successfully.");
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    public ResponseEntity<?> resetPassword(@RequestParam String email, String password) {
+        return appUserService.resetPassword(email,password);
     }
-
 }

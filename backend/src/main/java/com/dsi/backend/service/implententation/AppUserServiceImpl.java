@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -142,8 +143,27 @@ public class AppUserServiceImpl implements AppUserService{
     public void generateLink(String email) throws MessagingException {
         String token = jwtTokenService.createLinkToken(email);
         String url = UriComponentsBuilder.fromHttpUrl(baseURL).path("/api/v1/reset-password").queryParam("token", token).toUriString();
-        String link = baseURL + "/api/v1/reset-password/?token=" + token;
-        mailSenderService.sendMail(email, "Reset Your Password", link);
+        String link = baseURL + "/api/v1/reset-password?token=" + token;
+
+        String message = "This email has been sent to you because there has been an attempt to change your account password. If this is really you, click on this link to change your password:" + link ;
+
+
+        mailSenderService.sendMail(email, "Reset Your Password", message);
+    }
+
+    @Override
+    public ResponseEntity<?> validateToken(String token) {
+        String email = jwtTokenService.getUsernameFromToken(token);
+        long expirationTime = jwtTokenService.getExpirationDateFromToken(token).getTime();
+        long currentTime = System.currentTimeMillis();
+
+        AppUser appUser = appUserRepository.findByEmail(email);
+        if (appUser != null) {
+            if (currentTime <= expirationTime) {
+                return new ResponseEntity<>(appUser,HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.REQUEST_TIMEOUT);
     }
 
     @Override
@@ -168,6 +188,17 @@ public class AppUserServiceImpl implements AppUserService{
         List<AppUser> userList= appUserRepository.findAllByRole("ROLE_ADMIN");
         userList.remove(loggedAdmin);
         return new ResponseEntity<>(userList, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> resetPassword(String email, String password) {
+        AppUser user = appUserRepository.findByEmail(email);
+        if ( user != null) {
+            user.setPassword(passwordEncoder.encode(password));
+            appUserRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 
 //    @Override

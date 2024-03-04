@@ -18,6 +18,10 @@ public class JwtTokenService {
         return getClaimFromToken(token, Claims::getSubject);
     }
 
+    public Long getIssuedDateFromToken(String token) {
+        return getClaimFromToken(token, Claims::getIssuedAt).getTime();
+    }
+
     public Date getExpirationDateFromToken(String token) {
         return getClaimFromToken(token, Claims::getExpiration);
     }
@@ -49,7 +53,7 @@ public class JwtTokenService {
     public String createLinkToken(String subject) {
         Claims claims = Jwts.claims().setSubject(subject);
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 300))
+                .setExpiration(new Date(System.currentTimeMillis() + 300000))
                 .signWith(SignatureAlgorithm.HS256, SIGNING_KEY).compact();
     }
 
