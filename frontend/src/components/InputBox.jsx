@@ -28,7 +28,7 @@ const InputBox = ({Name, value, type}) => {
 
 
             const {value} = await requestApi({req,url,method,data})
-            console.log(value)
+
         }
 
     }
