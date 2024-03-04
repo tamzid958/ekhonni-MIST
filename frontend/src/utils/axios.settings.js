@@ -5,6 +5,7 @@ import {
     throwNetworkError,
     throwServerError,
 } from "@/utils/errors";
+import {getSession} from "next-auth/react";
 
 
 const axios = _axios.create({
@@ -65,11 +66,11 @@ const getErrorMessage = (e) => {
 };
 
 const bearerToken = async ({ req }) => {
-    const { token, ...Headers } = req;
-    return token
+    const session = await getSession({req});
+    return session?.user.token
         ? {
             ...Headers,
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${session?.user.token}`,
         }
         : { ...Headers };
 };
@@ -99,6 +100,7 @@ export const getServerApi = async ({ req,url, params = {} }) => {
             params,
             headers: await bearerToken({req})
         });
+
     } catch (e) {
         let error = {
             title: e.type || "Sorry!",
@@ -120,9 +122,8 @@ export const getServerApi = async ({ req,url, params = {} }) => {
         };
         return { error };
     }
-    console.log(res)
     // NOTE: axios provides all header names in lower case
-    return { data: res };
+    return { data: res.data };
 };
 
 /**
