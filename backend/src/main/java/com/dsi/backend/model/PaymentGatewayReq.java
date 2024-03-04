@@ -68,7 +68,7 @@ public class PaymentGatewayReq {
         return appUser.getDivision();
     }
     public String getCus_country(){
-        return "Bangladesh";
+        return paymentGatewayReqParam.getCus_country();
     }
     public String getCus_phone(){
         return appUser.getContact();
@@ -79,15 +79,6 @@ public class PaymentGatewayReq {
     public String getNum_of_item(){
         return paymentGatewayReqParam.getNum_of_item();
     }
-    public String getWeight_of_items(){
-        return paymentGatewayReqParam.getWeight_of_items();
-    }
-    public String getLogistic_pickup_id(){
-        return paymentGatewayReqParam.getLogistic_pickup_id();
-    }
-    public String getLogistic_delivery_type(){
-        return paymentGatewayReqParam.getLogistic_delivery_type();
-    }
     public String getProduct_name(){
         return product.getName();
     }
@@ -97,13 +88,5 @@ public class PaymentGatewayReq {
     public String getProduct_amount(){
         return Integer.toString(1);
     }
-    public String getVat(){
-        return paymentGatewayReqParam.getVat();
-    }
-    public String getDiscount_amount(){
-        return paymentGatewayReqParam.getDiscount_amount();
-    }
-    public String getConvenience_fee(){
-        return paymentGatewayReqParam.getConvenience_fee();
-    }
+
 }

@@ -93,8 +93,8 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
     public String convertToUrl(PaymentGatewayReq paymentGatewayReq) {
         PaymentGatewayReqView paymentGatewayReqView = this.convertToView(paymentGatewayReq);
         Map<String, String> paymentGatewayMap = objectMapper.convertValue(paymentGatewayReqView, Map.class);
-        paymentGatewayMap.put("store_id", "ekhon65e06dcba99f0");
-        paymentGatewayMap.put("store_passwd", "ekhon65e06dcba99f0@ssl");
+        paymentGatewayMap.put("store_id", System.getenv("STORE_ID"));
+        paymentGatewayMap.put("store_passwd", System.getenv("STORE_PASSWD"));
 
 
         return paymentGatewayMap.keySet().stream()
