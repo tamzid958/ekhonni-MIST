@@ -28,17 +28,6 @@ public class BidServiceImpl implements BidService{
     @Autowired
     private AppUserRepository appUserRepository;
 
-
-//    @Override
-//    public Bid saveBid(Bid bid) {
-//        Product product = productRepository.findByNameAndDescriptionAndSize(bid.getProduct().getName(), bid.getProduct().getDescription(), bid.getProduct().getSize());
-//        AppUser buyer = appUserRepository.findByEmail(bid.getBuyer().getEmail());
-//
-//        Bid addBid = new Bid(product, buyer, bid.getOfferedPrice());
-//
-//        return bidRepository.save(addBid);
-//    }
-
     @Override
     public Bid saveBid(Long id, String buyerEmail, Double offeredPrice) {
         Product product = productRepository.findProductById(id);
@@ -61,7 +50,7 @@ public class BidServiceImpl implements BidService{
     }
 
     @Override
-    public List<Bid> fetchBids(Long id, String email) {
+    public List<Optional<Bid>> fetchBids(Long id, String email) {
 
         Product product = productRepository.findProductById(id);
 
@@ -73,11 +62,21 @@ public class BidServiceImpl implements BidService{
                 return bidRepository.findAllByProductIdOrderByOfferedPriceDesc(product.getId());
             }
             else {
-                List<Bid> bidList = new ArrayList<>();
-                bidList.add(bidRepository.findByProductIdAndBuyerEmail(id, email));
-                bidList.add(bidRepository.findByProductIdOrderByOfferedPriceDesc(product.getId()));
+                List<Optional<Bid>> bidList = new ArrayList<>();
 
-                bidList.sort(Comparator.comparingDouble(Bid::getOfferedPrice));
+                Optional<Bid> maxBid = bidRepository.findTopByProductIdOrderByOfferedPriceDesc(id);
+                if (maxBid.isEmpty()) {
+                    return bidList;
+                }
+                bidList.add(maxBid);
+
+                Optional<Bid> buyerBid = Optional.ofNullable(bidRepository.findByProductIdAndBuyerEmail(id, email));
+                if (buyerBid.isEmpty()) {
+                    return bidList;
+                }
+                bidList.add(buyerBid);
+
+                //bidList.sort(Comparator.comparingDouble(Bid::getOfferedPrice));
                 return bidList;
             }
         }
