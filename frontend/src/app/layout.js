@@ -2,6 +2,8 @@ import {Montserrat} from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import {StoreProvider} from "@/Store/StoreProvider";
+import {Provider} from "react-redux";
+import Providers from "@/app/Providers";
 
 
 const montserrat = Montserrat({subsets: ["latin"]});
@@ -18,7 +20,7 @@ export default function RootLayout({children}) {
         <StoreProvider>
             <html lang="en">
             <body className={montserrat.className}>
-            {children}
+            <Providers>{children}</Providers>
             <Footer/>
             </body>
             </html>
