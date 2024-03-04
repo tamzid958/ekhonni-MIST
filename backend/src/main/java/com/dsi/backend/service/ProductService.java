@@ -30,4 +30,5 @@ public interface ProductService {
     Category insertCategory(Category category);
     ResponseEntity<?> removeCategory(Category category);
 
+    Page<ProductView> filterProduct(FilterRequest filterRequest);
 }

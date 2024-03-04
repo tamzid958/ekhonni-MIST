@@ -42,6 +42,10 @@ public class ProductController {
 //        return productService.fetchAllProducts();
 //    }
 
+    @RequestMapping("/products/filter")
+    public Page<ProductView> filterProduct(@RequestBody FilterRequest filterRequest) {
+        return productService.filterProduct(filterRequest);
+    }
     @GetMapping(value = "/products/{id}")
     public ProductView getProductById(@PathVariable("id") Long id) {
         return productService.getProductById(id);
