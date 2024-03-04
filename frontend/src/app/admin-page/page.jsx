@@ -1,27 +1,16 @@
 "use client"
-import button from "@/components/Button";
-import Header from "@/components/Header";
-import PostApprovalbox from "@/components/PostApprovalbox";
+
 import AdminModal from "@/components/AdminModal";
-
-import SmallButton from "@/components/SmallButton";
-
 import React, {useEffect, useState} from 'react';
-
 import {Toaster} from "sonner";
+import AdminNav from "@/components/AdminNav";
+import AddAdminModal from "@/components/AddAdminModal";
 import axios from "axios";
+import PostApprovalbox from "@/components/PostApprovalbox";
 
 export default function AdminPage() {
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    // = ({name,location,time,description,category,price,username,time}) =>
-    //
-    // const query = new URLSearchParams(window.location.search);
-    // const myParam = query.get("success");
-    //
-    // if(myParam === 'true'){
-    //     toast.success('Logged Successfully');
-    // }
-
+    const [SideBarModalIsOpen, setSideBarModalIsOpen] = useState(false);
+    const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false);
 
     const data1 = [
         {
@@ -34,7 +23,7 @@ export default function AdminPage() {
             price: '122222',
         }
     ]
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({});
     const fetchData = async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/v1/admin/products/review');
@@ -45,10 +34,20 @@ export default function AdminPage() {
         }
     };
 
-
+    // const setAddModalOpen = (data)=>{
+    //     setAddAdminModalIsOpen(data);
+    //     console.log("Data: "+data);
+    // }
     useEffect(() => {
         fetchData();
     }, []);
+
+    const SideBar = (data) => {
+        setSideBarModalIsOpen(data);
+    }
+    const AddAdminModelData = (data) => {
+        setAddAdminModalIsOpen(data)
+    }
 
 
     // const data =[
@@ -105,35 +104,27 @@ export default function AdminPage() {
 
     return (
         <>
+            <AdminNav Sidebar={SideBar}/>
 
-            <Header/>
-
-            {modalIsOpen && <AdminModal setModalOpen={setModalIsOpen}/>}
-
-
+            {SideBarModalIsOpen && <AdminModal value={data} setAddAdminModal={AddAdminModelData}/>}
+            {addAdminModalIsOpen && <AddAdminModal CloseModel={AddAdminModelData}/>}
             <Toaster richColors position={"top-right"}/>
 
             <div>
                 <p className="font-bold text-3xl ml-[340px] my-4 ">Posts to Approve</p>
-                <div className="absolute right-0">
-                    <SmallButton option={1} value={"Button"} type={button} onClick={() => {
-                        setModalIsOpen(true)
-                    }}/>
-                </div>
-
             </div>
             <div className="w-full h-auto flex flex-col justify-start items-center ">
 
 
-                {data.map((item) => (
+                {data.products && data.products.map((item) => (
                     <PostApprovalbox key={item.id} id={item.id} name={item.name} username={item.seller.name}
                                      description={item.description} price={item.startingPrice}
                                      category={item.category.category} subCategory={item.category.subCategory}
                                      location={item.seller.division}
-                                     time={new Date(item.productTime).toLocaleDateString('en-GB')}/>
+                                     time={new Date(item.productTime).toLocaleDateString('en-GB')}
+                    />
                 ))}
             </div>
         </>
     )
 }
-// export default AccountCreationPage
