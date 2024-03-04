@@ -87,10 +87,6 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByIsApprovedByAdminIsNullOrderByProductTimeAsc();
     }
 
-//    public List<Product> fetchAllProducts() {
-//        return productRepository.findByIsApprovedByAdminTrue();
-//    }
-
     public ProductView getProductById(Long id) {
         Product product = productRepository.findById(id).orElseThrow(()->new ProductNotFoundException("Product not found by id: "+id));
 //        Product product = productRepository.findById(id);
@@ -103,66 +99,6 @@ public class ProductServiceImpl implements ProductService {
         List<Category> categories = categoryRepository.findBySubCategoryIn(subcategories);
         return categories.stream().map(Category::getCategory).collect(Collectors.toSet());
     }
-
-//    public Page<ProductView> fetchProducts(int page, FilterRequest filter) {
-//        List<Product> filteredProducts = new ArrayList<>();
-//        Set<String> categoriesWithSubcategories = new HashSet<>();
-//
-//        if (filter.getSubcategories() != null && !filter.getSubcategories().isEmpty()) {
-//            categoriesWithSubcategories = getCategoriesBySubcategories(filter.getSubcategories());
-//            filteredProducts.addAll(productRepository.findByIsApprovedByAdminTrueAndCategorySubCategoryIn(filter.getSubcategories()));
-//        }
-//        if (filter.getCategories() != null && !filter.getCategories().isEmpty()) {
-//            List<String> category = filter.getCategories();
-//            category.removeAll(categoriesWithSubcategories);
-//            filteredProducts.addAll(productRepository.findByIsApprovedByAdminTrueAndCategoryCategoryIn(category));
-//        }
-//        if (filter.getDivision() != null && !filter.getDivision().isEmpty()) {
-//            List<Product> districtFilteredProducts = productRepository.findByIsApprovedByAdminTrueAndSellerDivisionIn(filter.getDivision());
-//            if ((filter.getSubcategories().isEmpty()) && (filter.getCategories().isEmpty())) {
-//                filteredProducts.addAll(districtFilteredProducts);
-//            }
-//            else {
-//            filteredProducts = filteredProducts.stream()
-//                    .filter(districtFilteredProducts::contains)
-//                    .collect(Collectors.toList());
-//            }
-//        }
-//        if (filter.getPrice() != null && filter.getPrice().size() == 2) {
-//            Double minPrice = filter.getPrice().get(0);
-//            Double maxPrice = filter.getPrice().get(1);
-//            List<Product> priceFilteredProducts = productRepository.findByIsApprovedByAdminTrueAndStartingPriceBetween(minPrice, maxPrice);
-//            if ((filter.getSubcategories().isEmpty()) && (filter.getCategories().isEmpty()) && (filter.getDivision().isEmpty())) {
-//                filteredProducts.addAll(priceFilteredProducts);
-//            }
-//            else {
-//                filteredProducts = filteredProducts.stream()
-//                    .filter(priceFilteredProducts::contains)
-//                    .collect(Collectors.toList());
-//            }
-//        }
-//        else {
-//            if ((filter.getSubcategories().isEmpty()) && (filter.getCategories().isEmpty()) && (filter.getDivision().isEmpty()) && (filter.getPrice().isEmpty())) {
-//                filteredProducts.addAll(productRepository.findByIsApprovedByAdminTrue());
-//            }
-//        }
-//        if (filter.getSort() != null) {
-//            String field = filter.getSort();
-//            if (field.equalsIgnoreCase("High_to_low")) filteredProducts.sort(Comparator.comparing(Product::getStartingPrice).reversed());
-//            else if (field.equalsIgnoreCase("Low_to_high")) filteredProducts.sort(Comparator.comparing(Product::getStartingPrice));
-//            else if (field.equalsIgnoreCase("Old_to_new")) filteredProducts.sort(Comparator.comparing(Product::getProductTime));
-//            else if (field.equalsIgnoreCase("New_to_old")) filteredProducts.sort(Comparator.comparing(Product::getProductTime).reversed());
-//    }
-//
-//        List<ProductView> productViews = filteredProducts.stream()
-//                .map(ProductViewImpl::new)
-//                .collect(Collectors.toList());
-//        int startIndex = page * 5;
-//        int endIndex = Math.min(startIndex + 5, filteredProducts.size());
-//        List<ProductView> productsForPage = productViews.subList(startIndex, endIndex);
-//        Sort sort = Sort.by(Sort.Direction.ASC, "id");
-//        return new PageImpl<>(productsForPage, PageRequest.of(page, 5, sort), filteredProducts.size());
-//    }
 
     public Map<String,Long> countProducts(String division) {
         List<Product> product;

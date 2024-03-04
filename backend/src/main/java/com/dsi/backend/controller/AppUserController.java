@@ -28,11 +28,10 @@ public class AppUserController {
         AppUserView registeredUser = appUserService.registerAppUser(appUser);
         return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
     }
-    @PostMapping("/user/login")
+    @PostMapping("/login")
     public ResponseEntity<?> loginAppUser(@RequestBody AppUser appUser){
 
         return appUserService.loginAppUser(appUser.getEmail(), appUser.getPassword());
-
     }
 
     @GetMapping("/user/profile")
