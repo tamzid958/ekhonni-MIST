@@ -8,6 +8,8 @@ import Button from "@/components/Button";
 import Link from "next/link";
 import {toast, Toaster} from "sonner";
 import Header from "@/components/Header";
+import {signIn, useSession} from "next-auth/react";
+import {getToken} from "next-auth/jwt";
 
 
 const LoginPage = () => {
@@ -22,20 +24,27 @@ const LoginPage = () => {
             password: password
         };
 
-
-        axios.post(`http://localhost:8080/api/v1/user/login`, formDataObject)
-            .then((res) => {
-                const {token} = res.data;
-                localStorage.setItem("token", token);
-                console.log(token);
-                toast.success("Logged in Successfully")
-                router.push('/');
-
-            })
-            .catch((err) => {
-                console.error("Err :" + err);
-                toast.error("UnAuthorized")
-            })
+         await signIn("credentials" , {
+            email : email,
+            password : password,
+            redirect : true,
+            callbackUrl: "/"
+        })
+        // axios.post(`http://localhost:8080/api/v1/user/login`, formDataObject)
+        //     .then((res) => {
+        //         const {token} = res.data;
+        //         localStorage.setItem("token", token);
+        //         console.log(token);
+        //         setTimeout(()=>{
+        //             toast.success("Logged in Successfully");
+        //         } , 1000)
+        //         router.push('/');
+        //
+        //     })
+        //     .catch((err) => {
+        //         console.error("Err :" + err);
+        //         toast.error("Unauthorized. Please Enter a Valid Email and Password")
+        //     })
     }
 
     return (
@@ -50,7 +59,7 @@ const LoginPage = () => {
                         <div className="w-3/5 h-full rounded-l-lg">
                             <div className=" w-full h-2/5 flex flex-col justify-end items-center">
                                 <h1 className="font-bold text-4xl mb-8 ">Login</h1>
-                                <p className="font-light text-lg mb-4">Please enter your Username and Password</p>
+                                <p className="font-light text-lg ">Please enter your Username and Password</p>
                             </div>
                             <div className=" w-full h-2/5 flex flex-col justify-center items-center">
                                 <TextField placeholder={"Email"} type={"text"} name={"email"} value={email}
@@ -61,11 +70,11 @@ const LoginPage = () => {
                                            onChange={(e) => {
                                                setPassword(e.target.value)
                                            }}/>
-                            </div>
-                            <div className="pl-36">
-                                <Link href="/forget-password">
-                                    <p className="text-cyan-950">Forgot your password?</p>
-                                </Link>
+                                <div className="flex justify-center">
+                                    <Link href="/forget-password">
+                                        <p className="text-cyan-700 text-sm">Forgot your password?</p>
+                                    </Link>
+                                </div>
                             </div>
                             <div className=" w-full h-1/5 mt-2 flex flex-col justify-start items-center">
                                 <Button value={"Login"} option={1} type={"submit"}/>

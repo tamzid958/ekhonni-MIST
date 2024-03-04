@@ -16,12 +16,12 @@ const ProductPage = ({params}) => {
     const [isBidActive, setIsBidActive] = useState(null);
     const [isVisible, setIsVisible] = useState(null);
     const [isSold, setIsSold] = useState(null);
-    const [finalBuyerSelected , setFinalBuyerSelected] = useState(null);
+    const [isPurchased , setIsPurchased] = useState(null);
+    const [finalBuyerId , setFinalBuyerId] = useState(null);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [data, setData] = useState(null);
-    const [currentUserEmail, setCurrentUserEmail] = useState("");
-    const [sellerEmail, setSellerEmail] = useState("");
-
+    const [currentUserId, setCurrentUserId] = useState("");
+    const [sellerId, setSellerId] = useState("");
     const productID = params.id;
 
     const fetchCurrentUserDetails = async () => {
@@ -31,11 +31,17 @@ const ProductPage = ({params}) => {
                 "Content-Type": "application/json"
             }
         }).then((response) => {
-            setCurrentUserEmail(response.data.email);
-            if (currentUserEmail === sellerEmail) {
+            setCurrentUserId(response.data.id);
+            if (currentUserId === sellerId) {
                 setUserIsSeller(true);
             } else {
                 setUserIsSeller(false);
+            }
+
+            if (isSold && (finalBuyerId === currentUserId)) {
+                setIsPurchased(true);
+            } else {
+                setIsPurchased(false);
             }
         }).catch((error) => {
             console.log("Error fetching current user data : ", error);
@@ -53,8 +59,8 @@ const ProductPage = ({params}) => {
             setIsSold(response.data.isSold);
             setIsBidActive(response.data.isBidActive);
             setIsVisible(response.data.isVisible);
-            setFinalBuyerSelected(response.data.finalBuyerId);
-            setSellerEmail(response.data.seller.email);
+            setFinalBuyerId(response.data.finalBuyerId);
+            setSellerId(response.data.seller.id);
         }).catch((error) => {
             console.log("Error Fetching Data : ", error);
         })
@@ -70,16 +76,16 @@ const ProductPage = ({params}) => {
         fetchCurrentUserDetails().then(r => {
             console.log(r);
         });
-    }, [sellerEmail]);
+    }, [sellerId]);
 
 
     return (
         <>
             <Header/>
             {userIsSeller && modalIsOpen &&
-                <SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={data ? isBidActive : false}/>}
+                <SellerSelectModal setModalOpen={setModalIsOpen} productName={data ? data.name : ""} isBidActive={data ? isBidActive : false} finalBuyerId = {finalBuyerSelected} productID = {productID}/>}
             {!userIsSeller && modalIsOpen &&
-                <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={data ? isVisible : false} productID={productID}/>}
+                <BuyerBidModal setModalOpen={setModalIsOpen} productName={data ? data.name : ""} isVisible={data ? isVisible : false} productID={productID}/>}
             <div className="w-full h-[700px] flex flex-col justify-center items-center">
                 <div className="flex w-full justify-center items-center ">
                     <h1 className="font-semibold text-4xl mb-[1%]">Product Details</h1>
@@ -111,8 +117,10 @@ const ProductPage = ({params}) => {
                                 <p className="text-lg">{data ? data.description : ""}</p>
                             </div>
                             <div className="w-full h-1/5 flex flex-col justify-center items-start border-b">
-                                <p className="text-lg mb-2">Starting Price : <span className="font-medium">{data ? data.startingPrice : ""}</span></p>
-                                <p className="text-lg mb-2">Size : <span className="font-medium">{data ? data.size : ""}</span></p>
+                                <p className="text-lg mb-2">Starting Price : <span
+                                    className="font-medium">{data ? data.startingPrice : ""}</span></p>
+                                <p className="text-lg mb-2">Size : <span
+                                    className="font-medium">{data ? data.size : ""}</span></p>
                                 <p className="text-lg">Condition :
                                     {data && data.usedCondition && (
                                         <span className="font-medium">Used</span>
@@ -124,15 +132,22 @@ const ProductPage = ({params}) => {
                             </div>
                             <div className="w-full h-1/5 flex justify-center items-center border-b">
                                 {data && userIsSeller && !isSold &&
-                                    (<Button value={"View Bids"} option={1} type={"button"} onClick={() => {setModalIsOpen(true)}}/>)}
+                                    (<Button value={"View Bids"} option={1} type={"button"} onClick={() => {
+                                        setModalIsOpen(true)
+                                    }}/>)}
                                 {data && !userIsSeller && isBidActive && !isSold &&
-                                    (<Button value={"Bid"} option={1} type={"button"} onClick={() => setModalIsOpen(true)}/>)}
+                                    (<Button value={"Bid"} option={1} type={"button"}
+                                             onClick={() => setModalIsOpen(true)}/>)}
                                 {data && !userIsSeller && !isBidActive && !isSold &&
-                                    (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding Is Off</p>)}
+                                    (
+                                        <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding
+                                            Is Off</p>)}
                                 {data && !userIsSeller && !isBidActive && !isSold && finalBuyerSelected &&
-                                    (<Button value={"Buy Now"} option={0} type={"button"} />)}
+                                    (<Button value={"Buy Now"} option={0} type={"button"}/>)}
                                 {data && isSold &&
                                     (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl font-medium shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
+                                {data && isPurchased &&
+                                    (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl font-medium shadow-lg shadow-slate-300 rounded-full">Purchased</p>)}
                             </div>
                         </div>
                     </div>
