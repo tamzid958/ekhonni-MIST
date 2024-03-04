@@ -3,3 +3,5 @@ databaseChangeLog:
     file: db/changelog/app_user.xml
 - include:
     file: db/changelog/category.xml
+- include:
+    file: db/changelog/product.xml
