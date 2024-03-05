@@ -14,7 +14,7 @@ import Button from "@/components/Button";
 //
 const RemoveAdminModal = ({CloseModal})=> {
     const [closeModal,setCloseModal] =useState(false);
-    const [email:string,setEmail]=useState("");
+    const [email,setEmail]=useState("");
 
     const CloseButton = () :void =>
     {
