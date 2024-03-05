@@ -1,32 +1,34 @@
 "use client"
 import Button from "@/components/Button";
 import TextField from "@/components/TextField";
-import {useEffect, useRef, useState} from "react";
+import {useRef, useState} from "react";
 import CategoryDropdown from "@/components/CategoryDropdown";
 import Image from "next/image";
-import axios from "axios";
 import Header from "@/components/Header";
 import TwoRadioButtons from "@/components/TwoRadioButtons";
-import {useRouter} from "next/navigation";
+import {requestApi} from "@/utils/axios.settings";
+
 
 const AddProductPage = () => {
 
-
-    const router = useRouter();
-    const sellerEmail = "demoEmail";
-    const seller = {
-        email: sellerEmail
-    }
-    const [category, setCategory] = useState("");
-    const [subCategory, setSubCategory] = useState("")
-    const [name, setName] = useState("");
-    const [size, setSize] = useState("");
-    const [description, setDescription] = useState("");
-    const [startingPrice, setStartingPrice] = useState(null);
-    const [usedCondition, setUsedCondition] = useState(false);
-    const [isVisible, setIsVisible] = useState(false);
     const [image, setImage] = useState('');
-    const [product, setProduct] = useState({});
+    const [product, setProduct] = useState({
+        "category": {
+            "category": "",
+            "subCategory": ""
+        },
+        "name": "",
+        "size": "",
+        "description": "",
+        "startingPrice": null,
+        "usedCondition": false,
+        "isVisible": false
+    });
+
+    const updateProduct = (name, value)=>{
+        setProduct((prevData)=>({...prevData, [name]:value}));
+
+    }
 
     const inputRef = useRef(null);
     const imageClick = () => {
@@ -37,53 +39,22 @@ const AddProductPage = () => {
         setImage(file);
     }
     const formData = new FormData();
-    useEffect(() => {
-        setProduct({
-            "category": {
-                "category": category,
-                "subCategory": subCategory
-            },
-            "name": name,
-            "size": size,
-            "description": description,
-            "startingPrice": startingPrice,
-            "usedCondition": usedCondition,
-            "isVisible": isVisible
-        });
-        formData.append("product", new Blob([JSON.stringify(product)], {type: 'application/json'}));
 
-        formData.append("imageFile", image);
-
-    }, [image]);
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setProduct({
-            "category": {
-                "category": category,
-                "subCategory": subCategory
-            },
-            "name": name,
-            "size": size,
-            "description": description,
-            "startingPrice": startingPrice,
-            "usedCondition": usedCondition,
-            "isVisible": isVisible
-        });
         formData.append("product", new Blob([JSON.stringify(product)], {type: 'application/json'}));
         formData.append("imageFile", image);
-        axios.post("http://localhost:8080/api/v1/user/products/save", formData, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`
-            }
-        })
-            .then(response => {
-                console.log(response);
-                router.push("/");
+        // const response = await createProduct(formData)
 
-            })
-            .catch(error => {
-                console.log("error saving products", error);
-            });
+        const param = {
+            req:{
+                'Content-Type': 'multipart/form-data'
+            },
+            url: "/user/products/save",
+            method: "POST",
+            data: formData
+        }
+        const response = await requestApi(param)
     }
 
 
@@ -104,7 +75,7 @@ const AddProductPage = () => {
                                     <div
                                         className="rounded-lg cursor-pointer w-full h-full flex flex-col justify-center items-center text-lg"
                                         onClick={imageClick}>
-                                        <input className="hidden" name="img" type="file" required ref={inputRef}
+                                        <input className="hidden" name="img" type="file" ref={inputRef}
                                                onChange={handleImageInput}/>
                                         {image ?
                                             <img className="w-full h-full" src={URL.createObjectURL(image)} alt=''/> :
@@ -121,31 +92,36 @@ const AddProductPage = () => {
                                             Below</p>
                                     </div>
                                     <div className="w-5/6 h-[75%] flex flex-col justify-start items-center">
-                                        <CategoryDropdown name={"category"} setCategory={(setCategory)}
-                                                          setSubCategory={setSubCategory}/>
-                                        <TextField placeholder={"Product Name"} type={"text"} name={"name"} value={name}
+                                        <CategoryDropdown name={"category"} updateProduct={(name, value)=>updateProduct(name, value)}/>
+                                        <TextField placeholder={"Product Name"} type={"text"} name={"name"} value={product.name}
                                                    onChange={(e) => {
-                                                       setName(e.target.value)
+                                                       // setName(e.target.value)
+                                                       updateProduct(e.target.name, e.target.value)
                                                    }}/>
-                                        <TextField placeholder={"Product Size"} type={"text"} name={"size"} value={size}
+                                        <TextField placeholder={"Product Size"} type={"text"} name={"size"} value={product.size}
                                                    onChange={(e) => {
-                                                       setSize(e.target.value)
+                                                       // setSize(e.target.value)
+                                                       updateProduct(e.target.name, e.target.value)
                                                    }}/>
                                         <TextField placeholder={"Description"} type={"text"} name={"description"}
-                                                   value={description} onChange={(e) => {
-                                            setDescription(e.target.value)
+                                                   value={product.description} onChange={(e) => {
+                                            // setDescription(e.target.value)
+                                            updateProduct(e.target.name, e.target.value)
                                         }}/>
                                         <TextField placeholder={"Starting Price"} type={"number"} name={"startingPrice"}
-                                                   value={startingPrice} onChange={(e) => {
-                                            setStartingPrice(e.target.value)
+                                                   value={product.startingPrice} onChange={(e) => {
+                                            // setStartingPrice(e.target.value)
+                                            updateProduct(e.target.name, e.target.value)
                                         }}/>
                                     </div>
                                     <div className="w-5/6 h-[15%] flex justify-start items-center">
                                         <TwoRadioButtons label={"Condition"} inputLabel1={"Used"} inputLabel2={"New"}
-                                                         value={usedCondition} setValue={setUsedCondition}/>
+                                                         name={"usedCondition"}
+                                                         value={product.usedCondition} setValue={(name,value)=>updateProduct(name,value)}/>
                                         <TwoRadioButtons label={"Bidding"} inputLabel1={"Public"}
                                                          inputLabel2={"Private"}
-                                                         value={isVisible} setValue={setIsVisible}/>
+                                                         name={"isVisible"}
+                                                         value={product.isVisible} setValue={(name, value)=>updateProduct(name,value)}/>
                                     </div>
                                 </div>
                             </div>

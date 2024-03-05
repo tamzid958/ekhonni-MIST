@@ -2,7 +2,7 @@
 
 import {useState} from "react";
 
-const CategoryDropdown = ({name, setCategory, setSubCategory}) => {
+const CategoryDropdown = ({name, updateProduct}) => {
 
     const [selectedCategory, setSelectedCategory] = useState("");
     const Categories = [
@@ -115,9 +115,7 @@ const CategoryDropdown = ({name, setCategory, setSubCategory}) => {
                 className="w-[350px] h-12 border-2 my-3 border-neutral-900 rounded-lg pl-2 shadow-md shadow-slate-300"
                 required name={name}
                 onChange={(e) => {
-                    setCategory(e.target.value);
                     setSelectedCategory(e.target.value);
-                    setSubCategory("");
                 }}>
                 <option disabled selected>Select Category</option>
                 {Categories.map((item) => (
@@ -130,7 +128,7 @@ const CategoryDropdown = ({name, setCategory, setSubCategory}) => {
                     required
                     name="subcategory"
                     onChange={(e) => {
-                        setSubCategory(e.target.value)
+                        updateProduct(name, {"category":selectedCategory, "subCategory": e.target.value})
                     }}
                 >
                     <option value="" disabled selected>Select Subcategory</option>
