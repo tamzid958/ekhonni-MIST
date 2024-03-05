@@ -71,6 +71,7 @@ const getErrorMessage = (e) => {
 const bearerToken = async ({ req }) => {
     const session = await getSession({req});
     return session?.user.token
+
         ? {
             ...Headers,
             'Authorization': `Bearer ${session?.user.token}`,
