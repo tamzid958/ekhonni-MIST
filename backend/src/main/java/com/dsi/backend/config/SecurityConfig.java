@@ -29,12 +29,13 @@ public class SecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> {
-                    request.requestMatchers("/api/v1/register", "/api/v1/login","/api/v1/","/api/v1/products/**","/api/v1/products/{id}","/swagger-ui/**","/v3/api-docs/**").permitAll()
+                    request.requestMatchers("/api/v1/register", "/api/v1/login","/api/v1/","/api/v1/products/**","/api/v1/products/{id}","/swagger-ui/**","/v3/api-docs/**","/api/v1/forgot-password","/api/v1/reset-password").permitAll()
                             .requestMatchers("/api/v1/user/**").hasAuthority("ROLE_USER")
                             .requestMatchers("/api/v1/admin/**").hasAuthority("ROLE_ADMIN")
                             .anyRequest().authenticated();
 
-//                    request.requestMatchers("/**").permitAll();
+                    //request.requestMatchers("/**").permitAll();
+
 
                 })
                 .authenticationProvider(authenticationProvider())
