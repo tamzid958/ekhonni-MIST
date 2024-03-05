@@ -1,4 +1,5 @@
 import _axios from "axios";
+
 import {baseUrl} from "@/utils/baseUrl";
 import {
     throwApiError,
@@ -64,7 +65,6 @@ const getErrorMessage = (e) => {
     }
     return e.toString();
 };
-
 
 const bearerToken = async ({ req }) => {
     const session = await getSession({req});

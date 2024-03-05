@@ -9,6 +9,8 @@ import BuyerBidModal from "@/components/BuyerBidModal";
 import Header from "@/components/Header";
 import axios from "axios";
 import {useSession} from "next-auth/react";
+import useSWR from "swr";
+import {fetcher} from "@/utils/fetcher";
 
 // const isSeller = () => {
 //     if() {
@@ -20,71 +22,72 @@ import {useSession} from "next-auth/react";
 // }
 
 const ProductPage = ({params}) => {
-    const [userIsSeller, setUserIsSeller] = useState(null);
-    const [isBidActive, setIsBidActive] = useState(null);
-    const [isVisible, setIsVisible] = useState(null);
-    const [isSold, setIsSold] = useState(null);
-    const [isPurchased , setIsPurchased] = useState(null);
-    const [finalBuyerId , setFinalBuyerId] = useState(null);
-    const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [data, setData] = useState(null);
-    const [currentUserId, setCurrentUserId] = useState("");
-    const [sellerId, setSellerId] = useState("");
+    // const [userIsSeller, setUserIsSeller] = useState(null);
+    // const [isBidActive, setIsBidActive] = useState(null);
+    // const [isVisible, setIsVisible] = useState(null);
+    // const [isSold, setIsSold] = useState(null);
+    // const [isPurchased , setIsPurchased] = useState(null);
+    // const [finalBuyerId , setFinalBuyerId] = useState(null);
+    // const [currentUserId, setCurrentUserId] = useState("");
+    // const [sellerId, setSellerId] = useState("");
     const productID = params.id;
+    const [modalIsOpen, setModalIsOpen] = useState(false);
 
-    const fetchCurrentUserDetails = async () => {
-        await axios.get(`http://localhost:8080/api/v1/user/profile`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        }).then((response) => {
-            setCurrentUserId(response.data.id);
-            if (currentUserId === sellerId) {
-                setUserIsSeller(true);
-            } else {
-                setUserIsSeller(false);
-            }
+    const {data , error , isLoading} = useSWR(`/products/${productID}` , fetcher)
 
-            if (isSold && (finalBuyerId === currentUserId)) {
-                setIsPurchased(true);
-            } else {
-                setIsPurchased(false);
-            }
-        }).catch((error) => {
-            console.log("Error fetching current user data : ", error);
-        })
-    }
-    const fetchProductDetails = async () => {
-        await axios.get(`http://localhost:8080/api/v1/products/${productID}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        }).then((response) => {
-            console.log(response);
-            setData(response.data);
-            setIsSold(response.data.isSold);
-            setIsBidActive(response.data.isBidActive);
-            setIsVisible(response.data.isVisible);
-            setFinalBuyerId(response.data.finalBuyerId);
-            setSellerId(response.data.seller.id);
-        }).catch((error) => {
-            console.log("Error Fetching Data : ", error);
-        })
-    }
-    useEffect(() => {
-        fetchProductDetails()
-            .then(r => {
-                console.log(r);
-            });
-    }, [productID]);
-
-    useEffect(() => {
-        fetchCurrentUserDetails().then(r => {
-            console.log(r);
-        });
-    }, [sellerId]);
+    // const fetchCurrentUserDetails = async () => {
+    //     await axios.get(`http://localhost:8080/api/v1/user/profile`, {
+    //         headers: {
+    //             Authorization: `Bearer ${token}`,
+    //             "Content-Type": "application/json"
+    //         }
+    //     }).then((response) => {
+    //         setCurrentUserId(response.data.id);
+    //         if (currentUserId === sellerId) {
+    //             setUserIsSeller(true);
+    //         } else {
+    //             setUserIsSeller(false);
+    //         }
+    //
+    //         if (isSold && (finalBuyerId === currentUserId)) {
+    //             setIsPurchased(true);
+    //         } else {
+    //             setIsPurchased(false);
+    //         }
+    //     }).catch((error) => {
+    //         console.log("Error fetching current user data : ", error);
+    //     })
+    // }
+    // const fetchProductDetails = async () => {
+    //     await axios.get(`http://localhost:8080/api/v1/products/${productID}`, {
+    //         headers: {
+    //             Authorization: `Bearer ${token}`,
+    //             "Content-Type": "application/json"
+    //         }
+    //     }).then((response) => {
+    //         console.log(response);
+    //         setData(response.data);
+    //         setIsSold(response.data.isSold);
+    //         setIsBidActive(response.data.isBidActive);
+    //         setIsVisible(response.data.isVisible);
+    //         setFinalBuyerId(response.data.finalBuyerId);
+    //         setSellerId(response.data.seller.id);
+    //     }).catch((error) => {
+    //         console.log("Error Fetching Data : ", error);
+    //     })
+    // }
+    // useEffect(() => {
+    //     fetchProductDetails()
+    //         .then(r => {
+    //             console.log(r);
+    //         });
+    // }, [productID]);
+    //
+    // useEffect(() => {
+    //     fetchCurrentUserDetails().then(r => {
+    //         console.log(r);
+    //     });
+    // }, [sellerId]);
 
 
     return (

@@ -48,6 +48,7 @@ public class ProductController {
     public Page<ProductView> filterProduct(@RequestBody FilterRequest filterRequest) {
         return productService.filterProduct(filterRequest);
     }
+
     @GetMapping("/products/category/all")
     public ResponseEntity<List<CategoryRecord>> getAllCategoriesWithSubcategories() {
         List<CategoryRecord> categories = categoryService.getAllCategoriesWithSubcategories();
@@ -57,6 +58,7 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @GetMapping(value = "/products/{id}")
     public ProductView getProductById(@PathVariable("id") Long id) {
         return productService.getProductById(id);
