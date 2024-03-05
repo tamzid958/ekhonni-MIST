@@ -13,10 +13,8 @@ import {fetcher} from "@/utils/fetcher";
 const ProfileBox = () => {
     const [imageUrl, setImageUrl] = useState();
 
-    const { data, error,isLoading } = useSWR('/user/profile', fetcher)
+    const {data, error,isLoading } = useSWR('/user/profile', fetcher)
     console.log(data)
-
-
 
     return (
         <>

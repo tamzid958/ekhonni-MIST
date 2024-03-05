@@ -12,7 +12,6 @@ import {getSession} from "next-auth/react";
 const axios = _axios.create({
     timeout: 5000,
     baseURL: baseUrl
-
 });
 
 axios.interceptors.request.use(
@@ -67,11 +66,9 @@ const getErrorMessage = (e) => {
     return e.toString();
 };
 
-
 const bearerToken = async ({ req }) => {
     const session = await getSession({req});
     return session?.user.token
-
         ? {
             ...Headers,
             'Authorization': `Bearer ${session?.user.token}`,
