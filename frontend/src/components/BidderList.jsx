@@ -11,6 +11,8 @@ const BidderList = ({isVisible , bidderList , view , finalBuyerID}) => {
         setExpandList(true)
     }, 50);
 
+    console.log(bidderList);
+
 
     return (<>
             {isVisible &&
