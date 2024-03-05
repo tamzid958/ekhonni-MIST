@@ -1,15 +1,12 @@
 "use client"
 
-import PostApprovalbox from "@/components/PostApprovalbox";
 import AdminModal from "@/components/AdminModal";
-
-import SmallButton from "@/components/SmallButton";
-import button from "@/components/Button";
 import React, {useEffect, useState} from 'react';
 import {Toaster} from "sonner";
 import AdminNav from "@/components/AdminNav";
 import AddAdminModal from "@/components/AddAdminModal";
 import axios from "axios";
+import PostApprovalbox from "@/components/PostApprovalbox";
 
 export default function AdminPage() {
     const [SideBarModalIsOpen, setSideBarModalIsOpen] = useState(false);
@@ -26,7 +23,7 @@ export default function AdminPage() {
             price: '122222',
         }
     ]
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({});
     const fetchData = async () => {
         try {
             const response = await axios.get('http://localhost:8080/api/v1/admin/products/review');
@@ -109,7 +106,7 @@ export default function AdminPage() {
         <>
             <AdminNav Sidebar={SideBar}/>
 
-            {SideBarModalIsOpen && <AdminModal setAddAdminModal={AddAdminModelData}/>}
+            {SideBarModalIsOpen && <AdminModal value={data} setAddAdminModal={AddAdminModelData}/>}
             {addAdminModalIsOpen && <AddAdminModal CloseModel={AddAdminModelData}/>}
             <Toaster richColors position={"top-right"}/>
 
@@ -119,12 +116,13 @@ export default function AdminPage() {
             <div className="w-full h-auto flex flex-col justify-start items-center ">
 
 
-                {data.map((item) => (
+                {data.products && data.products.map((item) => (
                     <PostApprovalbox key={item.id} id={item.id} name={item.name} username={item.seller.name}
                                      description={item.description} price={item.startingPrice}
                                      category={item.category.category} subCategory={item.category.subCategory}
                                      location={item.seller.division}
-                                     time={new Date(item.productTime).toLocaleDateString('en-GB')}/>
+                                     time={new Date(item.productTime).toLocaleDateString('en-GB')}
+                    />
                 ))}
             </div>
         </>

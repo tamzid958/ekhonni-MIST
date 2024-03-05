@@ -2,6 +2,7 @@
 import {useState} from 'react';
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
+import {requestApi} from "@/utils/axios.settings";
 
 const AddAdminModal = ({CloseModel}) => {
     const [closeModel, setCloseModel] = useState(false)
@@ -19,18 +20,27 @@ const AddAdminModal = ({CloseModel}) => {
             email: email,
             password: password
         };
-        const handleModalCloseOnBgClick = (e) => {
-            if (e.target.id === "") {
-            }
-
-        };
-
+        const req = {
+            // token: session?.user.token,
+            "token": localStorage.getItem("token"),
+            "content-type": "application/json"
+        }
+        console.log(formDataObject)
+        CloseButton();
+        const res = requestApi({
+            req,
+            url: "admin/add-admin",
+            method: "POST",
+            data: formDataObject
+        })
     }
+
     return (
 
         <>
             <form onSubmit={handleSubmit}>
-                <div className=" z-20  absolute inset-0 flex justify-center items-center  bg-opacity-20 backdrop-blur-[1px] flex-col">
+                <div
+                    className=" z-20  absolute inset-0 flex justify-center items-center  bg-opacity-20 backdrop-blur-[1px] flex-col">
                     <div className="w-[450px] h-[2px] left-0 bg-transparent z-10 flex justify-end items-center">
                         <button onClick={CloseButton}><p className="text-amber-50 mb-4 mr-1 text-black">X</p></button>
                     </div>

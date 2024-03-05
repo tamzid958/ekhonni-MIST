@@ -6,12 +6,12 @@ import ProfileBox from "@/components/ProfileBox";
 import Link from "next/link";
 
 
-
 const AdminNav = ({Sidebar}) => {
     const [profileModel, setProfileModel] = useState(false);
     const [BarClicked, setBarClicked] = useState(false);
 
 
+    // const {data: session} = useSession();
     const Token = localStorage.getItem('token');
 
     useEffect(() => {
