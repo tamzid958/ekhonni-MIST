@@ -2,18 +2,21 @@
 
 import PostApprovalbox from "@/components/PostApprovalbox";
 import AdminModal from "@/components/AdminModal";
-
-import SmallButton from "@/components/SmallButton";
-import button from "@/components/Button";
 import React, {useEffect, useState} from 'react';
 import {Toaster} from "sonner";
 import AdminNav from "@/components/AdminNav";
 import AddAdminModal from "@/components/AddAdminModal";
 import axios from "axios";
+import RemoveAdminModal from "@/components/RemoveAdminModal";
+import AddCategoryModal from "@/components/AddCategoryModal";
+import RemoveCategoryModal from "@/components/RemoveCategoryModal";
 
 export default function AdminPage() {
     const [SideBarModalIsOpen, setSideBarModalIsOpen] = useState(false);
     const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false);
+    const [removeAdminModalIsOpen ,setRemoveAdminModalIsOpen] = useState(false);
+    const [addCategoryModalIsOpen, setAddCategoryModalIsOpen]=useState(false);
+    const [removeCategoryModalIsOpen,setRemoveCategoryModalIsOpen]=useState(false);
 
     const data1 = [
         {
@@ -37,80 +40,31 @@ export default function AdminPage() {
         }
     };
 
-    // const setAddModalOpen = (data)=>{
-    //     setAddAdminModalIsOpen(data);
-    //     console.log("Data: "+data);
-    // }
-    useEffect(() => {
-        fetchData();
-    }, []);
-
     const SideBar = (data) => {
         setSideBarModalIsOpen(data);
     }
     const AddAdminModelData = (data) => {
         setAddAdminModalIsOpen(data)
     }
+    const RemoveAdminModelData =(data) =>{
+        setRemoveAdminModalIsOpen(data)
+    }
+    const AddCategoryModelData =(data) =>{
+        setAddCategoryModalIsOpen(data)
+    }
 
-
-    // const data =[
-    //     {
-    //         id : '1',
-    //         name : 'Product1',
-    //         location: 'Dhaka',
-    //         time: '12.00',
-    //         description: 'This is good',
-    //         category: 'phone',
-    //         price: '122222',
-    //         username:'Shadman'
-    //
-    //     },
-    //     {
-    //         id : '2',
-    //         name : 'Product2',
-    //         location: 'Chittagong',
-    //         time: '12.10',
-    //         description: 'This is good',
-    //         category: 'phone',
-    //         price: '122222',
-    //         username:'Shafeen'
-    //     },
-    //     {   id : '3',
-    //         name : 'Product3',
-    //         location: 'Khulna',
-    //         time: '12.40',
-    //         description: 'This is good',
-    //         category: 'phone',
-    //         price: '122222',
-    //         username:'Khan'
-    //     },
-    //     {   id : '4',
-    //         name : 'Product4',
-    //         location: 'Khulna',
-    //         time: '12.44',
-    //         description: 'This is not good',
-    //         category: 'phone',
-    //         price: '122222',
-    //         username:'Sadia'
-    //     },
-    //     {   id : '5',
-    //         name : 'Product5',
-    //         location: 'Khulna',
-    //         time: '12.45',
-    //         description: 'This is good',
-    //         category: 'phone',
-    //         price: '122222',
-    //         username:'Shitol'
-    //     }
-    // ]
-
-
+    const RemoveCategoryModelData=(data) =>{
+        setRemoveCategoryModalIsOpen(data)
+    }
     return (
         <>
             <AdminNav Sidebar={SideBar}/>
 
-            {SideBarModalIsOpen && <AdminModal setAddAdminModal={AddAdminModelData}/>}
+            {SideBarModalIsOpen && <AdminModal setAddAdminModal={AddAdminModelData} setRemoveAdminModalFromSide={RemoveAdminModelData} setAddCategoryModal={AddCategoryModelData} setRemoveCategoryModal={RemoveCategoryModelData}/>}
             {addAdminModalIsOpen && <AddAdminModal CloseModel={AddAdminModelData}/>}
+            {removeAdminModalIsOpen && <RemoveAdminModal CloseModel={RemoveAdminModelData}/>}
+            {addCategoryModalIsOpen && <AddCategoryModal CloseModel ={AddCategoryModelData}/>}
+            {removeCategoryModalIsOpen && <RemoveCategoryModal CloseModel={RemoveCategoryModelData}/>}
             <Toaster richColors position={"top-right"}/>
 
             <div>
@@ -127,6 +81,6 @@ export default function AdminPage() {
                                      time={new Date(item.productTime).toLocaleDateString('en-GB')}/>
                 ))}
             </div>
-        </>
+       </>
     )
 }

@@ -1,20 +1,36 @@
 "use client"
-
-
 import {useEffect, useState} from 'react';
+import AddCategoryModal from "@/components/AddCategoryModal";
+import AddAdminModal from "@/components/AddAdminModal";
 
-const AdminModal = ({setAddAdminModal}) => {
-    const [addAdminModal, setModalIsOpen] = useState(false);
-
+const AdminModal = ({setAddAdminModal,setRemoveAdminModalFromSide,setAddCategoryModal,setRemoveCategoryModal}) => {
+    const [addAdminModal, setModalIsOpen] =useState(false);
+    const [removeAdminModal, setRemoveAdminModalIsOpen] =useState(false);
+    const [addCategoryModal,setAddCategoryModalIsOpen]=useState(false);
+    const [removeCategoryModal,setRemoveCategoryModalIsOpen]=useState(false);
     const setAddAdminModalIsOpen = () => {
         setModalIsOpen((prevState) => !prevState);
+        console.log(AddAdminModal)
+    }
+    const RemoveAdminModalIsOpen =()=>{
+        setRemoveAdminModalIsOpen((prevState) => !prevState)
+        console.log(removeAdminModal)
+    }
+    const AddCategoryModalIsOpen =()=>{
+        setAddCategoryModalIsOpen((prevState)=>!prevState)
+        console.log(addCategoryModal)
+    }
+    const RemoveCategoryModalIsOpen =() =>{
+        setRemoveCategoryModalIsOpen((prevState)=>!prevState)
+        console.log(removeCategoryModal)
     }
     useEffect(() => {
-        setAddAdminModal(addAdminModal)
-    }, [addAdminModal]);
+        setAddAdminModal(addAdminModal);
+        setRemoveAdminModalFromSide(removeAdminModal);
+        setAddCategoryModal(addCategoryModal);
+        setRemoveCategoryModal(removeCategoryModal);
+    }, [addAdminModal,removeAdminModal,addCategoryModal,removeCategoryModal]);
 
-
-    // if (!isVisible) return null;
     return (
         <>
             <div className=" mt-[101px] absolute inset-0 flex justify-start items-center ">
@@ -29,14 +45,15 @@ const AdminModal = ({setAddAdminModal}) => {
                         onClick={setAddAdminModalIsOpen}> &nbsp; &nbsp;<span className="font-semibold">+&nbsp;</span>Add
                         Admin
                     </div>
-                    <div className="w-[90%] h-12 pt-3 text-xl bg-white my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">
+                    <div className="cursor-pointer w-[90%] h-12 pt-3 text-xl bg-white my-5 border-neutral-400 mx-4 rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1"
+                    onClick={RemoveAdminModalIsOpen}>
                         &nbsp;&nbsp;
                        <span className="font-semibold">-&nbsp;</span>Remove Admin
                     </div>
-                    <div className="w-[90%] h-12 pt-3 text-xl bg-white my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">&nbsp;&nbsp;
+                    <div   onClick={AddCategoryModalIsOpen} className="w-[90%] h-12 pt-3 text-xl bg-white cursor-pointer my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">&nbsp;&nbsp;
                         <span className="font-semibold">+&nbsp;</span>Add Category
                     </div>
-                    <div className="w-[90%] h-12 pt-3 text-xl bg-white my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">&nbsp;&nbsp;
+                    <div onClick={RemoveCategoryModalIsOpen} className="w-[90%] h-12 pt-3 text-xl bg-white cursor-pointer my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">&nbsp;&nbsp;
                         <span className="font-semibold">-&nbsp;</span>Remove Category
                     </div>
                 </div>
