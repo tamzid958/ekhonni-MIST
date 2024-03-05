@@ -1,14 +1,17 @@
 import _axios from "axios";
+
+import {baseUrl} from "@/utils/baseUrl";
 import {
     throwApiError,
     throwNetworkError,
     throwServerError,
 } from "@/utils/errors";
+import {getSession} from "next-auth/react";
 
 
 const axios = _axios.create({
-    timeout: Number(process.env.NEXT_PUBLIC_API_DEFAULT_TIMEOUT),
-    baseURL: process.env.BASE_URL
+    timeout: 5000,
+    baseURL: baseUrl
 });
 
 axios.interceptors.request.use(
@@ -64,13 +67,13 @@ const getErrorMessage = (e) => {
 };
 
 const bearerToken = async ({ req }) => {
-    const { token, ...Headers } = req;
-    return token
+    const session = await getSession({req});
+    return session?.user.token
         ? {
             ...Headers,
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${session?.user.token}`,
         }
-        : { ...Headers };
+        : {...Headers};
 };
 
 
@@ -89,7 +92,7 @@ const bearerToken = async ({ req }) => {
 // }
 
 
-export const getServerApi = async ({ req,url, params = {} }) => {
+export const getServerApi = async ({req, url, params = {}}) => {
     let res;
     try {
         res = await axios({
@@ -98,6 +101,7 @@ export const getServerApi = async ({ req,url, params = {} }) => {
             params,
             headers: await bearerToken({req})
         });
+
     } catch (e) {
         let error = {
             title: e.type || "Sorry!",
@@ -107,7 +111,7 @@ export const getServerApi = async ({ req,url, params = {} }) => {
         };
         console.error(e);
 
-        return { error };
+        return {error};
     }
 
     if (res.status !== REQUEST_STATUS.GET) {
@@ -117,11 +121,10 @@ export const getServerApi = async ({ req,url, params = {} }) => {
             message: `Error in calling server API, HTTP status: ${res.statusText}`,
             api: `${process.env.BASE_URL}${url}`,
         };
-        return { error };
+        return {error};
     }
-
     // NOTE: axios provides all header names in lower case
-    return { data: res.data };
+    return {data: res.data};
 };
 
 /**
@@ -144,8 +147,8 @@ export const requestApi = async ({
                                      data = {},
                                      params = {},
                                      isTimeoutExtended = false,
-                                     ignoreStatusCheck=true,
-                                     unmodifiedErrorResponse=true,
+                                     ignoreStatusCheck = true,
+                                     unmodifiedErrorResponse = true,
                                  }) => {
     let res;
     try {
@@ -162,11 +165,11 @@ export const requestApi = async ({
         console.log("Got Error in API call");
         console.dir(e);
 
-        if (unmodifiedErrorResponse) return { error: e.response };
+        if (unmodifiedErrorResponse) return {error: e.response};
 
         let error;
         if (e.response) {
-            let { status } = e.response;
+            let {status} = e.response;
             error = {
                 title: "Sorry!",
                 code: status,
@@ -183,7 +186,7 @@ export const requestApi = async ({
             };
         }
 
-        return { error };
+        return {error};
     }
 
     if (!ignoreStatusCheck && res.status !== REQUEST_STATUS[method]) {
@@ -195,10 +198,10 @@ export const requestApi = async ({
                 `Error in calling server API, HTTP status: ${res.statusText}`,
         };
 
-        return { error };
+        return {error};
     }
 
-    return { data: res.data, revision: res.headers["etag"] };
+    return {data: res.data, revision: res.headers["etag"]};
 };
 
 /**
@@ -231,7 +234,7 @@ export const callApi = async ({
             data,
             headers: {
                 ...headers,
-                ...(await bearerToken({ req })),
+                ...(await bearerToken({req})),
             },
         });
     } catch (e) {
@@ -239,7 +242,7 @@ export const callApi = async ({
         console.dir(e);
 
         if (e.response) {
-            let { status } = e.response;
+            let {status} = e.response;
             let message = getErrorMessage(e);
 
             if (
@@ -265,6 +268,6 @@ export const callApi = async ({
         );
     }
 
-    return { data: res.data, revision: res.headers["etag"] };
+    return {data: res.data, revision: res.headers["etag"]};
 };
 
