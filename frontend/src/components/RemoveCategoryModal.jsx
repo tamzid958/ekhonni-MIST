@@ -2,15 +2,8 @@
 import {useState,useEffect} from 'react';
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
-const RemoveCategoryModal = ({CloseModel}) => {
-    const [closeModel, setCloseModel] = useState(false);
+const RemoveCategoryModal = ({setRemoveCategoryModalIsOpen}) => {
     const [category, setCategory] = useState("");
-    // const router = useRouter()
-    // const [route, setRoute] = useState()
-    const CloseButton = () => {
-        setCloseModel(false);
-        CloseModel(false);
-    }
     function handleSubmit(event) {
         event.preventDefault();
         const formDataObject = {
@@ -23,7 +16,7 @@ const RemoveCategoryModal = ({CloseModel}) => {
             <form onSubmit={handleSubmit}>
             <div className=" z-20  absolute inset-0 flex justify-center items-center  bg-opacity-20 backdrop-blur-[1px] flex-col">
                 <div className="w-[450px] h-[2px] left-0 bg-transparent z-10 flex justify-end items-center">
-                    <button onClick={CloseButton}><p className="text-amber-50 mb-4 mr-1">X</p></button>
+                    <button onClick={() => {setRemoveCategoryModalIsOpen(false)}}><p className="text-amber-50 mb-4 mr-1">X</p></button>
                 </div>
                 <div
                     className="w-[450px] h-[250px]  left-0 border-neutral-400 bg-slate-100 rounded-lg  flex  flex-col justify-center  items-center">
@@ -46,7 +39,7 @@ const RemoveCategoryModal = ({CloseModel}) => {
 
                         </div>
                         <div className=" w-10/12  h-1/5 flex flex-col justify-start items-end mr-6">
-                            <Button onClick={CloseButton} value={"Remove"} option={1} type={"submit"}/>
+                            <Button onClick={() => {setRemoveCategoryModalIsOpen(false)}} value={"Remove"} option={1} type={"submit"}/>
                         </div>
                     </div>
                 </div>

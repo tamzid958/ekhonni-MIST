@@ -12,12 +12,11 @@ import AddCategoryModal from "@/components/AddCategoryModal";
 import RemoveCategoryModal from "@/components/RemoveCategoryModal";
 
 export default function AdminPage() {
-    const [SideBarModalIsOpen, setSideBarModalIsOpen] = useState(false);
-    const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false);
-    const [removeAdminModalIsOpen ,setRemoveAdminModalIsOpen] = useState(false);
-    const [addCategoryModalIsOpen, setAddCategoryModalIsOpen]=useState(false);
-    const [removeCategoryModalIsOpen,setRemoveCategoryModalIsOpen]=useState(false);
-
+    const [adminModalIsOpen , setAdminModalIsOpen] = useState(false);
+    const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false)
+    const [removeAdminModalIsOpen, setRemoveAdminModalIsOpen] = useState(false)
+    const [addCategoryModalIsOpen, setAddCategoryModalIsOpen] = useState(false)
+    const [removeCategoryModalIsOpen, setRemoveCategoryModalIsOpen] = useState(false)
     const data1 = [
         {
             id: '1',
@@ -40,31 +39,16 @@ export default function AdminPage() {
         }
     };
 
-    const SideBar = (data) => {
-        setSideBarModalIsOpen(data);
-    }
-    const AddAdminModelData = (data) => {
-        setAddAdminModalIsOpen(data)
-    }
-    const RemoveAdminModelData =(data) =>{
-        setRemoveAdminModalIsOpen(data)
-    }
-    const AddCategoryModelData =(data) =>{
-        setAddCategoryModalIsOpen(data)
-    }
 
-    const RemoveCategoryModelData=(data) =>{
-        setRemoveCategoryModalIsOpen(data)
-    }
     return (
         <>
-            <AdminNav Sidebar={SideBar}/>
+            <AdminNav setAdminModalIsOpen={setAdminModalIsOpen} adminModalIsOpen={adminModalIsOpen}/>
 
-            {SideBarModalIsOpen && <AdminModal setAddAdminModal={AddAdminModelData} setRemoveAdminModalFromSide={RemoveAdminModelData} setAddCategoryModal={AddCategoryModelData} setRemoveCategoryModal={RemoveCategoryModelData}/>}
-            {addAdminModalIsOpen && <AddAdminModal CloseModel={AddAdminModelData}/>}
-            {removeAdminModalIsOpen && <RemoveAdminModal CloseModel={RemoveAdminModelData}/>}
-            {addCategoryModalIsOpen && <AddCategoryModal CloseModel ={AddCategoryModelData}/>}
-            {removeCategoryModalIsOpen && <RemoveCategoryModal CloseModel={RemoveCategoryModelData}/>}
+            {adminModalIsOpen && <AdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen} setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen} setAddCategoryModalIsOpen={setAddCategoryModalIsOpen} setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
+            {addAdminModalIsOpen && <AddAdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen}/>}
+            {removeAdminModalIsOpen && <RemoveAdminModal setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen}/>}
+            {addCategoryModalIsOpen && <AddCategoryModal setAddCategoryModalIsOpen={setAddCategoryModalIsOpen}/>}
+            {removeCategoryModalIsOpen && <RemoveCategoryModal setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
             <Toaster richColors position={"top-right"}/>
 
             <div>
