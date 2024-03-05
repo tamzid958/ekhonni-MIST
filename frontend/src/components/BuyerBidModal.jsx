@@ -12,7 +12,6 @@ const BuyerBidModal = ({setModalOpen , productName , isVisible , productID}) => 
     const [bid, setBid] = useState(null);
     const [hasBid, setHasBid] = useState(null);
     const [bidData , setBidData] = useState(null);
-    const token = localStorage.getItem("token")
     const fetcher = url => axios.get(url , {
         headers : {
             Authorization : `Bearer ${token}`,

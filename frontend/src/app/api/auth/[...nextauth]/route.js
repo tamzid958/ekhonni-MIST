@@ -9,7 +9,7 @@ const handler = NextAuth ({
                 password: { label: "Password", type: "password" , placeholder: "Enter Your Password" }
             },
             async authorize (credentials , req) {
-                const res = await fetch("http://localhost:8080/api/v1/user/login", {
+                const res = await fetch("http://localhost:8080/api/v1/login", {
                     method: 'POST',
                     body: JSON.stringify(credentials),
                     headers: { "Content-Type": "application/json" }
@@ -28,12 +28,13 @@ const handler = NextAuth ({
         },
         async session({ session, token, user }) {
             session.user = token;
+            // session.user.user.role = user;
             return session;
         }
     },
     session : {
         strategy : "jwt",
-        maxAge : 60000 //in seconds
+        maxAge : 1200000 //in seconds
     },
     pages: {
         signIn: '/login',
