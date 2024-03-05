@@ -11,5 +11,6 @@ let req = {
 
 export const fetcher = async (url) => {
     const {data} = await getServerApi({req,url})
+    console.log(data)
     return data;
 }

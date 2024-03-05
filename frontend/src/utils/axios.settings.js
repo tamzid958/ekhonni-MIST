@@ -65,6 +65,7 @@ const getErrorMessage = (e) => {
     return e.toString();
 };
 
+
 const bearerToken = async ({ req }) => {
     const session = await getSession({req});
     return session?.user.token

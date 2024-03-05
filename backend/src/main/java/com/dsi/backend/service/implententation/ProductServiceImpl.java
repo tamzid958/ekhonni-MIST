@@ -91,11 +91,6 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    public Set<String> getCategoriesBySubcategories(List<String> subcategories) {
-        List<Category> categories = categoryRepository.findBySubCategoryIn(subcategories);
-        return categories.stream().map(Category::getCategory).collect(Collectors.toSet());
-    }
-
     public Map<String,Long> countProducts(String division) {
         List<Product> product;
         if(Objects.equals(division, "")) {
