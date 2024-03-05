@@ -6,20 +6,16 @@ import {toast, Toaster} from "sonner";
 import ButtonFull from "@/components/ButtonFull";
 import axios from "axios";
 import useSWR from "swr";
+import {fetcher} from "@/utils/fetcher";
 
 const BuyerBidModal = ({setModalOpen , productName , isVisible , productID}) => {
 
-    const [bid, setBid] = useState(null);
-    const [hasBid, setHasBid] = useState(null);
-    const [bidData , setBidData] = useState(null);
-    const fetcher = url => axios.get(url , {
-        headers : {
-            Authorization : `Bearer ${token}`,
-            "Content-Type" : "application/json"
-        }
-    }).then(res => res.data);
+    // const [bid, setBid] = useState(null);
+    // const [hasBid, setHasBid] = useState(null);
+    // const [bidData , setBidData] = useState(null);
+
     const {data , error} = useSWR('localhost:8080/api/v1/user/products/bid/fetch' , fetcher);
-    setBidData(data);
+
     const handleEnterBid = async (e) => {
         e.preventDefault();
         await axios.post(`http://localhost:8080/api/v1/user/products/bid/buyer/save?id=${productID}&token=${token}&offeredPrice${bid}` , {
