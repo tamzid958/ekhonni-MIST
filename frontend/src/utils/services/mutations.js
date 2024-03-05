@@ -1,4 +1,4 @@
-import {useBid} from "@/app/services/queries";
+import {useBid} from "@/utils/services/queries";
 import useSWRMutation from "swr/mutation";
 
 export function useCreateBid() {

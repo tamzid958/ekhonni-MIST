@@ -1,5 +1,5 @@
 export interface Bid {
     id: number;
     buyer: string;
-    offeredPrice: number;
+    offeredPrice: number;80
 }

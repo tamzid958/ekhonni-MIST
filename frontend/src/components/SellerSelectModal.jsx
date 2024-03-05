@@ -5,13 +5,15 @@ import BidderList from "@/components/BidderList";
 import {useEffect, useState} from "react";
 import ToggleSwitch from "@/components/ToggleSwitch";
 import useSWR from "swr";
+import {useSession} from "next-auth/react";
+import {fetcher} from "@/utils/fetcher";
 
-const fetcher = (...args) => fetch(...args).then(response => response.json());
 const baseUrl = `http://localhost:8080/api/v1/`;
 const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId, productID}) => {
 
-    const token = localStorage.getItem("token");
-    const {data, error, isLoading} = useSWR(`http://localhost:8080/api/v1/user/products/bid/fetch?id=${productID}&token=${token}`, fetcher);
+    const {data : session} = useSession();
+    console.log(session?.user.token);
+    const {data, error, isLoading} = useSWR(`user/products/bid/fetch?id=${productID}&token=`, fetcher);
     const [bidIsActive, setBidIsActive] = useState(isBidActive)
 
     const handleBiddingStatusChange = (e) => {
@@ -52,10 +54,6 @@ const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId
             setModalOpen(false);
     }
 
-    useEffect(() => {
-
-    }, []);
-
     return (
         <>
             <Toaster richColors position={"top-right"}/>
@@ -75,7 +73,7 @@ const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId
                             </div>
                             <div className="w-full h-[75%] flex flex-row justify-center items-center">
                                 <div className="w-full h-full flex justify-end items-start">
-                                    <BidderList isVisible={true} bidders={bidders} view={"sellerView"} finalBuyerID={finalBuyerID}/>
+                                    <BidderList isVisible={true} bidders={data} view={"sellerView"} finalBuyerID={finalBuyerId}/>
                                 </div>
                             </div>
                         </div>

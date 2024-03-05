@@ -120,9 +120,9 @@ export const getServerApi = async ({ req,url, params = {} }) => {
         };
         return { error };
     }
-    console.log(res)
+    console.log(res.data)
     // NOTE: axios provides all header names in lower case
-    return { data: res };
+    return { data: res.data };
 };
 
 /**
