@@ -1,10 +1,17 @@
 import _axios from "axios";
-import {throwApiError, throwNetworkError, throwServerError,} from "@/utils/errors";
+
+import {baseUrl} from "@/utils/baseUrl";
+import {
+    throwApiError,
+    throwNetworkError,
+    throwServerError,
+} from "@/utils/errors";
+import {getSession} from "next-auth/react";
 
 
 const axios = _axios.create({
-    timeout: Number(process.env.NEXT_PUBLIC_API_DEFAULT_TIMEOUT),
-    baseURL: 'http://localhost:8080/api/v1/'
+    timeout: 5000,
+    baseURL: baseUrl
 });
 
 axios.interceptors.request.use(
@@ -59,12 +66,14 @@ const getErrorMessage = (e) => {
     return e.toString();
 };
 
-const bearerToken = async ({req}) => {
-    const {token, ...Headers} = req;
-    return token
+
+const bearerToken = async ({ req }) => {
+    const session = await getSession({req});
+    return session?.user.token
+
         ? {
             ...Headers,
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${session?.user.token}`,
         }
         : {...Headers};
 };
@@ -94,6 +103,7 @@ export const getServerApi = async ({req, url, params = {}}) => {
             params,
             headers: await bearerToken({req})
         });
+
     } catch (e) {
         let error = {
             title: e.type || "Sorry!",
@@ -115,7 +125,6 @@ export const getServerApi = async ({req, url, params = {}}) => {
         };
         return {error};
     }
-
     // NOTE: axios provides all header names in lower case
     return {data: res.data};
 };
