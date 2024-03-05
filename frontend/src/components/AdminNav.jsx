@@ -5,8 +5,6 @@ import {useEffect, useState} from "react";
 import ProfileBox from "@/components/ProfileBox";
 import Link from "next/link";
 
-
-
 const AdminNav = ({setAdminModalIsOpen , adminModalIsOpen}) => {
 
 
