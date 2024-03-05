@@ -12,7 +12,6 @@ const TestPage = () => {
         <>
             <Header/>
             <RemoveAdminModal/>
-
         </>
     )
 }

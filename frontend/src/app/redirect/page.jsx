@@ -7,12 +7,12 @@ import {FallingLines} from "react-loader-spinner";
 const RedirectPage = () => {
 
     const router = useRouter();
-    const {data : session} = useSession();
-    setTimeout(()=> {
-        if(session?.user.user.role === "ROLE_ADMIN") {
+    const {data: session} = useSession();
+    setTimeout(async () => {
+
+        if (session?.user.user.role === "ROLE_ADMIN") {
             router.push("/admin-page")
-        }
-        else {
+        } else {
             router.push("/")
         }
     } , 1000)
