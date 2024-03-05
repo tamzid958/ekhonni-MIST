@@ -4,6 +4,7 @@ import Button from "@/components/Button";
 import {useEffect, useState} from "react";
 import ProfileBox from "@/components/ProfileBox";
 import Link from "next/link";
+import {useSession} from "next-auth/react";
 
 
 const AdminNav = ({Sidebar}) => {
@@ -11,8 +12,9 @@ const AdminNav = ({Sidebar}) => {
     const [BarClicked, setBarClicked] = useState(false);
 
 
-    // const {data: session} = useSession();
-    const Token = localStorage.getItem('token');
+    const {data: session} = useSession();
+    const Token = session?.user.token;
+    // console.log(Token)
 
     useEffect(() => {
         Sidebar(BarClicked)

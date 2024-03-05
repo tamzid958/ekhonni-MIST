@@ -2,10 +2,17 @@
 
 
 import {useEffect, useState} from 'react';
+import {jwtDecode} from "jwt-decode";
+import {useSession} from "next-auth/react";
+
 
 const AdminModal = ({setAddAdminModal, value}) => {
     const [addAdminModal, setModalIsOpen] = useState(false);
+    const {data: session} = useSession();
+    const token = session?.user.token
+    const decoded = jwtDecode(token);
 
+    // console.log(decoded.sub)
     const setAddAdminModalIsOpen = () => {
         setModalIsOpen((prevState) => !prevState);
     }
@@ -23,7 +30,7 @@ const AdminModal = ({setAddAdminModal, value}) => {
                         className="w-[90%] h-32 pt-3 text-xl bg-white my-5 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">
                         <div
                             className="w-full h-2/3 flex justify-start items-center overflow-hidden transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">
-                            <p className="w-full pl-2  mx-4  rounded shadow-md shadow-slate-400 text-wrap break-all text-base ">shadmanskystar@gmail.com</p>
+                            <p className="w-full pl-2  mx-4  rounded shadow-md shadow-slate-400 text-wrap break-all text-base ">{decoded.sub}</p>
                         </div>
                         <p className="w-full pl-4 text-xl">Pending posts: {value.size}</p>
                     </div>
