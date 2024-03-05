@@ -9,7 +9,7 @@ const BuyerBids = ({id, name, time, description, category, price}) => {
         <>
 
             {/*the main box*/}
-            <div className="w-7/12 h-56 border-black border-2 my-4 flex flex-row justify-center items-center ">
+            <div className="w-7/12 h-56 relative border-black border-2 my-4 flex flex-row justify-center items-center ">
                 {/*Image box*/}
                 <div
                     className="w-1/4 h-[82%] relative my-3 border-2 border-black flex justify-start items-start -ml-5 ">
@@ -25,10 +25,8 @@ const BuyerBids = ({id, name, time, description, category, price}) => {
                         <div className=" w-4/5 h-2/8 justify-items-start ">
                             <p className="  text-2xl font-semibold ml-5 overflow-hidden">{name}</p>
                         </div>
+                        <Status  option={""} type={"button"}/>
 
-                        <div className=" w-1/5 h-full flex justify-end items-end mr-2">
-                            <Status value={"Status"} option={"1"} type={"button"}/>
-                        </div>
                     </div>
                     {/*info div*/}
                     <div className="w-full h-[62.5%] ">

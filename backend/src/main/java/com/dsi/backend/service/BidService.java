@@ -4,11 +4,12 @@ import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.Bid;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BidService {
     Bid saveBid(Long id, String buyerEmail, Double offeredPrice);
 
-    List<Bid> fetchBids(Long id, String sellerEmail);
+    List<Optional<Bid>> fetchBids(Long id, String sellerEmail);
 
     Boolean changeBidActiveStatus(Long id, String sellerEmail);
 

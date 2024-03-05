@@ -1,6 +1,7 @@
 package com.dsi.backend.service;
 
 import com.dsi.backend.model.AppUser;
+import jakarta.mail.MessagingException;
 import com.dsi.backend.projection.AppUserView;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +23,12 @@ public interface AppUserService {
 
     AppUserView uploadImage(MultipartFile imageFile, String token) throws IOException;
 
+    AppUser findUser(String email);
+
+    void generateLink(String email) throws MessagingException;
+
+    ResponseEntity<?> validateToken(String token);
+
     AppUser addAdmin(AppUser appUser);
 
     AppUser deleteAdmin(String email);
@@ -29,5 +36,7 @@ public interface AppUserService {
     ResponseEntity<?> fetchOtherAdmins(String email);
 
 //    ResponseEntity<?> deleteAccount(AppUser appUser);
+
+    ResponseEntity<?> resetPassword(String email, String password);
 }
 

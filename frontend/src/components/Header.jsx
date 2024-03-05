@@ -5,20 +5,15 @@ import {useEffect, useState} from "react";
 import ProfileBox from "@/components/ProfileBox";
 import Link from "next/link";
 import NotificationListModal from "@/components/NotificationListModal";
+import {useSession , signIn , signOut} from "next-auth/react";
 
 
 const Header = () => {
+
+    const {data : session} = useSession();
+    // console.log(session?.user.user.role);
     const [profileModel, setProfileModel] = useState(false);
-
-    const [Token, setToken] = useState(false);
-
     const [notificationModalOpen, setNotificationModalOpen] = useState(false);
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        setToken(true);
-    }, []);
-
 
     const CloseModel = () => {
         if (profileModel) {
@@ -71,8 +66,7 @@ const Header = () => {
     return (
         <>
             <div onClick={CloseModel}>
-                <div
-                    className=" px-6 w-full overflow-x-hidden h-[100px] border-black flex justify-between bg-slate-100">
+                <div className=" px-6 w-full overflow-x-hidden h-[100px] border-black flex justify-between bg-slate-100">
                     <div className="flex">
                         <Link href={"/"} className={"my-auto"}>
                             <div className=" my-auto">
@@ -86,35 +80,33 @@ const Header = () => {
                         </div>
                     </div>
                     <div className="flex my-auto">
-                        <div className="flex my-auto px-5 cursor-pointer relative" onClick={() => {
-                            setNotificationModalOpen(!notificationModalOpen)
-                        }}>
+                        <div className="flex my-auto px-5 cursor-pointer relative" onClick={() => {setNotificationModalOpen(!notificationModalOpen)}}>
                             <Image src={"./notification.svg"} alt={"message"} width={20} height={20} className="mr-4"/>
-                            {notifications !== 0 && !notificationModalOpen && (
-                                <div
-                                    className="absolute -top-2 right-36 w-5 h-5 flex items-center justify-center text-white bg-rose-600 opacity-85 text-xs rounded-full">
+                            {session ?
+                                notifications !== 0 && !notificationModalOpen &&
+                                (<div className="absolute -top-2 right-36 w-5 h-5 flex items-center justify-center text-white bg-rose-600 opacity-85 text-xs rounded-full">
                                     <span>{notifications}</span>
-                                </div>
-                            )
+                                </div>) :
+                                (<></>)
                             }
                             <p className=" text-lg font-semibold">Notifications</p>
                         </div>
-                        <div className="flex my-auto px-5 cursor-pointer"
-                             onClick={() => setProfileModel(prevState => !prevState)}>
+                        <div className="flex my-auto px-5 cursor-pointer" onClick={() => setProfileModel(prevState => !prevState)}>
                             <Image src={"./user.svg"} alt={"message"} width={20} height={20} className=" mr-4"/>
                             <p className=" text-lg font-semibold">Account</p>
                         </div>
-                        {Token ? <Link href={"/add-product"}>
-                            <Button value="Post Ad" option={1} type={"submit"}/>
-                        </Link> : <Link href={"/login"}><Button value="Log in" option={1} type={"submit"}/></Link>}
+                        {session ?
+                            (<Link href={"/add-product"}>
+                                <Button value="Post Ad" option={1} type={"submit"}/>
+                            </Link>) :
+                            (<Link href={"/login"}>
+                                <Button value="Log in" option={1} type={"button"} onClick={() => signIn()}/>
+                            </Link>)}
                     </div>
                 </div>
                 {profileModel && <ProfileBox/>}
                 {notificationModalOpen &&
-                    <NotificationListModal setModalOpen={setNotificationModalOpen} setNotifications={setNotifications}
-                                           notificationList={notificationList}/>}
-
-
+                    <NotificationListModal setModalOpen={setNotificationModalOpen} setNotifications={setNotifications} notificationList={notificationList}/>}
             </div>
         </>
     )
