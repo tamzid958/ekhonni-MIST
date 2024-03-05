@@ -3,9 +3,9 @@
 import React from "react";
 import {ReactNode} from "react";
 import {SWRConfig} from "swr";
-import {fetcher} from "./fetcher";
+import {bidFetcher} from "./bidFetcher";
 
 
 export default function Providers({children}) {
-    return <SWRConfig value={fetcher}>{children}</SWRConfig>;
+    return <SWRConfig value={bidFetcher}>{children}</SWRConfig>;
 }

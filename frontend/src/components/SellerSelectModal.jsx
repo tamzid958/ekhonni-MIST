@@ -6,14 +6,14 @@ import {useEffect, useState} from "react";
 import ToggleSwitch from "@/components/ToggleSwitch";
 import useSWR from "swr";
 import {useSession} from "next-auth/react";
-import {fetcher} from "@/utils/fetcher";
+import {bidFetcher} from "@/utils/bidFetcher";
 
 const baseUrl = `http://localhost:8080/api/v1/`;
 const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId, productID}) => {
 
     const {data : session} = useSession();
     console.log(session?.user.token);
-    const {data, error, isLoading} = useSWR(`user/products/bid/fetch?id=${productID}&token=`, fetcher);
+    const {data, error, isLoading} = useSWR(`user/products/bid/fetch?id=${productID}&token=`, bidFetcher);
     const [bidIsActive, setBidIsActive] = useState(isBidActive)
 
     const handleBiddingStatusChange = (e) => {

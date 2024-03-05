@@ -5,7 +5,7 @@ import {useState} from "react";
 import {useSession} from "next-auth/react";
 import {getServerApi} from "@/utils/axios.settings";
 import useSWR from "swr";
-import {fetcher} from "@/utils/fetcher";
+import {bidFetcher} from "@/utils/bidFetcher";
 
 const TestPage = ({productName, isBidActive, finalBuyerId, productID}) => {
     const biddingActive = true;
@@ -21,7 +21,7 @@ const TestPage = ({productName, isBidActive, finalBuyerId, productID}) => {
     // const {data} = getServerApi({ req : req, url : "/products/1"})
 
     const [bidIsActive, setBidIsActive] = useState(isBidActive)
-    const {data} = useSWR("/products/1",fetcher);
+    const {data} = useSWR("/products/1",bidFetcher);
     console.log(data);
 
     return (
