@@ -24,7 +24,6 @@ const AdminLogin = () => {
             .then((response) => {
                 if (response.status === 200) {
                     localStorage.setItem("token", response.data.token);
-                    localStorage.setItem("currentUserEmail", email);
 
                     console.log(response);
                     toast.success("Logged in Successfully")

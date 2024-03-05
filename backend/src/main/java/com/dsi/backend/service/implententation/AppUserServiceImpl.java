@@ -4,6 +4,7 @@ import com.dsi.backend.model.AppUser;
 import com.dsi.backend.projection.AppUserView;
 import com.dsi.backend.model.ImageModel;
 import com.dsi.backend.model.TokenResponse;
+import com.dsi.backend.projection.LoginView;
 import com.dsi.backend.repository.AppUserRepository;
 import com.dsi.backend.repository.ImageRepository;
 import com.dsi.backend.service.AppUserService;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +71,12 @@ public class AppUserServiceImpl implements AppUserService{
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
             authenticationManager.authenticate(authenticationToken);
             String jwtToken = jwtTokenService.createToken(email);
-            return ResponseEntity.ok(new TokenResponse(jwtToken));
+            AppUser appUser = appUserRepository.findByEmail(email);
+            LoginView loginView = new SpelAwareProxyProjectionFactory().createProjection(LoginView.class, appUser);
+            Map<String, Object> responseBody = new HashMap<>();
+            responseBody.put("user", loginView);
+            responseBody.put("token", jwtToken);
+            return ResponseEntity.ok(responseBody);
         }
         catch (Exception e){
             e.printStackTrace();
