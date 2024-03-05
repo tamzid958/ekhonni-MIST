@@ -8,9 +8,9 @@ const RedirectPage = () => {
 
     const router = useRouter();
     const {data: session} = useSession();
-    console.log(session?.user.token);
     setTimeout(async () => {
-        if (session?.user.user.role === "ROLE_ADMIN") {
+        const userRole = await session?.user.user.role;
+        if (userRole === "ROLE_ADMIN") {
             router.push("/admin-page")
         } else {
             router.push("/")

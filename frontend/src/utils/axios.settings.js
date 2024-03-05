@@ -124,7 +124,7 @@ export const getServerApi = async ({req, url, params = {}}) => {
         return {error};
     }
 
-    console.log(res.data)
+    // console.log(res.data)
     // NOTE: axios provides all header names in lower case
     return {data: res.data};
 
