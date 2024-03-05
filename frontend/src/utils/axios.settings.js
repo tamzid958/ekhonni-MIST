@@ -68,12 +68,13 @@ const getErrorMessage = (e) => {
 
 const bearerToken = async ({ req }) => {
     const session = await getSession({req});
-    return session?.user.token
+    const a= session?.user.token
         ? {
-            ...Headers,
+            ...req,
             'Authorization': `Bearer ${session?.user.token}`,
         }
-        : {...Headers};
+        : {...req};
+    return a;
 };
 
 
@@ -124,6 +125,7 @@ export const getServerApi = async ({req, url, params = {}}) => {
         return {error};
     }
     // NOTE: axios provides all header names in lower case
+    console.log("A: "+JSON.stringify(res.data))
     return {data: res.data};
 };
 
@@ -134,7 +136,7 @@ export const getServerApi = async ({req, url, params = {}}) => {
  * @param url
  * @param method
  * @param params
- * @param data
+ * @param body
  * @param isTimeoutExtended
  * @param ignoreStatusCheck
  * @param unmodifiedErrorResponse
@@ -144,22 +146,25 @@ export const requestApi = async ({
                                      req,
                                      url,
                                      method = "GET",
-                                     data = {},
+                                     body = {},
                                      params = {},
                                      isTimeoutExtended = false,
                                      ignoreStatusCheck = true,
                                      unmodifiedErrorResponse = true,
                                  }) => {
+
     let res;
+    console.log('requestApi: '+JSON.stringify(body))
     try {
         const requestObj = {
             method,
             url,
-            data,
+            body,
             params,
             headers: await bearerToken({req})
         };
         if (isTimeoutExtended) requestObj.timeout = 60 * 60 * 1000;
+        console.log('Token: '+JSON.stringify(bearerToken({req})))
         res = await axios(requestObj);
     } catch (e) {
         console.log("Got Error in API call");
@@ -200,7 +205,7 @@ export const requestApi = async ({
 
         return {error};
     }
-
+    console.log(res)
     return {data: res.data, revision: res.headers["etag"]};
 };
 

@@ -11,6 +11,7 @@ import Header from "@/components/Header";
 import {addSort} from "@/Actions/filter";
 import useSWR from "swr";
 import {fetcher} from "@/utils/fetcher";
+import {requestApi} from "@/utils/axios.settings";
 
 
 
@@ -19,9 +20,28 @@ const Product = () => {
     // const {error, isLoading, products} = useSelector(state => state.product)
     // const filterItem = useSelector(state => state.filter);
 
-    const {data} = useSWR('/user/profile',fetcher)
-    console.log("Filter: "+data)
+    // const {data,error,isLoading} = useSWR('/products/filter',fetcher)
+    // console.log(data)
 
+    const req = {
+        'Content-Type': 'application/json'
+    }
+    const url= '/products/filter'
+    const method="POST"
+    const body = {
+        pageNumber: 0,
+        categories: [],
+        startPrice: null,
+        endPrice: null,
+        search: null,
+        division: [],
+        sort: null
+
+    };
+
+
+    // const {data} =  requestApi({req,url,method,body})
+    // console.log("Page: "+data);
 
     return (
         <>

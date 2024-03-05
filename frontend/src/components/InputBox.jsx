@@ -22,12 +22,12 @@ const InputBox = ({Name, value, type}) => {
         setEdit(false);
         if (UserNewData) {
             const name = Name.toLowerCase();
-            const data = {
+            const body = {
                 [name]: UserNewData
             }
 
 
-            const {value} = await requestApi({req,url,method,data})
+            const {value} = await requestApi({req,url,method,body})
 
         }
 
