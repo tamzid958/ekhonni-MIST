@@ -12,6 +12,7 @@ import {getSession} from "next-auth/react";
 const axios = _axios.create({
     timeout: 5000,
     baseURL: baseUrl
+
 });
 
 axios.interceptors.request.use(
