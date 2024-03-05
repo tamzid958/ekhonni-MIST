@@ -20,7 +20,6 @@ const AddAdminModal = ({CloseModel}) => {
     const handleSubmit = async () => {
 
         const req = {
-            token: session?.user.token,
             "content-type": "application/json"
         }
         console.log(formData)
@@ -62,17 +61,9 @@ const AddAdminModal = ({CloseModel}) => {
                             <div className=" w-10/12 h-2/5 flex  flex-col justify-center items-center ">
                                 <TextField placeholder={"Email"} type={"text"}
                                            name={"email"}
-                                    // value={email}
-                                    // onChange={(e) => {
-                                    //     setEmail(e.target.value)
-                                    // }}
                                            onChange={(e) => handleInputChange(e, 'email')}
                                 />
                                 <TextField placeholder={"Password"} type={"password"} name={"password"}
-                                    // value={password}
-                                    // onChange={(e) => {
-                                    //     setPassword(e.target.value)
-                                    // }}
                                            onChange={(e) => handleInputChange(e, 'password')}
                                 />
                             </div>
