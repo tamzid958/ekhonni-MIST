@@ -1,34 +1,20 @@
 "use client"
-import React from "react";
+import React,{useState} from "react";
 
-import {useDispatch, useSelector} from "react-redux";
+
 import Image from "next/image";
 import Filter from "@/components/Filter";
 import LargeCard from "@/components/LargeCard";
 import Pagination from "@/components/Pagination";
 
 import Header from "@/components/Header";
-import {addSort} from "@/Actions/filter";
 import useSWR from "swr";
-import {fetcher} from "@/utils/fetcher";
-import {requestApi} from "@/utils/axios.settings";
+import { reqFetcher} from "@/utils/fetcher";
 
 
 
 const Product = () => {
-    const dispatch = useDispatch()
-    // const {error, isLoading, products} = useSelector(state => state.product)
-    // const filterItem = useSelector(state => state.filter);
-
-    // const {data,error,isLoading} = useSWR('/products/filter',fetcher)
-    // console.log(data)
-
-    const req = {
-        'Content-Type': 'application/json'
-    }
-    const url= '/products/filter'
-    const method="POST"
-    const body = {
+    const [data,setData] = useState({
         pageNumber: 0,
         categories: [],
         startPrice: null,
@@ -36,12 +22,16 @@ const Product = () => {
         search: null,
         division: [],
         sort: null
-
+    })
+    const ChangeHandle = (e) => {
+        const { name, value } = e.target;
+        setData((prevData) => ({ ...prevData, [name]: value }));
     };
+    const url= '/products/filter'
+    const method="POST"
 
 
-    // const {data} =  requestApi({req,url,method,body})
-    // console.log("Page: "+data);
+    const {data:value,error,isLoading} = useSWR([url,method,data],reqFetcher)
 
     return (
         <>
@@ -64,9 +54,9 @@ const Product = () => {
                             </div>
                             <div>
                                 <select
-                                    name="Sort"
+                                    name="sort"
                                     className="border-2 w-44"
-                                    onChange={(e) => dispatch(addSort(e.target.value))}
+                                    onChange={ChangeHandle}
                                 >
                                     <option value="">Sort</option>
                                     <option value="High_to_low">Price(High to Low)</option>
@@ -78,12 +68,11 @@ const Product = () => {
                             </div>
                         </div>
                         <div className={"w-4/5 mx-auto box-border"}>
-                            {/*{*/}
-                            {/*    (isLoading && products.content) ? <>*/}
-                            {/*        <p>Loading.................</p></> : products.content.map((product, index) => (*/}
-                            {/*        <LargeCard key={index} img="/bike.jpg" name={product.name}*/}
-                            {/*                   desc={product.description} price={product.startingPrice}/>))*/}
-                            {/*}*/}
+                            {
+                                !isLoading && !error && value.content.map((product, index) => (
+                                    <LargeCard key={index} img="/bike.jpg" name={product.name}
+                                               desc={product.description} price={product.startingPrice}/> ))
+                            }
                         </div>
                         <Pagination/>
                     </div>

@@ -125,7 +125,6 @@ export const getServerApi = async ({req, url, params = {}}) => {
         return {error};
     }
     // NOTE: axios provides all header names in lower case
-    console.log("A: "+JSON.stringify(res.data))
     return {data: res.data};
 };
 
@@ -136,7 +135,7 @@ export const getServerApi = async ({req, url, params = {}}) => {
  * @param url
  * @param method
  * @param params
- * @param body
+ * @param data
  * @param isTimeoutExtended
  * @param ignoreStatusCheck
  * @param unmodifiedErrorResponse
@@ -146,26 +145,29 @@ export const requestApi = async ({
                                      req,
                                      url,
                                      method = "GET",
-                                     body = {},
+                                     data = {},
                                      params = {},
                                      isTimeoutExtended = false,
                                      ignoreStatusCheck = true,
                                      unmodifiedErrorResponse = true,
                                  }) => {
-
+    console.log("Body: "+JSON.stringify(data))
+    console.log("Req: "+JSON.stringify(req))
+    console.log("Method: "+method)
+    console.log("Url: "+url)
     let res;
-    console.log('requestApi: '+JSON.stringify(body))
+
     try {
         const requestObj = {
             method,
             url,
-            body,
+            data,
             params,
             headers: await bearerToken({req})
         };
-        if (isTimeoutExtended) requestObj.timeout = 60 * 60 * 1000;
-        console.log('Token: '+JSON.stringify(bearerToken({req})))
+        //if (isTimeoutExtended) requestObj.timeout = 60 * 60 * 1000;
         res = await axios(requestObj);
+        console.log("Response: "+res.data)
     } catch (e) {
         console.log("Got Error in API call");
         console.dir(e);
@@ -205,8 +207,8 @@ export const requestApi = async ({
 
         return {error};
     }
-    console.log(res)
-    return {data: res.data, revision: res.headers["etag"]};
+
+    return {data: res.data};
 };
 
 /**

@@ -4,6 +4,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchProduct} from "@/Actions/fetchProduct";
 
 import {updatePage} from "@/Actions/filter";
+import useSWR from "swr";
+import {reqFetcher} from "@/utils/fetcher";
 
 const Pagination = () => {
     const [currentPage, setCurrentPage] = useState(0);
@@ -28,6 +30,7 @@ const Pagination = () => {
     // useEffect(() => {
     //     setCurrentPage(products.pageable.pageNumber)
     // }, [products]);
+
     return (
         <>
             <div className="w-full h-10  my-4 mx-auto flex justify-center items-center">

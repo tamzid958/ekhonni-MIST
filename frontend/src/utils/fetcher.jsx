@@ -1,5 +1,5 @@
 "use client"
-import {getServerApi} from "@/utils/axios.settings";
+import {getServerApi, requestApi} from "@/utils/axios.settings";
 let req = {
     'content-type': 'application/json'
 }
@@ -8,4 +8,9 @@ let req = {
 export const fetcher = async (url) => {
     const {data} = await getServerApi({req,url})
     return data;
+}
+
+export const reqFetcher = async ([url,method,data]) => {
+    const {data:value} = await requestApi({req,url,method,data})
+    return value;
 }

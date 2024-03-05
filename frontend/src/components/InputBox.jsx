@@ -1,12 +1,13 @@
 "use client"
 import {useContext, useState} from "react";
-import {UserContext} from "@/Context/UserContext";
-import axios from "axios";
 import {requestApi} from "@/utils/axios.settings";
+import useSWR from 'swr'
+import {fetcher} from "@/utils/fetcher";
 
 const InputBox = ({Name, value, type}) => {
     const [edit, setEdit] = useState(false);
     const [UserNewData, setUserNewData] = useState(value);
+    const { data, error,isLoading,mutate } = useSWR('/user/profile', fetcher)
 
     const req = {
         'Content-Type': 'application/json'
@@ -22,13 +23,12 @@ const InputBox = ({Name, value, type}) => {
         setEdit(false);
         if (UserNewData) {
             const name = Name.toLowerCase();
-            const body = {
+            const data = {
                 [name]: UserNewData
             }
 
-
-            const {value} = await requestApi({req,url,method,body})
-
+            const {data:value} =await requestApi({req,url,method,data})
+            mutate({...data,[name]:UserNewData});
         }
 
     }
