@@ -30,12 +30,6 @@ public class AdminController {
     public AdminService adminService;
 
 
-
-//    @PostMapping("/login")
-//    public ResponseEntity<?> loginAdmin(@RequestBody AppUser appUser){
-//        return appUserService.loginAppUser(appUser.getEmail(),appUser.getPassword());
-//    }
-
     @PutMapping("/products/{id}")
     public Product updateProduct(@PathVariable("id") Long id, @RequestParam Boolean isApprovedByAdmin) {
         return productService.updateProduct(id, isApprovedByAdmin);
