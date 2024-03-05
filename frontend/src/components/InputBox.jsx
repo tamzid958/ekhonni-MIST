@@ -2,37 +2,33 @@
 import {useContext, useState} from "react";
 import {UserContext} from "@/Context/UserContext";
 import axios from "axios";
+import {requestApi} from "@/utils/axios.settings";
 
 const InputBox = ({Name, value, type}) => {
     const [edit, setEdit] = useState(false);
-    const [data, setData] = useState(value);
-    const user = useContext(UserContext);
-    const token = localStorage.getItem("token");
+    const [UserNewData, setUserNewData] = useState(value);
+
+    const req = {
+        'Content-Type': 'application/json'
+    }
+    const url= '/user/profile/update'
+    const method="PUT"
+
     const handleEdit = () => {
         setEdit(!edit);
     }
 
-    const handleSave = () => {
+    const handleSave = async  () => {
         setEdit(false);
-        if (data) {
+        if (UserNewData) {
             const name = Name.toLowerCase();
-            const UpdateValue = {
-                [name]: data
+            const data = {
+                [name]: UserNewData
             }
-            console.log(JSON.stringify(UpdateValue));
-            axios.put(`http://localhost:8080/api/v1/user/profile/update`, UpdateValue, {
 
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json' // Specify content type if required
-                }
-            })
-                .then((res) => {
-                    window.location.reload();
-                })
-                .catch((err) => {
-                    console.error("Error fetching data:", err);
-                });
+
+            const {value} = await requestApi({req,url,method,data})
+            console.log(value)
         }
 
     }
@@ -47,9 +43,9 @@ const InputBox = ({Name, value, type}) => {
                         <input
                             type={type}
                             name={Name}
-                            value={data}
+                            value={UserNewData}
                             placeholder={value}
-                            onChange={(e) => setData(e.target.value)}
+                            onChange={(e) => setUserNewData(e.target.value)}
                             className="w-[500px] h-10 tracking-wider"
                         />
                         <p onClick={handleSave} className="cursor-pointer">Save</p>

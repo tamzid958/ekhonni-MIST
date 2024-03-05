@@ -13,23 +13,21 @@ import {getToken} from "next-auth/jwt";
 
 
 const LoginPage = () => {
-    const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     async function handleSubmit(event) {
         event.preventDefault();
-        const formDataObject = {
-            email: email,
-            password: password
-        };
-
-         await signIn("credentials" , {
+        await signIn("credentials" , {
             email : email,
             password : password,
             redirect : true,
-            callbackUrl: "/"
+            callbackUrl: "/redirect"
         })
+        // const formDataObject = {
+        //     email: email,
+        //     password: password
+        // };
         // axios.post(`http://localhost:8080/api/v1/user/login`, formDataObject)
         //     .then((res) => {
         //         const {token} = res.data;

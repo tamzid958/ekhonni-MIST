@@ -1,11 +1,13 @@
 "use client"
-
-import SellerSelectModal from "@/components/SellerSelectModal";
 import {useState} from "react";
 import {useSession} from "next-auth/react";
-import {getServerApi} from "@/utils/axios.settings";
 import useSWR from "swr";
 import {bidFetcher} from "@/utils/bidFetcher";
+import Header from "@/components/Header";
+import RemoveAdminModal from "@/components/RemoveAdminModal";
+
+
+
 
 const TestPage = ({productName, isBidActive, finalBuyerId, productID}) => {
     const biddingActive = true;
@@ -30,5 +32,4 @@ const TestPage = ({productName, isBidActive, finalBuyerId, productID}) => {
         </>
     )
 }
-
 export default TestPage;

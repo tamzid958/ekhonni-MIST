@@ -20,14 +20,11 @@ public interface ProductService {
 
     List<ProductView> fetchAllRequests();
 
-//    List<ProductView> fetchAllProducts();
-
     ProductView getProductById(Long id);
-
-//    Page<ProductView> fetchProducts(int page, FilterRequest filter);
     Map<String,Long> countProducts(String division);
     List<ProductView> showByCategory(String category);
     Category insertCategory(Category category);
     ResponseEntity<?> removeCategory(Category category);
 
+    Page<ProductView> filterProduct(FilterRequest filterRequest);
 }

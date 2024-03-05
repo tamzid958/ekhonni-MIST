@@ -2,17 +2,25 @@
 import {useState} from 'react';
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
-const RemoveAdminModal = ({isVisible,onClose}) => {
-    const handleModalCloseOnBgClick = (e)=>
-    {if (e.target.id ==="")
+// const RemoveAdminModal = ({isVisible,onClose}) => {
+//     const handleModalCloseOnBgClick = (e)=>
+//     {if (e.target.id ==="")
+//     {
+//         onClose();
+//     }
+//
+//     };
+//     if (!isVisible)
+//
+const RemoveAdminModal = ({CloseModal})=> {
+    const [closeModal,setCloseModal] =useState(false);
+    const [email:string,setEmail]=useState("");
+
+    const CloseButton = () :void =>
     {
-        onClose();
+        setCloseModal(false);
+        CloseModal(false);
     }
-
-    };
-    if (!isVisible)
-
-
 
         // if (!isVisible) return null;
         return(
@@ -29,7 +37,7 @@ const RemoveAdminModal = ({isVisible,onClose}) => {
                             className="w-full h-full   flex flex-col justify-center items-center rounded-lg   shadow-md shadow-slate-500 mb-4 ">
                             <div className="w-10/12 h-1/5  flex flex-col justify-center items-center mt-8 ">
                                 <p className="text-3xl font-medium my-3 mt-4">Remove Admin</p>
-                                <p className="text-lg mb-4 "> Enter Email Address</p>
+                                <p className="text-lg mb-4"> Enter Email Address</p>
                             </div>
 
 

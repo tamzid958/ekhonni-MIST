@@ -2,6 +2,7 @@ package com.dsi.backend.controller;
 
 import com.dsi.backend.model.*;
 import com.dsi.backend.projection.ProductView;
+import com.dsi.backend.service.CategoryService;
 import com.dsi.backend.service.ImageModelService;
 import com.dsi.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
+import java.util.Set;
 
 
 @RestController
@@ -26,8 +28,12 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+
+    private CategoryService categoryService;
+
     @Autowired
     private ImageModelService imageModelService;
+
 
     @PostMapping(value = "/user/products/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> saveProduct(@RequestPart("product") Product product,
@@ -37,20 +43,26 @@ public class ProductController {
 
         return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
     }
-//    @GetMapping("/products")
-//    public List<ProductView> fetchAllProduct() {
-//        return productService.fetchAllProducts();
-//    }
+
+    @RequestMapping("/products/filter")
+    public Page<ProductView> filterProduct(@RequestBody FilterRequest filterRequest) {
+        return productService.filterProduct(filterRequest);
+    }
+
+    @GetMapping("/products/category/all")
+    public ResponseEntity<List<CategoryRecord>> getAllCategoriesWithSubcategories() {
+        List<CategoryRecord> categories = categoryService.getAllCategoriesWithSubcategories();
+        if (!categories.isEmpty()) {
+            return ResponseEntity.ok(categories);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @GetMapping(value = "/products/{id}")
     public ProductView getProductById(@PathVariable("id") Long id) {
         return productService.getProductById(id);
     }
-
-//    @GetMapping("/products/page/{page}")
-//    public Page<ProductView> filterProducts(@PathVariable int page, @RequestParam FilterRequest filterRequest) {
-//        return productService.fetchProducts(page, filterRequest);
-//    }
 
     @GetMapping("/products/count")
     public Map<String,Long> countProducts(@RequestParam(defaultValue = "") String division) {
