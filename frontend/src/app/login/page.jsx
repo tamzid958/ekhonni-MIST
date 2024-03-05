@@ -22,7 +22,7 @@ const LoginPage = () => {
             email : email,
             password : password,
             redirect : true,
-            callbackUrl: "/"
+            callbackUrl: "/redirect"
         })
         // const formDataObject = {
         //     email: email,

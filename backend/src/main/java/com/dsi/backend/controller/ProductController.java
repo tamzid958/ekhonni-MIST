@@ -27,13 +27,7 @@ public class ProductController {
     private ProductService productService;
 
     @Autowired
-    private ImageModelService imageModelService;if (!isLoading) {
-    const updatedCategory = category.map(item => ({
-        ...item,
-                item: data[item.category]
-    }));
-        // Do something with updatedCategory
-    }
+    private ImageModelService imageModelService;
 
     @PostMapping(value = "/user/products/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> saveProduct(@RequestPart("product") Product product,
