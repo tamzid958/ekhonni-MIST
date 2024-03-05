@@ -6,7 +6,7 @@
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <!-- Insert data into the category table -->
-    <changeSet id="insert_category_data-v1" author="rafsan">
+    <changeSet id="category_data-v1-01" author="rafsan">
         <!-- Inserting data for each category and its sub-categories -->
         <sql>DELETE FROM category;</sql> <!-- Delete existing data -->
 

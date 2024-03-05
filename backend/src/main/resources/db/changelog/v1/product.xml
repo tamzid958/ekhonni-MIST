@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="insert_product_data_v1" author="rafsan">
+    <changeSet id="product_data_v1-01" author="rafsan">
         <!-- Inserting product data -->
         <sql>
             INSERT INTO product (id, description, is_approved_by_admin, is_bid_active, is_sold, is_visible, name, product_time, size, starting_price, used_condition, category_id, seller_id, final_buyer_id)
