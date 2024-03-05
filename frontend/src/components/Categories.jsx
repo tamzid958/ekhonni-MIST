@@ -6,21 +6,17 @@ import CategoryCard from "@/components/CategoryCard";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import {fetchProduct} from "@/Actions/fetchProduct";
+import useSWR from "swr";
+import {fetcher} from "@/utils/fetcher";
+
 
 const Categories = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [Categories, setCategories] = useState([])
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        axios.get("http://localhost:8080/api/v1/products/count")
-            .then((res) => {
-                setCategories(res.data)
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }, []);
+    const { data, error,isLoading } = useSWR('/products/count', fetcher)
+
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -63,10 +59,6 @@ const Categories = () => {
         {img: "/properties.svg", category: "Properties"},
         {img: "/toy.svg", category: "Toy"}
     ];
-    const updatedCategory = category.map(item => ({
-        ...item,
-        item: Categories[item.category]
-    }));
 
 
     return (
@@ -82,9 +74,9 @@ const Categories = () => {
                 <div className={" relative overflow-hidden"}>
                     <div className="mx-8 flex  transition ease-out duration-1000"
                          style={{transform: `translateX(-${currentIndex * 0.5}%)`}}>
-                        {updatedCategory.map((data, index) => <CategoryCard key={index} img={data.img}
-                                                                            categories={data.category}
-                                                                            item={data.item}/>)}
+                        {!isLoading && category.map((value, index) => <CategoryCard key={index} img={value.img}
+                                                                            categories={value.category}
+                                                                            item={data[value.category]}/>)}
                     </div>
                     <div>
                         <button

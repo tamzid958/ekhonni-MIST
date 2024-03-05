@@ -29,6 +29,7 @@ public class ProductController {
     @Autowired
     private ImageModelService imageModelService;
 
+
     @PostMapping(value = "/user/products/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> saveProduct(@RequestPart("product") Product product,
                                          @RequestPart("imageFile") MultipartFile[] file,
