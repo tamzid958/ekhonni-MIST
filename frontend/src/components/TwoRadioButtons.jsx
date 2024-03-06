@@ -8,13 +8,13 @@ const TwoRadioButtons = ({label, inputLabel1, inputLabel2, value, setValue}) => 
                 <input className="w-5 h-5 mr-2 cursor-pointer" type="radio" required name={label} value={value}
                        onChange={(e) => {
                            setValue(true)
-                       }} id={label + "1"}/>
-                <label className="text-white font-light cursor-pointer mr-5" htmlFor="value">{inputLabel1}</label>
+                       }} id={inputLabel1}/>
+                <label className="text-white font-light cursor-pointer mr-5" htmlFor={inputLabel1}>{inputLabel1}</label>
                 <input className="w-5 h-5 mr-2 cursor-pointer" type="radio" required name={label} value={value}
                        onChange={(e) => {
                            setValue(false)
-                       }} id={label + "2"}/>
-                <label className="text-white font-light cursor-pointer" htmlFor={label + "2"}>{inputLabel2}</label>
+                       }} id={inputLabel2}/>
+                <label className="text-white font-light cursor-pointer" htmlFor={inputLabel2}>{inputLabel2}</label>
             </div>
         </div>
     )

@@ -9,10 +9,11 @@ import Header from "@/components/Header";
 import TwoRadioButtons from "@/components/TwoRadioButtons";
 import {useRouter} from "next/navigation";
 import {useSession} from "next-auth/react";
+import {toast, Toaster} from "sonner";
 
 const AddProductPage = () => {
 
-    const {data : session} = useSession();
+    const {data: session} = useSession();
     const token = session?.user.token;
     const router = useRouter();
     const sellerEmail = "demoEmail";
@@ -82,27 +83,29 @@ const AddProductPage = () => {
         })
             .then(response => {
                 console.log(response);
-                router.push("/");
-
+                toast.success("Product added successfully!");
+                setTimeout(() => {
+                    router.push("/");
+                }, 2000)
             })
             .catch(error => {
                 console.log("error saving products", error);
+                toast.error("An unexpected error occurred. Please Try again")
             });
     }
-
-
     return (
 
         <>
+            <Toaster richColors position={"top-right"}/>
             <Header/>
             <form onSubmit={handleSubmit}>
-                <div className="w-full h-[700px] flex justify-center items-start">
-                    <div className="w-4/6 h-full">
+                <div className="w-full h-full flex justify-center items-start">
+                    <div className="w-[1100px] h-[750px]">
                         <div className="w-full h-[5%] my-3 flex justify-center items-center">
-                            <h1 className="text-3xl font-semibold ">Product Details</h1>
+                            <h1 className="text-3xl font-semibold ">Enter Product Details</h1>
                         </div>
                         <div
-                            className="w-full h-[85%] bg-gray-600 border-2 border-black drop-shadow-lg flex justify-center items-center rounded-lg">
+                            className="w-full h-[80%] bg-gray-600 border-2 border-black drop-shadow-lg flex justify-center items-center rounded-lg">
                             <div className="w-[97%] h-[92%]  flex flex-row">
                                 <div className="w-1/2 h-full border-2 border-black bg-white rounded-l-lg">
                                     <div
@@ -111,10 +114,12 @@ const AddProductPage = () => {
                                         <input className="hidden" name="img" type="file" required ref={inputRef}
                                                onChange={handleImageInput}/>
                                         {image ?
-                                            <img className="w-full h-full" src={URL.createObjectURL(image)} alt=''/> :
+                                            <img className="w-full h-full rounded-l-md" src={URL.createObjectURL(image)}
+                                                 alt=''/> :
                                             <>
                                                 <Image src={"/upload_image.svg"} alt={"upload"} width={40} height={40}/>
-                                                <p className="text-neutral-900 mt-5">Enter Product Image</p>
+                                                <p className="text-neutral-900 mt-5 rounded-l-md">Enter Product
+                                                    Image</p>
                                             </>}
                                         {/*<p className="mt-5 text-white text-lg">Enter Product Image</p>*/}
                                     </div>
@@ -154,8 +159,8 @@ const AddProductPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full h-[10%]  flex justify-end items-center">
-                            <div className="w-fit h-fit mr-2 mb-3">
+                        <div className="w-full h-[15%] flex justify-end items-center">
+                            <div className="w-fit h-fit mr-2 mb-10">
                                 <Button value={"Post Ad"} option={1} type={"submit"}/>
                             </div>
                         </div>
