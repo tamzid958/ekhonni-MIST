@@ -1,21 +1,35 @@
 "use client"
-import {useState} from 'react';
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
+import {requestApi} from "@/utils/axios.settings";
+
 
 const AddCategoryModal = ({setAddCategoryModalIsOpen}) => {
+    let formData = {
+        category: "",
+        subCategory: ""
+    };
 
-    const [category, setCategory] = useState("");
-    const [subcategory, setSubcategory] = useState("");
+    const handleSubmit = async (e) => {
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        const formDataObject = {
-
-            category: category,
-            subcategory: subcategory
-        };
+        e.preventDefault();
+        const req = {
+            "content-type": "application/json"
+        }
+        console.log(formData)
+        const res = await requestApi({
+            req,
+            url: "/admin/add-category",
+            method: "POST",
+            data: formData
+        })
+        setAddCategoryModalIsOpen(false)
     }
+
+    const handleInputChange = (e, field) => {
+        formData[field] = e.target.value;
+    }
+
 
     return (
 
@@ -43,22 +57,15 @@ const AddCategoryModal = ({setAddCategoryModalIsOpen}) => {
 
                             <div className=" w-10/12 h-2/5 flex  flex-col justify-center items-center ">
                                 <TextField placeholder={"Category"} type={"text"}
-                                           name={"category"} value={category}
-                                           onChange={(e) => {
-                                               setCategory(e.target.value)
-                                           }}
+                                           name={"category"}
+                                           onChange={(e) => handleInputChange(e, 'category')}
                                 />
                                 <TextField placeholder={"Subcategory"} type={"text"} name={"subcategory"}
-                                           value={subcategory}
-                                           onChange={(e) => {
-                                               setSubcategory(e.target.value)
-                                           }}
+                                           onChange={(e) => handleInputChange(e, 'subCategory')}
                                 />
                             </div>
                             <div className=" w-10/12  h-1/5 flex flex-col justify-center items-end mr-6">
-                                <Button onClick={() => {
-                                    setAddCategoryModalIsOpen(false)
-                                }} value={"Add Category"} option={1} type={"submit"}/>
+                                <Button value={"Add Category"} option={1} type={"submit"}/>
                             </div>
 
                         </div>
