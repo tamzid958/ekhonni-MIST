@@ -8,7 +8,6 @@ import {useEffect} from "react";
 const RedirectPage = () => {
     const router = useRouter();
     const {data: session} = useSession();
-
     useEffect(() => {
         if (session?.user?.user?.role) {
             const userRole = session.user.user.role;
@@ -17,6 +16,7 @@ const RedirectPage = () => {
             } else {
                 router.push("/")
             }
+
         }
     }, [router, session])
 

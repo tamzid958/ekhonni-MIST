@@ -33,6 +33,7 @@ const ProductPage = ({params}) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const {data : productData , error : productError, isLoading: productDataIsLoading} = useSWR(`/products/${productID}` , fetcher)
     const {data : userData , error : userDataError , isLoading : userDataIsLoading} = useSWR(`/user/profile` , fetcher)
+
     return (
         <>
             <Header/>
