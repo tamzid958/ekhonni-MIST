@@ -9,7 +9,6 @@ import AdminNav from "@/components/AdminNav";
 import AddAdminModal from "@/components/AddAdminModal";
 import RemoveAdminModal from "@/components/RemoveAdminModal";
 import AddCategoryModal from "@/components/AddCategoryModal";
-import RemoveCategoryModal from "@/components/RemoveCategoryModal";
 import PostApprovalbox from "@/components/PostApprovalbox";
 
 
@@ -23,7 +22,6 @@ export default function AdminPage() {
     const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false)
     const [removeAdminModalIsOpen, setRemoveAdminModalIsOpen] = useState(false)
     const [addCategoryModalIsOpen, setAddCategoryModalIsOpen] = useState(false)
-    const [removeCategoryModalIsOpen, setRemoveCategoryModalIsOpen] = useState(false)
 
     const {data, error, isLoading} = useSWR("/admin/products/review", fetcher);
     console.log(data)
@@ -36,13 +34,10 @@ export default function AdminPage() {
             {adminModalIsOpen && <AdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen}
                                              setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen}
                                              setAddCategoryModalIsOpen={setAddCategoryModalIsOpen}
-                                             setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}
                                              pendingPostCount={data.size}/>}
             {addAdminModalIsOpen && <AddAdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen}/>}
             {removeAdminModalIsOpen && <RemoveAdminModal setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen}/>}
             {addCategoryModalIsOpen && <AddCategoryModal setAddCategoryModalIsOpen={setAddCategoryModalIsOpen}/>}
-            {removeCategoryModalIsOpen &&
-                <RemoveCategoryModal setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
 
             <Toaster richColors position={"top-right"}/>
 
