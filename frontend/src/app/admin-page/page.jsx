@@ -52,7 +52,7 @@ export default function AdminPage() {
             <div className="w-full h-auto flex flex-col justify-start items-center ">
 
 
-                {!error && !isLoading && data.products && data.products.map((item) => (
+                {!error && !isLoading && data && data.products && data.products.map((item) => (
                     <PostApprovalbox key={item.id} id={item.id} name={item.name} username={item.seller.name}
                                      description={item.description} price={item.startingPrice}
                                      category={item.category.category} subCategory={item.category.subCategory}

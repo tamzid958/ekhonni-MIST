@@ -26,7 +26,7 @@ const RemoveAdminModal = ({setRemoveAdminModalIsOpen}) => {
 
     const handleInputChange = (e) => {
         email = e.target.value;
-
+    }
     return (
         <>
             <form onSubmit={handleSubmit}>

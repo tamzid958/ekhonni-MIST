@@ -1,19 +1,23 @@
 "use client"
 
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Image from "next/image";
 import Button from "@/components/Button";
 import ProfileDiv from "@/components/ProfileDiv";
 import Link from "next/link";
-import axios from "axios";
 import useSWR from "swr";
 import {fetcher} from "@/utils/fetcher";
+import {signOut} from "next-auth/react";
 
 
 const ProfileBox = () => {
     const [imageUrl, setImageUrl] = useState();
 
-    const {data, error,isLoading } = useSWR('/user/profile', fetcher)
+    const {data, error, isLoading} = useSWR('/user/profile', fetcher)
+
+    const logOut = async () => {
+        await signOut();
+    }
 
     return (
         <>
@@ -26,7 +30,7 @@ const ProfileBox = () => {
                                    className={"rounded-full px-1 py-2"}/>
                         </div>
                         <div className={"w-2/3 h-full flex justify-start items-center pl-4"}>
-                            <h1 className={"tracking-widest text-xl font-semibold"}>{!isLoading && !error && data.name }</h1>
+                            <h1 className={"tracking-widest text-xl font-semibold"}>{!isLoading && !error && data && data.name}</h1>
                         </div>
                     </div>
                 </Link>
@@ -36,7 +40,9 @@ const ProfileBox = () => {
                 </div>
                 <div className={"w-full mt-3"}>
                     <ProfileDiv image={"/edit.svg"} text={"Edit Profile"} color={"bg-slate-100"}/>
-                    <ProfileDiv image={"/logout.svg"} text={"Logout"} color={"bg-slate-100"}/>
+                    <ProfileDiv image={"/logout.svg"} text={"Logout"} color={"bg-slate-100"} onClick={() => {
+                        logOut()
+                    }}/>
                     <ProfileDiv image={"/delete.svg"} text={"Delete Account"} color={"bg-red-500"}/>
                 </div>
             </div>
