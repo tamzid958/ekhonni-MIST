@@ -15,11 +15,11 @@ import PostApprovalbox from "@/components/PostApprovalbox";
 
 export default function AdminPage() {
 
-    const AddAdminModelData = (data) => {
-        setAddAdminModalIsOpen(data)
+    const AdminModelData = (data) => {
+        setAdminModalIsOpen(data)
     }
 
-    const [adminModalIsOpen , setAdminModalIsOpen] = useState(false);
+    const [adminModalIsOpen, setAdminModalIsOpen] = useState(false);
     const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false)
     const [removeAdminModalIsOpen, setRemoveAdminModalIsOpen] = useState(false)
     const [addCategoryModalIsOpen, setAddCategoryModalIsOpen] = useState(false)
@@ -33,11 +33,16 @@ export default function AdminPage() {
         <>
             <AdminNav setAdminModalIsOpen={setAdminModalIsOpen} adminModalIsOpen={adminModalIsOpen}/>
 
-            {adminModalIsOpen && <AdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen} setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen} setAddCategoryModalIsOpen={setAddCategoryModalIsOpen} setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
+            {adminModalIsOpen && <AdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen}
+                                             setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen}
+                                             setAddCategoryModalIsOpen={setAddCategoryModalIsOpen}
+                                             setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}
+                                             pendingPostCount={data.size}/>}
             {addAdminModalIsOpen && <AddAdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen}/>}
             {removeAdminModalIsOpen && <RemoveAdminModal setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen}/>}
             {addCategoryModalIsOpen && <AddCategoryModal setAddCategoryModalIsOpen={setAddCategoryModalIsOpen}/>}
-            {removeCategoryModalIsOpen && <RemoveCategoryModal setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
+            {removeCategoryModalIsOpen &&
+                <RemoveCategoryModal setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
 
             <Toaster richColors position={"top-right"}/>
 
@@ -56,6 +61,6 @@ export default function AdminPage() {
                     />
                 ))}
             </div>
-       </>
+        </>
     )
 }

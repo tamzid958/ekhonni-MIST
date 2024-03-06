@@ -3,7 +3,13 @@
 import {jwtDecode} from "jwt-decode";
 import {useSession} from "next-auth/react";
 
-const AdminModal = ({setAddAdminModalIsOpen,setRemoveAdminModalIsOpen,setAddCategoryModalIsOpen,setRemoveCategoryModalIsOpen}) => {
+const AdminModal = ({
+                        setAddAdminModalIsOpen,
+                        setRemoveAdminModalIsOpen,
+                        setAddCategoryModalIsOpen,
+                        setRemoveCategoryModalIsOpen,
+                        pendingPostCount
+                    }) => {
 
     const {data: session} = useSession();
     const token = session?.user.token
@@ -20,24 +26,38 @@ const AdminModal = ({setAddAdminModalIsOpen,setRemoveAdminModalIsOpen,setAddCate
                             className="w-full h-2/3 flex justify-start items-center overflow-hidden transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">
                             <p className="w-full pl-2  mx-4  rounded shadow-md shadow-slate-400 text-wrap break-all text-base ">{decoded.sub}</p>
                         </div>
-                        <p className="w-full pl-4 text-xl">Pending posts: {value.size}</p>
+                        <p className="w-full pl-4 text-xl">Pending posts:&nbsp;<span
+                            className="rounded-lg px-3  border border-slate-300 bg-slate-200 shadow-slate-400 shadow-sm ">{pendingPostCount}</span>
+                        </p>
                     </div>
 
-                    <div className="w-[90%] h-12 pt-3 text-xl bg-white my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1 cursor-pointer"
-                        onClick={() => {setAddAdminModalIsOpen(true)}}> &nbsp; &nbsp;<span className="font-semibold">+&nbsp;</span>Add
+                    <div
+                        className="w-[90%] h-12 pt-3 text-xl bg-white my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1 cursor-pointer"
+                        onClick={() => {
+                            setAddAdminModalIsOpen(true)
+                        }}> &nbsp; &nbsp;<span className="font-semibold">+&nbsp;</span>Add
                         Admin
                     </div>
-                    <div className="cursor-pointer w-[90%] h-12 pt-3 text-xl bg-white my-5 border-neutral-400 mx-4 rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1"
-                    onClick={() => {setRemoveAdminModalIsOpen(true)}}>
+                    <div
+                        className="cursor-pointer w-[90%] h-12 pt-3 text-xl bg-white my-5 border-neutral-400 mx-4 rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1"
+                        onClick={() => {
+                            setRemoveAdminModalIsOpen(true)
+                        }}>
 
                         &nbsp;&nbsp;
                         <span className="font-semibold">-&nbsp;</span>Remove Admin
                     </div>
 
-                    <div   onClick={() => {setAddCategoryModalIsOpen(true)}} className="w-[90%] h-12 pt-3 text-xl bg-white cursor-pointer my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">&nbsp;&nbsp;
+                    <div onClick={() => {
+                        setAddCategoryModalIsOpen(true)
+                    }}
+                         className="w-[90%] h-12 pt-3 text-xl bg-white cursor-pointer my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">&nbsp;&nbsp;
                         <span className="font-semibold">+&nbsp;</span>Add Category
                     </div>
-                    <div onClick={() => {setRemoveCategoryModalIsOpen(true)}} className="w-[90%] h-12 pt-3 text-xl bg-white cursor-pointer my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">&nbsp;&nbsp;
+                    <div onClick={() => {
+                        setRemoveCategoryModalIsOpen(true)
+                    }}
+                         className="w-[90%] h-12 pt-3 text-xl bg-white cursor-pointer my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">&nbsp;&nbsp;
 
 
                         <span className="font-semibold">-&nbsp;</span>Remove Category
