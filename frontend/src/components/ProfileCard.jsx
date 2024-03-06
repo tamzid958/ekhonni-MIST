@@ -57,7 +57,7 @@ const ProfileCard = () => {
                         </div>
                     </div>
                     <div className="w-full text-center py-2 ">
-                        <h1 className="text-2xl font-semibold tracking-wider mb-3">{(!isLoading && !error)? data.name : ''}</h1>
+                        <h1 className="text-2xl font-semibold tracking-wider mb-3">{!isLoading && !error && data.name }</h1>
                         <div onClick={imageClick}>
                             <input name="img" className={"hidden"} type={"file"} ref={inputRef}
                                    onChange={handleChange}/>
