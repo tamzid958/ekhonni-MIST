@@ -6,12 +6,17 @@ import {Toaster} from "sonner";
 import AdminNav from "@/components/AdminNav";
 import AddAdminModal from "@/components/AddAdminModal";
 import axios from "axios";
+import RemoveAdminModal from "@/components/RemoveAdminModal";
+import AddCategoryModal from "@/components/AddCategoryModal";
+import RemoveCategoryModal from "@/components/RemoveCategoryModal";
 import PostApprovalbox from "@/components/PostApprovalbox";
 
 export default function AdminPage() {
-    const [SideBarModalIsOpen, setSideBarModalIsOpen] = useState(false);
-    const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false);
-
+    const [adminModalIsOpen , setAdminModalIsOpen] = useState(false);
+    const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false)
+    const [removeAdminModalIsOpen, setRemoveAdminModalIsOpen] = useState(false)
+    const [addCategoryModalIsOpen, setAddCategoryModalIsOpen] = useState(false)
+    const [removeCategoryModalIsOpen, setRemoveCategoryModalIsOpen] = useState(false)
     const data1 = [
         {
             id: '1',
@@ -34,80 +39,17 @@ export default function AdminPage() {
         }
     };
 
-    // const setAddModalOpen = (data)=>{
-    //     setAddAdminModalIsOpen(data);
-    //     console.log("Data: "+data);
-    // }
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    const SideBar = (data) => {
-        setSideBarModalIsOpen(data);
-    }
-    const AddAdminModelData = (data) => {
-        setAddAdminModalIsOpen(data)
-    }
-
-
-    // const data =[
-    //     {
-    //         id : '1',
-    //         name : 'Product1',
-    //         location: 'Dhaka',
-    //         time: '12.00',
-    //         description: 'This is good',
-    //         category: 'phone',
-    //         price: '122222',
-    //         username:'Shadman'
-    //
-    //     },
-    //     {
-    //         id : '2',
-    //         name : 'Product2',
-    //         location: 'Chittagong',
-    //         time: '12.10',
-    //         description: 'This is good',
-    //         category: 'phone',
-    //         price: '122222',
-    //         username:'Shafeen'
-    //     },
-    //     {   id : '3',
-    //         name : 'Product3',
-    //         location: 'Khulna',
-    //         time: '12.40',
-    //         description: 'This is good',
-    //         category: 'phone',
-    //         price: '122222',
-    //         username:'Khan'
-    //     },
-    //     {   id : '4',
-    //         name : 'Product4',
-    //         location: 'Khulna',
-    //         time: '12.44',
-    //         description: 'This is not good',
-    //         category: 'phone',
-    //         price: '122222',
-    //         username:'Sadia'
-    //     },
-    //     {   id : '5',
-    //         name : 'Product5',
-    //         location: 'Khulna',
-    //         time: '12.45',
-    //         description: 'This is good',
-    //         category: 'phone',
-    //         price: '122222',
-    //         username:'Shitol'
-    //     }
-    // ]
-
 
     return (
         <>
-            <AdminNav Sidebar={SideBar}/>
+            <AdminNav setAdminModalIsOpen={setAdminModalIsOpen} adminModalIsOpen={adminModalIsOpen}/>
 
-            {SideBarModalIsOpen && <AdminModal value={data} setAddAdminModal={AddAdminModelData}/>}
-            {addAdminModalIsOpen && <AddAdminModal CloseModel={AddAdminModelData}/>}
+            {adminModalIsOpen && <AdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen} setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen} setAddCategoryModalIsOpen={setAddCategoryModalIsOpen} setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
+            {addAdminModalIsOpen && <AddAdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen}/>}
+            {removeAdminModalIsOpen && <RemoveAdminModal setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen}/>}
+            {addCategoryModalIsOpen && <AddCategoryModal setAddCategoryModalIsOpen={setAddCategoryModalIsOpen}/>}
+            {removeCategoryModalIsOpen && <RemoveCategoryModal setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
+
             <Toaster richColors position={"top-right"}/>
 
             <div>
@@ -125,6 +67,6 @@ export default function AdminPage() {
                     />
                 ))}
             </div>
-        </>
+       </>
     )
 }

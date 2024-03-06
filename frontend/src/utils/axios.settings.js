@@ -68,12 +68,13 @@ const getErrorMessage = (e) => {
 
 const bearerToken = async ({ req }) => {
     const session = await getSession({req});
-    return session?.user.token
+    const a= session?.user.token
         ? {
-            ...Headers,
+            ...req,
             'Authorization': `Bearer ${session?.user.token}`,
         }
-        : {...Headers};
+        : {...req};
+    return a;
 };
 
 
@@ -150,7 +151,12 @@ export const requestApi = async ({
                                      ignoreStatusCheck = true,
                                      unmodifiedErrorResponse = true,
                                  }) => {
+    console.log("Body: "+JSON.stringify(data))
+    console.log("Req: "+JSON.stringify(req))
+    console.log("Method: "+method)
+    console.log("Url: "+url)
     let res;
+
     try {
         const requestObj = {
             method,
@@ -159,8 +165,9 @@ export const requestApi = async ({
             params,
             headers: await bearerToken({req})
         };
-        if (isTimeoutExtended) requestObj.timeout = 60 * 60 * 1000;
+        //if (isTimeoutExtended) requestObj.timeout = 60 * 60 * 1000;
         res = await axios(requestObj);
+        console.log("Response: "+res.data)
     } catch (e) {
         console.log("Got Error in API call");
         console.dir(e);
@@ -201,7 +208,7 @@ export const requestApi = async ({
         return {error};
     }
 
-    return {data: res.data, revision: res.headers["etag"]};
+    return {data: res.data};
 };
 
 /**
