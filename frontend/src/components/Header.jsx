@@ -9,64 +9,33 @@ import {signIn, useSession} from "next-auth/react";
 import NotificationSVG from "../../public/notification.svg";
 import AccountSVG from "../../public/user.svg"
 import AllAdsSVG from "../../public//all_adds.svg"
+import {usePathname} from "next/navigation";
+import useSWR from "swr";
+import {fetcher} from "@/utils/fetcher";
 
 const Header = () => {
 
     const {data: session} = useSession();
+    const currentURL = usePathname();
     const [profileModel, setProfileModel] = useState(false);
     const [notificationModalOpen, setNotificationModalOpen] = useState(false);
 
-    const CloseModel = () => {
-        if (profileModel) {
-            setProfileModel(false);
-        }
-        if (notificationModalOpen) {
-            setNotificationModalOpen(false);
+    const {data: notificationData, error, isLoading} = useSWR('/user/notification/fetch', fetcher);
+    const CloseModal = (e) => {
+        if (e.target.id !== "notificationModal" && e.target.id !== "notificationList") {
+            if (profileModel) {
+                setProfileModel(false);
+            }
+            if (notificationModalOpen) {
+                setNotificationModalOpen(false);
+            }
         }
     }
-
-    const notificationList = [
-        {
-            id: "1",
-            message: "Your product has been approved",
-            link: "link",
-            buttonText: "Go to your products",
-            time: "3:52 PM"
-        },
-        {
-            id: "2",
-            message: "Your product has been sold",
-            link: "link",
-            buttonText: "Go to your products",
-            time: "4:35 PM"
-        },
-        {
-            id: "3",
-            message: "Your bid has been selected",
-            link: "link",
-            buttonText: "Go to your bids",
-            time: "5:09 PM"
-        },
-        {
-            id: "4",
-            message: "Your product has been approved",
-            link: "link",
-            buttonText: "Go to your products",
-            time: "6:15 PM"
-        },
-        {
-            id: "5",
-            message: "Your product has been rejected",
-            link: "link",
-            buttonText: "Go to your products",
-            time: "7:30 PM"
-        }
-    ]
-    const notificationsNo = notificationList.length;
-    const [notifications, setNotifications] = useState(notificationsNo);
     return (
         <>
-            <div onClick={CloseModel}>
+            <div id={"mainHeader"} onClick={(e) => {
+                CloseModal(e)
+            }}>
                 <div
                     className=" px-6 w-full overflow-x-hidden h-[100px] border-black flex justify-between bg-slate-100">
                     <div className="flex">
@@ -87,10 +56,10 @@ const Header = () => {
                         }}>
                             <Image src={NotificationSVG} alt={"message"} width={20} height={20} className="mr-4"/>
                             {session ?
-                                notifications !== 0 && !notificationModalOpen &&
+                                notificationData && notificationData.length !== 0 && !notificationModalOpen &&
                                 (<div
                                     className="absolute -top-2 right-36 w-5 h-5 flex items-center justify-center text-white bg-rose-600 opacity-85 text-xs rounded-full">
-                                    <span>{notifications}</span>
+                                    <span>{notificationData.length}</span>
                                 </div>) :
                                 (<></>)
                             }
@@ -102,18 +71,20 @@ const Header = () => {
                             <p className=" text-lg font-semibold">Account</p>
                         </div>
                         {session ?
-                            (<Link href={"/add-product"}>
-                                <Button value="Post Ad" option={1} type={"submit"}/>
-                            </Link>) :
-                            (<Link href={"/login"}>
-                                <Button value="Log in" option={1} type={"button"} onClick={() => signIn()}/>
-                            </Link>)}
+                            (currentURL !== "/add-product" &&
+                                <Link href={"/add-product"}>
+                                    <Button value="Post Ad" option={1} type={"submit"}/>
+                                </Link>) :
+                            (currentURL !== "/login" &&
+                                <Link href={"/login"}>
+                                    <Button value="Log in" option={1} type={"button"} onClick={() => signIn()}/>
+                                </Link>)}
                     </div>
                 </div>
                 {profileModel && <ProfileBox/>}
                 {notificationModalOpen &&
-                    <NotificationListModal setModalOpen={setNotificationModalOpen} setNotifications={setNotifications}
-                                           notificationList={notificationList}/>}
+                    <NotificationListModal setModalOpen={setNotificationModalOpen}
+                                           notificationList={notificationData ? notificationData : []}/>}
             </div>
         </>
     )
