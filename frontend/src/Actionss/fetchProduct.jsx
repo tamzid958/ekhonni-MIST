@@ -1,4 +1,4 @@
-import {getProductFailed, getProductRequest, getProductSuccess} from "@/Actions/product";
+import {getProductFailed, getProductRequest, getProductSuccess} from "@/Actionss/product";
 import axios from "axios";
 
 export const fetchProduct = ({filter}) => {

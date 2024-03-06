@@ -1,9 +1,9 @@
 "use client"
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchProduct} from "@/Actions/fetchProduct";
+import {fetchProduct} from "@/Actionss/fetchProduct";
 
-import {updatePage} from "@/Actions/filter";
+import {updatePage} from "@/Actionss/filter";
 
 const Pagination = () => {
     const [currentPage, setCurrentPage] = useState(0);

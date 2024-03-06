@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import {useDispatch} from "react-redux";
-import {addCategory} from "@/Actions/filter";
+import {addCategory} from "@/Actionss/filter";
 import Link from "next/link";
 
 

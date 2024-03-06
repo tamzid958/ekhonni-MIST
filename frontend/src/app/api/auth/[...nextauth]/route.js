@@ -1,6 +1,6 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-const handler = NextAuth ({
+export const authOptions = {
     providers : [
         CredentialsProvider({
             name : "Credentials",
@@ -43,6 +43,7 @@ const handler = NextAuth ({
         verifyRequest: '/auth/verify-request', // (used for check email message)
         newUser: '/register' // New users will be directed here on first sign in (leave the property out if not of interest)
     }
-})
+}
+const handler = NextAuth (authOptions)
 
 export {handler as GET , handler as POST}

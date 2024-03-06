@@ -8,7 +8,7 @@ import {
     DELETE_INDIVIDUAL_PRODUCT,
     SEARCH_PRODUCT,
     UPDATE_PAGE
-} from "@/Actions/constants";
+} from "@/Actionss/constants";
 
 export const addCategory = (category) => {
     return {

@@ -8,7 +8,7 @@ import LargeCard from "@/components/LargeCard";
 import Pagination from "@/components/Pagination";
 
 import Header from "@/components/Header";
-import {addSort} from "@/Actions/filter";
+import {addSort} from "@/Actionss/filter";
 
 
 

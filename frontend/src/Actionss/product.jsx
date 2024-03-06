@@ -1,4 +1,4 @@
-import {PRODUCT_FETCH_ERROR, PRODUCT_REQUEST, PRODUCT_SUCCESSFULLY_FETCH} from "@/Actions/constants";
+import {PRODUCT_FETCH_ERROR, PRODUCT_REQUEST, PRODUCT_SUCCESSFULLY_FETCH} from "@/Actionss/constants";
 
 export const getProductRequest = () => {
     return {

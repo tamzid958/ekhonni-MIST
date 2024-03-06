@@ -7,6 +7,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import TwoRadioButtons from "@/components/TwoRadioButtons";
 import {requestApi} from "@/utils/axios.settings";
+import {addToDb} from "@/actions/actions";
 
 
 const AddProductPage = () => {
@@ -44,17 +45,17 @@ const AddProductPage = () => {
         e.preventDefault();
         formData.append("product", new Blob([JSON.stringify(product)], {type: 'application/json'}));
         formData.append("imageFile", image);
-        // const response = await createProduct(formData)
-
-        const param = {
-            req:{
-                'Content-Type': 'multipart/form-data'
-            },
-            url: "/user/products/save",
-            method: "POST",
-            data: formData
-        }
-        const response = await requestApi(param)
+        const response = await addToDb(formData)
+        console.log("The response from ",response)
+        // const param = {
+        //     req:{
+        //         'Content-Type': 'multipart/form-data'
+        //     },
+        //     url: "/user/products/save",
+        //     method: "POST",
+        //     data: formData
+        // }
+        // const response = await requestApi(param)
     }
 
 
