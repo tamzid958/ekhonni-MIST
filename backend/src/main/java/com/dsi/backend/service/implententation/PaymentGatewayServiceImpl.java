@@ -98,9 +98,9 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
         paymentGatewayMap.put("store_id", System.getenv("STORE_ID"));
         paymentGatewayMap.put("store_passwd", System.getenv("STORE_PASSWD"));
 
-        String url = System.getenv("FRONTEND_BASE_URL")+"/"+paymentGatewayReqView.getTran_id();
+        String url = System.getenv("FRONTEND_BASE_URL");
 
-        String successUrl = url+System.getenv("SSL_SUCCESS_URL");
+        String successUrl = url+System.getenv("SSL_SUCCESS_URL")+"/"+paymentGatewayReqView.getTran_id();
         String cancelUrl = url+System.getenv("SSL_CANCEL_URL");
         String failUrl = url+System.getenv("SSL_FAIL_URL");
 

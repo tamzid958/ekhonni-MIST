@@ -1,5 +1,6 @@
 "use client"
-import {getServerApi, requestApi} from "@/utils/axios.settings";
+import {callApi, getServerApi, requestApi} from "@/utils/axios.settings";
+import {baseUrl} from "@/utils/baseUrl";
 let req = {
     'content-type': 'application/json'
 }
@@ -13,4 +14,9 @@ export const fetcher = async (url) => {
 export const reqFetcher = async ([url,method,data]) => {
     const {data:value} = await requestApi({req,url,method,data})
     return value;
+}
+
+export const postCallFetcher = async ([baseUrl, url, method, headers], {arg}) => {
+    const response = await callApi({baseURL:baseUrl, url, method, data:arg, headers});
+    return response;
 }
