@@ -5,6 +5,7 @@ import com.dsi.backend.model.Bid;
 import com.dsi.backend.service.BidService;
 import com.dsi.backend.service.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ public class BidController {
     private JwtTokenService jwtTokenService;
 
     @PostMapping("/buyer/save")
-    public ResponseEntity<?> saveBid(@RequestParam Long id, String token, Double offeredPrice) {
-        String buyerEmail = jwtTokenService.getUsernameFromToken(token);
+    public ResponseEntity<?> saveBid(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam Long id, @RequestParam Double offeredPrice) {
+        String buyerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
 
         Bid bid = bidService.saveBid(id, buyerEmail, offeredPrice);
         if (bid != null) {
@@ -33,15 +34,15 @@ public class BidController {
     }
 
     @GetMapping("/fetch")
-    public ResponseEntity<?> fetchBids(@RequestParam Long id, String token) {
-        String email = jwtTokenService.getUsernameFromToken(token);
+    public ResponseEntity<?> fetchBids(@RequestParam Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        String email = jwtTokenService.getUsernameFromToken(token.substring(7));
 
         return new ResponseEntity<>(bidService.fetchBids(id, email), HttpStatus.OK);
     }
 
     @PostMapping("/seller/activity")
-    public ResponseEntity<?> changeBidActivity(@RequestParam Long id, String token) {
-        String sellerEmail = jwtTokenService.getUsernameFromToken(token);
+    public ResponseEntity<?> changeBidActivity(@RequestParam Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        String sellerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
 
         Boolean result = bidService.changeBidActiveStatus(id, sellerEmail);
         if (result !=null)
@@ -50,8 +51,8 @@ public class BidController {
     }
 
     @PostMapping("/seller/visibility")
-    public ResponseEntity<?> changeBidVisibility(@RequestParam Long id, String token) {
-        String sellerEmail = jwtTokenService.getUsernameFromToken(token);
+    public ResponseEntity<?> changeBidVisibility(@RequestParam Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        String sellerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
 
         Boolean result = bidService.changeBidVisibilityStatus(id, sellerEmail);
         if (result !=null)
@@ -60,8 +61,8 @@ public class BidController {
     }
 
     @PostMapping("/seller/accept-buyer")
-    public ResponseEntity<?> acceptBuyer(@RequestParam Long id, String token, String buyerEmail) {
-        String sellerEmail = jwtTokenService.getUsernameFromToken(token);
+    public ResponseEntity<?> acceptBuyer(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam Long id, @RequestParam String buyerEmail) {
+        String sellerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
 
         AppUser result = bidService.updateFinalBuyer(id, sellerEmail, buyerEmail);
         if (result !=null)
@@ -70,8 +71,8 @@ public class BidController {
     }
 
     @PostMapping("/seller/revert-buyer")
-    public ResponseEntity<?> revertBuyer(@RequestParam Long id, String token) {
-        String sellerEmail = jwtTokenService.getUsernameFromToken(token);
+    public ResponseEntity<?> revertBuyer(@RequestParam Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        String sellerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
 
         Boolean result = bidService.revertFinalBuyer(id, sellerEmail);
         if (result)
@@ -80,8 +81,8 @@ public class BidController {
     }
 
     @PostMapping("/buyer/buy-now")
-    public ResponseEntity<?> buyNow(@RequestParam Long id, String token) {
-        String buyerEmail = jwtTokenService.getUsernameFromToken(token);
+    public ResponseEntity<?> buyNow(@RequestParam Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        String buyerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
 
         Boolean result = bidService.changeIsSold(id, buyerEmail);
         if (result)

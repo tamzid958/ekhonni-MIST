@@ -117,13 +117,15 @@ public class AppUserServiceImpl implements AppUserService{
 
     }
 
-
+    @Override
+    public AppUserView convertToView(AppUser appUser){
+        return new SpelAwareProxyProjectionFactory().createProjection(AppUserView.class, appUser);
+    }
 
     @Override
-    public ResponseEntity<?> fetchInformation(String token) {
+    public AppUser fetchInformation(String token) {
 //        AppUser appUser = appUserRepository.findByEmail(email);
-        AppUserView appUserView = appUserRepository.getByEmail(jwtTokenService.getUsernameFromToken(token.substring(7)));
-        return ResponseEntity.ok(appUserView);
+        return appUserRepository.findByEmail(jwtTokenService.getUsernameFromToken(token.substring(7)));
     }
 
     @Override
