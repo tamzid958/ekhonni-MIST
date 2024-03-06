@@ -15,9 +15,10 @@ const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId
     console.log(data);
     const {mutate} = useSWRConfig();
     const handleBiddingStatusChange = (e) => {
-        setBidIsActive(!bidIsActive);
         const response= requestApi({url: `user/products/bid/seller/activity?id=${productID}`, method : "POST"});
         mutate(`user/products/bid/fetch?id=${productID}`);
+        mutate(`/products/${productID}`);
+        setBidIsActive(!bidIsActive);
     }
 
     const handleModalCloseOnBgClick = (e) => {
