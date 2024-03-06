@@ -10,7 +10,6 @@ const RemoveAdminModal = ({setRemoveAdminModalIsOpen})=> {
         event.preventDefault();
     }
     return (
-
         <>
             <form onSubmit={handleSubmit}>
                 <div
