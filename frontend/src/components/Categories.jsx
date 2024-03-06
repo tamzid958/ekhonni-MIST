@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
 import {fetchProduct} from "@/Actions/fetchProduct";
 import useSWR from "swr";
-import {fetcher} from "@/utils/fetcher";
+import {bidFetcher} from "@/utils/bidFetcher";
 
 
 const Categories = () => {
@@ -15,7 +15,7 @@ const Categories = () => {
     const [Categories, setCategories] = useState([])
     const dispatch = useDispatch();
 
-    const { data, error,isLoading } = useSWR('/products/count', fetcher)
+    const { data, error,isLoading } = useSWR('/products/count', bidFetcher)
 
 
     useEffect(() => {

@@ -124,8 +124,11 @@ export const getServerApi = async ({req, url, params = {}}) => {
         };
         return {error};
     }
+
+    // console.log(res.data)
     // NOTE: axios provides all header names in lower case
     return {data: res.data};
+
 };
 
 /**
@@ -151,7 +154,7 @@ export const requestApi = async ({
                                      ignoreStatusCheck = true,
                                      unmodifiedErrorResponse = true,
                                  }) => {
-    console.log("Body: "+JSON.stringify(data))
+
     let res;
 
     try {

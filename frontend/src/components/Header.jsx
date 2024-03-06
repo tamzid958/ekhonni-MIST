@@ -11,7 +11,6 @@ import {useSession , signIn , signOut} from "next-auth/react";
 const Header = () => {
 
     const {data : session} = useSession();
-    // console.log(session?.user.user.role);
     const [profileModel, setProfileModel] = useState(false);
     const [notificationModalOpen, setNotificationModalOpen] = useState(false);
 

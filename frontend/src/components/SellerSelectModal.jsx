@@ -2,59 +2,25 @@
 
 import {Toaster} from "sonner";
 import BidderList from "@/components/BidderList";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import ToggleSwitch from "@/components/ToggleSwitch";
 import useSWR from "swr";
+import {bidFetcher} from "@/utils/bidFetcher";
 
-const fetcher = (...args) => fetch(...args).then(response => response.json());
 const baseUrl = `http://localhost:8080/api/v1/`;
 const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId, productID}) => {
-
-    const token = localStorage.getItem("token");
-    const {data, error, isLoading} = useSWR(`http://localhost:8080/api/v1/user/products/bid/fetch?id=${productID}&token=${token}`, fetcher);
+    const {data, error, isLoading} = useSWR(`user/products/bid/fetch?id=${productID}`, bidFetcher);
     const [bidIsActive, setBidIsActive] = useState(isBidActive)
+    console.log(data);
 
     const handleBiddingStatusChange = (e) => {
         setBidIsActive(!bidIsActive);
     }
 
-    const bidders = [
-        {
-            id: "1",
-            name: "Syed Nafees Kaiser",
-            bid: 10000
-        },
-        {
-            id: "2",
-            name: "Ikhtiar Uddin Muhammad Bin Bakhtiar Khilji",
-            bid: 3000
-        },
-        {
-            id: "3",
-            name: "Shahabuddin Akhon",
-            bid: 25000
-        },
-        {
-            id: "4",
-            name: "Sheikh Rafsan Provee",
-            bid: 250
-        },
-        {
-            id: "5",
-            name: "Sadia Bintay Mostafiz",
-            bid: 25000
-        }
-    ];
-    const finalBuyerID = "2";
-
     const handleModalCloseOnBgClick = (e) => {
         if (e.target.id === "backgroundBlur")
             setModalOpen(false);
     }
-
-    useEffect(() => {
-
-    }, []);
 
     return (
         <>
@@ -75,7 +41,7 @@ const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId
                             </div>
                             <div className="w-full h-[75%] flex flex-row justify-center items-center">
                                 <div className="w-full h-full flex justify-end items-start">
-                                    <BidderList isVisible={true} bidders={bidders} view={"sellerView"} finalBuyerID={finalBuyerID}/>
+                                    <BidderList isVisible={true} bidders={(!error && !isLoading && data) ? data : false} view={"sellerView"} finalBuyerID={finalBuyerId}/>
                                 </div>
                             </div>
                         </div>

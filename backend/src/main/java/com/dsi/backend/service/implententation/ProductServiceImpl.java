@@ -11,9 +11,7 @@ import com.dsi.backend.service.ImageModelService;
 import com.dsi.backend.service.JwtTokenService;
 import com.dsi.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.data.domain.Page;
-
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpStatus;
@@ -89,6 +87,12 @@ public class ProductServiceImpl implements ProductService {
         ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
         return projectionFactory.createProjection(ProductView.class, product);
 
+    }
+
+    @Override
+    public Product fetchProductById(Long id){
+        return productRepository.findById(id)
+                .orElseThrow(()->new ProductNotFoundException("Product not found by id: "+id));
     }
 
     public Map<String,Long> countProducts(String division) {
