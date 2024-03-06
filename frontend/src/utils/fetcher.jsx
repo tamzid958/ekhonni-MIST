@@ -1,6 +1,6 @@
 "use client"
 import {callApi, getServerApi, requestApi} from "@/utils/axios.settings";
-import {baseUrl} from "@/utils/baseUrl";
+
 let req = {
     'content-type': 'application/json'
 }

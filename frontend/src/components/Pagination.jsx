@@ -3,7 +3,9 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchProduct} from "@/Actions/fetchProduct";
 
+
 import {updatePage} from "@/Actions/filter";
+
 import useSWR from "swr";
 import {reqFetcher} from "@/utils/fetcher";
 

@@ -167,7 +167,7 @@ const Filter = () => {
         {
             category: "Toy",
             SubCategories: [
-                "Actions Figures & Playsets",
+                "Actionss Figures & Playsets",
                 "Dolls & Accessories",
                 "Educational Toys",
                 "Building Blocks & Construction Sets",
