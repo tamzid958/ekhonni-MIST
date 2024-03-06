@@ -7,35 +7,14 @@ import {addCategory, addDivision, addPrice, addSubCategory, clearAll} from "@/Ac
 import {fetchProduct} from "@/Actions/fetchProduct";
 
 
-const Filter = () => {
-    const [RangeValue, setRangeValue] = useState([]);
+const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory}) => {
+
     const [selectedCategory, setSelectedCategory] = useState(null);
     const dispatch = useDispatch();
-    const filteredItem = useSelector((state) => state.filter);
-    const product = useSelector((state) => state.product);
 
     let allFilter = [];
-    const initialState = {
-        pageNumber: 0,
-        categories: [
-            {
-                name: "Electronics",
-                subCategories: ["Smartphones & Tablets"]
-            },
-            {
-                name: "Furniture",
-                subCategories: ["Table"]
-            },
 
-        ],
-        startPrice: 2000,
-        endPrice: 100000,
-        search: null,
-        division: ["Dhaka", "Khulna"],
-        sort: "High to low"
-
-    };
-    const {categories, division} = filteredItem;
+    const {categories, division} = FilterData;
 
     categories.map((category, index) => {
         allFilter.push(category.name);
@@ -44,19 +23,8 @@ const Filter = () => {
         })
     })
     allFilter = [...allFilter, ...division];
-    useEffect(() => {
-        dispatch(addPrice(RangeValue))
-    }, [RangeValue]);
-    useEffect(() => {
-        // console.log(allFilter)
-        dispatch(fetchProduct({filter: filteredItem}))
-    }, [filteredItem]);
 
 
-    function valueFunction(msg) {
-        setRangeValue(msg);
-        // dispatch(addPrice(msg))
-    }
 
     const handleCategoryClick = (index) => {
         if (selectedCategory === index) {
@@ -65,6 +33,7 @@ const Filter = () => {
             setSelectedCategory(index);
         }
     };
+    console.log(FilterData)
     const divisions = [
         {name: "Dhaka"},
         {name: "Chattogram"},
@@ -208,7 +177,7 @@ const Filter = () => {
                         <select
                             name="division"
                             className="border-2 w-full"
-                            onChange={(e) => dispatch(addDivision(e.target.value))}
+                            onChange={ChangeHandle}
                         >
                             <option value="">Select Division</option>
                             {divisions.map((division) => (
@@ -227,10 +196,9 @@ const Filter = () => {
                     <div>
                         <ul>
                             {Categories.map((data, index) => (
-                                <li key={index} className={"ml-2"} onClick={() => {
+                                <li key={index} className={"ml-2"} value={data.category} onClick={() => {
                                     handleCategoryClick(index)
-                                    dispatch(addCategory(Categories[index].category))
-
+                                    HandleCategory(Categories[index].category)
                                 }}>
                                     <div className={"flex"}>
                                         <p className={"mr-2 font-bold text-xl"}>
@@ -242,7 +210,9 @@ const Filter = () => {
                                         <ul className="">
                                             {data.SubCategories.map((subcategory, subIndex) => (
                                                 <li key={subIndex} className="ml-10 text-gray-500 cursor-pointer"
-                                                    onClick={() => dispatch(addSubCategory(Categories[index].category, Categories[index].SubCategories[subIndex]))}>{subcategory}</li>
+                                                    onClick={() => {
+                                                        HandleSubCategory(Categories[index].category, Categories[index].SubCategories[subIndex])
+                                                    }}>{subcategory}</li>
                                             ))}
                                         </ul>
                                     )}
@@ -254,11 +224,11 @@ const Filter = () => {
                 <div>
                     <div className="pb-3">
                         <h1 className="text-lg font-bold my-3">Price Range</h1>
-                        <h2 className="text-blue-600">৳ {RangeValue[0]} - ৳ {RangeValue[1]}</h2>
-                        <h3 className="my-1 text-gray-400">Current Range: ৳ {RangeValue[1] - RangeValue[0]}</h3>
+                        <h2 className="text-blue-600">৳ {FilterData.startPrice} - ৳ {FilterData.endPrice}</h2>
+                        <h3 className="my-1 text-gray-400">Current Range: ৳ {FilterData.endPrice - FilterData.startPrice}</h3>
                     </div>
                     <div className={"pb-5"}>
-                        <Range max={1000000} min={0} valueFunction={valueFunction}/>
+                        <Range max={1000000} min={0} ChangeHandle={ChangeHandle} />
                     </div>
                 </div>
             </div>

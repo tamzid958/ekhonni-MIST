@@ -152,9 +152,6 @@ export const requestApi = async ({
                                      unmodifiedErrorResponse = true,
                                  }) => {
     console.log("Body: "+JSON.stringify(data))
-    console.log("Req: "+JSON.stringify(req))
-    console.log("Method: "+method)
-    console.log("Url: "+url)
     let res;
 
     try {
@@ -167,7 +164,6 @@ export const requestApi = async ({
         };
         //if (isTimeoutExtended) requestObj.timeout = 60 * 60 * 1000;
         res = await axios(requestObj);
-        console.log("Response: "+res.data)
     } catch (e) {
         console.log("Got Error in API call");
         console.dir(e);
