@@ -8,10 +8,12 @@ import axios from "axios";
 import Header from "@/components/Header";
 import TwoRadioButtons from "@/components/TwoRadioButtons";
 import {useRouter} from "next/navigation";
+import {useSession} from "next-auth/react";
 
 const AddProductPage = () => {
 
-
+    const {data : session} = useSession();
+    const token = session?.user.token;
     const router = useRouter();
     const sellerEmail = "demoEmail";
     const seller = {
@@ -57,6 +59,7 @@ const AddProductPage = () => {
     }, [image]);
     const handleSubmit = (e) => {
         e.preventDefault();
+
         setProduct({
             "category": {
                 "category": category,
@@ -70,10 +73,11 @@ const AddProductPage = () => {
             "isVisible": isVisible
         });
         formData.append("product", new Blob([JSON.stringify(product)], {type: 'application/json'}));
+        console.log(formData);
         formData.append("imageFile", image);
         axios.post("http://localhost:8080/api/v1/user/products/save", formData, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`
+                Authorization: `Bearer ${token}`
             }
         })
             .then(response => {

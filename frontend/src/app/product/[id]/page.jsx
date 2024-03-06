@@ -1,26 +1,36 @@
 "use client"
 
 import Image from "next/image";
-import {useEffect, useState} from "react";
-
+import {useState} from "react";
 import Button from "@/components/Button";
 import SellerSelectModal from "@/components/SellerSelectModal";
 import BuyerBidModal from "@/components/BuyerBidModal";
 import Header from "@/components/Header";
-import axios from "axios";
 import {useSession} from "next-auth/react";
 import useSWR from "swr";
 import {fetcher} from "@/utils/fetcher";
+import {FallingLines} from "react-loader-spinner";
 
 const isSeller = (userData , sellerData) => {
-    if (userData?.id === sellerData?.id) {
+
+    if(userData?.id === sellerData?.id) {
         return true;
     }
     else {
         return false;
     }
 }
+
+const isPurchased = (userData , productData) => {
+    if (productData?.isSold && (productData?.finalBuyerId === userData?.id)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 const ProductPage = ({params}) => {
+
     const productID = params.id;
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
