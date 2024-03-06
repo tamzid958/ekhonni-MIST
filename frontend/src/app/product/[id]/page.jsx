@@ -39,8 +39,8 @@ const ProductPage = ({params}) => {
             <Header/>
             {!productDataIsLoading && !productError && isSeller(productData.seller , userData) && modalIsOpen &&
                 <SellerSelectModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""} isBidActive={productData ? productData.isBidActive : false} finalBuyerId = {productData.finalBuyerID} productID = {productID}/>}
-            {!productDataIsLoading && !productError && !isSeller(productData.seller , userData) && modalIsOpen &&
-                <BuyerBidModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""} isVisible={productData ? productData.isVisible : false} productID={productID}/>}
+            {!productDataIsLoading && !productError && !userDataIsLoading && !userDataError && !isSeller(productData.seller , userData) && modalIsOpen &&
+                <BuyerBidModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""} userData={userData ? userData : null} isVisible={productData ? productData.isVisible : false} productID={productID}/>}
             <div className="w-full h-[700px] flex flex-col justify-center items-center">
                 <div className="flex w-full justify-center items-center ">
                     <h1 className="font-semibold text-4xl mb-[1%]">Product Details</h1>

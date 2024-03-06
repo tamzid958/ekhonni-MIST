@@ -3,7 +3,6 @@ import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import {requestApi} from "@/utils/axios.settings";
 
-
 const RemoveAdminModal = ({setRemoveAdminModalIsOpen}) => {
 
     let email = "";
@@ -26,9 +25,8 @@ const RemoveAdminModal = ({setRemoveAdminModalIsOpen}) => {
 
     const handleInputChange = (e) => {
         email = e.target.value;
-
+    }
     return (
-
         <>
             <form onSubmit={handleSubmit}>
                 <div

@@ -7,7 +7,6 @@ const AdminModal = ({
                         setAddAdminModalIsOpen,
                         setRemoveAdminModalIsOpen,
                         setAddCategoryModalIsOpen,
-                        setRemoveCategoryModalIsOpen,
                         pendingPostCount
                     }) => {
 
@@ -53,14 +52,6 @@ const AdminModal = ({
                     }}
                          className="w-[90%] h-12 pt-3 text-xl bg-white cursor-pointer my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">&nbsp;&nbsp;
                         <span className="font-semibold">+&nbsp;</span>Add Category
-                    </div>
-                    <div onClick={() => {
-                        setRemoveCategoryModalIsOpen(true)
-                    }}
-                         className="w-[90%] h-12 pt-3 text-xl bg-white cursor-pointer my-5 border-neutral-400 mx-4  rounded shadow-md shadow-slate-400 transition ease-in-out duration-500 hover:scale-105 hover:-translate-y-1">&nbsp;&nbsp;
-
-
-                        <span className="font-semibold">-&nbsp;</span>Remove Category
                     </div>
                 </div>
             </div>
