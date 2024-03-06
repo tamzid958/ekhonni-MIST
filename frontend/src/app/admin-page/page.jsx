@@ -1,54 +1,48 @@
 "use client"
 
+import useSWR from "swr";
+import {fetcher} from "@/utils/fetcher";
 import AdminModal from "@/components/AdminModal";
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Toaster} from "sonner";
 import AdminNav from "@/components/AdminNav";
 import AddAdminModal from "@/components/AddAdminModal";
-import axios from "axios";
 import RemoveAdminModal from "@/components/RemoveAdminModal";
 import AddCategoryModal from "@/components/AddCategoryModal";
 import RemoveCategoryModal from "@/components/RemoveCategoryModal";
 import PostApprovalbox from "@/components/PostApprovalbox";
 
+
 export default function AdminPage() {
-    const [adminModalIsOpen , setAdminModalIsOpen] = useState(false);
+
+    const AdminModelData = (data) => {
+        setAdminModalIsOpen(data)
+    }
+
+    const [adminModalIsOpen, setAdminModalIsOpen] = useState(false);
     const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false)
     const [removeAdminModalIsOpen, setRemoveAdminModalIsOpen] = useState(false)
     const [addCategoryModalIsOpen, setAddCategoryModalIsOpen] = useState(false)
     const [removeCategoryModalIsOpen, setRemoveCategoryModalIsOpen] = useState(false)
-    const data1 = [
-        {
-            id: '1',
-            name: 'Product1',
-            location: 'Dhaka',
-            time: '12.00',
-            description: 'This is good',
-            category: 'phone',
-            price: '122222',
-        }
-    ]
-    const [data, setData] = useState({});
-    const fetchData = async () => {
-        try {
-            const response = await axios.get('http://localhost:8080/api/v1/admin/products/review');
-            console.log(response.data);
-            setData(response.data);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    };
+
+    const {data, error, isLoading} = useSWR("/admin/products/review", fetcher);
+    console.log(data)
 
 
     return (
         <>
             <AdminNav setAdminModalIsOpen={setAdminModalIsOpen} adminModalIsOpen={adminModalIsOpen}/>
 
-            {adminModalIsOpen && <AdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen} setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen} setAddCategoryModalIsOpen={setAddCategoryModalIsOpen} setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
+            {adminModalIsOpen && <AdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen}
+                                             setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen}
+                                             setAddCategoryModalIsOpen={setAddCategoryModalIsOpen}
+                                             setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}
+                                             pendingPostCount={data.size}/>}
             {addAdminModalIsOpen && <AddAdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen}/>}
             {removeAdminModalIsOpen && <RemoveAdminModal setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen}/>}
             {addCategoryModalIsOpen && <AddCategoryModal setAddCategoryModalIsOpen={setAddCategoryModalIsOpen}/>}
-            {removeCategoryModalIsOpen && <RemoveCategoryModal setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
+            {removeCategoryModalIsOpen &&
+                <RemoveCategoryModal setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
 
             <Toaster richColors position={"top-right"}/>
 
@@ -58,7 +52,7 @@ export default function AdminPage() {
             <div className="w-full h-auto flex flex-col justify-start items-center ">
 
 
-                {data.products && data.products.map((item) => (
+                {!error && !isLoading && data.products && data.products.map((item) => (
                     <PostApprovalbox key={item.id} id={item.id} name={item.name} username={item.seller.name}
                                      description={item.description} price={item.startingPrice}
                                      category={item.category.category} subCategory={item.category.subCategory}
@@ -67,6 +61,6 @@ export default function AdminPage() {
                     />
                 ))}
             </div>
-       </>
+        </>
     )
 }

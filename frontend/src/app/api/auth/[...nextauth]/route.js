@@ -33,9 +33,11 @@ const handler = NextAuth({
             return session;
         }
     },
+
     session: {
         strategy: "jwt",
         maxAge: 12000 //in seconds
+
     },
     pages: {
         signIn: '/login',
