@@ -8,10 +8,7 @@ const RemoveAdminModal = ({setRemoveAdminModalIsOpen})=> {
     const [email , setEmail] = useState("");
     function handleSubmit(event) {
         event.preventDefault();
-
-
     }
-
     return (
 
         <>

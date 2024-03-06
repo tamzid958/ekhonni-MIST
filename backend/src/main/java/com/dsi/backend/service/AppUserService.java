@@ -17,7 +17,9 @@ public interface AppUserService {
 
     ResponseEntity<?> updateProfile(String token, AppUser appUser);
 
-    ResponseEntity<?> fetchInformation(String token);
+    AppUserView convertToView(AppUser appUser);
+
+    AppUser fetchInformation(String token);
 
     AppUserView uploadImage(MultipartFile imageFile, String token) throws IOException;
 
