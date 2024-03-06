@@ -12,6 +12,7 @@ import {addToDb} from "@/actions/actions";
 
 const AddProductPage = () => {
 
+
     const [image, setImage] = useState('');
     const [product, setProduct] = useState({
         "category": {
@@ -43,8 +44,10 @@ const AddProductPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         formData.append("product", new Blob([JSON.stringify(product)], {type: 'application/json'}));
         formData.append("imageFile", image);
+
         const response = await addToDb(formData)
         console.log("The response from ",response)
         // const param = {
@@ -56,6 +59,7 @@ const AddProductPage = () => {
         //     data: formData
         // }
         // const response = await requestApi(param)
+
     }
 
 

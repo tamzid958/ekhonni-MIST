@@ -4,9 +4,9 @@ import Button from "@/components/Button";
 import {useEffect, useState} from "react";
 import ProfileBox from "@/components/ProfileBox";
 import Link from "next/link";
+import {useSession} from "next-auth/react";
 
 const AdminNav = ({setAdminModalIsOpen , adminModalIsOpen}) => {
-
 
     return (
         <>
