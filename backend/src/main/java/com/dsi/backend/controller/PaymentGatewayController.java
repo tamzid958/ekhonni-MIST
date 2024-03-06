@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/v1/user")
 public class PaymentGatewayController {
@@ -32,6 +34,11 @@ public class PaymentGatewayController {
 
     @RequestMapping("/validate")
     public ResponseEntity<?> validate(@RequestBody ValidateResp validateResp, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
-        return ResponseEntity.ok(paymentGatewayService.validatePayment(validateResp, token));
+       try {
+           return ResponseEntity.ok(paymentGatewayService.validatePayment(validateResp, token));
+       }
+       catch (Exception e){
+           return new ResponseEntity<>(Map.of("error", e.getMessage()),HttpStatus.NOT_FOUND);
+       }
     }
 }
