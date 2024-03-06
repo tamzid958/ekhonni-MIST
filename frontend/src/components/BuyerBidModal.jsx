@@ -8,7 +8,7 @@ import {fetcher} from "@/utils/fetcher";
 import {useSession} from "next-auth/react";
 import {requestApi} from "@/utils/axios.settings";
 
-const currentUserHasBid = (userData, bidData, bid) => {
+const currentUserHasBid = (userData, bidData, userBid) => {
     let hasBid = false;
     bidData.forEach((bidItem) => {
         if (bidItem.buyer.id === userData.id)
@@ -16,12 +16,20 @@ const currentUserHasBid = (userData, bidData, bid) => {
     })
     return hasBid;
 }
-
+const getCurrentUserBid = (userData, bidData) => {
+    let bid = 0;
+    bidData.forEach((bidItem) => {
+        if (bidItem.buyer.id === userData.id) {
+            bid = bidItem.offeredPrice;
+        }
+    })
+    return bid;
+}
 const BuyerBidModal = ({setModalOpen, productName, userData, isVisible, productID}) => {
 
     const {data: session} = useSession();
     session?.user.token;
-
+    let userBid = 0;
     let bid = 0;
     const {
         data: bidData,
@@ -103,14 +111,13 @@ const BuyerBidModal = ({setModalOpen, productName, userData, isVisible, productI
                                             <ButtonFull value={"Place Bid"} option={1} type={"submit"}/>
                                         </div>
                                     </form>
-                                    {
-                                        !error && !isLoading && userData && currentUserHasBid(userData, bidData) && (
-                                            <div
-                                                className="w-[95%] h-[25%] mt-[4%] flex flex-col justify-center items-start bg-slate-100 border border-neutral-300 shadow-lg shadow-slate-300 rounded-lg">
-                                                <p className="text-lg font-medium mb-1 ml-5">Your Bid</p>
-                                                <p className="w-[86%] ml-4 p-1 px-2  bg-slate-200 border border-slate-300 text-center font-medium shadow-inner shadow-slate-400 rounded-md ">{bidData && bidData[1] ? "Tk " + bidData[1].offeredPrice : "You have not bid yet"}</p>
-                                            </div>
-                                        )}
+                                    {!error && !isLoading && userData && currentUserHasBid(userData, bidData, userBid) && (
+                                        <div
+                                            className="w-[95%] h-[25%] mt-[4%] flex flex-col justify-center items-start bg-slate-100 border border-neutral-300 shadow-lg shadow-slate-300 rounded-lg">
+                                            <p className="text-lg font-medium mb-1 ml-5">Your Bid</p>
+                                            <p className="w-[86%] ml-4 p-1 px-2  bg-slate-200 border border-slate-300 text-center font-medium shadow-inner shadow-slate-400 rounded-md ">{getCurrentUserBid(userData, bidData)}</p>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="w-2/3 h-full flex justify-end items-start">
                                     <BidderList isVisible={isVisible} bidderList={bidData ? bidData : []}
