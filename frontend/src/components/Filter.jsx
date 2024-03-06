@@ -3,8 +3,8 @@ import CrossButton from "@/components/CrossButton";
 import Range from "@/components/Range";
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {addCategory, addDivision, addPrice, addSubCategory, clearAll} from "@/Actions/filter";
-import {fetchProduct} from "@/Actions/fetchProduct";
+import {addCategory, addDivision, addPrice, addSubCategory, clearAll} from "@/Actionss/filter";
+import {fetchProduct} from "@/Actionss/fetchProduct";
 
 
 const Filter = () => {
@@ -167,7 +167,7 @@ const Filter = () => {
         {
             category: "Toy",
             SubCategories: [
-                "Actions Figures & Playsets",
+                "Actionss Figures & Playsets",
                 "Dolls & Accessories",
                 "Educational Toys",
                 "Building Blocks & Construction Sets",
