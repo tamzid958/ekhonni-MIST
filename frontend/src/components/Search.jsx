@@ -3,7 +3,7 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
 import Image from "next/image";
-import {addPrice, addSearch} from "@/Actions/filter";
+import {addPrice, addSearch} from "@/Actionss/filter";
 
 const Search = () => {
     const [value, setValue] = useState(null)

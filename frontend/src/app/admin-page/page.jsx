@@ -9,7 +9,6 @@ import AdminNav from "@/components/AdminNav";
 import AddAdminModal from "@/components/AddAdminModal";
 import RemoveAdminModal from "@/components/RemoveAdminModal";
 import AddCategoryModal from "@/components/AddCategoryModal";
-import RemoveCategoryModal from "@/components/RemoveCategoryModal";
 import PostApprovalbox from "@/components/PostApprovalbox";
 
 
@@ -23,7 +22,6 @@ export default function AdminPage() {
     const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false)
     const [removeAdminModalIsOpen, setRemoveAdminModalIsOpen] = useState(false)
     const [addCategoryModalIsOpen, setAddCategoryModalIsOpen] = useState(false)
-    const [removeCategoryModalIsOpen, setRemoveCategoryModalIsOpen] = useState(false)
 
     const {data, error, isLoading} = useSWR("/admin/products/review", fetcher);
     console.log(data)
@@ -36,13 +34,10 @@ export default function AdminPage() {
             {adminModalIsOpen && <AdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen}
                                              setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen}
                                              setAddCategoryModalIsOpen={setAddCategoryModalIsOpen}
-                                             setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}
                                              pendingPostCount={data.size}/>}
             {addAdminModalIsOpen && <AddAdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen}/>}
             {removeAdminModalIsOpen && <RemoveAdminModal setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen}/>}
             {addCategoryModalIsOpen && <AddCategoryModal setAddCategoryModalIsOpen={setAddCategoryModalIsOpen}/>}
-            {removeCategoryModalIsOpen &&
-                <RemoveCategoryModal setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
 
             <Toaster richColors position={"top-right"}/>
 
@@ -52,7 +47,7 @@ export default function AdminPage() {
             <div className="w-full h-auto flex flex-col justify-start items-center ">
 
 
-                {!error && !isLoading && data.products && data.products.map((item) => (
+                {!error && !isLoading && data && data.products && data.products.map((item) => (
                     <PostApprovalbox key={item.id} id={item.id} name={item.name} username={item.seller.name}
                                      description={item.description} price={item.startingPrice}
                                      category={item.category.category} subCategory={item.category.subCategory}

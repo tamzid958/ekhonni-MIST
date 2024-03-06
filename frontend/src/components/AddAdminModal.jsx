@@ -2,11 +2,9 @@
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import {requestApi} from "@/utils/axios.settings";
-import {useSession} from "next-auth/react";
 
 
 const AddAdminModal = ({setAddAdminModalIsOpen}) => {
-    const {data: session} = useSession();
     let formData = {
         email: "",
         password: ""

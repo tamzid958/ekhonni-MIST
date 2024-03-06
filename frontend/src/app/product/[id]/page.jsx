@@ -6,22 +6,22 @@ import Button from "@/components/Button";
 import SellerSelectModal from "@/components/SellerSelectModal";
 import BuyerBidModal from "@/components/BuyerBidModal";
 import Header from "@/components/Header";
-import {useSession} from "next-auth/react";
 import useSWR from "swr";
 import {fetcher} from "@/utils/fetcher";
-import {FallingLines} from "react-loader-spinner";
+import {useSession} from "next-auth/react";
+import {toast, Toaster} from "sonner";
+import {useRouter} from "next/navigation";
 
-const isSeller = (userData , sellerData) => {
 
-    if(userData?.id === sellerData?.id) {
+const isSeller = (userData, sellerData) => {
+    if (userData?.id === sellerData?.id) {
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
 
-const isPurchased = (userData , productData) => {
+const isPurchased = (userData, productData) => {
     if (productData?.isSold && (productData?.finalBuyerId === userData?.id)) {
         return true;
     } else {
@@ -29,8 +29,17 @@ const isPurchased = (userData , productData) => {
     }
 }
 
+const redirectToLogin = (router) => {
+    toast.error("You must be logged in to see bidding info. Redirecting...");
+    setTimeout(() => {
+        router.push('/login')
+    }, 2000)
+}
+
 const ProductPage = ({params}) => {
 
+    const {data: session} = useSession();
+    const router = useRouter();
     const productID = params.id;
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -72,11 +81,13 @@ const ProductPage = ({params}) => {
                                             <p className="text-base">{productData ? productData.seller.address : ""}</p>
                                         </div>
                                         <div className="w-full h-1/3 flex">
-                                            <p className="text-base">For sale by <span className="font-medium">{productData ? productData.seller.name : ""}</span></p>
+                                            <p className="text-base">For sale by <span
+                                                className="font-medium">{productData ? productData.seller.name : ""}</span>
+                                            </p>
                                         </div>
                                     </div>
                                     <div className="w-full h-1/5 flex items-start mt-2 border-b">
-                                        <p className="text-lg text-sm font-light">{productData ? productData.description : ""}</p>
+                                        <p className="font-light">{productData ? productData.description : ""}</p>
                                     </div>
                                     <div className="w-full h-1/5 flex flex-col justify-center items-start border-b">
                                         <p className="text-lg mb-2">Starting Price : <span
@@ -94,25 +105,40 @@ const ProductPage = ({params}) => {
                                         </p>
                                     </div>
                                     <div className="w-full h-1/5 flex justify-center items-center border-b">
+                                        {/*For Seller : View Bids Modal Open Button For Seller*/}
                                         {!productError && isSeller(productData.seller, userData) && !productData.isSold &&
-                                            (<Button value={"View Bids"} option={1} type={"button"} onClick={() => {
-                                                setModalIsOpen(true)
-                                            }}/>)}
+                                            (<Button value={"View Bids"} option={1} type={"button"}
+                                                     onClick={() => {
+                                                         session ? setModalIsOpen(true) : redirectToLogin(router)
+                                                     }}/>)}
+
+                                        {/*For Buyer : Bid Modal Open Button For Buyer (Bidding is Active and Not Sold)*/}
                                         {!productError && !isSeller(productData.seller, userData) && productData.isBidActive && !productData.isSold &&
                                             (<Button value={"Bid"} option={1} type={"button"}
-                                                     onClick={() => setModalIsOpen(true)}/>)}
+                                                     onClick={() => {
+                                                         session ? setModalIsOpen(true) : redirectToLogin(router)
+                                                     }}/>)}
+
+                                        {/*For Buyer : Bidding is Inactive*/}
                                         {!productError && !isSeller(productData.seller, userData) && !productData.isBidActive && !productData.isSold &&
                                             (
                                                 <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding
                                                     Is Off</p>)}
+
+                                        {/*For Buyer : Buy Now Button for Buyer, when Seller has Selected Current User*/}
                                         {!productError && !isSeller(productData.seller, userData) && !productData.isBidActive && !productData.isSold && productData.finalBuyerId &&
                                             (<Button value={"Buy Now"} option={0} type={"button"}/>)}
+
+                                        {/*For Buyer : Product Has Been Sold*/}
                                         {!productError && productData.isSold &&
                                             (
-                                                <p className="px-4 py-1 cursor-default bg-black text-white text-2xl font-medium shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
+                                                <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
+
+                                        {/*For Buyer : Product Has Been Purchased By Current User*/}
                                         {!productError && isPurchased(userData, productData) &&
                                             (
-                                                <p className="px-4 py-1 cursor-default bg-black text-white text-2xl font-medium shadow-lg shadow-slate-300 rounded-full">Purchased</p>)}
+                                                <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Purchased</p>)}
+
                                     </div>
                                 </div>
                             </div>

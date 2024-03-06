@@ -5,7 +5,7 @@ import Image from "next/image";
 import CategoryCard from "@/components/CategoryCard";
 import {useDispatch, useSelector} from "react-redux";
 import axios from "axios";
-import {fetchProduct} from "@/Actions/fetchProduct";
+import {fetchProduct} from "@/Actionss/fetchProduct";
 import useSWR from "swr";
 import {bidFetcher} from "@/utils/bidFetcher";
 
