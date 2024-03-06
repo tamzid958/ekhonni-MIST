@@ -22,11 +22,11 @@ const Profile = () => {
                     <ProfileCard/>
                     <div className="w-3/5  mt-3 rounded-xl ">
                         <div className="w-full pl-10 py-5">
-                            <InputBox Name={"Name"} value={(!isLoading && !error) ? data.name : ''} type={"text"}/>
-                            <InputBox Name={"Email"} value={(!isLoading && !error)  ? data.email : ''} type={"email"}/>
-                            <InputBox Name={"Contact"} value={(!isLoading && !error)  ? data.contact : ''} type={"number"}/>
-                            <InputBox Name={"Address"} value={(!isLoading && !error)  ? data.address : ''} type={"text"}/>
-                            <InputBox Name={"Division"} value={(!isLoading && !error)  ? data.division : ''} type={"text"}/>
+                            <InputBox Name={"Name"} value={!isLoading && !error && data.name } type={"text"}/>
+                            <InputBox Name={"Email"} value={!isLoading && !error && data.email } type={"email"}/>
+                            <InputBox Name={"Contact"} value={!isLoading && !error && data.contact} type={"number"}/>
+                            <InputBox Name={"Address"} value={!isLoading && !error && data.address } type={"text"}/>
+                            <InputBox Name={"Division"} value={!isLoading && !error && data.division } type={"text"}/>
                         </div>
                         <div className="w-full  flex justify-end">
                             <div className="w-1/2  flex justify-center mr-10">
