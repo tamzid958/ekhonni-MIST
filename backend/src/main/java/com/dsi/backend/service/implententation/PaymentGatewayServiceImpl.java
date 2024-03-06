@@ -1,15 +1,10 @@
 package com.dsi.backend.service.implententation;
 
 import com.dsi.backend.model.*;
-import com.dsi.backend.projection.AppUserView;
 import com.dsi.backend.projection.PaymentGatewayReqView;
-import com.dsi.backend.projection.ProductView;
-import com.dsi.backend.repository.AppUserRepository;
 import com.dsi.backend.repository.PaymentGatewayReqParamRepository;
-import com.dsi.backend.repository.PaymentGatewayReqRepository;
-import com.dsi.backend.repository.ProductRepository;
+import com.dsi.backend.repository.TransactionRepository;
 import com.dsi.backend.service.AppUserService;
-import com.dsi.backend.service.JwtTokenService;
 import com.dsi.backend.service.PaymentGatewayService;
 import com.dsi.backend.service.ProductService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,7 +20,6 @@ import reactor.core.publisher.Mono;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +32,7 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
     @Autowired
     private AppUserService appUserService;
     @Autowired
-    private PaymentGatewayReqRepository paymentGatewayReqRepository;
+    private TransactionRepository transactionRepository;
     @Autowired
     private PaymentGatewayReqParamRepository paymentGatewayReqParamRepository;
 
@@ -52,19 +46,23 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
         product = productService.fetchProductById(product.getId());
         AppUser appUser = appUserService.fetchInformation(token);
 
-        PaymentGatewayReq paymentGatewayReq = new PaymentGatewayReq();
+        Transaction transaction = new Transaction();
+        transaction = transactionRepository.save(transaction);
+
         PaymentGatewayReqParam otherParams = paymentGatewayReqParamRepository.findById(1L)
-                        .orElseThrow(()->new RuntimeException());
+                        .orElseThrow(RuntimeException::new);
+//        otherParams.setSuccess_url(otherParams.getSuccess_url()+"/"+ transaction.getTran_id());
+//        otherParams.setCancel_url(otherParams.getCancel_url()+"/"+ transaction.getTran_id());
+//        otherParams.setFail_url(otherParams.getFail_url()+"/"+ transaction.getTran_id());
+        transaction.setPaymentGatewayReqParam(otherParams);
+        transaction.setProduct(product);
+        transaction.setAppUser(appUser);
+        transaction = transactionRepository.save(transaction);
 
-        paymentGatewayReq.setPaymentGatewayReqParam(otherParams);
-        paymentGatewayReq.setProduct(product);
-        paymentGatewayReq.setAppUser(appUser);
-        paymentGatewayReq = paymentGatewayReqRepository.save(paymentGatewayReq);
-
-        String param = this.convertToUrl(paymentGatewayReq);
+        String param = this.convertToUrl(transaction);
         PaymentGatewayResp paymentGatewayResp = this.postCall(param);
-        paymentGatewayReq.setStatus(paymentGatewayResp.getStatus());
-        paymentGatewayReqRepository.save(paymentGatewayReq);
+        transaction.setConnectionStatus(paymentGatewayResp.getStatus());
+        transactionRepository.save(transaction);
         return paymentGatewayResp;
     }
 
@@ -90,16 +88,27 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
         return this.convertToObject(responseString);
     }
     @Override
-    public String convertToUrl(PaymentGatewayReq paymentGatewayReq) {
-        PaymentGatewayReqView paymentGatewayReqView = this.convertToView(paymentGatewayReq);
+    public String convertToUrl(Transaction transaction) {
+        PaymentGatewayReqView paymentGatewayReqView = this.convertToView(transaction);
         Map<String, String> paymentGatewayMap = objectMapper.convertValue(paymentGatewayReqView, Map.class);
         paymentGatewayMap.put("store_id", System.getenv("STORE_ID"));
         paymentGatewayMap.put("store_passwd", System.getenv("STORE_PASSWD"));
 
+        String url = System.getenv("FRONTEND_BASE_URL")+"/"+paymentGatewayReqView.getTran_id();
 
-        return paymentGatewayMap.keySet().stream()
+        String successUrl = url+System.getenv("SSL_SUCCESS_URL");
+        String cancelUrl = url+System.getenv("SSL_CANCEL_URL");
+        String failUrl = url+System.getenv("SSL_FAIL_URL");
+
+        paymentGatewayMap.put("success_url", successUrl);
+        paymentGatewayMap.put("cancel_url", cancelUrl);
+        paymentGatewayMap.put("fail_url", failUrl);
+
+
+        String param =  paymentGatewayMap.keySet().stream()
                 .map(key -> key + '=' + URLEncoder.encode(paymentGatewayMap.get(key), StandardCharsets.UTF_8))
                 .collect(Collectors.joining("&"));
+        return param;
     }
 
     @Override
@@ -109,7 +118,17 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
     }
 
     @Override
-    public PaymentGatewayReqView convertToView(PaymentGatewayReq paymentGatewayReq) {
-        return new SpelAwareProxyProjectionFactory().createProjection(PaymentGatewayReqView.class, paymentGatewayReq);
+    public PaymentGatewayReqView convertToView(Transaction transaction) {
+        return new SpelAwareProxyProjectionFactory().createProjection(PaymentGatewayReqView.class, transaction);
+    }
+
+    @Override
+    public Map<String, String> validatePayment(ValidateResp validateResp, String token) {
+//        AppUser appUser = appUserService.fetchInformation(token);
+        Transaction transaction = transactionRepository.findByTran_id(validateResp.getTran_id());
+//                .orElseThrow(RuntimeException::new);
+        transaction.setTransactionStatus(validateResp.getTransactionStatus());
+        transactionRepository.save(transaction);
+        return Map.of("transactionStatus",validateResp.getTransactionStatus());
     }
 }

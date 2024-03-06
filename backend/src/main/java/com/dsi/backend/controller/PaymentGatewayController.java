@@ -1,6 +1,7 @@
 package com.dsi.backend.controller;
 
 import com.dsi.backend.model.Product;
+import com.dsi.backend.model.ValidateResp;
 import com.dsi.backend.service.PaymentGatewayService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -27,5 +28,10 @@ public class PaymentGatewayController {
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
+    }
+
+    @RequestMapping("/validate")
+    public ResponseEntity<?> validate(@RequestBody ValidateResp validateResp, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
+        return ResponseEntity.ok(paymentGatewayService.validatePayment(validateResp, token));
     }
 }

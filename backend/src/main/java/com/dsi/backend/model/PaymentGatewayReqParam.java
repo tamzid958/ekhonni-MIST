@@ -13,9 +13,6 @@ import lombok.*;
 public class PaymentGatewayReqParam extends BaseEntity<Long> {
     @Column
     private String currency;
-    private String success_url;
-    private String fail_url;
-    private String cancel_url;
     private String emi_option;
     private String shipping_method;
     private String num_of_item;

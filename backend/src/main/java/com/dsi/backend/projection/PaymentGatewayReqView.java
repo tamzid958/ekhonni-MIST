@@ -5,9 +5,6 @@ public interface PaymentGatewayReqView {
     String getTotal_amount();
     String getCurrency();
     String getProduct_category();
-    String getSuccess_url();
-    String getFail_url();
-    String getCancel_url();
     String getEmi_option();
     String getCus_name();
     String getCus_email();

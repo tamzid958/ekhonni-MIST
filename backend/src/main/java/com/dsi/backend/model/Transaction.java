@@ -3,16 +3,13 @@ package com.dsi.backend.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "transaction")
-public class PaymentGatewayReq {
+public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,7 +20,8 @@ public class PaymentGatewayReq {
     private Product product;
     @ManyToOne
     private AppUser appUser;
-    private String status;
+    private String connectionStatus;
+    private String transactionStatus;
 
     public String getTotal_amount(){
         return Double.toString(product.getStartingPrice());
@@ -33,15 +31,6 @@ public class PaymentGatewayReq {
     }
     public String getProduct_category(){
         return product.getCategory().getCategory()+','+product.getCategory().getSubCategory();
-    }
-    public String getSuccess_url(){
-        return paymentGatewayReqParam.getSuccess_url();
-    }
-    public String getFail_url(){
-        return paymentGatewayReqParam.getFail_url();
-    }
-    public String getCancel_url(){
-        return paymentGatewayReqParam.getCancel_url();
     }
     public String getEmi_option(){
         return paymentGatewayReqParam.getEmi_option();
