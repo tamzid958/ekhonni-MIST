@@ -1,6 +1,15 @@
 import Button from "@/components/SmallButton";
+import {requestApi} from "@/utils/axios.settings";
+import {useSWRConfig} from "swr";
 
-const BidderListItem = ({bidderName, bidderId, bid, option}) => {
+const BidderListItem = ({productID, buyerEmail, bidderName, bidderId, bid, option}) => {
+    const {mutate} = useSWRConfig();
+    const handleAccept = (e) => {
+        const response= requestApi({url: `user/products/bid/seller/accept-buyer?id=${productID}&buyerEmail=${buyerEmail}`, method : "POST"});
+        mutate(`user/products/bid/fetch?id=${productID}`);
+        mutate(`/products/${productID}`);
+    }
+
     return (
         <>
             {option === "buyerView" ? (
@@ -16,8 +25,8 @@ const BidderListItem = ({bidderName, bidderId, bid, option}) => {
                     <label htmlFor={bidderId} className="border-black flex items-center p-1 text-lg cursor-pointer peer-checked:before:content-['-'] before:content-['+'] before:mr-2 before:font-semibold before:text-lg">{bidderName}
                         <span className="absolute right-7 font-medium"> Tk.{bid} </span>
                     </label>
-                    <div className="h-32 flex justify-end items-center mt-2 mr-3.5 transition-all ease-in-out duration-500">
-                        <Button value={"Accept"} type={"button"} option={1}/>
+                    <div className="max-h-0 overflow-hidden peer-checked:max-h-14 flex justify-end items-center mt-2 mr-3.5 transition-all ease-in-out duration-500">
+                        <Button value={"Accept"} type={"button"} option={1} onClick={handleAccept}/>
                     </div>
                 </li>
             )

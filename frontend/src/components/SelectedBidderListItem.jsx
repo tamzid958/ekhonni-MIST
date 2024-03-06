@@ -1,8 +1,18 @@
 import SmallButton from "@/components/SmallButton";
+import {useSWRConfig} from "swr";
+import {requestApi} from "@/utils/axios.settings";
 
 
-const SelectedBidderListItem = ({bidderName, bidderId, bid, finalBuyerID}) => {
-    const isSelected = finalBuyerID === bidderId;
+const SelectedBidderListItem = ({productID, bidderName, buyerEmail, bidderId, bid, finalBuyerId}) => {
+    const isSelected = finalBuyerId === bidderId;
+
+    const {mutate} = useSWRConfig();
+    const handleRevert = (e) => {
+        const response= requestApi({url: `user/products/bid/seller/revert-buyer?id=${productID}`, method : "POST"});
+        mutate(`user/products/bid/fetch?id=${productID}`);
+        mutate(`/products/${productID}`);
+    }
+
     return (<>
             <li className="relative w-[95%] p-3 mb-2 list-none rounded-lg border border-slate-300 bg-slate-100 shadow-lg shadow-slate-300 group transition ease-in-out duration-500 hover:scale-[101%] hover:-translate-y-1">
                 <input type={"radio"} name="bidderList" id={bidderId} className="hidden peer"/>
@@ -13,7 +23,7 @@ const SelectedBidderListItem = ({bidderName, bidderId, bid, finalBuyerID}) => {
 
                         <div
                             className="max-h-0 overflow-hidden mt-2 mr-3.5 peer-checked:max-h-10 flex flex-row justify-end items-center transition-all ease-in-out duration-500 ">
-                            <SmallButton value={"Revert"} type={"button"} option={0}/>
+                            <SmallButton value={"Revert"} type={"button"} option={0} onClick={handleRevert}/>
                         </div>
                         <div
                             className="absolute top-0 right-0 px-2 py-0.5 text-white bg-slate-800 opacity-40 text-xs rounded-full">

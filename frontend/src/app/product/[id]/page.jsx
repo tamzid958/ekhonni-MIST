@@ -36,12 +36,11 @@ const ProductPage = ({params}) => {
 
     const {data : productData , error : productError, isLoading: productDataIsLoading} = useSWR(`/products/${productID}` , fetcher)
     const {data : userData , error : userDataError , isLoading : userDataIsLoading} = useSWR(`/user/profile` , fetcher)
-
     return (
         <>
             <Header/>
             {!productDataIsLoading && !productError && isSeller(productData.seller , userData) && modalIsOpen &&
-                <SellerSelectModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""} isBidActive={productData ? productData.isBidActive : false} finalBuyerId = {productData.finalBuyerID} productID = {productID}/>}
+                <SellerSelectModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""} isBidActive={productData ? productData.isBidActive : false} finalBuyerId = {productData ? productData.finalBuyerId : null} productID = {productID}/>}
             {!productDataIsLoading && !productError && !isSeller(productData.seller , userData) && modalIsOpen &&
                 <BuyerBidModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""} userData={userData ? userData : null} isVisible={productData ? productData.isVisible : false} productID={productID}/>}
             <div className="w-full h-[700px] flex flex-col justify-center items-center">

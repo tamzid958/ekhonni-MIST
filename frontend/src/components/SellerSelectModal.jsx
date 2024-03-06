@@ -1,6 +1,5 @@
 "use client"
 
-import {Toaster} from "sonner";
 import BidderList from "@/components/BidderList";
 import {useState} from "react";
 import ToggleSwitch from "@/components/ToggleSwitch";
@@ -28,7 +27,6 @@ const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId
 
     return (
         <>
-            <Toaster richColors position={"top-right"}/>
             <div className="fixed inset-0 z-10 bg-black bg-opacity-20 backdrop-blur-[1px] flex justify-center items-center" id="backgroundBlur" onClick={(e) => {handleModalCloseOnBgClick(e)}}>
                 <div className="w-[775px] h-[575px] flex flex-col">
                     <button className="text-white text-lg font-semibold ml-3 place-self-end transition ease-in-out duration-500 hover:scale-110 active:scale-90" onClick={() => {setModalOpen(false)}}>X</button>
@@ -46,7 +44,7 @@ const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId
                             <div className="w-full h-[75%] flex flex-row justify-center items-center">
                                 <div className="w-full h-full flex justify-end items-start">
                                     {!error && !isLoading && data && (
-                                        <BidderList isVisible={true} bidderList={data} view={"sellerView"} finalBuyerID={data.finalBuyerId}/>
+                                        <BidderList isVisible={true} bidderList={data} view={"sellerView"} finalBuyerId={finalBuyerId} productID={productID}/>
                                     )}
 
                                 </div>
