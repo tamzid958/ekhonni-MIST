@@ -153,6 +153,11 @@ export const requestApi = async ({
                                      ignoreStatusCheck = true,
                                      unmodifiedErrorResponse = true,
                                  }) => {
+    console.log (req);
+    console.log (url);
+    console.log (method);
+    console.log (params);
+
     let res;
     try {
         const requestObj = {
