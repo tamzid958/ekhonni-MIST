@@ -1,22 +1,26 @@
 "use client"
 import Image from "next/image";
-import Button from "@/components/Button";
-import {useEffect, useState} from "react";
-import ProfileBox from "@/components/ProfileBox";
 import Link from "next/link";
-import {useSession} from "next-auth/react";
+import Button from "@/components/Button";
+import {signOut, useSession} from "next-auth/react";
+import {useRouter} from "next/navigation";
 
-const AdminNav = ({setAdminModalIsOpen , adminModalIsOpen}) => {
+const logOut = async () => {
+    await signOut();
+}
 
-    return (
-        <>
-            <div onClick={() => {}}>
+const AdminNav = ({setAdminModalIsOpen, adminModalIsOpen}) => {
+    const router = useRouter();
+    const {data: session} = useSession();
+    if (session) {
+        return (
+            <>
                 <div
                     className=" px-6 w-full overflow-x-hidden h-[100px] border-black flex justify-between bg-slate-100 ">
                     <div className="flex">
                         <div className="flex my-auto px-5" onClick={() => (setAdminModalIsOpen(!adminModalIsOpen))}>
                             {adminModalIsOpen ? <Image src={"./bar-staggered.svg"} alt={"bars"} width={30} height={30}
-                                                 className=" mr-4 cursor-pointer"/> :
+                                                       className=" mr-4 cursor-pointer"/> :
                                 <Image src={"./bars.svg"} alt={"bars"} width={30} height={30}
                                        className=" mr-4 cursor-pointer"/>}
                         </div>
@@ -29,18 +33,17 @@ const AdminNav = ({setAdminModalIsOpen , adminModalIsOpen}) => {
                     </div>
                     <div className="flex my-auto">
                         <div className="flex my-auto px-5">
-                            <Image src={"./notification.svg"} alt={"message"} width={20} height={20} className=" mr-4"/>
-                            <p className=" text-lg font-semibold">Notifications</p>
-                        </div>
-                        <div className="flex my-auto px-5 cursor-pointer"
-                             onClick={() => {}}>
-                            <Image src={"./user.svg"} alt={"message"} width={20} height={20} className=" mr-4"/>
-                            <p className=" text-lg font-semibold">Account</p>
+                            <Button value={"Log Out"} type={"button"} option={1} onClick={() => {
+                                logOut()
+                            }}/>
                         </div>
                     </div>
                 </div>
-            </div>
-        </>
-    )
+            </>
+        )
+    } else {
+        router.push("/login")
+    }
+
 }
 export default AdminNav;

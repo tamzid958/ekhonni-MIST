@@ -10,6 +10,7 @@ import Pagination from "@/components/Pagination";
 import Header from "@/components/Header";
 import useSWR from "swr";
 import { reqFetcher} from "@/utils/fetcher";
+import Link from "next/link";
 
 
 
@@ -29,7 +30,6 @@ const Product = () => {
     };
     const url= '/products/filter'
     const method="POST"
-
 
     const {data:value,error,isLoading} = useSWR([url,method,data],reqFetcher)
 
@@ -70,8 +70,10 @@ const Product = () => {
                         <div className={"w-4/5 mx-auto box-border"}>
                             {
                                 !isLoading && !error && value.content.map((product, index) => (
-                                    <LargeCard key={index} img="/bike.jpg" name={product.name}
-                                               desc={product.description} price={product.startingPrice}/> ))
+                                    <Link href={`/product/${product.id}`} key={index}>
+                                        <LargeCard key={index} img="/bike.jpg" name={product.name}
+                                                   desc={product.description} price={product.startingPrice}/>
+                                    </Link>))
                             }
                         </div>
                         <Pagination/>

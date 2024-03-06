@@ -1,15 +1,12 @@
 "use client"
 
-import axios from "axios";
 import {useState} from "react";
-import {useRouter} from 'next/navigation'
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import Link from "next/link";
-import {toast, Toaster} from "sonner";
+import {Toaster} from "sonner";
 import Header from "@/components/Header";
-import {signIn, useSession} from "next-auth/react";
-import {getToken} from "next-auth/jwt";
+import {signIn} from "next-auth/react";
 
 
 const LoginPage = () => {
@@ -18,31 +15,12 @@ const LoginPage = () => {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        await signIn("credentials" , {
-            email : email,
-            password : password,
-            redirect : true,
+        await signIn("credentials", {
+            email: email,
+            password: password,
+            redirect: true,
             callbackUrl: "/redirect"
         })
-        // const formDataObject = {
-        //     email: email,
-        //     password: password
-        // };
-        // axios.post(`http://localhost:8080/api/v1/user/login`, formDataObject)
-        //     .then((res) => {
-        //         const {token} = res.data;
-        //         localStorage.setItem("token", token);
-        //         console.log(token);
-        //         setTimeout(()=>{
-        //             toast.success("Logged in Successfully");
-        //         } , 1000)
-        //         router.push('/');
-        //
-        //     })
-        //     .catch((err) => {
-        //         console.error("Err :" + err);
-        //         toast.error("Unauthorized. Please Enter a Valid Email and Password")
-        //     })
     }
 
     return (
