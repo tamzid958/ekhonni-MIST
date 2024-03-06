@@ -6,8 +6,9 @@ import CategoryDropdown from "@/components/CategoryDropdown";
 import Image from "next/image";
 import Header from "@/components/Header";
 import TwoRadioButtons from "@/components/TwoRadioButtons";
-import {requestApi} from "@/utils/axios.settings";
-import {addToDb} from "@/actions/actions";
+import {baseUrl} from "@/utils/baseUrl";
+import {addProductFetcher} from "@/utils/fetcher";
+import useSWRMutation from "swr/mutation";
 
 
 const AddProductPage = () => {
@@ -40,29 +41,28 @@ const AddProductPage = () => {
         const file = e.target.files[0];
         setImage(file);
     }
-    const formData = new FormData();
 
+    const baseURL = baseUrl;
+    const url = '/user/products/save';
+    const method = 'POST';
+    const headers = {
+        'Content-Type': 'multipart/form-data'
+    }
+    const { trigger} = useSWRMutation([url, baseURL, method, headers], addProductFetcher);
+
+        const formData = new FormData();
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         formData.append("product", new Blob([JSON.stringify(product)], {type: 'application/json'}));
         formData.append("imageFile", image);
 
-        const response = await addToDb(formData)
-        console.log("The response from ",response)
-        // const param = {
-        //     req:{
-        //         'Content-Type': 'multipart/form-data'
-        //     },
-        //     url: "/user/products/save",
-        //     method: "POST",
-        //     data: formData
-        // }
-        // const response = await requestApi(param)
-
+        try{
+            const result = await trigger(formData)
+        } catch (e){
+            console.log(e)
+        }
     }
-
-
+    
     return (
 
         <>
