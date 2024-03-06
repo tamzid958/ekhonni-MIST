@@ -1,34 +1,44 @@
 "use client"
 
-import React, {useState} from 'react';
 import useSWR from "swr";
 import {fetcher} from "@/utils/fetcher";
-import PostApprovalbox from "@/components/PostApprovalbox";
-import AdminNav from "@/components/AdminNav";
 import AdminModal from "@/components/AdminModal";
-import AddAdminModal from "@/components/AddAdminModal";
+import React, {useState} from 'react';
 import {Toaster} from "sonner";
+import AdminNav from "@/components/AdminNav";
+import AddAdminModal from "@/components/AddAdminModal";
+import RemoveAdminModal from "@/components/RemoveAdminModal";
+import AddCategoryModal from "@/components/AddCategoryModal";
+import RemoveCategoryModal from "@/components/RemoveCategoryModal";
+import PostApprovalbox from "@/components/PostApprovalbox";
+
 
 export default function AdminPage() {
-    const [SideBarModalIsOpen, setSideBarModalIsOpen] = useState(false);
-    const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false);
 
-    const SideBar = (data) => {
-        setSideBarModalIsOpen(data);
-    }
     const AddAdminModelData = (data) => {
         setAddAdminModalIsOpen(data)
     }
 
+    const [adminModalIsOpen , setAdminModalIsOpen] = useState(false);
+    const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false)
+    const [removeAdminModalIsOpen, setRemoveAdminModalIsOpen] = useState(false)
+    const [addCategoryModalIsOpen, setAddCategoryModalIsOpen] = useState(false)
+    const [removeCategoryModalIsOpen, setRemoveCategoryModalIsOpen] = useState(false)
+
     const {data, error, isLoading} = useSWR("/admin/products/review", fetcher);
     console.log(data)
 
+
     return (
         <>
-            <AdminNav Sidebar={SideBar}/>
+            <AdminNav setAdminModalIsOpen={setAdminModalIsOpen} adminModalIsOpen={adminModalIsOpen}/>
 
-            {SideBarModalIsOpen && <AdminModal value={data} setAddAdminModal={AddAdminModelData}/>}
-            {addAdminModalIsOpen && <AddAdminModal CloseModel={AddAdminModelData}/>}
+            {adminModalIsOpen && <AdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen} setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen} setAddCategoryModalIsOpen={setAddCategoryModalIsOpen} setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
+            {addAdminModalIsOpen && <AddAdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen}/>}
+            {removeAdminModalIsOpen && <RemoveAdminModal setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen}/>}
+            {addCategoryModalIsOpen && <AddCategoryModal setAddCategoryModalIsOpen={setAddCategoryModalIsOpen}/>}
+            {removeCategoryModalIsOpen && <RemoveCategoryModal setRemoveCategoryModalIsOpen={setRemoveCategoryModalIsOpen}/>}
+
             <Toaster richColors position={"top-right"}/>
 
             <div>
@@ -46,6 +56,6 @@ export default function AdminPage() {
                     />
                 ))}
             </div>
-        </>
+       </>
     )
 }

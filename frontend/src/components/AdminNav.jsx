@@ -6,39 +6,19 @@ import ProfileBox from "@/components/ProfileBox";
 import Link from "next/link";
 import {useSession} from "next-auth/react";
 
+const AdminNav = ({setAdminModalIsOpen , adminModalIsOpen}) => {
 
-const AdminNav = ({Sidebar}) => {
-    const [profileModel, setProfileModel] = useState(false);
-    const [BarClicked, setBarClicked] = useState(false);
-
-
-    const {data: session} = useSession();
-    const Token = session?.user.token;
-    // console.log(Token)
-
-    useEffect(() => {
-        Sidebar(BarClicked)
-    }, [BarClicked]);
-
-    const CloseModel = () => {
-        if (profileModel) {
-            setProfileModel(false);
-        }
-    }
     return (
         <>
-            <div onClick={CloseModel}>
-
+            <div onClick={() => {}}>
                 <div
-
                     className=" px-6 w-full overflow-x-hidden h-[100px] border-black flex justify-between bg-slate-100 ">
                     <div className="flex">
-                        <div className="flex my-auto px-5" onClick={() => setBarClicked((state) => !state)}>
-                            {BarClicked ? <Image src={"./bar-staggered.svg"} alt={"bars"} width={30} height={30}
+                        <div className="flex my-auto px-5" onClick={() => (setAdminModalIsOpen(!adminModalIsOpen))}>
+                            {adminModalIsOpen ? <Image src={"./bar-staggered.svg"} alt={"bars"} width={30} height={30}
                                                  className=" mr-4 cursor-pointer"/> :
                                 <Image src={"./bars.svg"} alt={"bars"} width={30} height={30}
                                        className=" mr-4 cursor-pointer"/>}
-
                         </div>
                         <Link href={"/"} className={"my-auto"}>
                             <div className=" my-auto">
@@ -53,18 +33,12 @@ const AdminNav = ({Sidebar}) => {
                             <p className=" text-lg font-semibold">Notifications</p>
                         </div>
                         <div className="flex my-auto px-5 cursor-pointer"
-                             onClick={() => setProfileModel(prevState => !prevState)}>
+                             onClick={() => {}}>
                             <Image src={"./user.svg"} alt={"message"} width={20} height={20} className=" mr-4"/>
                             <p className=" text-lg font-semibold">Account</p>
                         </div>
-
-                        {Token ? <Link href={"/add-product"}>
-
-                            <Button value="Post Ad" option={1} type={"submit"}/>
-                        </Link> : <Link href={"/login"}><Button value="Log in" option={1} type={"submit"}/></Link>}
                     </div>
                 </div>
-                {profileModel && <ProfileBox/>}
             </div>
         </>
     )
