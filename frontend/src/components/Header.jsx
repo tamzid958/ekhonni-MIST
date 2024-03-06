@@ -1,16 +1,18 @@
 "use client"
 import Image from "next/image";
 import Button from "@/components/Button";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import ProfileBox from "@/components/ProfileBox";
 import Link from "next/link";
 import NotificationListModal from "@/components/NotificationListModal";
-import {useSession , signIn , signOut} from "next-auth/react";
-
+import {signIn, useSession} from "next-auth/react";
+import NotificationSVG from "../../public/notification.svg";
+import AccountSVG from "../../public/user.svg"
+import AllAdsSVG from "../../public//all_adds.svg"
 
 const Header = () => {
 
-    const {data : session} = useSession();
+    const {data: session} = useSession();
     const [profileModel, setProfileModel] = useState(false);
     const [notificationModalOpen, setNotificationModalOpen] = useState(false);
 
@@ -65,7 +67,8 @@ const Header = () => {
     return (
         <>
             <div onClick={CloseModel}>
-                <div className=" px-6 w-full overflow-x-hidden h-[100px] border-black flex justify-between bg-slate-100">
+                <div
+                    className=" px-6 w-full overflow-x-hidden h-[100px] border-black flex justify-between bg-slate-100">
                     <div className="flex">
                         <Link href={"/"} className={"my-auto"}>
                             <div className=" my-auto">
@@ -74,24 +77,28 @@ const Header = () => {
                             </div>
                         </Link>
                         <div className="flex my-auto px-5">
-                            <Image src={"./all_adds.svg"} alt={"message"} width={30} height={30} className=" mr-4"/>
+                            <Image src={AllAdsSVG} alt={"message"} width={30} height={30} className=" mr-4"/>
                             <p className=" text-lg font-semibold">All ads</p>
                         </div>
                     </div>
                     <div className="flex my-auto">
-                        <div className="flex my-auto px-5 cursor-pointer relative" onClick={() => {setNotificationModalOpen(!notificationModalOpen)}}>
-                            <Image src={"./notification.svg"} alt={"message"} width={20} height={20} className="mr-4"/>
+                        <div className="flex my-auto px-5 cursor-pointer relative" onClick={() => {
+                            setNotificationModalOpen(!notificationModalOpen)
+                        }}>
+                            <Image src={NotificationSVG} alt={"message"} width={20} height={20} className="mr-4"/>
                             {session ?
                                 notifications !== 0 && !notificationModalOpen &&
-                                (<div className="absolute -top-2 right-36 w-5 h-5 flex items-center justify-center text-white bg-rose-600 opacity-85 text-xs rounded-full">
+                                (<div
+                                    className="absolute -top-2 right-36 w-5 h-5 flex items-center justify-center text-white bg-rose-600 opacity-85 text-xs rounded-full">
                                     <span>{notifications}</span>
                                 </div>) :
                                 (<></>)
                             }
                             <p className=" text-lg font-semibold">Notifications</p>
                         </div>
-                        <div className="flex my-auto px-5 cursor-pointer" onClick={() => setProfileModel(prevState => !prevState)}>
-                            <Image src={"./user.svg"} alt={"message"} width={20} height={20} className=" mr-4"/>
+                        <div className="flex my-auto px-5 cursor-pointer"
+                             onClick={() => setProfileModel(prevState => !prevState)}>
+                            <Image src={AccountSVG} alt={"message"} width={20} height={20} className=" mr-4"/>
                             <p className=" text-lg font-semibold">Account</p>
                         </div>
                         {session ?
@@ -105,7 +112,8 @@ const Header = () => {
                 </div>
                 {profileModel && <ProfileBox/>}
                 {notificationModalOpen &&
-                    <NotificationListModal setModalOpen={setNotificationModalOpen} setNotifications={setNotifications} notificationList={notificationList}/>}
+                    <NotificationListModal setModalOpen={setNotificationModalOpen} setNotifications={setNotifications}
+                                           notificationList={notificationList}/>}
             </div>
         </>
     )
