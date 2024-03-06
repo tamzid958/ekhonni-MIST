@@ -11,6 +11,7 @@ const BidderList = ({isVisible , bidderList , view , finalBuyerID}) => {
         setExpandList(true)
     }, 50);
 
+    console.log("bidderList");
     console.log(bidderList);
 
 
@@ -26,20 +27,28 @@ const BidderList = ({isVisible , bidderList , view , finalBuyerID}) => {
                                 {bidderList ? (
                                     view === "buyerView" ? (
                                     bidderList.map((bidder) => (
-                                        <BidderListItem key={bidder.buyer.id} bidderId={bidder.buyer.id} bidderName={bidder.buyer.name}
-                                                        bid={bidder.offeredPrice} option={"buyerView"}/>
+                                        <BidderListItem key={bidder.buyer.id}
+                                                        bidderId={bidder.buyer.id}
+                                                        bidderName={bidder.buyer.name}
+                                                        bid={bidder.offeredPrice}
+                                                        option={"buyerView"}/>
                                     ))
                                 ) : (
                                     bidderSelected ? (
                                         bidderList.map((bidder) => (
-                                            <SelectedBidderListItem key={bidder.id} bidderId={bidder.id}
-                                                                    bidderName={bidder.name} bid={bidder.bid}
-                                                                    option={"sellerView"} finalBuyerID={finalBuyerID}/>
+                                            <SelectedBidderListItem key={bidder.buyer.id}
+                                                                    bidderId={bidder.buyer.id}
+                                                                    bidderName={bidder.buyer.name}
+                                                                    bid={bidder.offeredPrice}
+                                                                    option={"sellerView"}
+                                                                    finalBuyerID={finalBuyerID}/>
                                         ))
                                     ) : (
                                         bidderList.map((bidder) => (
-                                            <BidderListItem key={bidder.id} bidderId={bidder.id}
-                                                            bidderName={bidder.name} bid={bidder.bid}
+                                            <BidderListItem key={bidder.buyer.id}
+                                                            bidderId={bidder.buyer.id}
+                                                            bidderName={bidder.buyer.name}
+                                                            bid={bidder.offeredPrice}
                                                             option={"sellerView"}/>
                                         ))
                                     )

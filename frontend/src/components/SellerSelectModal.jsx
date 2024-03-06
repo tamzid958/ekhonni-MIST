@@ -4,17 +4,20 @@ import {Toaster} from "sonner";
 import BidderList from "@/components/BidderList";
 import {useState} from "react";
 import ToggleSwitch from "@/components/ToggleSwitch";
-import useSWR from "swr";
+import useSWR, {useSWRConfig} from "swr";
 import {bidFetcher} from "@/utils/bidFetcher";
+import {requestApi} from "@/utils/axios.settings";
 
-const baseUrl = `http://localhost:8080/api/v1/`;
+
 const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId, productID}) => {
-    const {data, error, isLoading} = useSWR(`user/products/bid/fetch?id=${productID}`, bidFetcher);
+    const {data, error, isLoading} = useSWR(`user/products/bid/fetch?id=${productID}`, bidFetcher, {refreshInterval: 1000 });
     const [bidIsActive, setBidIsActive] = useState(isBidActive)
     console.log(data);
-
+    const {mutate} = useSWRConfig();
     const handleBiddingStatusChange = (e) => {
         setBidIsActive(!bidIsActive);
+        const response= requestApi({url: `user/products/bid/seller/activity?id=${productID}`, method : "POST"});
+        mutate(`user/products/bid/fetch?id=${productID}`);
     }
 
     const handleModalCloseOnBgClick = (e) => {
@@ -41,7 +44,10 @@ const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId
                             </div>
                             <div className="w-full h-[75%] flex flex-row justify-center items-center">
                                 <div className="w-full h-full flex justify-end items-start">
-                                    <BidderList isVisible={true} bidders={(!error && !isLoading && data) ? data : false} view={"sellerView"} finalBuyerID={finalBuyerId}/>
+                                    {!error && !isLoading && data && (
+                                        <BidderList isVisible={true} bidderList={data} view={"sellerView"} finalBuyerID={data.finalBuyerId}/>
+                                    )}
+
                                 </div>
                             </div>
                         </div>
