@@ -138,4 +138,10 @@ public class BidServiceImpl implements BidService{
         }
         return false;
     }
+
+    @Override
+    public List<Bid> buyerBids(String buyerEmail) {
+        AppUser buyer = appUserRepository.findByEmail(buyerEmail);
+        return bidRepository.findAllByBuyer(buyer);
+    }
 }
