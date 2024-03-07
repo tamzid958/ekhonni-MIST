@@ -12,6 +12,7 @@ import {useSession} from "next-auth/react";
 import {toast, Toaster} from "sonner";
 import {useRouter} from "next/navigation";
 
+
 const isSeller = (userData, sellerData) => {
     if (userData?.id === sellerData?.id) {
         return true;
@@ -19,6 +20,7 @@ const isSeller = (userData, sellerData) => {
         return false;
     }
 }
+
 const isPurchased = (userData, productData) => {
     if (productData?.isSold && (productData?.finalBuyerId === userData?.id)) {
         return true;
@@ -40,25 +42,16 @@ const ProductPage = ({params}) => {
     const router = useRouter();
     const productID = params.id;
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const {
-        data: productData,
-        error: productError,
-        isLoading: productDataIsLoading
-    } = useSWR(`/products/${productID}`, fetcher)
-    const {data: userData, error: userDataError, isLoading: userDataIsLoading} = useSWR(`/user/profile`, fetcher)
 
+    const {data : productData , error : productError, isLoading: productDataIsLoading} = useSWR(`/products/${productID}` , fetcher)
+    const {data : userData , error : userDataError , isLoading : userDataIsLoading} = useSWR(`/user/profile` , fetcher)
     return (
         <>
             <Header/>
-            <Toaster richColors position={"top-right"}/>
-            {!productDataIsLoading && !productError && isSeller(productData.seller, userData) && modalIsOpen &&
-                <SellerSelectModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""}
-                                   isBidActive={productData ? productData.isBidActive : false}
-                                   finalBuyerId={productData.finalBuyerID} productID={productID}/>}
-            {!productDataIsLoading && !productError && !userDataIsLoading && !userDataError && !isSeller(productData.seller, userData) && modalIsOpen &&
-                <BuyerBidModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""}
-                               userData={userData ? userData : null}
-                               isVisible={productData ? productData.isVisible : false} productID={productID}/>}
+            {!productDataIsLoading && !productError && isSeller(productData.seller , userData) && modalIsOpen &&
+                <SellerSelectModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""} isBidActive={productData ? productData.isBidActive : false} finalBuyerId = {productData ? productData.finalBuyerId : null} productID = {productID}/>}
+            {!productDataIsLoading && !productError && !isSeller(productData.seller , userData) && modalIsOpen &&
+                <BuyerBidModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""} userData={userData ? userData : null} isVisible={productData ? productData.isVisible : false} productID={productID}/>}
             <div className="w-full h-[700px] flex flex-col justify-center items-center">
                 <div className="flex w-full justify-center items-center ">
                     <h1 className="font-semibold text-4xl mb-[1%]">Product Details</h1>
