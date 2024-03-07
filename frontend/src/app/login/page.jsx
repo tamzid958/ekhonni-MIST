@@ -4,14 +4,18 @@ import {useState} from "react";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import Link from "next/link";
-import {Toaster} from "sonner";
+import {toast, Toaster} from "sonner";
 import Header from "@/components/Header";
 import {signIn} from "next-auth/react";
+import {useSearchParams} from "next/navigation";
 
 
 const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const requestParams = useSearchParams()
+    const errorCode = requestParams.get('error')
+
 
     async function handleSubmit(event) {
         event.preventDefault();
@@ -21,6 +25,12 @@ const LoginPage = () => {
             redirect: true,
             callbackUrl: "/redirect"
         })
+        if (errorCode) {
+            toast.error("An unexpected error occurred. Please try again");
+            setTimeout(() => {
+                },
+                3000);
+        }
     }
 
     return (
