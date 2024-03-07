@@ -3,6 +3,7 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import SessionProvider from "@/components/SessionProvider";
 import {getServerSession} from "next-auth";
+import Providers from "@/utils/Providers";
 
 const montserrat = Montserrat({subsets: ["latin"]});
 
@@ -19,7 +20,7 @@ export default async function RootLayout({children}) {
             <html lang="en">
             <body className={montserrat.className}>
                 <SessionProvider session={session}>
-                    {children}
+                    <Providers>{children}</Providers>
                 </SessionProvider>
             <Footer/>
             </body>
