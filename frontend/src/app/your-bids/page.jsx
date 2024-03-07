@@ -1,8 +1,10 @@
 "use client"
 
-import BuyerBids from "@/components/BuyerBids";
 import React from "react";
+import {fetcher} from "@/utils/fetcher";
+import useSWR from "swr";
 import Header from "@/components/Header";
+import BuyerBids from "@/components/BuyerBids";
 
 const isPurchased = (userData, productData) => {
     if (productData?.isSold && (productData?.finalBuyerId === userData?.id)) {
@@ -21,74 +23,29 @@ const isFinalBuyer = (userData, productData) => {
 }
 export default function YourBids() {
 
-    // const {data, error, isLoading} = useSWR("/", fetcher)
-    const data = [
-        {
-            id: '1',
-            name: 'Product1',
-            location: 'Dhaka',
-            time: '12.00',
-            description: 'This is good',
-            category: 'phone',
-            price: '122222',
-            username: 'Shadman'
-
-        },
-        {
-            id: '2',
-            name: 'Product2',
-            location: 'Chittagong',
-            time: '12.10',
-            description: 'This is good',
-            category: 'phone',
-            price: '122222',
-            username: 'Shafeen'
-        },
-        {
-            id: '3',
-            name: 'Product3',
-            location: 'Khulna',
-            time: '12.40',
-            description: 'This is good',
-            category: 'phone',
-            price: '122222',
-            username: 'Khan'
-        },
-        {
-            id: '4',
-            name: 'Product4',
-            location: 'Khulna',
-            time: '12.44',
-            description: 'This is not good',
-            category: 'phone',
-            price: '122222',
-            username: 'Sadia'
-        },
-        {
-            id: '5',
-            name: 'Product5',
-            location: 'Khulna',
-            time: '12.45',
-            description: 'This is good',
-            category: 'phone',
-            price: '122222',
-            username: 'Shitol'
-        }
-    ]
+    const {data, error, isLoading} = useSWR("/user/your-bids", fetcher)
+    console.log(data);
     return (
         <>
             <Header/>
             <div>
                 <p className="font-bold text-3xl ml-[300px] my-4 ">Your Bids</p>
             </div>
-            <div className="w-full h-auto flex flex-col justify-start items-center ">
-                {data.map((item) => (
-                    <BuyerBids key={item.id} id={item.id} name={item.name} username={item.username}
-                               description={item.description} price={item.price} category={item.category}
-                               time={item.time}/>
+            <div className="w-full min-h-[500px] h-auto flex flex-col justify-start items-center ">
+                {data && data.map((item) => (
+                    <BuyerBids key={item.id} id={item.product.id} name={item.product.name}
+                               description={item.product.description} price={item.offeredPrice}
+                               category={item.product.category.category}
+                               subcategory={item.product.category.subCategory}/>
                 ))}
 
             </div>
+            {!data && (
+                <div className="w-[60%] min-h-[500px] border-2 border-black h-auto flex justify-center items-start">
+                    <p className="p-4 px-8 cursor-pointer text-xl bg-slate-100 border border-slate-300 shadow-md shadow-slate-400 rounded-lg ">You
+                        have no bids yet</p>
+                </div>
+            )}
         </>
     )
 }
