@@ -32,20 +32,6 @@ const PostApprovalbox = ({id, name, location, time, description, category, subCa
     const handleInputChange = (e) => {
         isApprovedByAdmin = e;
     }
-    // const handleAccept = (status) => {
-    //     //const response = axios.post(`http://localhost:8080/api/v1/admin/products/${id}`, params);
-    //
-    //     axios.put(`http://localhost:8080/api/v1/admin/products/${id}?isApprovedByAdmin=${status}`)
-    //         .then((res) => {
-    //             console.log(res);
-    //             //router.push('/');
-    //
-    //         })
-    //         .catch((err) => {
-    //             console.error("Err :" + err);
-    //             toast.error("Not working")
-    //         })
-    // }
     return (
         <>
 
