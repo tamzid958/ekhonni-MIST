@@ -4,6 +4,7 @@ import Range from "@/components/Range";
 import { useState} from "react";
 
 
+
 const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory,ResetFilter, RemoveOneProduct}) => {
 
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -132,7 +133,7 @@ const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory,ResetF
         {
             category: "Toy",
             SubCategories: [
-                "Actions Figures & Playsets",
+                "Actionss Figures & Playsets",
                 "Dolls & Accessories",
                 "Educational Toys",
                 "Building Blocks & Construction Sets",

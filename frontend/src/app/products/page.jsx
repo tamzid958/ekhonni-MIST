@@ -11,6 +11,8 @@ import Header from "@/components/Header";
 import useSWR from "swr";
 import { reqFetcher} from "@/utils/fetcher";
 import { useSearchParams } from 'next/navigation'
+import Link from "next/link";
+
 
 
 
@@ -171,9 +173,6 @@ const Product = () => {
 
 
 
-
-
-
     return (
         <>
             <Header/>
@@ -211,8 +210,10 @@ const Product = () => {
                         <div className={"w-4/5 mx-auto box-border"}>
                             {
                                 !isLoading && !error && value.content.map((product, index) => (
-                                    <LargeCard key={index} img="/bike.jpg" name={product.name}
-                                               desc={product.description} price={product.startingPrice}/> ))
+                                    <Link href={`/product/${product.id}`} key={index}>
+                                        <LargeCard key={index} img="/bike.jpg" name={product.name}
+                                                   desc={product.description} price={product.startingPrice}/>
+                                    </Link>))
                             }
                         </div>
                         <Pagination data={data} pagination={pagination} />
