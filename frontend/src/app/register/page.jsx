@@ -24,13 +24,6 @@ const AccountCreationPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (formData.password === formData.confirm_password) {
-            console.log(formData.name)
-            console.log(formData.contact)
-            console.log(formData.email)
-            console.log(formData.address)
-            console.log(formData.division)
-            console.log(formData.password)
-            console.log(formData.confirm_password)
             try {
                 const req = {
                     "content-type": "application/json"
