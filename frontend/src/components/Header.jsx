@@ -54,25 +54,28 @@ const Header = () => {
 
                     </div>
                     <div className="flex my-auto">
-                        <div className="flex my-auto px-5 cursor-pointer relative" onClick={() => {
-                            setNotificationModalOpen(!notificationModalOpen)
-                        }}>
-                            <Image src={NotificationSVG} alt={"message"} width={20} height={20} className="mr-4"/>
-                            {session ?
-                                notificationData && notificationData.length !== 0 && !notificationModalOpen &&
-                                (<div
-                                    className="absolute -top-2 right-36 w-5 h-5 flex items-center justify-center text-white bg-rose-600 opacity-85 text-xs rounded-full">
-                                    <span>{notificationData.length}</span>
-                                </div>) :
-                                (<></>)
-                            }
-                            <p className=" text-lg font-semibold">Notifications</p>
-                        </div>
-                        <div className="flex my-auto px-5 cursor-pointer"
-                             onClick={() => setProfileModel(prevState => !prevState)}>
-                            <Image src={AccountSVG} alt={"message"} width={20} height={20} className=" mr-4"/>
-                            <p className=" text-lg font-semibold">Account</p>
-                        </div>
+                        {session &&
+                            <>
+
+                                <div className="flex my-auto px-5 cursor-pointer relative" onClick={() => {
+                                    setNotificationModalOpen(!notificationModalOpen)
+                                }}>
+                                    <Image src={NotificationSVG} alt={"message"} width={20} height={20}
+                                           className="mr-4"/>
+                                    {notificationData && notificationData.length !== 0 && !notificationModalOpen &&
+                                        <div
+                                            className="absolute -top-2 right-36 w-5 h-5 flex items-center justify-center text-white bg-rose-600 opacity-85 text-xs rounded-full">
+                                            <span>{notificationData.length}</span>
+                                        </div>}
+                                    <p className=" text-lg font-semibold">Notifications</p>
+                                </div>
+                                <div className="flex my-auto px-5 cursor-pointer"
+                                     onClick={() => setProfileModel(prevState => !prevState)}>
+                                    <Image src={AccountSVG} alt={"message"} width={20} height={20} className=" mr-4"/>
+                                    <p className=" text-lg font-semibold">Account</p>
+                                </div>
+                            </>
+                        }
                         {session ?
                             (currentURL !== "/add-product" &&
                                 <Link href={"/add-product"}>

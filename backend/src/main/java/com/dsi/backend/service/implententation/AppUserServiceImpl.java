@@ -151,8 +151,7 @@ public class AppUserServiceImpl implements AppUserService{
     @Override
     public void generateLink(String email) throws MessagingException {
         String token = jwtTokenService.createLinkToken(email);
-        String url = UriComponentsBuilder.fromHttpUrl(baseURL).path("/api/v1/reset-password").queryParam("token", token).toUriString();
-        String link = baseURL + "/api/v1/reset-password?token=" + token;
+        String link = System.getenv("FRONTEND_BASE_URL") + "/reset-password?token=" + token;
 
         String message = "This email has been sent to you because there has been an attempt to change your account password. If this is really you, click on this link to change your password:" + link ;
 

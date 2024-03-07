@@ -35,8 +35,8 @@ const ProfileBox = () => {
                     </div>
                 </Link>
                 <div className="w-full h-[80px] py-3 px-2 gap-x-3 flex justify-center items-center">
-                    <Button value={"Your Bid"} option={true} type={"submit"}/>
-                    <Button value={"Your Product"} option={true} type={"submit"}/>
+                    <Link href={"/your-bids"}><Button value={"Your Bids"} option={true} type={"button"}/></Link>
+                    <Link href={"/your-products"}><Button value={"Your Products"} option={true} type={"button"}/></Link>
                 </div>
                 <div className={"w-full mt-3"}>
                     <ProfileDiv image={"/edit.svg"} text={"Edit Profile"} color={"bg-slate-100"}/>
