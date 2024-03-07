@@ -87,7 +87,7 @@ const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory,ResetF
                     </div>
                     <div>
                         <ul>
-                            {!isLoading && !error && Categories.map((data, index) => (
+                            {!isLoading && !error && Categories && Categories.map((data, index) => (
                                 <li key={index} className={"ml-2"} value={data.name} onClick={() => {
                                     handleCategoryClick(index)
                                     HandleCategory(Categories[index].name)

@@ -45,10 +45,13 @@ const Header = () => {
                                 <p className=" text-sm">Buy now,pay later</p>
                             </div>
                         </Link>
-                        <div className="flex my-auto px-5">
-                            <Image src={AllAdsSVG} alt={"message"} width={30} height={30} className=" mr-4"/>
-                            <p className=" text-lg font-semibold">All ads</p>
-                        </div>
+                        <Link href={"/products"} className={"my-auto"}>
+                            <div className="flex my-auto px-5">
+                                <Image src={AllAdsSVG} alt={"message"} width={30} height={30} className=" mr-4"/>
+                                <p className=" text-lg font-semibold">All ads</p>
+                            </div>
+                        </Link>
+
                     </div>
                     <div className="flex my-auto">
                         <div className="flex my-auto px-5 cursor-pointer relative" onClick={() => {
