@@ -154,10 +154,10 @@ const ProductPage = ({params}) => {
                                                      }}/>)}
 
                                         {/*For Buyer : Bidding is Inactive*/}
-                                        {!productError && !isSeller(userData, productData) && !isFinalBuyer(userData, productData) && !productData.isBidActive && !productData.isSold &&
-                                            (
-                                                <p className="px-4 py-1 cursor-default bg-black text-white text-xl shadow-lg shadow-slate-300 rounded-full">Bidding
-                                                    Is Off</p>)}
+                                        {(
+                                            <p className="px-4 py-1 cursor-default bg-black text-white text-xl shadow-lg shadow-slate-300 rounded-full">Bidding
+                                                Is
+                                                Off</p>) && !productData.isSold && !productData.isBidActive && !isFinalBuyer(userData, productData) && !isSeller(userData, productData) && !productError}
 
                                         {/*For Buyer : Buy Now Button for Buyer, when Seller has Selected Current User*/}
                                         {!productError
