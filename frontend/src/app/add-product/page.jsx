@@ -12,6 +12,7 @@ import TwoRadioButtons from "@/components/TwoRadioButtons";
 import {baseUrl} from "@/utils/baseUrl";
 import {addProductFetcher} from "@/utils/fetcher";
 import useSWRMutation from "swr/mutation";
+import {Toaster} from "sonner";
 
 
 const AddProductPage = () => {
