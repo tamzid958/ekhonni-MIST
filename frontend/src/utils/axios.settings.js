@@ -70,10 +70,10 @@ const bearerToken = async ({ req }) => {
     const session = await getSession({req});
     const a= session?.user.token
         ? {
-            ...req,
+            ...Headers,
             'Authorization': `Bearer ${session?.user.token}`,
         }
-        : {...req};
+        : {...Headers};
     return a;
 };
 
@@ -277,4 +277,6 @@ export const callApi = async ({
 
     return {data: res.data, revision: res.headers["etag"]};
 };
+
+
 

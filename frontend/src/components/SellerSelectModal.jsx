@@ -1,19 +1,22 @@
 "use client"
 
-import {Toaster} from "sonner";
 import BidderList from "@/components/BidderList";
 import {useState} from "react";
 import ToggleSwitch from "@/components/ToggleSwitch";
-import useSWR from "swr";
+import useSWR, {useSWRConfig} from "swr";
 import {bidFetcher} from "@/utils/bidFetcher";
+import {requestApi} from "@/utils/axios.settings";
 
-const baseUrl = `http://localhost:8080/api/v1/`;
+
 const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId, productID}) => {
-    const {data, error, isLoading} = useSWR(`user/products/bid/fetch?id=${productID}`, bidFetcher);
+    const {data, error, isLoading} = useSWR(`user/products/bid/fetch?id=${productID}`, bidFetcher, {refreshInterval: 1000 });
     const [bidIsActive, setBidIsActive] = useState(isBidActive)
     console.log(data);
-
+    const {mutate} = useSWRConfig();
     const handleBiddingStatusChange = (e) => {
+        const response= requestApi({url: `user/products/bid/seller/activity?id=${productID}`, method : "POST"});
+        mutate(`user/products/bid/fetch?id=${productID}`);
+        mutate(`/products/${productID}`);
         setBidIsActive(!bidIsActive);
     }
 
@@ -24,7 +27,6 @@ const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId
 
     return (
         <>
-            <Toaster richColors position={"top-right"}/>
             <div className="fixed inset-0 z-10 bg-black bg-opacity-20 backdrop-blur-[1px] flex justify-center items-center" id="backgroundBlur" onClick={(e) => {handleModalCloseOnBgClick(e)}}>
                 <div className="w-[775px] h-[575px] flex flex-col">
                     <button className="text-white text-lg font-semibold ml-3 place-self-end transition ease-in-out duration-500 hover:scale-110 active:scale-90" onClick={() => {setModalOpen(false)}}>X</button>
@@ -41,7 +43,10 @@ const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId
                             </div>
                             <div className="w-full h-[75%] flex flex-row justify-center items-center">
                                 <div className="w-full h-full flex justify-end items-start">
-                                    <BidderList isVisible={true} bidders={(!error && !isLoading && data) ? data : false} view={"sellerView"} finalBuyerID={finalBuyerId}/>
+                                    {!error && !isLoading && data && (
+                                        <BidderList isVisible={true} bidderList={data} view={"sellerView"} finalBuyerId={finalBuyerId} productID={productID}/>
+                                    )}
+
                                 </div>
                             </div>
                         </div>
