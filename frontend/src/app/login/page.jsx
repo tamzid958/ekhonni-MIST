@@ -28,8 +28,6 @@ const LoginPage = () => {
             redirect: true,
             callbackUrl: "/redirect"
         })
-
-
     }
 
     return (
