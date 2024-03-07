@@ -1,5 +1,5 @@
 "use client"
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 
 const PriceRangeSlider = ({min, max,ChangeHandle}) => {
     const [minPrice, setMinPrice] = useState();

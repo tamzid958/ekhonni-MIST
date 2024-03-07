@@ -10,13 +10,13 @@ import Pagination from "@/components/Pagination";
 import Header from "@/components/Header";
 import useSWR from "swr";
 import { reqFetcher} from "@/utils/fetcher";
-
+import { useSearchParams } from 'next/navigation'
 
 
 
 const Product = () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const search = urlParams.get('search');
+    const searchParams = useSearchParams()
+    const search = searchParams.get('search')
 
     const url= '/products/filter'
     const method="POST"
@@ -29,13 +29,14 @@ const Product = () => {
         division: [],
         sort: null
     })
-    const {data:value,error,isLoading,mutate} = useSWR([url,method,data],reqFetcher)
+    const {data:value,error,isLoading} = useSWR([url,method,data],reqFetcher)
 
 
 
 
     useEffect(() => {
         const value = "search";
+        console.log(search)
         setData((prevData) => ({ ...prevData, [value]: search }));
     }, [search]);
 
@@ -98,6 +99,76 @@ const Product = () => {
         }));
     };
 
+    const ResetFilter = ()=>{
+        // console.log("Value: "+value);
+        const pageNumber = "pageNumber"
+        const categories = "categories"
+        const startPrice = "startPrice"
+        const endPrice = "endPrice"
+        const search = "search"
+        const division = "division"
+        const sort = "sort"
+        setData((prevState)=> ({
+            ...prevState,
+            [pageNumber]:0,
+            [categories]:[],
+            [startPrice]:0,
+            [endPrice]:750000,
+            [search]:null,
+            [division]:[],
+            [sort]:null
+
+        }))
+
+    }
+
+    const RemoveOneProduct = (value)=>{
+        setData((prevState) => {
+            const updatedState = { ...prevState };
+
+            for (const key in updatedState) {
+                if (Array.isArray(updatedState[key])) {
+                    if (key === 'categories') {
+                        updatedState[key] = updatedState[key].map((category) => {
+                            const updatedCategory = {...category};
+                            if (updatedCategory.name === value) {
+                                return null;
+                            } else {
+                                updatedCategory.subCategories = updatedCategory.subCategories.filter(subCategory => subCategory !== value);
+                                return updatedCategory;
+                            }
+                        }).filter((category) => category !== null);
+                    } else {
+                        updatedState[key] = updatedState[key].filter(
+                            (item) => item !== value
+                        );
+                    }
+                }
+            }
+
+            return { ...updatedState };
+        });
+
+    }
+    const pagination = (value)=>{
+        const pageNumber = "pageNumber"
+
+        if(value){
+            setData((prevState)=>({
+                ...prevState,
+                [pageNumber]: (prevState.pageNumber+1 === value)? 0: prevState.pageNumber+1
+            }))
+        }
+        else {
+            setData((prevState)=>({
+                ...prevState,
+                [pageNumber]: (prevState.pageNumber === 0)? 0: prevState.pageNumber-1
+            }))
+        }
+
+
+    }
+
 
 
 
@@ -116,7 +187,7 @@ const Product = () => {
                     </div>
                 </div>
                 <div className="w-full h-auto flex box-border">
-                    <Filter ChangeHandle={ChangeHandle} HandleCategory={HandleCategory} HandleSubCategory={HandleSubCategory} FilterData={data} />
+                    <Filter ChangeHandle={ChangeHandle} HandleCategory={HandleCategory} RemoveOneProduct={RemoveOneProduct} HandleSubCategory={HandleSubCategory} ResetFilter={ResetFilter} FilterData={data} />
                     <div className="w-4/5 border-2 ml-3">
                         <div className="w-full p-3 flex justify-between border-b-2">
                             <div>
@@ -144,7 +215,7 @@ const Product = () => {
                                                desc={product.description} price={product.startingPrice}/> ))
                             }
                         </div>
-                        <Pagination/>
+                        <Pagination data={data} pagination={pagination} />
                     </div>
 
                 </div>

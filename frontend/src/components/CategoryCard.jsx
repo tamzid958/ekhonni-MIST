@@ -2,13 +2,10 @@
 
 import Image from "next/image";
 import React from "react";
-import {useDispatch} from "react-redux";
-import {addCategory} from "@/Actions/filter";
 import Link from "next/link";
 
 
 const CategoryCard = ({img, categories, item}) => {
-    const dispatch = useDispatch();
 
 
     return (

@@ -1,44 +1,113 @@
 "use client"
 
-import useSWR from "swr";
-import {fetcher} from "@/utils/fetcher";
 import AdminModal from "@/components/AdminModal";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Toaster} from "sonner";
 import AdminNav from "@/components/AdminNav";
 import AddAdminModal from "@/components/AddAdminModal";
-import RemoveAdminModal from "@/components/RemoveAdminModal";
-import AddCategoryModal from "@/components/AddCategoryModal";
+import axios from "axios";
 import PostApprovalbox from "@/components/PostApprovalbox";
 
-
 export default function AdminPage() {
+    const [SideBarModalIsOpen, setSideBarModalIsOpen] = useState(false);
+    const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false);
 
-    const AdminModelData = (data) => {
-        setAdminModalIsOpen(data)
+    const data1 = [
+        {
+            id: '1',
+            name: 'Product1',
+            location: 'Dhaka',
+            time: '12.00',
+            description: 'This is good',
+            category: 'phone',
+            price: '122222',
+        }
+    ]
+    const [data, setData] = useState({});
+    const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:8080/api/v1/admin/products/review');
+            console.log(response.data);
+            setData(response.data);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+
+    // const setAddModalOpen = (data)=>{
+    //     setAddAdminModalIsOpen(data);
+    //     console.log("Data: "+data);
+    // }
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const SideBar = (data) => {
+        setSideBarModalIsOpen(data);
+    }
+    const AddAdminModelData = (data) => {
+        setAddAdminModalIsOpen(data)
     }
 
-    const [adminModalIsOpen, setAdminModalIsOpen] = useState(false);
-    const [addAdminModalIsOpen, setAddAdminModalIsOpen] = useState(false)
-    const [removeAdminModalIsOpen, setRemoveAdminModalIsOpen] = useState(false)
-    const [addCategoryModalIsOpen, setAddCategoryModalIsOpen] = useState(false)
 
-    const {data, error, isLoading} = useSWR("/admin/products/review", fetcher);
-    console.log(data)
+    // const data =[
+    //     {
+    //         id : '1',
+    //         name : 'Product1',
+    //         location: 'Dhaka',
+    //         time: '12.00',
+    //         description: 'This is good',
+    //         category: 'phone',
+    //         price: '122222',
+    //         username:'Shadman'
+    //
+    //     },
+    //     {
+    //         id : '2',
+    //         name : 'Product2',
+    //         location: 'Chittagong',
+    //         time: '12.10',
+    //         description: 'This is good',
+    //         category: 'phone',
+    //         price: '122222',
+    //         username:'Shafeen'
+    //     },
+    //     {   id : '3',
+    //         name : 'Product3',
+    //         location: 'Khulna',
+    //         time: '12.40',
+    //         description: 'This is good',
+    //         category: 'phone',
+    //         price: '122222',
+    //         username:'Khan'
+    //     },
+    //     {   id : '4',
+    //         name : 'Product4',
+    //         location: 'Khulna',
+    //         time: '12.44',
+    //         description: 'This is not good',
+    //         category: 'phone',
+    //         price: '122222',
+    //         username:'Sadia'
+    //     },
+    //     {   id : '5',
+    //         name : 'Product5',
+    //         location: 'Khulna',
+    //         time: '12.45',
+    //         description: 'This is good',
+    //         category: 'phone',
+    //         price: '122222',
+    //         username:'Shitol'
+    //     }
+    // ]
 
 
     return (
         <>
-            <AdminNav setAdminModalIsOpen={setAdminModalIsOpen} adminModalIsOpen={adminModalIsOpen}/>
+            <AdminNav Sidebar={SideBar}/>
 
-            {adminModalIsOpen && <AdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen}
-                                             setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen}
-                                             setAddCategoryModalIsOpen={setAddCategoryModalIsOpen}
-                                             pendingPostCount={data.size}/>}
-            {addAdminModalIsOpen && <AddAdminModal setAddAdminModalIsOpen={setAddAdminModalIsOpen}/>}
-            {removeAdminModalIsOpen && <RemoveAdminModal setRemoveAdminModalIsOpen={setRemoveAdminModalIsOpen}/>}
-            {addCategoryModalIsOpen && <AddCategoryModal setAddCategoryModalIsOpen={setAddCategoryModalIsOpen}/>}
-
+            {SideBarModalIsOpen && <AdminModal value={data} setAddAdminModal={AddAdminModelData}/>}
+            {addAdminModalIsOpen && <AddAdminModal CloseModel={AddAdminModelData}/>}
             <Toaster richColors position={"top-right"}/>
 
             <div>
@@ -47,7 +116,7 @@ export default function AdminPage() {
             <div className="w-full h-auto flex flex-col justify-start items-center ">
 
 
-                {!error && !isLoading && data.products && data.products.map((item) => (
+                {data.products && data.products.map((item) => (
                     <PostApprovalbox key={item.id} id={item.id} name={item.name} username={item.seller.name}
                                      description={item.description} price={item.startingPrice}
                                      category={item.category.category} subCategory={item.category.subCategory}

@@ -1,16 +1,12 @@
 "use client"
 import CrossButton from "@/components/CrossButton";
 import Range from "@/components/Range";
-import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {addCategory, addDivision, addPrice, addSubCategory, clearAll} from "@/Actions/filter";
-import {fetchProduct} from "@/Actions/fetchProduct";
+import { useState} from "react";
 
 
-const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory}) => {
+const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory,ResetFilter, RemoveOneProduct}) => {
 
     const [selectedCategory, setSelectedCategory] = useState(null);
-    const dispatch = useDispatch();
 
     let allFilter = [];
 
@@ -33,7 +29,7 @@ const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory}) => {
             setSelectedCategory(index);
         }
     };
-    console.log(FilterData)
+
     const divisions = [
         {name: "Dhaka"},
         {name: "Chattogram"},
@@ -156,15 +152,12 @@ const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory}) => {
                 <div className={"w-full"}>
                     <div className="flex justify-between border-b-2 pb-2">
                         <h1 className="font-bold font-lg">Filter</h1>
-                        <p className="text-blue-500 cursor-pointer" onClick={() => {
-                            dispatch(clearAll())
-
-                        }}>CLEAR ALL</p>
+                        <p className="text-blue-500 cursor-pointer" onClick={ResetFilter} >CLEAR ALL</p>
                     </div>
                     <div className="my-1 flex flex-wrap flex-shrink-0">
                         {
                             allFilter && allFilter.map((data, index) => (
-                                <CrossButton key={index} text={data}/>
+                                <CrossButton key={index} text={data} RemoveOneProduct={RemoveOneProduct}  />
                             ))
                         }
                     </div>
@@ -181,8 +174,7 @@ const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory}) => {
                         >
                             <option value="">Select Division</option>
                             {divisions.map((division) => (
-                                <option key={division.name} value={division.name}
-                                        onClick={() => (dispatch(addDivision(division.name)))}>
+                                <option key={division.name} value={division.name}>
                                     {division.name}
                                 </option>
                             ))}
