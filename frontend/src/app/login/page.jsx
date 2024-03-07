@@ -1,23 +1,30 @@
 "use client"
 
-import {useState} from "react";
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import Link from "next/link";
 import {Toaster} from "sonner";
 import Header from "@/components/Header";
 import {signIn} from "next-auth/react";
+import {useSearchParams} from "next/navigation";
 
 
 const LoginPage = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    let formData = {
+        email: "",
+        password: ""
+    }
+    const requestParams = useSearchParams()
+    const handleInputChange = (e, field) => {
+        formData[field] = e.target.value;
+    }
 
     async function handleSubmit(event) {
         event.preventDefault();
-        await signIn("credentials", {
-            email: email,
-            password: password,
+        console.log(formData)
+        const response = await signIn("credentials", {
+            email: formData.email,
+            password: formData.password,
             redirect: true,
             callbackUrl: "/redirect"
         })
@@ -38,13 +45,13 @@ const LoginPage = () => {
                                 <p className="font-light text-lg ">Please enter your Username and Password</p>
                             </div>
                             <div className=" w-full h-2/5 flex flex-col justify-center items-center">
-                                <TextField placeholder={"Email"} type={"text"} name={"email"} value={email}
+                                <TextField placeholder={"Email"} type={"text"} name={"email"}
                                            onChange={(e) => {
-                                               setEmail(e.target.value)
+                                               handleInputChange(e, "email")
                                            }}/>
-                                <TextField placeholder={"Password"} type={"password"} name={"password"} value={password}
+                                <TextField placeholder={"Password"} type={"password"} name={"password"}
                                            onChange={(e) => {
-                                               setPassword(e.target.value)
+                                               handleInputChange(e, "password")
                                            }}/>
                                 <div className="flex justify-center">
                                     <Link href="/forget-password">

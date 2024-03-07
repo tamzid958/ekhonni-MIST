@@ -16,7 +16,6 @@ const RedirectPage = () => {
             } else {
                 router.push("/")
             }
-
         }
     }, [router, session])
 
