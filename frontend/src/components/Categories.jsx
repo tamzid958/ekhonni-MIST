@@ -3,9 +3,8 @@
 import {useEffect, useState} from "react";
 import Image from "next/image";
 import CategoryCard from "@/components/CategoryCard";
-import {useDispatch, useSelector} from "react-redux";
-import axios from "axios";
-import {fetchProduct} from "@/Actionss/fetchProduct";
+
+
 import useSWR from "swr";
 import {bidFetcher} from "@/utils/bidFetcher";
 
@@ -13,7 +12,6 @@ import {bidFetcher} from "@/utils/bidFetcher";
 const Categories = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [Categories, setCategories] = useState([])
-    const dispatch = useDispatch();
 
     const { data, error,isLoading } = useSWR('/products/count', bidFetcher)
 
@@ -28,13 +26,6 @@ const Categories = () => {
 
         return () => clearInterval(interval);
     }, []);
-    const filterItem = useSelector(state => state.filter);
-    const product = useSelector(state => state.product);
-    useEffect(() => {
-        console.log(filterItem)
-        dispatch(fetchProduct({filter: filterItem}))
-
-    }, [filterItem]);
 
 
     const prevImage = () => {

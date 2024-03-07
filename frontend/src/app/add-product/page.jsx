@@ -6,7 +6,6 @@ import CategoryDropdown from "@/components/CategoryDropdown";
 import Image from "next/image";
 import Header from "@/components/Header";
 import TwoRadioButtons from "@/components/TwoRadioButtons";
-
 import {baseUrl} from "@/utils/baseUrl";
 import {addProductFetcher} from "@/utils/fetcher";
 import useSWRMutation from "swr/mutation";
@@ -45,11 +44,13 @@ const AddProductPage = () => {
         setImage(file);
     }
 
+
     const baseURL = baseUrl;
     const url = '/user/products/save';
     const method = 'POST';
     const headers = {
         'Content-Type': 'multipart/form-data'
+
     }
     const {trigger} = useSWRMutation([url, baseURL, method, headers], addProductFetcher);
 
