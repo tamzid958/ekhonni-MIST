@@ -1,5 +1,6 @@
 package com.dsi.backend.repository;
 
+import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.Product;
 import com.dsi.backend.projection.ProductView;
 import jakarta.transaction.Transactional;
@@ -28,6 +29,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, CustomR
     List<Product> findByIsApprovedByAdminTrueAndStartingPriceBetween(Double minPrice, Double maxPrice);
     List<Product> findByIsApprovedByAdminTrueAndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String searchKey1,String searchKey2);
     Product findProductById(Long id);
+
+    List<ProductView> findAllBySeller(AppUser seller);
 
     @Modifying
     @Transactional

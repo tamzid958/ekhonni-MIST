@@ -11,6 +11,7 @@ import RemoveAdminModal from "@/components/RemoveAdminModal";
 import AddCategoryModal from "@/components/AddCategoryModal";
 import PostApprovalbox from "@/components/PostApprovalbox";
 
+
 export default function AdminPage() {
 
     const AdminModelData = (data) => {

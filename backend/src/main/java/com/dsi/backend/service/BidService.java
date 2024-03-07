@@ -21,4 +21,6 @@ public interface BidService {
 
     Boolean changeIsSold(Long id, String buyerEmail);
 
+    List<Bid> buyerBids(String buyerEmail);
+
 }

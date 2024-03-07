@@ -67,13 +67,9 @@ const ProductPage = ({params}) => {
     const router = useRouter();
     const productID = params.id;
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const {data: productData, error: productError, isLoading: productDataIsLoading} = useSWR(`/products/${productID}`, fetcher)
+    const {data: userData, error: userDataError, isLoading: userDataIsLoading} = useSWR('/user/profile', fetcher)
 
-    const {
-        data: productData,
-        error: productError,
-        isLoading: productDataIsLoading
-    } = useSWR(`/products/${productID}`, fetcher)
-    const {data: userData, error: userDataError, isLoading: userDataIsLoading} = useSWR(`/user/profile`, fetcher)
     return (
         <>
             <Toaster richColors position={"top-right"}/>
