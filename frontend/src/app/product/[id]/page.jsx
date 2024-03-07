@@ -9,7 +9,7 @@ import Header from "@/components/Header";
 import useSWR from "swr";
 import {fetcher} from "@/utils/fetcher";
 import {useSession} from "next-auth/react";
-import {toast, Toaster} from "sonner";
+import {toast} from "sonner";
 import {useRouter} from "next/navigation";
 import {requestApi} from "@/utils/axios.settings";
 
@@ -67,13 +67,9 @@ const ProductPage = ({params}) => {
     const router = useRouter();
     const productID = params.id;
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const {data: productData, error: productError, isLoading: productDataIsLoading} = useSWR(`/products/${productID}`, fetcher)
+    const {data: userData, error: userDataError, isLoading: userDataIsLoading} = useSWR('/user/profile', fetcher)
 
-    const {
-        data: productData,
-        error: productError,
-        isLoading: productDataIsLoading
-    } = useSWR(`/products/${productID}`, fetcher)
-    const {data: userData, error: userDataError, isLoading: userDataIsLoading} = useSWR(`/user/profile`, fetcher)
     return (
         <>
             <Toaster richColors position={"top-right"}/>

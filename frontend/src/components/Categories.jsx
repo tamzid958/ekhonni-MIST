@@ -7,11 +7,11 @@ import CategoryCard from "@/components/CategoryCard";
 
 import useSWR from "swr";
 import {bidFetcher} from "@/utils/bidFetcher";
+import {toast, Toaster} from "sonner";
 
 
 const Categories = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [Categories, setCategories] = useState([])
 
     const { data, error,isLoading } = useSWR('/products/count', bidFetcher)
 
@@ -54,6 +54,7 @@ const Categories = () => {
 
     return (
         <>
+            <Toaster richColors position={"top-right"}/>
             <div className="w-11/12 mx-auto border-black my-2 flex flex-col flex-nowrap">
                 <div className="flex">
                     <h1 className="font-bold mr-2">View Items By Categories</h1>
@@ -65,7 +66,7 @@ const Categories = () => {
                 <div className={" relative overflow-hidden"}>
                     <div className="mx-8 flex  transition ease-out duration-1000"
                          style={{transform: `translateX(-${currentIndex * 0.5}%)`}}>
-                        {!isLoading && category.map((value, index) => <CategoryCard key={index} img={value.img}
+                        {!isLoading && !error && category.map((value, index) => <CategoryCard key={index} img={value.img}
                                                                             categories={value.category}
                                                                             item={data[value.category]}/>)}
                     </div>

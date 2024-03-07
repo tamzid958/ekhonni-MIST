@@ -2,6 +2,8 @@
 import CrossButton from "@/components/CrossButton";
 import Range from "@/components/Range";
 import { useState} from "react";
+import useSWR from "swr";
+import {fetcher} from "@/utils/fetcher";
 
 
 
@@ -20,7 +22,7 @@ const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory,ResetF
         })
     })
     allFilter = [...allFilter, ...division];
-
+    const {data:Categories,error,isLoading} = useSWR('/products/category/all',fetcher);
 
 
     const handleCategoryClick = (index) => {
@@ -42,110 +44,7 @@ const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory,ResetF
         {name: "Mymensingh"},
     ]
 
-    const Categories = [
-        {
-            category: "Furniture",
-            SubCategories: [
-                "Seating Furniture",
-                "Tables",
-                "Storage Furniture",
-                "Beds and Bedroom Furniture",
-                "Outdoor Furniture",
-                "Office Furniture",
-                "Entertainment Furniture"
-            ]
-        },
-        {
-            category: "Electronics",
-            SubCategories: [
-                "Televisions",
-                "Computers & Laptops",
-                "Smartphones & Tablets",
-                "Audio Equipment",
-                "Cameras & Photography",
-                "Home Appliances",
-                "Gaming Consoles & Accessories",
-                "Wearable Technology",
-                "Networking & Internet Devices",
-                "Electronic Accessories"
-            ]
-        },
-        {
-            category: "Vehicle",
-            SubCategories: [
-                "Cars & Trucks",
-                "Motorcycles & Scooters",
-                "RVs & Campers",
-                "Boats & Watercraft",
-                "Commercial Vehicles",
-                "Trailers & Hauling",
-                "Powersports Vehicles",
-                "Aircraft",
-                "Bicycles & Cycling",
-                "Vehicle Parts & Accessories"
-            ]
-        },
-        {
-            category: "Clothing",
-            SubCategories: [
-                "Men's Clothing",
-                "Women's Clothing",
-                "Kids' Clothing",
-                "Shoes",
-                "Accessories",
-                "Jewelry",
-                "Bags & Luggage",
-                "Watches",
-                "Uniforms & Workwear",
-                "Costumes & Cosplay"
-            ]
-        },
-        {
-            category: "Sports Item",
-            SubCategories: [
-                "Exercise & Fitness Equipment",
-                "Team Sports Equipment",
-                "Outdoor Recreation Gear",
-                "Athletic Apparel & Shoes",
-                "Sports Accessories",
-                "Cycling Equipment",
-                "Water Sports Equipment",
-                "Winter Sports Gear",
-                "Hunting & Fishing Gear",
-                "Golf Equipment"
-            ]
-        },
-        {
-            category: "Properties",
-            SubCategories: [
-                "Residential Properties",
-                "Commercial Properties",
-                "Land & Plots",
-                "Vacation Rentals & Timeshares",
-                "Parking Spaces & Garages",
-                "Real Estate Services",
-                "Shared Accommodations",
-                "Agricultural Properties",
-                "Industrial Properties",
-                "Real Estate Investments"
-            ]
-        },
-        {
-            category: "Toy",
-            SubCategories: [
-                "Actionss Figures & Playsets",
-                "Dolls & Accessories",
-                "Educational Toys",
-                "Building Blocks & Construction Sets",
-                "Remote Control & Vehicles",
-                "Pretend Play & Dress-Up",
-                "Games & Puzzles",
-                "Outdoor Play Equipment",
-                "Stuffed Animals & Plush",
-                "Arts & Crafts"
-            ]
-        }
-    ];
+
 
     return (
         <>
@@ -188,23 +87,23 @@ const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory,ResetF
                     </div>
                     <div>
                         <ul>
-                            {Categories.map((data, index) => (
-                                <li key={index} className={"ml-2"} value={data.category} onClick={() => {
+                            {!isLoading && !error && Categories.map((data, index) => (
+                                <li key={index} className={"ml-2"} value={data.name} onClick={() => {
                                     handleCategoryClick(index)
-                                    HandleCategory(Categories[index].category)
+                                    HandleCategory(Categories[index].name)
                                 }}>
                                     <div className={"flex"}>
                                         <p className={"mr-2 font-bold text-xl"}>
                                             {selectedCategory === index ? '⇩' : '⇨'}
                                         </p>
-                                        <p className={`cursor-pointer ${selectedCategory === index ? 'text-black font-bold' : 'text-gray-500'}`}>{data.category}</p>
+                                        <p className={`cursor-pointer ${selectedCategory === index ? 'text-black font-bold' : 'text-gray-500'}`}>{data.name}</p>
                                     </div>
                                     {selectedCategory === index && (
                                         <ul className="">
-                                            {data.SubCategories.map((subcategory, subIndex) => (
+                                            {data.subcategories.map((subcategory, subIndex) => (
                                                 <li key={subIndex} className="ml-10 text-gray-500 cursor-pointer"
                                                     onClick={() => {
-                                                        HandleSubCategory(Categories[index].category, Categories[index].SubCategories[subIndex])
+                                                        HandleSubCategory(Categories[index].name, Categories[index].SubCategories[subIndex])
                                                     }}>{subcategory}</li>
                                             ))}
                                         </ul>

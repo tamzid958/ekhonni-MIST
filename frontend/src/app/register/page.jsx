@@ -3,48 +3,62 @@
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import DivisionDropdown from "@/components/DivisionDropdown";
-import React, {useState} from 'react';
+import React from 'react';
 import {toast, Toaster} from "sonner";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 import Header from "@/components/Header";
-import axios from "axios";
+import {requestApi} from "@/utils/axios.settings";
 
 const AccountCreationPage = () => {
     const router = useRouter();
+    let formData = {
+        name: "",
+        contact: "",
+        email: "",
+        address: "",
+        division: "",
+        password: "",
+        confirm_password: ""
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (formData.password === formData.confirm_password) {
+            console.log(formData.name)
+            console.log(formData.contact)
+            console.log(formData.email)
+            console.log(formData.address)
+            console.log(formData.division)
+            console.log(formData.password)
+            console.log(formData.confirm_password)
+            try {
+                const req = {
+                    "content-type": "application/json"
+                }
+                const res = await requestApi({
+                    req,
+                    url: "/register",
+                    method: "POST",
+                    data: formData
+                });
 
-    const [name, setName] = useState("");
-    const [contact, setContact] = useState("");
-    const [email, setEmail] = useState("");
-    const [address, setAddress] = useState("");
-    const [division, setDivision] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-
-    async function handleSubmit(event) {
-        event.preventDefault();
-        if (password === confirmPassword) {
-            const formDataObject = {
-                name: name,
-                contact: contact,
-                email: email,
-                address: address,
-                division: division,
-                password: password
-            };
-            const formData = JSON.stringify(formDataObject);
-            const response = await axios.post('http://localhost:8080/api/v1/register', formDataObject);
-            console.log(response)
-            if (response.status === 201) {
-                await router.push("/login");
-                setTimeout(()=> {
+                if (res.error) {
+                    toast.error("Failed to register. Please try again.");
+                } else {
                     toast.success("Account created successfully");
-                } , 1000)
+                    setTimeout(() => {
+                        router.push("/login");
+                    }, 1000)
+                }
+            } catch (error) {
+                toast.error("An unexpected error occurred. Please try again later.");
             }
+        } else {
+            toast.error("Passwords must match.");
         }
-        else {
-            toast.error("Passwords must match");
-        }
+    };
+    const handleInputChange = (e, field) => {
+        formData[field] = e.target.value;
     }
 
     return (
@@ -73,31 +87,19 @@ const AccountCreationPage = () => {
                                 <p className="font-light ">Please enter your Personal Information</p>
                             </div>
                             <div className="w-full h-6/8 flex flex-col justify-center items-center">
-                                <TextField placeholder={"Name"} type={"text"} name={"name"} value={name}
-                                           onChange={(e) => {
-                                               setName(e.target.value)
-                                           }}/>
-                                <TextField placeholder={"Email"} type={"text"} name={"email"} value={email}
-                                           onChange={(e) => {
-                                               setEmail(e.target.value)
-                                           }}/>
-                                <TextField placeholder={"Contact Number"} type={"text"} name={"contact"} value={contact}
-                                           onChange={(e) => {
-                                               setContact(e.target.value)
-                                           }}/>
-                                <TextField placeholder={"Address"} type={"text"} name={"address"} value={address}
-                                           onChange={(e) => {
-                                               setAddress(e.target.value)
-                                           }}/>
-                                <DivisionDropdown name={"Division"} setDivision={(setDivision)}/>
-                                <TextField placeholder={"Password"} type={"password"} name={"password"} value={password}
-                                           onChange={(e) => {
-                                               setPassword(e.target.value)
-                                           }}/>
+                                <TextField placeholder={"Name"} type={"text"} name={"name"}
+                                           onChange={(e) => handleInputChange(e, 'name')}/>
+                                <TextField placeholder={"Email"} type={"text"} name={"email"}
+                                           onChange={(e) => handleInputChange(e, 'email')}/>
+                                <TextField placeholder={"Contact Number"} type={"text"} name={"contact"}
+                                           onChange={(e) => handleInputChange(e, 'contact')}/>
+                                <TextField placeholder={"Address"} type={"text"} name={"address"}
+                                           onChange={(e) => handleInputChange(e, 'address')}/>
+                                <DivisionDropdown name={"Division"} onChange={(e) => handleInputChange(e, 'division')}/>
+                                <TextField placeholder={"Password"} type={"password"} name={"password"}
+                                           onChange={(e) => handleInputChange(e, 'password')}/>
                                 <TextField placeholder={"Confirm Password"} type={"password"} name={"confirmPassword"}
-                                           value={confirmPassword} onChange={(e) => {
-                                    setConfirmPassword(e.target.value)
-                                }}/>
+                                           onChange={(e) => handleInputChange(e, 'confirm_password')}/>
                             </div>
                             <div className="w-full h-1/8  flex justify-center items-start">
                                 <Button value={"Sign Up"} option={"0"} type={"submit"}/>
