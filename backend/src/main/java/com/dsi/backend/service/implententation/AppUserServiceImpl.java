@@ -104,7 +104,7 @@ public class AppUserServiceImpl implements AppUserService{
     public AppUser uploadImage(MultipartFile imageFile, AppUser appUser) throws IOException {
         ImageModel imageModel = new ImageModel(null,imageFile.getOriginalFilename(),
                 imageFile.getContentType(),
-                imageFile.getBytes());
+                "");
         imageModel = imageRepository.save(imageModel);
 
         appUser = appUserRepository.findByEmail(appUser.getEmail());

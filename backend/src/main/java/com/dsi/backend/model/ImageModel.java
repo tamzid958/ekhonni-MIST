@@ -16,6 +16,7 @@ public class ImageModel extends BaseEntity<Long>{
     private Product product;
     private String name;
     private String type;
-    @Column(length = 50000000, name = "image_byte")
-    private byte[] imageByte;
+
+    @Column(name = "image_byte", columnDefinition = "TEXT")
+    private String imageByte;
 }
