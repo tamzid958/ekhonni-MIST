@@ -3,7 +3,6 @@ import React from 'react';
 
 import SmallButton from "@/components/SmallButton";
 import Image from "next/image";
-import axios from "axios";
 import {toast} from "sonner";
 import {requestApi} from "@/utils/axios.settings";
 import {useSWRConfig} from "swr";
@@ -29,9 +28,7 @@ const PostApprovalbox = ({id, name, location, time, description, category, subCa
                 toast.error("An unexpected error occurred. Please try again.");
             }
     };
-    const handleInputChange = (e) => {
-        isApprovedByAdmin = e;
-    }
+
     return (
         <>
 
