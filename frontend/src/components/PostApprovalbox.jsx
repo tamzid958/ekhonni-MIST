@@ -33,7 +33,7 @@ const PostApprovalbox = ({id, name, location, time, description, category, subCa
         <>
 
             {/*the main box*/}
-            <div className="w-7/12 h-56 border-black border-2 my-4 flex flex-row justify-center items-center ml-16 ">
+            <div className="w-7/12 h-56 border-black border-2 my-4 flex flex-row justify-center items-center ml-16 rounded-lg shadow-md shadow-slate-400">
                 {/*Image box*/}
                 <div
                     className="w-1/4 h-[82%]  relative my-3 border-2 border-black flex justify-start items-start -ml-5 ">
@@ -41,7 +41,7 @@ const PostApprovalbox = ({id, name, location, time, description, category, subCa
                 </div>
 
                 {/*details info div*/}
-                <div className="w-2/3 h-[90%]  justify-center items-center flex flex-col">
+                <div className="w-2/3 h-[90%] pb-2 justify-center items-center flex flex-col">
 
                     <div className=" w-full h-[25%]  flex flex-row ">
                         <div className=" w-full h-2/8 justify-items-start ">
@@ -51,29 +51,24 @@ const PostApprovalbox = ({id, name, location, time, description, category, subCa
                     </div>
                     {/*info div*/}
                     <div className="w-full h-[62.5%] ">
-                        <div className="w-full h-[45%]">
-                            <p className="pl-5">{description}</p>
+                        <div className="w-full h-[40%]">
+                            <p className="pl-5 font-light">{description}</p>
                         </div>
                         <div className="w-full h-[25%] flex flex-row">
                             <div className="w-[100%] h-[16.3%]">
-                                <p className="pl-5">Category: {category} - {subCategory}</p>
-                            </div>
-                            <div className="w-[50%]  h-[16.3%] items-end">
-                                <p className="pl-5">Time:{time}</p>
+                                <p className="pl-5">{category}, {subCategory}</p>
                             </div>
                         </div>
-                        <div className="w-full  h-[16.3%] flex flex-row">
-                            <div className="w-[50%] h-full items-start">
+                        <div className="w-full h-[16.3%] flex flex-row">
+                            <div className="w-[33%] h-full items-start">
                                 <p className="pl-5">Price :&nbsp; <span
-                                    className="text-cyan-950 font-medium">{price}</span></p>
+                                    className="font-medium">Tk {price}</span></p>
                             </div>
-
-                            <div className="w-[50%] h-full items-end">
-                                <p className="pl-5 ">Division - {location}</p>
+                            <div className="w-[33%] h-full items-end">
+                                <p className="pl-5 ">Location - {location}</p>
                             </div>
-
-                            <div className="w-[50%] h-full items-end">
-                                <p className="pl-5 ">Seller - {username}</p>
+                            <div className="w-[33%] h-full items-center">
+                                <p className="pl-5 text-sm">Post Added by <span className="font-medium">{username}</span></p>
                             </div>
                         </div>
                     </div>
