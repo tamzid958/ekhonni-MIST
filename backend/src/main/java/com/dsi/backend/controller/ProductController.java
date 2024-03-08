@@ -4,6 +4,7 @@ import com.dsi.backend.model.*;
 import com.dsi.backend.projection.ProductView;
 import com.dsi.backend.service.CategoryService;
 import com.dsi.backend.service.ImageModelService;
+import com.dsi.backend.service.JwtTokenService;
 import com.dsi.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,9 @@ public class ProductController {
 
     @Autowired
     private ImageModelService imageModelService;
+
+    @Autowired
+    private JwtTokenService jwtTokenService;
 
 
     @PostMapping(value = "/user/products/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -71,6 +75,13 @@ public class ProductController {
     @GetMapping("/products/category")
     public ResponseEntity<List<ProductView>> showByCategories(@RequestParam String category) {
         List<ProductView> products = productService.showByCategory(category);
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/user/your-products")
+    public ResponseEntity<List<ProductView>> yourProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        String sellerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
+        List<ProductView> products = productService.sellerProducts(sellerEmail);
         return ResponseEntity.ok(products);
     }
 

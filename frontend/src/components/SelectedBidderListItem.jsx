@@ -3,7 +3,7 @@ import {useSWRConfig} from "swr";
 import {requestApi} from "@/utils/axios.settings";
 
 
-const SelectedBidderListItem = ({productID, bidderName, buyerEmail, bidderId, bid, finalBuyerId}) => {
+const SelectedBidderListItem = ({productID, bidderName, buyerEmail, bidderId, bid, isBidActive, finalBuyerId}) => {
     const isSelected = finalBuyerId === bidderId;
 
     const {mutate} = useSWRConfig();
