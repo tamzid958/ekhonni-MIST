@@ -99,7 +99,7 @@ public class BidController {
         return ResponseEntity.ok(bids);
     }
 
-    @GetMapping("/user/popular-products")
+    @GetMapping("/popular-products")
     public ResponseEntity<?> mostBidedProducts() {
         return bidService.popularProducts();
     }
