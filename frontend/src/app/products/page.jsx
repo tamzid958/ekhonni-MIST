@@ -53,9 +53,6 @@ const Product = () => {
     }, [searchValue,categoryValue]);
 
 
-
-
-
     const ChangeHandle = (e) => {
         const { name, value } = e.target;
 
@@ -125,7 +122,7 @@ const Product = () => {
             [pageNumber]:0,
             [categories]:[],
             [startPrice]:0,
-            [endPrice]:750000,
+            [endPrice]:1000000,
             [search]:null,
             [division]:[],
             [sort]:null
