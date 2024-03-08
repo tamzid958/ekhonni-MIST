@@ -33,10 +33,10 @@ const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId
                     <div className="w-full h-full border border-neutral-700 bg-white shadow-lg shadow-slate-500 flex justify-center items-center rounded-lg">
                         <div className="w-[90%] h-[90%] flex flex-col justify-start items-center">
                             <div className="w-full h-[25%] flex flex-row justify-start items-start">
-                                <div className="w-[69%] mr-[1%] h-full border border-neutral-300 overflow-hidden flex justify-start items-center bg-slate-100 shadow-lg shadow-slate-300 rounded-lg transition ease-in-out duration-500 hover:scale-[101%]">
+                                <div className="w-[69%] mr-[1%] h-full border border-neutral-300 overflow-hidden flex justify-start items-center bg-slate-100 shadow-lg shadow-slate-300 rounded-lg ">
                                     <p className="p-3 text-2xl font-medium text-black text-wrap text-ellipsis ">{productName}</p>
                                 </div>
-                                <div className="w-[30%] h-full border border-neutral-300 overflow-hidden flex flex-col justify-center items-center bg-slate-100 shadow-lg shadow-slate-300 rounded-lg transition ease-in-out duration-500 hover:scale-[101%]">
+                                <div className="w-[30%] h-full border border-neutral-300 overflow-hidden flex flex-col justify-center items-center bg-slate-100 shadow-lg shadow-slate-300 rounded-lg ">
                                     <p className="text-lg font-medium mb-[5%]">Bidding Status</p>
                                     <ToggleSwitch bidIsActive={bidIsActive} onClick={handleBiddingStatusChange}/>
                                 </div>

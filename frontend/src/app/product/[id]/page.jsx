@@ -30,7 +30,6 @@ const isPurchased = (userData, productData) => {
     }
 }
 const isFinalBuyer = (userData, productData) => {
-    console.log(userData?.id, "user id", productData?.finalBuyerId, "final buyer id")
     if (productData?.finalBuyerId === userData?.id) {
         return true;
     } else {
