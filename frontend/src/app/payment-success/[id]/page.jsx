@@ -16,7 +16,6 @@ const SslSuccess = ({params}) => {
     const url = "/user/validate";
     const method = "POST";
     const headers = {'Content-Type': 'application/json'}
-    const value = {"tran_id": tranId, "transactionStatus": "SUCCESS"}
 
     const {data: response, trigger} = useSWRMutation([baseUrl, url, method, headers], postCallFetcher)
     return (

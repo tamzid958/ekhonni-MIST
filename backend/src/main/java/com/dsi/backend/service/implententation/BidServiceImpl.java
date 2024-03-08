@@ -138,4 +138,9 @@ public class BidServiceImpl implements BidService{
         }
         return false;
     }
+
+    @Override
+    public Bid fetchBidByProductAndBuyer(Long id, String buyerEmail){
+        return bidRepository.findByProductIdAndBuyerEmail(id, buyerEmail);
+    }
 }
