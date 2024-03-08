@@ -30,7 +30,6 @@ const isPurchased = (userData, productData) => {
     }
 }
 const isFinalBuyer = (userData, productData) => {
-    console.log(userData?.id, "user id", productData?.finalBuyerId, "final buyer id")
     if (productData?.finalBuyerId === userData?.id) {
         return true;
     } else {
@@ -67,7 +66,11 @@ const ProductPage = ({params}) => {
     const router = useRouter();
     const productID = params.id;
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const {data: productData, error: productError, isLoading: productDataIsLoading} = useSWR(`/products/${productID}`, fetcher)
+    const {
+        data: productData,
+        error: productError,
+        isLoading: productDataIsLoading
+    } = useSWR(`/products/${productID}`, fetcher)
     const {data: userData, error: userDataError, isLoading: userDataIsLoading} = useSWR('/user/profile', fetcher)
 
     return (
@@ -150,10 +153,10 @@ const ProductPage = ({params}) => {
                                                      }}/>)}
 
                                         {/*For Buyer : Bidding is Inactive*/}
-                                        {(
+                                        {!productError &&
+                                            !isFinalBuyer(userData, productData) && !isSeller(userData, productData) && !productData.isSold && !productData.isBidActive &&
                                             <p className="px-4 py-1 cursor-default bg-black text-white text-xl shadow-lg shadow-slate-300 rounded-full">Bidding
-                                                Is
-                                                Off</p>) && !productData.isSold && !productData.isBidActive && !isFinalBuyer(userData, productData) && !isSeller(userData, productData) && !productError}
+                                                Is Off</p>}
 
                                         {/*For Buyer : Buy Now Button for Buyer, when Seller has Selected Current User*/}
                                         {!productError
@@ -164,12 +167,12 @@ const ProductPage = ({params}) => {
                                                      }}/>)}
 
                                         {/*For Buyer : Product Has Been Sold*/}
-                                        {!productError && productData.isSold &&
+                                        {!productError && !userDataError && productData.isSold && !isPurchased(userData , productData) &&
                                             (
                                                 <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
 
                                         {/*For Buyer : Product Has Been Purchased By Current User*/}
-                                        {!productError && isPurchased(userData, productData) &&
+                                        {!productError && !userDataError && isPurchased(userData, productData) &&
                                             (
                                                 <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Purchased</p>)}
 
