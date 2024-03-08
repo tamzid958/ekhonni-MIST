@@ -66,9 +66,10 @@ const Categories = () => {
                 <div className={" relative overflow-hidden"}>
                     <div className="mx-8 flex  transition ease-out duration-1000"
                          style={{transform: `translateX(-${currentIndex * 0.5}%)`}}>
-                        {!isLoading && !error && category.map((value, index) => <CategoryCard key={index} img={value.img}
+                        {!isLoading && !error && data && category.map((value, index) => <CategoryCard key={index} img={value.img}
                                                                             categories={value.category}
                                                                             item={data[value.category]}/>)}
+
                     </div>
                     <div>
                         <button
