@@ -24,10 +24,12 @@ jobs:
         with:
           images: ekhonni/frontend
 
-        
-      - name: Locate and use Docker Compose YAML
-        run:  docker compose build
 
+      - name: build docker image
+        run:  cd frontend && docker build -t ekhonni/frontend .
+
+      - name: push docker file to docker hub
+        run: docker push ekhonni/frontend
 
         
 
