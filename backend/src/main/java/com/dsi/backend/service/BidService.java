@@ -2,6 +2,7 @@ package com.dsi.backend.service;
 
 import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.Bid;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,5 +23,7 @@ public interface BidService {
     Boolean changeIsSold(Long id, String buyerEmail);
 
     List<Bid> buyerBids(String buyerEmail);
+
+    ResponseEntity<?> popularProducts();
 
 }
