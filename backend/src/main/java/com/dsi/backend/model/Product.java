@@ -1,10 +1,17 @@
 package com.dsi.backend.model;
 
+import com.dsi.backend.repository.ImageModelRepository;
+import com.dsi.backend.service.ImageModelService;
+import com.dsi.backend.service.implententation.ImageModelServiceImpl;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Set;
+
 
 
 @Setter
@@ -14,6 +21,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 public class Product extends BaseEntity<Long>{
+
     @Column
     private String name;
     private String size;
@@ -39,7 +47,7 @@ public class Product extends BaseEntity<Long>{
 //            inverseJoinColumns = @JoinColumn(name = "image_id")
 //    )
 //    private Set<ImageModel> productImage;
-
+//
 //    @OneToMany(mappedBy = "product")
 //    @JoinColumn(referencedColumnName = "product_id")
 //    private Set<ImageModel> productImage;
@@ -50,4 +58,5 @@ public class Product extends BaseEntity<Long>{
         }
         return null;
     }
+
 }

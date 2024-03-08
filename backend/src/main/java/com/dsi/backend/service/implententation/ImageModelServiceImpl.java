@@ -47,7 +47,7 @@ public class ImageModelServiceImpl implements ImageModelService {
     }
 
     @Override
-    public Set<ImageModel> downloadImage(Long id) {
-        return imageModelRepository.findAllByProductId(id);
+    public Set<ImageModel> downloadImage(Long productId) {
+        return imageModelRepository.findAllByProductId(productId);
     }
 }

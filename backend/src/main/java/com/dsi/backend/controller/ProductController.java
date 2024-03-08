@@ -45,7 +45,7 @@ public class ProductController {
                                          @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         ProductView savedProduct = productService.saveProduct(product, file, token);
 
-        return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
+        return new ResponseEntity<>(productService.getProductById(savedProduct.getId()), HttpStatus.CREATED);
     }
 
     @RequestMapping("/products/filter")
@@ -64,8 +64,12 @@ public class ProductController {
     }
 
     @GetMapping(value = "/products/{id}")
-    public ProductView getProductById(@PathVariable("id") Long id) {
-        return productService.getProductById(id);
+    public ResponseEntity<?> getProductById(@PathVariable("id") Long id) {
+
+        ProductView product = productService.getProductById(id);
+        Set<ImageModel> images = imageModelService.downloadImage(id);
+        Map<String, ?> map = Map.of("product", product, "images", images);
+        return ResponseEntity.ok(map);
     }
 
     @GetMapping("/products/count")

@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.Set;
 
 public interface ImageModelRepository extends JpaRepository<ImageModel,Long> {
-    Set<ImageModel> findAllByProductId(Long product_id);
+    Set<ImageModel> findAllByProductId(Long productId);
 }

@@ -3,9 +3,11 @@ package com.dsi.backend.service.implententation;
 import com.dsi.backend.exception.ProductNotFoundException;
 import com.dsi.backend.model.*;
 
+import com.dsi.backend.projection.ImageModelView;
 import com.dsi.backend.projection.ProductView;
 import com.dsi.backend.repository.AppUserRepository;
 import com.dsi.backend.repository.CategoryRepository;
+import com.dsi.backend.repository.ImageModelRepository;
 import com.dsi.backend.repository.ProductRepository;
 import com.dsi.backend.service.ImageModelService;
 import com.dsi.backend.service.JwtTokenService;
@@ -43,6 +45,9 @@ public class ProductServiceImpl implements ProductService {
     private ImageModelService imageModelService;
 
     @Autowired
+    private ImageModelRepository imageModelRepository;
+
+    @Autowired
     private JwtTokenService jwtTokenService;
 
     @Override
@@ -70,6 +75,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         productRepository.save(product);
+
         ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
         return projectionFactory.createProjection(ProductView.class, product);
     }
@@ -92,8 +98,18 @@ public class ProductServiceImpl implements ProductService {
     public ProductView getProductById(Long id) {
         Product product = productRepository.findById(id).orElseThrow(()->new ProductNotFoundException("Product not found by id: "+id));
 //        Product product = productRepository.findById(id);
+//        Set<ImageModel> imageModels = imageModelRepository.findAllByProductId(product.getId());
+
         ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
+        ProductView productView = projectionFactory.createProjection(ProductView.class, product);
+//        List<ImageModelView> imageModelViews = new ArrayList<ImageModelView>();
+//
+//        for (ImageModel image : imageModels) {
+//            imageModelViews.add(projectionFactory.createProjection(ImageModelView.class, image));
+//        }
+
         return projectionFactory.createProjection(ProductView.class, product);
+        //return Map.of("product", productView, "images", imageModelViews);
     }
 
     @Override
