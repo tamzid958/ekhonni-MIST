@@ -20,6 +20,8 @@ jobs:
 
 
 
+
+
       - name: build docker image
         run:  cd frontend && docker build -t ekhonni/frontend .
 
