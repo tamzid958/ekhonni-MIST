@@ -15,7 +15,7 @@ import {requestApi} from "@/utils/axios.settings";
 
 
 const isSeller = (userData, productData) => {
-    if (userData?.id === productData?.seller.id) {
+    if (userData?.id === productData?.seller?.id) {
         return true;
     } else {
         return false;
@@ -69,7 +69,7 @@ const ProductPage = ({params}) => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const {data: productData, error: productError, isLoading: productDataIsLoading} = useSWR(`/products/${productID}`, fetcher)
     const {data: userData, error: userDataError, isLoading: userDataIsLoading} = useSWR('/user/profile', fetcher)
-
+    console.log(productData);
     return (
         <>
             <Toaster richColors position={"top-right"}/>
@@ -94,7 +94,7 @@ const ProductPage = ({params}) => {
                         <>
                             <div className="w-1/2 h-full  flex justify-center items-center">
                                 <div className="w-[95%] h-[95%] -z-10 relative">
-                                    <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"}
+                                    <Image src={productData.images[0]?.imageByte} alt={"dslr"} fill objectFit={"cover"}
                                            style={{borderRadius: "3%"}}/>
                                 </div>
                             </div>
@@ -105,14 +105,14 @@ const ProductPage = ({params}) => {
                                     </div>
                                     <div className="w-full h-1/5 flex flex-col justify-start items-center border-b">
                                         <div className="w-full h-1/3 flex">
-                                            <p className="text-lg">{productData ? productData.category.category : ""} , {productData ? productData.category.subCategory : ""}</p>
+                                            <p className="text-lg">{productData ? productData.category?.category : ""} , {productData ? productData.category?.subCategory : ""}</p>
                                         </div>
                                         <div className="w-full h-1/3 flex">
-                                            <p className="text-base">{productData ? productData.seller.address : ""}</p>
+                                            <p className="text-base">{productData ? productData.seller?.address : ""}</p>
                                         </div>
                                         <div className="w-full h-1/3 flex">
                                             <p className="text-base">For sale by <span
-                                                className="font-medium">{productData ? productData.seller.name : ""}</span>
+                                                className="font-medium">{productData ? productData.seller?.name : ""}</span>
                                             </p>
                                         </div>
                                     </div>
