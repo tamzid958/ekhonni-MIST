@@ -2,7 +2,7 @@ import BidderListItem from "@/components/BidderListItem";
 import SelectedBidderListItem from "@/components/SelectedBidderListItem";
 import {useState} from "react";
 
-const BidderList = ({isVisible , bidderList , view , finalBuyerId, productID}) => {
+const BidderList = ({isVisible , bidderList , view , finalBuyerId, productID, isBidActive}) => {
 
     const [expandList, setExpandList] = useState(false);
     const timeoutID = setTimeout(() => {
@@ -19,7 +19,7 @@ const BidderList = ({isVisible , bidderList , view , finalBuyerId, productID}) =
                         </label>
                         <div className="w-full overflow-hidden max-h-0 peer-checked:max-h-72 peer-checked:h-72 overflow-y-scroll transition-all ease-in-out duration-1000">
                             <ul className="w-full flex flex-col items-center">
-                                {bidderList ? (
+                                {bidderList && bidderList.length ? (
                                     view === "buyerView" ? (
                                     bidderList.map((bidder) => (
                                         <BidderListItem key={bidder.buyer.id}
@@ -27,20 +27,21 @@ const BidderList = ({isVisible , bidderList , view , finalBuyerId, productID}) =
                                                         bidderId={bidder.buyer.id}
                                                         bidderName={bidder.buyer.name}
                                                         bid={bidder.offeredPrice}
+                                                        isBidActive = {isBidActive}
                                                         option={"buyerView"}/>
                                     ))
-                                ) : (
-                                    finalBuyerId ? (
-                                        bidderList.map((bidder) => (
-                                            <SelectedBidderListItem key={bidder.buyer.id}
-                                                                    productID={productID}
-                                                                    bidderId={bidder.buyer.id}
-                                                                    bidderName={bidder.buyer.name}
-                                                                    bid={bidder.offeredPrice}
-                                                                    buyerEmail={bidder.buyer.email}
-                                                                    option={"sellerView"}
-                                                                    finalBuyerId={finalBuyerId}/>
-                                        ))
+                                    ) : (finalBuyerId ? (
+                                            bidderList.map((bidder) => (
+                                                <SelectedBidderListItem key={bidder.buyer.id}
+                                                                        productID={productID}
+                                                                        bidderId={bidder.buyer.id}
+                                                                        bidderName={bidder.buyer.name}
+                                                                        bid={bidder.offeredPrice}
+                                                                        buyerEmail={bidder.buyer.email}
+                                                                        isBidActive = {isBidActive}
+                                                                        option={"sellerView"}
+                                                                        finalBuyerId={finalBuyerId}/>
+                                            ))
                                     ) : (
                                         bidderList.map((bidder) => (
                                             <BidderListItem key={bidder.buyer.id}
@@ -48,6 +49,7 @@ const BidderList = ({isVisible , bidderList , view , finalBuyerId, productID}) =
                                                             bidderId={bidder.buyer.id}
                                                             bidderName={bidder.buyer.name}
                                                             bid={bidder.offeredPrice}
+                                                            isBidActive = {isBidActive}
                                                             buyerEmail={bidder.buyer.email}
                                                             option="sellerView"/>
                                         ))

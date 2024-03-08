@@ -22,7 +22,7 @@ const LoginPage = () => {
     async function handleSubmit(event) {
         event.preventDefault();
         console.log(formData)
-        const response = await signIn("credentials", {
+        await signIn("credentials", {
             email: formData.email,
             password: formData.password,
             redirect: true,

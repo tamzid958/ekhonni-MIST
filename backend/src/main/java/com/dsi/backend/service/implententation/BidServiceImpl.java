@@ -3,12 +3,14 @@ package com.dsi.backend.service.implententation;
 import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.Bid;
 import com.dsi.backend.model.Product;
+import com.dsi.backend.projection.ProductView;
 import com.dsi.backend.repository.AppUserRepository;
 import com.dsi.backend.repository.BidRepository;
 import com.dsi.backend.repository.ProductRepository;
 import com.dsi.backend.service.BidService;
 import com.dsi.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -137,5 +139,18 @@ public class BidServiceImpl implements BidService{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Bid> buyerBids(String buyerEmail) {
+        AppUser buyer = appUserRepository.findByEmail(buyerEmail);
+        return bidRepository.findAllByBuyer(buyer);
+    }
+
+    @Override
+    public ResponseEntity<?> popularProducts() {
+        List<Long> productId = bidRepository.allPopularBidsOrderByCountDesc();
+        List<ProductView> productViewList = productRepository.findAllByIsApprovedByAdminTrueAndIsBidActiveTrueAndIsSoldFalseAndIdIsIn(productId);
+        return ResponseEntity.ok(productViewList);
     }
 }
