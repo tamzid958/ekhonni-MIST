@@ -1,7 +1,6 @@
 import {Montserrat} from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
-import {StoreProvider} from "@/Store/StoreProvider";
 import SessionProvider from "@/components/SessionProvider";
 import {getServerSession} from "next-auth";
 import Providers from "@/utils/Providers";
@@ -18,17 +17,14 @@ export default async function RootLayout({children}) {
 
     const session = await getServerSession();
     return (
-        <StoreProvider>
             <html lang="en">
             <body className={montserrat.className}>
                 <SessionProvider session={session}>
-                    <Providers>
-                        {children}
-                    </Providers>
+                    <Providers>{children}</Providers>
                 </SessionProvider>
             <Footer/>
             </body>
             </html>
-        </StoreProvider>
+
     );
 }

@@ -1,7 +1,9 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 
+
 const handler = NextAuth({
+    secret: process.env.NEXTAUTH_SECRET,
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -23,6 +25,9 @@ const handler = NextAuth({
             }
         })
     ],
+    jwt: {
+        signingKey: process.env.JWT_SIGNING_PRIVATE_KEY,
+    },
     callbacks: {
         async jwt({token, user}) {
             return {...token, ...user}
@@ -33,16 +38,14 @@ const handler = NextAuth({
             return session;
         }
     },
-
     session: {
         strategy: "jwt",
-        maxAge: 12000 //in seconds
-
+        maxAge: 120000 //in seconds
     },
     pages: {
         signIn: '/login',
         signOut: '/auth/signout',
-        error: '/auth/error', // Error code passed in query string as ?error=
+        error: '/login', // Error code passed in query string as ?error=
         verifyRequest: '/auth/verify-request', // (used for check email message)
         newUser: '/register' // New users will be directed here on first sign in (leave the property out if not of interest)
     }

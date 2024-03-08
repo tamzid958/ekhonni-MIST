@@ -26,7 +26,7 @@ public abstract class BaseEntity <PK extends Serializable> {
                             name = SequenceStyleGenerator.CONFIG_SEQUENCE_PER_ENTITY_SUFFIX,
                             value = "true"
                     ),
-                    @Parameter(name = "initial_value", value = "1"),
+                    @Parameter(name = "initial_value", value = "100"),
                     @Parameter(name = "increment_size", value = "1")
             }
     )

@@ -125,4 +125,10 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.filter(filterRequest);
     }
 
+    @Override
+    public List<ProductView> sellerProducts(String sellerEmail) {
+        AppUser seller = appUserRepository.findByEmail(sellerEmail);
+        return productRepository.findAllBySeller(seller);
+    }
+
 }

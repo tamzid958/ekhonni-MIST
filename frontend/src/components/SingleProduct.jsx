@@ -3,14 +3,17 @@ import React from 'react';
 import Status from "@/components/Status";
 import SmallButton from "@/components/SmallButton";
 import Image from "next/image";
+import Link from "next/link";
 
-const SingleProduct = ({name, location, time, description, category, price, maxbid, totalbid}) => {
+const SingleProduct = ({id, name, location, time, description, category, price, maxbid, totalbid}) => {
     return (
         <>
             {/*the main box*/}
-            <div className="w-7/12 h-56 relative border-black border-2 my-3 flex flex-row justify-center items-center ">
+            <Link href={`/product/${id}`}
+                  className="w-7/12 h-56 relative border-black border-2 my-3 flex flex-row justify-center items-center ">
                 {/*Image box*/}
-                <div className="w-1/4 h-[82%] my-3 relative border-2 border-black flex justify-start items-start -ml-5 ">
+                <div
+                    className="w-1/4 h-[82%] my-3 relative border-2 border-black flex justify-start items-start -ml-5 ">
                     <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"}/>
                 </div>
                 {/*implementation of status*/}
@@ -20,7 +23,7 @@ const SingleProduct = ({name, location, time, description, category, price, maxb
                         <div className=" w-4/5 h-2/8  justify-items-start ">
                             <p className="  text-2xl font-semibold ml-5 text-ellipsis overflow-hidden">{name}</p>
                         </div>
-                            <Status option={"sold"} type={"button"}/>
+                        <Status option={"sold"} type={"button"}/>
                     </div>
                     <div className="w-full h-[62.5%] ">
                         <div className="w-full h-[40%] overflow-hidden">
@@ -50,7 +53,7 @@ const SingleProduct = ({name, location, time, description, category, price, maxb
                         </div>
                     </div>
                 </div>
-            </div>
+            </Link>
         </>
     )
 

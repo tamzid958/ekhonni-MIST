@@ -1,9 +1,8 @@
 "use client"
-import React, {useContext, useEffect, useRef, useState} from "react";
-import {UserContext} from "@/Context/UserContext.jsx";
+import React, { useRef, useState} from "react";
+
 import Button from "@/components/Button";
 import Image from "next/image";
-import axios from "axios";
 import useSWR from "swr";
 import {fetcher} from "@/utils/fetcher";
 
@@ -16,25 +15,7 @@ const ProfileCard = () => {
     const imageClick = () => {
         inputRef.current.click();
     }
-    const formData = new FormData();
 
-
-    // useEffect(() => {
-    //     formData.append("imageFile", img);
-    //
-    //     axios.put(`http://localhost:8080/api/v1/user/profile/upload-image`, formData, {
-    //         headers: {
-    //             Authorization: `Bearer ${token}`,
-    //         }
-    //     })
-    //         .then((res) => {
-    //             console.log(res);
-    //         })
-    //         .catch((err) => {
-    //             console.error("Error fetching data:", err);
-    //         });
-    //
-    // }, [img])
 
 
     const handleChange = async (e) => {

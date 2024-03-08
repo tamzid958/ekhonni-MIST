@@ -16,7 +16,6 @@ const RedirectPage = () => {
             } else {
                 router.push("/")
             }
-
         }
     }, [router, session])
 
@@ -29,6 +28,3 @@ const RedirectPage = () => {
 }
 
 export default RedirectPage;
-
-
-

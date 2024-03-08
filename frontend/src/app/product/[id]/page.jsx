@@ -11,14 +11,17 @@ import {fetcher} from "@/utils/fetcher";
 import {useSession} from "next-auth/react";
 import {toast, Toaster} from "sonner";
 import {useRouter} from "next/navigation";
+import {requestApi} from "@/utils/axios.settings";
 
-const isSeller = (userData, sellerData) => {
-    if (userData?.id === sellerData?.id) {
+
+const isSeller = (userData, productData) => {
+    if (userData?.id === productData?.seller.id) {
         return true;
     } else {
         return false;
     }
 }
+
 const isPurchased = (userData, productData) => {
     if (productData?.isSold && (productData?.finalBuyerId === userData?.id)) {
         return true;
@@ -26,7 +29,14 @@ const isPurchased = (userData, productData) => {
         return false;
     }
 }
-
+const isFinalBuyer = (userData, productData) => {
+    console.log(userData?.id, "user id", productData?.finalBuyerId, "final buyer id")
+    if (productData?.finalBuyerId === userData?.id) {
+        return true;
+    } else {
+        return false
+    }
+}
 const redirectToLogin = (router) => {
     toast.error("You must be logged in to see bidding info. Redirecting...");
     setTimeout(() => {
@@ -34,28 +44,41 @@ const redirectToLogin = (router) => {
     }, 2000)
 }
 
+const handleBuyNow = async (productId, router) => {
+    const req = {"Content-Type": "application/json"}
+    const url = "/user/buy-now";
+    const method = "POST"
+    const data = {
+        "id": productId
+    }
+    try {
+        const {data: response} = await requestApi({req, url, method, data})
+        console.log(response)
+        if (response?.GatewayPageURL) {
+            router.push(response.GatewayPageURL)
+        }
+    } catch (e) {
+        toast.error(e.message);
+    }
+}
 const ProductPage = ({params}) => {
 
     const {data: session} = useSession();
     const router = useRouter();
     const productID = params.id;
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const {
-        data: productData,
-        error: productError,
-        isLoading: productDataIsLoading
-    } = useSWR(`/products/${productID}`, fetcher)
-    const {data: userData, error: userDataError, isLoading: userDataIsLoading} = useSWR(`/user/profile`, fetcher)
+    const {data: productData, error: productError, isLoading: productDataIsLoading} = useSWR(`/products/${productID}`, fetcher)
+    const {data: userData, error: userDataError, isLoading: userDataIsLoading} = useSWR('/user/profile', fetcher)
 
     return (
         <>
-            <Header/>
             <Toaster richColors position={"top-right"}/>
-            {!productDataIsLoading && !productError && isSeller(productData.seller, userData) && modalIsOpen &&
+            <Header/>
+            {!productDataIsLoading && !productError && isSeller(userData, productData) && modalIsOpen &&
                 <SellerSelectModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""}
                                    isBidActive={productData ? productData.isBidActive : false}
-                                   finalBuyerId={productData.finalBuyerID} productID={productID}/>}
-            {!productDataIsLoading && !productError && !userDataIsLoading && !userDataError && !isSeller(productData.seller, userData) && modalIsOpen &&
+                                   finalBuyerId={productData ? productData.finalBuyerId : null} productID={productID}/>}
+            {!productDataIsLoading && !productError && !isSeller(userData, productData) && modalIsOpen &&
                 <BuyerBidModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""}
                                userData={userData ? userData : null}
                                isVisible={productData ? productData.isVisible : false} productID={productID}/>}
@@ -113,28 +136,32 @@ const ProductPage = ({params}) => {
                                     </div>
                                     <div className="w-full h-1/5 flex justify-center items-center border-b">
                                         {/*For Seller : View Bids Modal Open Button For Seller*/}
-                                        {!productError && isSeller(productData.seller, userData) && !productData.isSold &&
+                                        {!productError && isSeller(userData, productData) && !productData.isSold &&
                                             (<Button value={"View Bids"} option={1} type={"button"}
                                                      onClick={() => {
                                                          session ? setModalIsOpen(true) : redirectToLogin(router)
                                                      }}/>)}
 
                                         {/*For Buyer : Bid Modal Open Button For Buyer (Bidding is Active and Not Sold)*/}
-                                        {!productError && !isSeller(productData.seller, userData) && productData.isBidActive && !productData.isSold &&
+                                        {!productError && !isSeller(userData, productData) && productData.isBidActive && !productData.isSold && !productData.finalBuyerId &&
                                             (<Button value={"Bid"} option={1} type={"button"}
                                                      onClick={() => {
                                                          session ? setModalIsOpen(true) : redirectToLogin(router)
                                                      }}/>)}
 
                                         {/*For Buyer : Bidding is Inactive*/}
-                                        {!productError && !isSeller(productData.seller, userData) && !productData.isBidActive && !productData.isSold &&
-                                            (
-                                                <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding
-                                                    Is Off</p>)}
+                                        {(
+                                            <p className="px-4 py-1 cursor-default bg-black text-white text-xl shadow-lg shadow-slate-300 rounded-full">Bidding
+                                                Is
+                                                Off</p>) && !productData.isSold && !productData.isBidActive && !isFinalBuyer(userData, productData) && !isSeller(userData, productData) && !productError}
 
                                         {/*For Buyer : Buy Now Button for Buyer, when Seller has Selected Current User*/}
-                                        {!productError && !isSeller(productData.seller, userData) && !productData.isBidActive && !productData.isSold && productData.finalBuyerId &&
-                                            (<Button value={"Buy Now"} option={0} type={"button"}/>)}
+                                        {!productError
+                                            && !isSeller(userData, productData) && isFinalBuyer(userData, productData) && !productData.isSold &&
+                                            (<Button value={"Buy Now"} option={1} type={"button"}
+                                                     onClick={() => {
+                                                         session ? handleBuyNow(productID, router) : redirectToLogin(router)
+                                                     }}/>)}
 
                                         {/*For Buyer : Product Has Been Sold*/}
                                         {!productError && productData.isSold &&

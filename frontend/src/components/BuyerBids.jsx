@@ -3,13 +3,14 @@ import React from 'react';
 import Status from "@/components/Status";
 import Image from "next/image";
 import SmallButton from "@/components/SmallButton";
+import Link from "next/link";
 
 const BuyerBids = ({id, name, time, description, category, price}) => {
     return (
         <>
-
             {/*the main box*/}
-            <div className="w-7/12 h-56 relative border-black border-2 my-4 flex flex-row justify-center items-center ">
+            <Link href={`/product/${id}`}
+                  className="w-7/12 h-56 relative border-black border-2 my-4 flex flex-row justify-center items-center shadow-lg shadow-slate-300 transition ease-in-out duration-500 hover:-translate-y-1 rounded-md">
                 {/*Image box*/}
                 <div
                     className="w-1/4 h-[82%] relative my-3 border-2 border-black flex justify-start items-start -ml-5 ">
@@ -19,13 +20,13 @@ const BuyerBids = ({id, name, time, description, category, price}) => {
 
 
                 {/*details info div*/}
-                <div className="w-2/3 h-[90%]  justify-center items-center flex flex-col">
+                <div className="w-2/3 h-[90%] pl-4 py-1 justify-center items-center flex flex-col">
 
                     <div className=" w-full h-[25%]  flex flex-row ">
                         <div className=" w-4/5 h-2/8 justify-items-start ">
                             <p className="  text-2xl font-semibold ml-5 overflow-hidden">{name}</p>
                         </div>
-                        <Status  option={""} type={"button"}/>
+                        <Status option={""} type={"button"}/>
 
                     </div>
                     {/*info div*/}
@@ -49,11 +50,7 @@ const BuyerBids = ({id, name, time, description, category, price}) => {
                         <SmallButton value={"Details"} option={"1"} type={"button"}/>
                     </div>
                 </div>
-
-
-            </div>
-
-
+            </Link>
         </>
     )
 

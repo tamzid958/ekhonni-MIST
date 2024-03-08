@@ -115,7 +115,7 @@ const BuyerBidModal = ({setModalOpen, productName, userData, isVisible, productI
                                         <div
                                             className="w-[95%] h-[25%] mt-[4%] flex flex-col justify-center items-start bg-slate-100 border border-neutral-300 shadow-lg shadow-slate-300 rounded-lg">
                                             <p className="text-lg font-medium mb-1 ml-5">Your Bid</p>
-                                            <p className="w-[86%] ml-4 p-1 px-2  bg-slate-200 border border-slate-300 text-center font-medium shadow-inner shadow-slate-400 rounded-md ">{getCurrentUserBid(userData, bidData)}</p>
+                                            <p className="w-[86%] ml-4 p-1 px-2  bg-slate-200 border border-slate-300 text-center font-medium shadow-inner shadow-slate-400 rounded-md ">Tk {getCurrentUserBid(userData, bidData)}</p>
                                         </div>
                                     )}
                                 </div>

@@ -29,4 +29,6 @@ public interface ProductService {
     ResponseEntity<?> removeCategory(Category category);
 
     Page<ProductView> filterProduct(FilterRequest filterRequest);
+
+    List<ProductView> sellerProducts(String sellerEmail);
 }

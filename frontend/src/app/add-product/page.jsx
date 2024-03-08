@@ -6,15 +6,16 @@ import CategoryDropdown from "@/components/CategoryDropdown";
 import Image from "next/image";
 import Header from "@/components/Header";
 import TwoRadioButtons from "@/components/TwoRadioButtons";
-
 import {baseUrl} from "@/utils/baseUrl";
 import {addProductFetcher, postCallFetcher} from "@/utils/fetcher";
 import useSWRMutation from "swr/mutation";
-import {Toaster} from "sonner";
+import {toast, Toaster} from "sonner";
+import {useRouter} from "next/navigation";
 
 
 const AddProductPage = () => {
 
+    const router = useRouter();
     const [image, setImage] = useState('');
     const [product, setProduct] = useState({
         "category": {
@@ -29,8 +30,8 @@ const AddProductPage = () => {
         "isVisible": false
     });
 
-    const updateProduct = (name, value)=>{
-        setProduct((prevData)=>({...prevData, [name]:value}));
+    const updateProduct = (name, value) => {
+        setProduct((prevData) => ({...prevData, [name]: value}));
 
     }
 
@@ -48,22 +49,32 @@ const AddProductPage = () => {
     const method = 'POST';
     const headers = {
         'Content-Type': 'multipart/form-data'
+
     }
     const { trigger} = useSWRMutation([baseUrl, url, method, headers], postCallFetcher);
 
-        const formData = new FormData();
-        const handleSubmit = async (e) => {
+    const formData = new FormData();
+    const handleSubmit = async (e) => {
         e.preventDefault();
         formData.append("product", new Blob([JSON.stringify(product)], {type: 'application/json'}));
         formData.append("imageFile", image);
 
-        try{
+        try {
             const result = await trigger(formData)
-        } catch (e){
-            console.log(e)
+            // console.log(result)
+            if (result?.data) {
+                toast.success("Product added successfully");
+                setTimeout(() => {
+                    router.push("/");
+                }, 2000)
+            }
+            // if(result)
+        } catch (e) {
+            // console.log(e)
+            toast.error(e.message)
         }
     }
-    
+
     return (
 
         <>
@@ -101,13 +112,16 @@ const AddProductPage = () => {
                                             Below</p>
                                     </div>
                                     <div className="w-5/6 h-[75%] flex flex-col justify-start items-center">
-                                        <CategoryDropdown name={"category"} updateProduct={(name, value)=>updateProduct(name, value)}/>
-                                        <TextField placeholder={"Product Name"} type={"text"} name={"name"} value={product.name}
+                                        <CategoryDropdown name={"category"}
+                                                          updateProduct={(name, value) => updateProduct(name, value)}/>
+                                        <TextField placeholder={"Product Name"} type={"text"} name={"name"}
+                                                   value={product.name}
                                                    onChange={(e) => {
                                                        // setName(e.target.value)
                                                        updateProduct(e.target.name, e.target.value)
                                                    }}/>
-                                        <TextField placeholder={"Product Size"} type={"text"} name={"size"} value={product.size}
+                                        <TextField placeholder={"Product Size"} type={"text"} name={"size"}
+                                                   value={product.size}
                                                    onChange={(e) => {
                                                        // setSize(e.target.value)
                                                        updateProduct(e.target.name, e.target.value)
@@ -126,11 +140,13 @@ const AddProductPage = () => {
                                     <div className="w-5/6 h-[15%] flex justify-start items-center">
                                         <TwoRadioButtons label={"Condition"} inputLabel1={"Used"} inputLabel2={"New"}
                                                          name={"usedCondition"}
-                                                         value={product.usedCondition} setValue={(name,value)=>updateProduct(name,value)}/>
+                                                         value={product.usedCondition}
+                                                         setValue={(name, value) => updateProduct(name, value)}/>
                                         <TwoRadioButtons label={"Bidding"} inputLabel1={"Public"}
                                                          inputLabel2={"Private"}
                                                          name={"isVisible"}
-                                                         value={product.isVisible} setValue={(name, value)=>updateProduct(name,value)}/>
+                                                         value={product.isVisible}
+                                                         setValue={(name, value) => updateProduct(name, value)}/>
                                     </div>
                                 </div>
                             </div>
