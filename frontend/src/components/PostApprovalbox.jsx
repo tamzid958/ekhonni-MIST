@@ -43,15 +43,15 @@ const PostApprovalbox = ({id, name, location, time, description, category, subCa
                 {/*details info div*/}
                 <div className="w-2/3 h-[90%] pb-2 justify-center items-center flex flex-col">
 
-                    <div className=" w-full h-[25%]  flex flex-row ">
+                    <div className=" w-full h-[20%]  flex flex-row ">
                         <div className=" w-full h-2/8 justify-items-start ">
                             <p className="  text-2xl font-semibold ml-5 truncate overflow-hidden">{name}</p>
                         </div>
 
                     </div>
                     {/*info div*/}
-                    <div className="w-full h-[62.5%] ">
-                        <div className="w-full h-[40%]">
+                    <div className="w-full h-[67.5%] ">
+                        <div className="w-full h-[40%] flex items-start">
                             <p className="pl-5 font-light">{description}</p>
                         </div>
                         <div className="w-full h-[25%] flex flex-row">
