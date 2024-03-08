@@ -1,6 +1,7 @@
 import Button from "@/components/SmallButton";
 import {requestApi} from "@/utils/axios.settings";
 import {useSWRConfig} from "swr";
+import {toast, Toaster} from "sonner";
 
 const BidderListItem = ({productID, buyerEmail, bidderName, bidderId, bid, isBidActive, option}) => {
     const {mutate} = useSWRConfig();
@@ -11,10 +12,12 @@ const BidderListItem = ({productID, buyerEmail, bidderName, bidderId, bid, isBid
         }
         mutate(`user/products/bid/fetch?id=${productID}`);
         mutate(`/products/${productID}`);
+        toast.success("Buyer accepted!");
     }
 
     return (
         <>
+            <Toaster richColors position={"top-right"}/>
             {option === "buyerView" ? (
                 <li className="w-[95%] flex flex-row items-center justify-center p-3 mb-2 list-none cursor-default rounded-lg bg-slate-100 border border-slate-300 shadow-lg shadow-slate-300 group transition ease-in-out duration-500 hover:scale-[101%] hover:-translate-y-1">
                     <div className="w-3/5 flex items-center p-1 text-base overflow-hidden">{bidderName}</div>
