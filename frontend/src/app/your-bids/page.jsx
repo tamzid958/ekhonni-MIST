@@ -1,12 +1,27 @@
 "use client"
+
 import BuyerBids from "@/components/BuyerBids";
-
-
 import React from "react";
+import Header from "@/components/Header";
 
+const isPurchased = (userData, productData) => {
+    if (productData?.isSold && (productData?.finalBuyerId === userData?.id)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+const isFinalBuyer = (userData, productData) => {
+    console.log(userData?.id, "user id", productData?.finalBuyerId, "final buyer id")
+    if (productData?.finalBuyerId === userData?.id) {
+        return true;
+    } else {
+        return false
+    }
+}
 export default function YourBids() {
 
-
+    // const {data, error, isLoading} = useSWR("/", fetcher)
     const data = [
         {
             id: '1',
@@ -62,6 +77,7 @@ export default function YourBids() {
     ]
     return (
         <>
+            <Header/>
             <div>
                 <p className="font-bold text-3xl ml-[300px] my-4 ">Your Bids</p>
             </div>
