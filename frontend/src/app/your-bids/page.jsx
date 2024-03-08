@@ -17,8 +17,8 @@ export default function YourBids() {
             <div>
                 <p className="font-bold text-3xl ml-[300px] my-4 ">Your Bids</p>
             </div>
-            {data && userData &&
-            <div className="w-full min-h-[350px] h-auto flex flex-col justify-start items-center ">
+            {data && userData && data.length !== 0 &&
+                <div className="w-full min-h-[350px] h-auto flex flex-col justify-start items-center ">
                 {data.map((item) => (
                 <BuyerBids key={item.id} id={item.product.id} name={item.product.name}
                            description={item.product.description} price={item.offeredPrice}
@@ -32,7 +32,7 @@ export default function YourBids() {
 
             </div>
             }
-            {!data && (
+            {!data || data && data.length === 0 && (
                 <div className="w-[100%] min-h-[500px] h-auto flex justify-center items-start ">
                     <p className="p-4 px-8 mt-40 cursor-pointer text-xl text-gray-500 rounded-lg ">
                         Products on which you have bid will be shown here
