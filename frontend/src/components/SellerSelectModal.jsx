@@ -10,14 +10,14 @@ import {requestApi} from "@/utils/axios.settings";
 
 const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId, productID}) => {
     const {data, error, isLoading} = useSWR(`user/products/bid/fetch?id=${productID}`, bidFetcher, {refreshInterval: 1000 });
-    const [bidIsActive, setBidIsActive] = useState(isBidActive)
+    let bidIsActive = isBidActive;
     console.log(data);
     const {mutate} = useSWRConfig();
     const handleBiddingStatusChange = (e) => {
         const response= requestApi({url: `user/products/bid/seller/activity?id=${productID}`, method : "POST"});
         mutate(`user/products/bid/fetch?id=${productID}`);
         mutate(`/products/${productID}`);
-        setBidIsActive(!bidIsActive);
+        bidIsActive= !bidIsActive;
     }
 
     const handleModalCloseOnBgClick = (e) => {
@@ -44,7 +44,7 @@ const SellerSelectModal = ({setModalOpen, productName, isBidActive, finalBuyerId
                             <div className="w-full h-[75%] flex flex-row justify-center items-center">
                                 <div className="w-full h-full flex justify-end items-start">
                                     {!error && !isLoading && data && (
-                                        <BidderList isVisible={true} bidderList={data} view={"sellerView"} finalBuyerId={finalBuyerId} productID={productID}/>
+                                        <BidderList isVisible={true} bidderList={data} view={"sellerView"} finalBuyerId={finalBuyerId} productID={productID} isBidActive={isBidActive}/>
                                     )}
 
                                 </div>

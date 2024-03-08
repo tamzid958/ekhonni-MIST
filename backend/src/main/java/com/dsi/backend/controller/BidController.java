@@ -10,8 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1/user/products/bid")
+@RequestMapping("/api/v1")
 public class BidController {
 
     @Autowired
@@ -20,7 +22,7 @@ public class BidController {
     @Autowired
     private JwtTokenService jwtTokenService;
 
-    @PostMapping("/buyer/save")
+    @PostMapping("/user/products/bid/buyer/save")
     public ResponseEntity<?> saveBid(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam Long id, @RequestParam Double offeredPrice) {
         String buyerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
 
@@ -33,14 +35,14 @@ public class BidController {
         }
     }
 
-    @GetMapping("/fetch")
+    @GetMapping("/user/products/bid/fetch")
     public ResponseEntity<?> fetchBids(@RequestParam Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String email = jwtTokenService.getUsernameFromToken(token.substring(7));
 
         return new ResponseEntity<>(bidService.fetchBids(id, email), HttpStatus.OK);
     }
 
-    @PostMapping("/seller/activity")
+    @PostMapping("/user/products/bid/seller/activity")
     public ResponseEntity<?> changeBidActivity(@RequestParam Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String sellerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
 
@@ -50,7 +52,7 @@ public class BidController {
         else return new ResponseEntity<>("Unauthorized action.", HttpStatus.UNAUTHORIZED);
     }
 
-    @PostMapping("/seller/visibility")
+    @PostMapping("/user/products/bid/seller/visibility")
     public ResponseEntity<?> changeBidVisibility(@RequestParam Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String sellerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
 
@@ -60,7 +62,7 @@ public class BidController {
         else return new ResponseEntity<>("Unauthorized action.", HttpStatus.UNAUTHORIZED);
     }
 
-    @PostMapping("/seller/accept-buyer")
+    @PostMapping("/user/products/bid/seller/accept-buyer")
     public ResponseEntity<?> acceptBuyer(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam Long id, @RequestParam String buyerEmail) {
         String sellerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
 
@@ -70,7 +72,7 @@ public class BidController {
         else return new ResponseEntity<>("Unauthorized action.", HttpStatus.UNAUTHORIZED);
     }
 
-    @PostMapping("/seller/revert-buyer")
+    @PostMapping("/user/products/bid/seller/revert-buyer")
     public ResponseEntity<?> revertBuyer(@RequestParam Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String sellerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
 
@@ -80,7 +82,7 @@ public class BidController {
         else return new ResponseEntity<>("Unauthorized action.", HttpStatus.UNAUTHORIZED);
     }
 
-    @PostMapping("/buyer/buy-now")
+    @PostMapping("/user/products/bid/buyer/buy-now")
     public ResponseEntity<?> buyNow(@RequestParam Long id, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String buyerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
 
@@ -88,6 +90,18 @@ public class BidController {
         if (result)
             return new ResponseEntity<>("Purchase Successful", HttpStatus.OK);
         else return new ResponseEntity<>("Unauthorized action.", HttpStatus.UNAUTHORIZED);
+    }
+
+    @GetMapping("/user/your-bids")
+    public ResponseEntity<List<Bid>> yourProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        String buyerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
+        List<Bid> bids = bidService.buyerBids(buyerEmail);
+        return ResponseEntity.ok(bids);
+    }
+
+    @GetMapping("/popular-products")
+    public ResponseEntity<?> mostBidedProducts() {
+        return bidService.popularProducts();
     }
 
 }

@@ -9,7 +9,7 @@ import Header from "@/components/Header";
 import useSWR from "swr";
 import {fetcher} from "@/utils/fetcher";
 import {useSession} from "next-auth/react";
-import {toast} from "sonner";
+import {toast, Toaster} from "sonner";
 import {useRouter} from "next/navigation";
 import {requestApi} from "@/utils/axios.settings";
 

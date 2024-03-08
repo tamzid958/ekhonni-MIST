@@ -2,10 +2,13 @@ import Button from "@/components/SmallButton";
 import {requestApi} from "@/utils/axios.settings";
 import {useSWRConfig} from "swr";
 
-const BidderListItem = ({productID, buyerEmail, bidderName, bidderId, bid, option}) => {
+const BidderListItem = ({productID, buyerEmail, bidderName, bidderId, bid, isBidActive, option}) => {
     const {mutate} = useSWRConfig();
     const handleAccept = (e) => {
         const response= requestApi({url: `user/products/bid/seller/accept-buyer?id=${productID}&buyerEmail=${buyerEmail}`, method : "POST"});
+        if (isBidActive){
+            const changeStatus= requestApi({url: `user/products/bid/seller/activity?id=${productID}`, method : "POST"});
+        }
         mutate(`user/products/bid/fetch?id=${productID}`);
         mutate(`/products/${productID}`);
     }
