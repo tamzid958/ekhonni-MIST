@@ -33,7 +33,7 @@ const Product = () => {
         sort: null
     })
     const {data:value,error,isLoading} = useSWR([url,method,data],reqFetcher)
-
+    console.log(data)
 
 
 
