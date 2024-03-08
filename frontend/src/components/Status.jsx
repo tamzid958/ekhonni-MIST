@@ -12,7 +12,7 @@ const Status = ({value, option, type, onClick}) => {
                 <button
                     className=" absolute top-3 right-3 px-2 py-1 border border-slate-300 bg-slate-200 shadow-slate-400 shadow-sm text-black rounded-full font-semibold  transition duration-200 ease-in-out hover:scale-105 active:scale-90 "
                     type={type} onClick={onClick}>
-                    {"Ongoing"}
+                    {"Bid Ongoing"}
                 </button>
             ) : option === "buynow" ? (
                     <button
@@ -20,24 +20,19 @@ const Status = ({value, option, type, onClick}) => {
                         type={type} onClick={onClick}>
                         {"Buy Now"}
                     </button>
-                )
-
-                : option === "paused" ? (
+            ) : option === "paused" ? (
                         <button
                             className="absolute top-3 right-3 px-2 py-1 border border-slate-300 bg-slate-200 shadow-slate-400 shadow-sm text-slate-500 rounded-lg font-semibold "
                             type={type} onClick={onClick}>
-                            {"Bidding Paused"}
+                            {"Bid Paused"}
                         </button>
-                    )
-                    :
-                    option === "sold" ? (
-                            <button
-                                className="absolute top-3 right-3 px-2 py-1 border border-slate-300 bg-slate-200 shadow-slate-400 shadow-sm text-slate-600 rounded-full font-semibold"
-                                type={type} onClick={onClick}>
-                                {"Sold"}
-                            </button>
-                        ) :
-                        <></>}
+            ) : option === "sold" ? (
+                        <button
+                            className="absolute top-3 right-3 px-4 py-1 border border-slate-300 bg-slate-200 shadow-slate-400 shadow-sm text-slate-600 rounded-full font-semibold"
+                            type={type} onClick={onClick}>
+                            {"Sold"}
+                        </button>
+            ) : <></>}
 
         </>
     )

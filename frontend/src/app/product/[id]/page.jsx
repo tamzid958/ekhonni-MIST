@@ -168,12 +168,12 @@ const ProductPage = ({params}) => {
                                                      }}/>)}
 
                                         {/*For Buyer : Product Has Been Sold*/}
-                                        {!productError && productData.isSold &&
+                                        {!productError && !userDataError && productData.isSold && !isPurchased(userData , productData) &&
                                             (
                                                 <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
 
                                         {/*For Buyer : Product Has Been Purchased By Current User*/}
-                                        {!productError && isPurchased(userData, productData) &&
+                                        {!productError && !userDataError && isPurchased(userData, productData) &&
                                             (
                                                 <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Purchased</p>)}
 

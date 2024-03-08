@@ -5,7 +5,7 @@ import Image from "next/image";
 import SmallButton from "@/components/SmallButton";
 import Link from "next/link";
 
-const BuyerBids = ({id, name, subcategory, description, category, price}) => {
+const BuyerBids = ({id, name, subcategory, description, category, price , isSold , isBidActive , finalBuyerId , userId}) => {
     return (
         <>
             {/*the main box*/}
@@ -25,7 +25,12 @@ const BuyerBids = ({id, name, subcategory, description, category, price}) => {
                         <div className=" w-4/5 h-2/8 justify-items-start ">
                             <p className="  text-2xl font-semibold ml-5 overflow-hidden">{name}</p>
                         </div>
-                        <Status option={""} type={"button"}/>
+                        {isSold && finalBuyerId !== userId && <Status option={"sold"} type={"button"}/>}
+                        {isSold && finalBuyerId === userId && <Status option={"purchased"} type={"button"}/>}
+                        {!isSold && finalBuyerId === userId && <Status option={"buynow"} type={"button"}/>}
+                        {isBidActive && !isSold && !finalBuyerId && <Status option={"ongoing"} type={"button"}/>}
+                        {!isBidActive && !isSold && finalBuyerId !== userId &&  <Status option={"paused"} type={"button"}/>}
+
                     </div>
                     {/*info div*/}
                     <div className="w-full h-[62.5%] ">
