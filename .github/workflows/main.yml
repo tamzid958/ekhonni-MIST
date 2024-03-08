@@ -24,6 +24,12 @@ jobs:
         with:
           images: ekhonni/frontend
 
+
+      - name: test
+        run:  ls -la
+
+      - name: test2
+        run:  pwd
         
       - name: build docker image
         run:  docker build -t ekhonni/frontend .\frontend\
