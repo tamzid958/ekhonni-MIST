@@ -33,7 +33,7 @@ const Product = () => {
         sort: null
     })
     const {data:value,error,isLoading} = useSWR([url,method,data],reqFetcher)
-
+    console.log(data)
 
 
 
@@ -43,14 +43,14 @@ const Product = () => {
         if(searchValue){
             setData((prevData) => ({ ...prevData, [search]: searchValue }));
         }
-        if(categoryValue && !data.categories.some(category => category.name === categoryValue)){
-            setData((prevState)=>({
-                ...prevState,
-                [categories]:[...prevState.categories,{name:categoryValue,subCategories:[]}]
-            }))
-        }
+        // if(categoryValue && !data.categories.some(category => category.name === categoryValue)){
+        //     setData((prevState)=>({
+        //         ...prevState,
+        //         [categories]:[...prevState.categories,{name:categoryValue,subCategories:[]}]
+        //     }))
+        // }
 
-    }, [searchValue,categoryValue]);
+    }, [searchValue]);
 
 
     const ChangeHandle = (e) => {
