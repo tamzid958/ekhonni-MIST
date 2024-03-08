@@ -17,7 +17,7 @@ export default function YourBids() {
                 <p className="font-bold text-3xl ml-[300px] my-4 ">Your Bids</p>
             </div>
             {data && userData &&
-            <div className="w-full min-h-[500px] h-auto flex flex-col justify-start items-center ">
+            <div className="w-full min-h-[350px] h-auto flex flex-col justify-start items-center ">
                 {data.map((item) => (
                 <BuyerBids key={item.id} id={item.product.id} name={item.product.name}
                            description={item.product.description} price={item.offeredPrice}

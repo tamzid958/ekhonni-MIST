@@ -35,17 +35,16 @@ const BuyerBids = ({id, name, subcategory, description, category, price , isSold
                     {/*info div*/}
                     <div className="w-full h-[62.5%] ">
                         <div className="w-full h-[45%] ">
-                            <p className="pl-5 overflow-hidden">{description}</p>
+                            <p className="pl-5 overflow-hidden font-light">{description}</p>
                         </div>
-                        <div className="w-full h-[20%] ">
-                            <p className="pl-5 text-lg">Your Bid : <span
-                                className="text-cyan-950 font-medium">Tk {price}</span>
-                            </p>
-                        </div>
-                        <div className="w-full h-[40%] mt-3">
+                        <div className="w-full h-[20%]">
                             <p className="pl-5"> {category}, {subcategory}</p>
                         </div>
-
+                        <div className="w-full h-[40%] flex items-center">
+                            <p className="pl-5 text-lg ">Your Bid : <span
+                                className="font-medium">Tk {price}</span>
+                            </p>
+                        </div>
 
                     </div>
                     <div className="w-full h-[12.5%] ml-8 mt-5 flex items-end ">
