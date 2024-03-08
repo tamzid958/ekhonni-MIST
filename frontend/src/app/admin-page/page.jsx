@@ -44,7 +44,7 @@ export default function AdminPage() {
             <div>
                 <p className="font-bold text-3xl ml-[340px] my-4 ">Posts to Approve</p>
             </div>
-            <div className="w-full h-auto flex flex-col justify-start items-center ">
+            <div className="w-full h-auto min-h-[400px] flex flex-col justify-start items-center ">
 
 
                 {!error && !isLoading && data && data.products && data.products.map((item) => (
