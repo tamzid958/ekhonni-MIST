@@ -2,7 +2,7 @@ name: Publish Docker image
 
 on:
   push:
-    branches: ['production']
+    branches: ['docker']
 
 jobs:
   push_to_registry:
@@ -23,6 +23,8 @@ jobs:
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: ekhonni/frontend
+
+
 
 
       - name: build docker image
