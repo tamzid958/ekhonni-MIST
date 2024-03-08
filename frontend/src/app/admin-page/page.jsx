@@ -24,9 +24,6 @@ export default function AdminPage() {
     const [addCategoryModalIsOpen, setAddCategoryModalIsOpen] = useState(false)
 
     const {data, error, isLoading} = useSWR("/admin/products/review", fetcher);
-    console.log(data)
-
-
     return (
         <>
             <AdminNav setAdminModalIsOpen={setAdminModalIsOpen} adminModalIsOpen={adminModalIsOpen}/>
@@ -45,8 +42,6 @@ export default function AdminPage() {
                 <p className="font-bold text-3xl ml-[340px] my-4 ">Posts to Approve</p>
             </div>
             <div className="w-full h-auto min-h-[400px] flex flex-col justify-start items-center ">
-
-
                 {!error && !isLoading && data && data.products && data.products.map((item) => (
                     <PostApprovalbox key={item.id} id={item.id} name={item.name} username={item.seller.name}
                                      description={item.description} price={item.startingPrice}
@@ -55,7 +50,15 @@ export default function AdminPage() {
                                      time={new Date(item.productTime).toLocaleDateString('en-GB')}
                     />
                 ))}
+                {!data || data && data.length === 0 && (
+                    <div className="w-[100%] min-h-[500px] h-auto flex justify-center items-start ">
+                        <p className="p-4 px-8 mt-40 cursor-pointer text-xl text-gray-500 rounded-lg ">
+                            No products to review. Check back later!
+                        </p>
+                    </div>)
+                }
             </div>
+
         </>
     )
 }
