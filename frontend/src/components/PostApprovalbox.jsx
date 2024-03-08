@@ -1,37 +1,43 @@
 "use client"
-import React, { useState } from 'react';
-import Button from "@/components/Button";
+import React from 'react';
 
 import SmallButton from "@/components/SmallButton";
 import Image from "next/image";
-import axios from "axios";
 import {toast} from "sonner";
+import {requestApi} from "@/utils/axios.settings";
+import {useSWRConfig} from "swr";
 
-const PostApprovalbox = ({id, name, location, time, description, category, subCategory, price, username}) =>
-{
-    const handleAccept = (status) => {
-       //const response = axios.post(`http://localhost:8080/api/v1/admin/products/${id}`, params);
+const PostApprovalbox = ({id, name, location, time, description, category, subCategory, price, username}) => {
 
-        axios.put(`http://localhost:8080/api/v1/admin/products/${id}?isApprovedByAdmin=${status}`)
-            .then((res)=>{
-                console.log(res);
-                //router.push('/');
+    const {mutate} = useSWRConfig();
+    let isApprovedByAdmin = "";
+    const handleAccept = async (e,value) => {
+        e.preventDefault();
+            try {
+                const res = await requestApi({
+                    url: `/admin/products/${id}`,
+                    method: "PUT",
+                    params: {
+                        isApprovedByAdmin: value
+                    }
+                });
 
-            })
-            .catch((err)=>{
-                console.error("Err :"+err);
-                toast.error("Not working")
-            })
-    }
-    return(
+                mutate("/admin/products/review");
+
+            } catch (error) {
+                toast.error("An unexpected error occurred. Please try again.");
+            }
+    };
+
+    return (
         <>
 
             {/*the main box*/}
-            <div className="w-7/12 h-56 border-black border-2 my-4 flex flex-row justify-center items-center ">
+            <div className="w-7/12 h-56 border-black border-2 my-4 flex flex-row justify-center items-center ml-16 ">
                 {/*Image box*/}
                 <div
                     className="w-1/4 h-[82%]  relative my-3 border-2 border-black flex justify-start items-start -ml-5 ">
-                    <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"} />
+                    <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"}/>
                 </div>
 
                 {/*details info div*/}
@@ -74,14 +80,18 @@ const PostApprovalbox = ({id, name, location, time, description, category, subCa
                     <div className="w-full h-[12.5%] -mt-3 flex flex-row justify-start items-start">
                         <div className="w-[25%] pl-4">
                             <SmallButton
-                                onClick={(e)=>handleAccept(true)}
-                                value={"Approve"} option={"1"} type={"button"}/>
+                                // onClick={(e) => handleInputChange(true)}
+                                onClick={(e) => handleAccept(e,true)}
+                                value={"Approve"}
+                                option={"1"} type={"button"}/>
                         </div>
-                       <div className="w-[25%]">
-                           <SmallButton
-                               onClick={(e)=>handleAccept(false)}
-                               value={"Decline"} option={"1"} type={"button"}/>
-                       </div>
+                        <div className="w-[25%]">
+                            <SmallButton
+                                // onClick={(e) => handleInputChange(false)}
+                                onClick={(e) => handleAccept(e, false)}
+                                value={"Decline"}
+                                option={"1"} type={"button"}/>
+                        </div>
 
                     </div>
                 </div>

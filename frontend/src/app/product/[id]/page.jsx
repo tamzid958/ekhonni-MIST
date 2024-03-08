@@ -1,88 +1,184 @@
 "use client"
 
 import Image from "next/image";
-import axios from "axios";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import Button from "@/components/Button";
 import SellerSelectModal from "@/components/SellerSelectModal";
 import BuyerBidModal from "@/components/BuyerBidModal";
 import Header from "@/components/Header";
+import useSWR from "swr";
+import {fetcher} from "@/utils/fetcher";
+import {useSession} from "next-auth/react";
+import {toast, Toaster} from "sonner";
+import {useRouter} from "next/navigation";
+import {requestApi} from "@/utils/axios.settings";
 
 
-const ProductPage = ({ params }) => {
+const isSeller = (userData, productData) => {
+    if (userData?.id === productData?.seller.id) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
-    const userIsSeller = true;
-    const biddingActive = false;
-    const isSold = false;
-    const [modalIsOpen , setModalIsOpen] = useState(false);
-    const currentUserEmail = localStorage.getItem("currentUserEmail");
-    const [data , setData] = useState([]);
+const isPurchased = (userData, productData) => {
+    if (productData?.isSold && (productData?.finalBuyerId === userData?.id)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+const isFinalBuyer = (userData, productData) => {
+    console.log(userData?.id, "user id", productData?.finalBuyerId, "final buyer id")
+    if (productData?.finalBuyerId === userData?.id) {
+        return true;
+    } else {
+        return false
+    }
+}
+const redirectToLogin = (router) => {
+    toast.error("You must be logged in to see bidding info. Redirecting...");
+    setTimeout(() => {
+        router.push('/login')
+    }, 2000)
+}
+
+const handleBuyNow = async (productId, router) => {
+    const req = {"Content-Type": "application/json"}
+    const url = "/user/buy-now";
+    const method = "POST"
+    const data = {
+        "id": productId
+    }
+    try {
+        const {data: response} = await requestApi({req, url, method, data})
+        console.log(response)
+        if (response?.GatewayPageURL) {
+            router.push(response.GatewayPageURL)
+        }
+    } catch (e) {
+        toast.error(e.message);
+    }
+}
+const ProductPage = ({params}) => {
+
+    const {data: session} = useSession();
+    const router = useRouter();
     const productID = params.id;
-    // const  fetchProductDetails = async () => {
-    //     const response = await axios.get(`http://localhost:8080/api/v1/products/${product_id}`);
-    //     console.log(response);
-    //     setData(response.data);
-    // }
-    // useEffect(() => {
-    //     fetchProductDetails().then(r => {
-    //         console.log(r);
-    //     });
-    // }, []);
-    // if(data.seller.email === currentUserEmail) {
-    //      userIsSeller = true;
-    // }
-    // else {
-    //      userIsSeller = false;
-    // }
+    const [modalIsOpen, setModalIsOpen] = useState(false);
+    const {data: productData, error: productError, isLoading: productDataIsLoading} = useSWR(`/products/${productID}`, fetcher)
+    const {data: userData, error: userDataError, isLoading: userDataIsLoading} = useSWR('/user/profile', fetcher)
+
     return (
         <>
-            <Header />
-            {userIsSeller && modalIsOpen && <SellerSelectModal setModalOpen={setModalIsOpen} maxBid={65000} isBidActive={biddingActive}/>}
-            {!userIsSeller && modalIsOpen && <BuyerBidModal setModalOpen={setModalIsOpen} maxBid={65000} visibility={true} productID={productID} />}
+            <Toaster richColors position={"top-right"}/>
+            <Header/>
+            {!productDataIsLoading && !productError && isSeller(userData, productData) && modalIsOpen &&
+                <SellerSelectModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""}
+                                   isBidActive={productData ? productData.isBidActive : false}
+                                   finalBuyerId={productData ? productData.finalBuyerId : null} productID={productID}/>}
+            {!productDataIsLoading && !productError && !isSeller(userData, productData) && modalIsOpen &&
+                <BuyerBidModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""}
+                               userData={userData ? userData : null}
+                               isVisible={productData ? productData.isVisible : false} productID={productID}/>}
             <div className="w-full h-[700px] flex flex-col justify-center items-center">
-                <h1 className="font-semibold text-4xl mb-[1%]">Product Details</h1>
-                <div className="w-4/5 h-5/6 border-2 border-black flex flex-row justify-start items-center rounded-lg">
-                    <div className="w-1/2 h-full  flex justify-center items-center">
-                        <div className="w-[95%] h-[95%] -z-10 relative">
-                            <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"} style={{borderRadius:"3%"}}/>
-                        </div>
-                    </div>
-                    <div className="w-1/2 h-full flex justify-center items-center">
-                        <div className="w-3/4 h-full flex flex-col justify-center items-center">
-                            <div className="w-full h-1/5 flex justify-start items-center  border-b">
-                                <h1 className="text-3xl text-black font-medium text-left">
-                                    Product Name
-                                </h1>
-                            </div>
-                            <div className="w-full h-1/5 flex flex-col justify-start items-center border-b">
-                                <div className="w-full h-1/3 flex">
-                                    <p className="text-base">Category , Subcategory</p>
-                                </div>
-                                <div className="w-full h-1/3 flex">
-                                    <p className="text-base">Location</p>
-                                </div>
-                                <div className="w-full h-1/3 flex">
-                                    <p className="text-base">For sale by sellerName</p>
+                <div className="flex w-full justify-center items-center ">
+                    <h1 className="font-semibold text-4xl mb-[1%]">Product Details</h1>
+                </div>
+                <div className="w-4/5 h-5/6 border-2 border-black flex flex-row justify-center items-center rounded-lg">
+                    {productDataIsLoading && (
+                        <h1 className="text-2xl font-light">Loading Product Details...</h1>
+                    )}
+                    {!productDataIsLoading && (
+                        <>
+                            <div className="w-1/2 h-full  flex justify-center items-center">
+                                <div className="w-[95%] h-[95%] -z-10 relative">
+                                    <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"}
+                                           style={{borderRadius: "3%"}}/>
                                 </div>
                             </div>
-                            <div className="w-full h-1/5 flex items-center border-b">
-                                <p className="text-lg">Description</p>
+                            <div className="w-1/2 h-full flex justify-center items-center">
+                                <div className="w-3/4 h-full flex flex-col justify-center items-center">
+                                    <div className="w-full h-1/5 flex justify-start items-center  border-b">
+                                        <h1 className="text-3xl text-black font-medium text-left">{productData ? productData.name : ""}</h1>
+                                    </div>
+                                    <div className="w-full h-1/5 flex flex-col justify-start items-center border-b">
+                                        <div className="w-full h-1/3 flex">
+                                            <p className="text-lg">{productData ? productData.category.category : ""} , {productData ? productData.category.subCategory : ""}</p>
+                                        </div>
+                                        <div className="w-full h-1/3 flex">
+                                            <p className="text-base">{productData ? productData.seller.address : ""}</p>
+                                        </div>
+                                        <div className="w-full h-1/3 flex">
+                                            <p className="text-base">For sale by <span
+                                                className="font-medium">{productData ? productData.seller.name : ""}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className="w-full h-1/5 flex items-start mt-2 border-b">
+                                        <p className="font-light">{productData ? productData.description : ""}</p>
+                                    </div>
+                                    <div className="w-full h-1/5 flex flex-col justify-center items-start border-b">
+                                        <p className="text-lg mb-2">Starting Price : <span
+                                            className="font-medium">{productData ? "Tk " + productData.startingPrice : ""}</span>
+                                        </p>
+                                        <p className="text-lg mb-2">Size : <span
+                                            className="font-medium">{productData ? productData.size : ""}</span></p>
+                                        <p className="text-lg">Condition : &nbsp;
+                                            {productData && productData.usedCondition && (
+                                                <span className="font-medium">Used</span>
+                                            )}
+                                            {productData && !productData.usedCondition && (
+                                                <span className="font-medium">New</span>
+                                            )}
+                                        </p>
+                                    </div>
+                                    <div className="w-full h-1/5 flex justify-center items-center border-b">
+                                        {/*For Seller : View Bids Modal Open Button For Seller*/}
+                                        {!productError && isSeller(userData, productData) && !productData.isSold &&
+                                            (<Button value={"View Bids"} option={1} type={"button"}
+                                                     onClick={() => {
+                                                         session ? setModalIsOpen(true) : redirectToLogin(router)
+                                                     }}/>)}
+
+                                        {/*For Buyer : Bid Modal Open Button For Buyer (Bidding is Active and Not Sold)*/}
+                                        {!productError && !isSeller(userData, productData) && productData.isBidActive && !productData.isSold && !productData.finalBuyerId &&
+                                            (<Button value={"Bid"} option={1} type={"button"}
+                                                     onClick={() => {
+                                                         session ? setModalIsOpen(true) : redirectToLogin(router)
+                                                     }}/>)}
+
+                                        {/*For Buyer : Bidding is Inactive*/}
+                                        {!productError && !isSeller(userData, productData) && !isFinalBuyer(userData, productData) && !productData.isBidActive && !productData.isSold &&
+                                            (
+                                                <p className="px-4 py-1 cursor-default bg-black text-white text-xl shadow-lg shadow-slate-300 rounded-full">Bidding
+                                                    Is Off</p>)}
+
+                                        {/*For Buyer : Buy Now Button for Buyer, when Seller has Selected Current User*/}
+                                        {!productError
+                                            && !isSeller(userData, productData) && isFinalBuyer(userData, productData) && !productData.isSold &&
+                                            (<Button value={"Buy Now"} option={1} type={"button"}
+                                                     onClick={() => {
+                                                         session ? handleBuyNow(productID, router) : redirectToLogin(router)
+                                                     }}/>)}
+
+                                        {/*For Buyer : Product Has Been Sold*/}
+                                        {!productError && productData.isSold &&
+                                            (
+                                                <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
+
+                                        {/*For Buyer : Product Has Been Purchased By Current User*/}
+                                        {!productError && isPurchased(userData, productData) &&
+                                            (
+                                                <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Purchased</p>)}
+
+                                    </div>
+                                </div>
                             </div>
-                            <div className="w-full h-1/5 flex items-center border-b">
-                                <p className="text-xl">Current Price</p>
-                            </div>
-                            <div className="w-full h-1/5 flex justify-center items-center border-b">
-                                {userIsSeller && !isSold &&
-                                    (<Button value={"View Bids"} option={1} type={"button"} onClick={() => {setModalIsOpen(true)}}/>)}
-                                {!userIsSeller && biddingActive && !isSold &&
-                                    (<Button value={"Bid"} option={1} type={"button"} onClick={() => setModalIsOpen(true)}/>)}
-                                {!userIsSeller && !biddingActive && !isSold &&
-                                    (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Bidding Is Off</p>)}
-                                {isSold &&
-                                    (<p className="px-4 py-1 cursor-default bg-black text-white text-2xl font-medium shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
-                            </div>
-                        </div>
-                    </div>
+                        </>
+                    )
+                    }
                 </div>
             </div>
         </>

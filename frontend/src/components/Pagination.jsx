@@ -1,80 +1,25 @@
 "use client"
-import React,{useState,useEffect} from "react";
-import {useSelector,useDispatch} from "react-redux";
-import {fetchProduct} from "@/Actions/fetchProduct";
-const Pagination = ()=>{
-    const [currentPage,setCurrentPage] = useState(0);
-    const dispatch = useDispatch();
-    const {error,isLoading,products} = useSelector(state => state.product);
-    const filteredItem = useSelector(state => state.filter);
-    const totalPage = products.totalPages;
-    useEffect(() => {
-        dispatch(fetchProduct({id: currentPage,filter:filteredItem}))
-    }, [currentPage]);
-    const NextPage = ()=>{
-        (currentPage === totalPage-1 ? setCurrentPage(0):setCurrentPage(currentPage+1))
-    }
-    const PrevPage = ()=>{
-        (currentPage === 0 ? setCurrentPage(currentPage):setCurrentPage(currentPage-1))
-    }
+
+import React from "react";
+
+import useSWR from "swr";
+import {reqFetcher} from "@/utils/fetcher";
+
+const Pagination = ({data,pagination}) => {
+    const url= '/products/filter'
+    const method="POST"
+
+    const {data:value,error,isLoading} = useSWR([url,method,data],reqFetcher)
 
 
-    // const recordsPerPage = 5;
-    // const lastIndex = currentPage * recordsPerPage;
-    // const firstIndex = lastIndex - recordsPerPage;
-    // const numOfPage = Math.ceil(length/recordsPerPage);
-    // useEffect(() => {
-    //     data([firstIndex,lastIndex]);
-    // }, [currentPage]);
-
-
-
-    useEffect(() => {
-        setCurrentPage(products.pageable.pageNumber)
-    }, [products]);
     return (
         <>
             <div className="w-full h-10  my-4 mx-auto flex justify-center items-center">
-                <button className="text-xl" onClick={PrevPage}>◀</button>
-                <p className="mx-4 text-xl font-medium">{currentPage+1} of {totalPage}</p>
-                <button className="text-xl" onClick={NextPage}>▶</button>
+                <button className="text-xl" onClick={()=>{pagination(0)}} >◀</button>
+                <p className="mx-4 text-xl font-medium">{!isLoading && !error && value.totalPages > 0 ? value.pageable.pageNumber+1:0} of {!isLoading && !error && value.totalPages}</p>
+                <button className="text-xl"  onClick={()=>{pagination(!isLoading && !error && value.totalPages)}}>▶</button>
             </div>
         </>
     )
 }
 export default Pagination;
-
-
-
-
-
-//
-// "use client"
-// import React,{useState,useEffect} from "react";
-// import {useSelector,useDispatch} from "react-redux";
-//
-// const Pagination = ()=>{
-//     const [currentPage,setCurrentPage] = useState(1);
-//     const dispatch = useDispatch();
-//     const {error,isLoading,products} = useSelector(state => state.product);
-//     useEffect(()=>{
-//
-//     },[products])
-//     // const recordsPerPage = 5;
-//     // const lastIndex = currentPage * recordsPerPage;
-//     // const firstIndex = lastIndex - recordsPerPage;
-//     // const numOfPage = Math.ceil(length/recordsPerPage);
-//     // useEffect(() => {
-//     //     data([firstIndex,lastIndex]);
-//     // }, [currentPage]);
-//     return (
-//         <>
-//             <div className="w-full h-10  my-4 mx-auto flex justify-center items-center">
-//                 <button className="text-xl" onClick={()=>(currentPage === 1 ? setCurrentPage(currentPage):setCurrentPage(currentPage-1))}>◀</button>
-//                 <p className="mx-4 text-xl font-medium">{products.pageable.pageNumber} of {products.totalPages}</p>
-//                 <button className="text-xl" onClick={()=>(currentPage === numOfPage ? setCurrentPage(1):setCurrentPage(currentPage+1))}>▶</button>
-//             </div>
-//         </>
-//     )
-// }
-// export default Pagination;

@@ -1,49 +1,192 @@
 "use client"
 import React, {useEffect, useState} from "react";
-import {useDispatch,useSelector} from "react-redux";
+
+
 import Image from "next/image";
 import Filter from "@/components/Filter";
 import LargeCard from "@/components/LargeCard";
 import Pagination from "@/components/Pagination";
-import axios from "axios";
+
 import Header from "@/components/Header";
-import {addSort} from "@/Actions/filter";
-import {fetchProduct} from "@/Actions/fetchProduct";
+import useSWR from "swr";
+import { reqFetcher} from "@/utils/fetcher";
+import { useSearchParams } from 'next/navigation'
+import Link from "next/link";
 
 
-const Product = ()=>{
-    const dispatch = useDispatch()
-    const {error,isLoading,products} = useSelector(state => state.product)
-    const filterItem = useSelector(state => state.filter)
-    // console.log(products)
+
+
+const Product = () => {
+    const searchParams = useSearchParams()
+    const search = searchParams.get('search')
+
+    const url= '/products/filter'
+    const method="POST"
+    const [data,setData] = useState({
+        pageNumber: 0,
+        categories: [],
+        startPrice: 250000,
+        endPrice: 750000,
+        search: null,
+        division: [],
+        sort: null
+    })
+    const {data:value,error,isLoading} = useSWR([url,method,data],reqFetcher)
+
+
+
+
     useEffect(() => {
+        const value = "search";
+        console.log(search)
+        setData((prevData) => ({ ...prevData, [value]: search }));
+    }, [search]);
 
-    }, [filterItem]);
 
-    const Products = [
-        {img:"/mobile.jpg",name:"iphone 15 pro max",desc:"4GB/65GB",price:"150000"},
-        {img:"/DSLR2.jpg",name:"Canon Eos 4000D 18MP 2.7inch Display With 18-55mm Lens Dslr Camera",desc:"18 megapixel APS-C sensor",price:"50000"},
-        {img:"/bike.jpg",name:"Yamaha R15 V4",desc:"150cc Sports Bike,2021",price:"530000"},
-        {img:"/mobile.jpg",name:"iphone 15 pro max",desc:"4GB/65GB",price:"150000"},
-        {img:"/DSLR2.jpg",name:"Canon Eos 4000D 18MP 2.7inch Display With 18-55mm Lens Dslr Camera",desc:"18 megapixel APS-C sensor",price:"50000"},
-        {img:"/bike.jpg",name:"Yamaha R15 V4",desc:"150cc Sports Bike,2021",price:"530000"},
-    ]
+
+
+
+    const ChangeHandle = (e) => {
+        const { name, value } = e.target;
+
+        if(name === "division" ){
+            if(!(data.division.includes(value))){
+                setData((prevData)=> ({ ...prevData,[name]:[...prevData.division,value]}))
+            }
+            else {
+                setData((prevData)=> ({ ...prevData}))
+            }
+
+        }
+        else if(name === "startPrice" ){
+            const p = (500000 - value);
+            setData((prevData) => ({ ...prevData, [name]: p }));
+        }
+        else if(name === "endPrice" ){
+            setData((prevData) => ({ ...prevData, [name]: value }));
+        }
+        else if(name === "sort" || name === "pageNumber"){
+            setData((prevData) => ({ ...prevData, [name]: value }));
+        }
+
+    };
+
+    const HandleCategory = (categoryName)=>{
+        const cat = "categories";
+
+        if(data.categories.some(category => category.name === categoryName)){
+            setData((prevData)=> ({ ...prevData}))
+        }
+        else {
+            setData((prevState)=>({
+                ...prevState,
+                [cat]:[...prevState.categories,{name:categoryName,subCategories:[]}]
+            }))
+        }
+    }
+    const HandleSubCategory = (categoryName, subCategoryName) => {
+        const cat = "categories";
+        const subCat = "subCategories";
+        setData((prevState) => ({
+            ...prevState,
+            [cat]: prevState.categories.map(category => {
+                if (categoryName === category.name && !category.subCategories.includes(subCategoryName)) {
+                    return {
+                        ...category,
+                        [subCat]: [...category.subCategories, subCategoryName]
+                    };
+                }
+                return category;
+            })
+        }));
+    };
+
+    const ResetFilter = ()=>{
+        // console.log("Value: "+value);
+        const pageNumber = "pageNumber"
+        const categories = "categories"
+        const startPrice = "startPrice"
+        const endPrice = "endPrice"
+        const search = "search"
+        const division = "division"
+        const sort = "sort"
+        setData((prevState)=> ({
+            ...prevState,
+            [pageNumber]:0,
+            [categories]:[],
+            [startPrice]:0,
+            [endPrice]:750000,
+            [search]:null,
+            [division]:[],
+            [sort]:null
+
+        }))
+
+    }
+
+    const RemoveOneProduct = (value)=>{
+        setData((prevState) => {
+            const updatedState = { ...prevState };
+
+            for (const key in updatedState) {
+                if (Array.isArray(updatedState[key])) {
+                    if (key === 'categories') {
+                        updatedState[key] = updatedState[key].map((category) => {
+                            const updatedCategory = {...category};
+                            if (updatedCategory.name === value) {
+                                return null;
+                            } else {
+                                updatedCategory.subCategories = updatedCategory.subCategories.filter(subCategory => subCategory !== value);
+                                return updatedCategory;
+                            }
+                        }).filter((category) => category !== null);
+                    } else {
+                        updatedState[key] = updatedState[key].filter(
+                            (item) => item !== value
+                        );
+                    }
+                }
+            }
+
+            return { ...updatedState };
+        });
+
+    }
+    const pagination = (value)=>{
+        const pageNumber = "pageNumber"
+
+        if(value){
+            setData((prevState)=>({
+                ...prevState,
+                [pageNumber]: (prevState.pageNumber+1 === value)? 0: prevState.pageNumber+1
+            }))
+        }
+        else {
+            setData((prevState)=>({
+                ...prevState,
+                [pageNumber]: (prevState.pageNumber === 0)? 0: prevState.pageNumber-1
+            }))
+        }
+
+
+    }
+
 
 
     return (
         <>
-            <Header />
+            <Header/>
             <div className="w-11/12 mx-auto ">
                 <div className={"w-full h-96 my-3 relative"}>
                     <div className="w-full h-full absolute">
-                        <Image src={"/banner.jpg"} alt={"Product"} fill sizes={"100vw"} />
+                        <Image src={"/banner.jpg"} alt={"Product"} fill sizes={"100vw"}/>
                     </div>
                     <div className="absolute top-1/2 left-[40%]">
                         <h1 className="text-2xl text-white font-bold sm:text-md">Products in Category</h1>
                     </div>
                 </div>
                 <div className="w-full h-auto flex box-border">
-                    <Filter/>
+                    <Filter ChangeHandle={ChangeHandle} HandleCategory={HandleCategory} RemoveOneProduct={RemoveOneProduct} HandleSubCategory={HandleSubCategory} ResetFilter={ResetFilter} FilterData={data} />
                     <div className="w-4/5 border-2 ml-3">
                         <div className="w-full p-3 flex justify-between border-b-2">
                             <div>
@@ -51,9 +194,9 @@ const Product = ()=>{
                             </div>
                             <div>
                                 <select
-                                    name="Sort"
+                                    name="sort"
                                     className="border-2 w-44"
-                                    onChange={(e)=> dispatch(addSort(e.target.value))}
+                                    onChange={ChangeHandle}
                                 >
                                     <option value="">Sort</option>
                                     <option value="High_to_low">Price(High to Low)</option>
@@ -65,12 +208,15 @@ const Product = ()=>{
                             </div>
                         </div>
                         <div className={"w-4/5 mx-auto box-border"}>
-                            {/*{records.map((product,index)=>(<LargeCard key={index} img={product.img} name={product.name} desc={product.desc} price={product.price} />))}*/}
                             {
-                                (isLoading && products.content) ? <><p>Loading.................</p></> : products.content.map((product,index)=>(<LargeCard key={index} img="/bike.jpg" name={product.name} desc={product.description} price={product.startingPrice} />))
+                                !isLoading && !error && value.content.map((product, index) => (
+                                    <Link href={`/product/${product.id}`} key={index}>
+                                        <LargeCard key={index} img="/bike.jpg" name={product.name}
+                                                   desc={product.description} price={product.startingPrice}/>
+                                    </Link>))
                             }
                         </div>
-                        <Pagination  />
+                        <Pagination data={data} pagination={pagination} />
                     </div>
 
                 </div>

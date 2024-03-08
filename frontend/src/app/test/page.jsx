@@ -1,14 +1,18 @@
-import BuyerBidModal from "@/components/BuyerBidModal";
-import SellerSelectModal from "@/components/SellerSelectModal";
+"use client"
+import {useState} from "react";
+import Header from "@/components/Header";
+import RemoveAdminModal from "@/components/RemoveAdminModal";
+import RemoveCategoryModal from "@/components/RemoveCategoryModal";
 
 
 const TestPage = () => {
+    const biddingActive = true;
+    const [modalIsOpen, setModalIsOpen] = useState(true);
     return (
         <>
-            {/*<BuyerBidModal visibility={true} maxBid={420} />*/}
-            <SellerSelectModal maxBid={420} isBidActive={true}/>
+            <Header/>
+            <RemoveAdminModal/>
         </>
     )
 }
-
 export default TestPage;

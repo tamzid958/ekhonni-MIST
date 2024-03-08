@@ -3,19 +3,18 @@ package com.dsi.backend.controller;
 import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.Category;
 import com.dsi.backend.model.Product;
-import com.dsi.backend.model.ProductView;
+import com.dsi.backend.projection.ProductView;
 import com.dsi.backend.service.AdminService;
 import com.dsi.backend.service.AppUserService;
 import com.dsi.backend.service.ProductService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/admin")
@@ -31,20 +30,19 @@ public class AdminController {
     public AdminService adminService;
 
 
-
-    @PostMapping("/login")
-    public ResponseEntity<?> loginAdmin(@RequestBody AppUser appUser){
-        return appUserService.loginAppUser(appUser.getEmail(),appUser.getPassword());
-    }
-
     @PutMapping("/products/{id}")
     public Product updateProduct(@PathVariable("id") Long id, @RequestParam Boolean isApprovedByAdmin) {
         return productService.updateProduct(id, isApprovedByAdmin);
     }
 
     @GetMapping("/products/review")
-    public List<ProductView> fetchAllRequest() {
-        return productService.fetchAllRequests();
+    public Map<String, Object> fetchAllRequest() {
+        Map<String, Object> result = new HashMap<>();
+        List<ProductView> product = productService.fetchAllRequests();
+        int size = product.size();
+        result.put("products", product);
+        result.put("size", size);
+        return result;
     }
 
     @PostMapping("/add-admin")

@@ -1,8 +1,7 @@
 package com.dsi.backend.service;
 
 import com.dsi.backend.model.*;
-import com.dsi.backend.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.dsi.backend.projection.ProductView;
 
 import org.springframework.data.domain.Page;
 import com.dsi.backend.model.Product;
@@ -15,22 +14,20 @@ import java.util.Map;
 
 @Service
 public interface ProductService {
-    Product saveProduct(Product product, MultipartFile[] file);
+    ProductView saveProduct(Product product, MultipartFile[] file, String token);
 
     Product updateProduct(Long id, Boolean isApprovedByAdmin);
 
     List<ProductView> fetchAllRequests();
 
-//    List<ProductView> fetchAllProducts();
-
-    ResponseEntity<?> getProductById(Long id);
-
-//    Page<ProductView> fetchProducts(int page, FilterRequest filter);
-    Page<ProductView> fetchProducts(int page, List<String> categories, List<String> subCategories, List<String> division, List<Double> price, String sort,String searchKey);
+    ProductView getProductById(Long id);
+    Product fetchProductById(Long id);
     Map<String,Long> countProducts(String division);
     List<ProductView> showByCategory(String category);
-
     Category insertCategory(Category category);
-
     ResponseEntity<?> removeCategory(Category category);
+
+    Page<ProductView> filterProduct(FilterRequest filterRequest);
+
+    List<ProductView> sellerProducts(String sellerEmail);
 }

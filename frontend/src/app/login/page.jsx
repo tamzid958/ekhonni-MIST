@@ -1,70 +1,63 @@
 "use client"
 
-import axios from "axios";
-import {FormEvent, useState} from "react";
-import { useRouter } from 'next/navigation'
 import TextField from "@/components/TextField";
 import Button from "@/components/Button";
 import Link from "next/link";
-import {toast, Toaster} from "sonner";
-import {Router} from "next/router";
-import {Toast} from "next/dist/client/components/react-dev-overlay/internal/components/Toast";
+import {Toaster} from "sonner";
 import Header from "@/components/Header";
+import {signIn} from "next-auth/react";
+import {useSearchParams} from "next/navigation";
 
 
 const LoginPage = () => {
-    const router = useRouter();
-    const [email , setEmail] = useState("");
-    const [password , setPassword] = useState("");
+    let formData = {
+        email: "",
+        password: ""
+    }
+    const requestParams = useSearchParams()
+    const handleInputChange = (e, field) => {
+        formData[field] = e.target.value;
+    }
+
     async function handleSubmit(event) {
         event.preventDefault();
-        const formDataObject = {
-            email : email,
-            password : password
-        };
-
-
-        axios.post(`http://localhost:8080/api/v1/user/login`, formDataObject)
-            .then((res)=>{
-                const { token } = res.data;
-                localStorage.setItem("token" , token);
-                localStorage.setItem("currentUserEmail" , email);
-                console.log(token);
-                toast.success("Logged in Successfully")
-                router.push('/');
-
-            })
-            .catch((err)=>{
-                console.error("Err :"+err);
-                toast.error("UnAuthorized")
-            })
-
-
-
+        console.log(formData)
+        const response = await signIn("credentials", {
+            email: formData.email,
+            password: formData.password,
+            redirect: true,
+            callbackUrl: "/redirect"
+        })
     }
+
     return (
         <>
-            <Header />
+            <Header/>
             <Toaster richColors position={"top-right"}/>
             <form onSubmit={handleSubmit}>
-                <div className="w-screen h-[700px] flex justify-center items-center">
+                <div className="w-full h-[700px] flex justify-center items-center">
                     <div
                         className="w-[750px] h-[450px] border-2 border-black flex flex-row justify-center items-center rounded-lg">
                         {/*Login Div*/}
                         <div className="w-3/5 h-full rounded-l-lg">
                             <div className=" w-full h-2/5 flex flex-col justify-end items-center">
                                 <h1 className="font-bold text-4xl mb-8 ">Login</h1>
-                                <p className="font-light text-lg mb-4">Please enter your Username and Password</p>
+                                <p className="font-light text-lg ">Please enter your Username and Password</p>
                             </div>
                             <div className=" w-full h-2/5 flex flex-col justify-center items-center">
-                                <TextField placeholder={"Email"} type={"text"} name={"email"} value={email}
+                                <TextField placeholder={"Email"} type={"text"} name={"email"}
                                            onChange={(e) => {
-                                               setEmail(e.target.value)
+                                               handleInputChange(e, "email")
                                            }}/>
-                                <TextField placeholder={"Password"} type={"password"} name={"password"} value={password}
+                                <TextField placeholder={"Password"} type={"password"} name={"password"}
                                            onChange={(e) => {
-                                               setPassword(e.target.value)
+                                               handleInputChange(e, "password")
                                            }}/>
+                                <div className="flex justify-center">
+                                    <Link href="/forget-password">
+                                        <p className="text-cyan-700 text-sm">Forgot your password?</p>
+                                    </Link>
+                                </div>
                             </div>
                             <div className=" w-full h-1/5 mt-2 flex flex-col justify-start items-center">
                                 <Button value={"Login"} option={1} type={"submit"}/>
