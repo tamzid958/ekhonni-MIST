@@ -8,6 +8,7 @@ import {fetcher} from "@/utils/fetcher";
 export default function YourProducts() {
 
     const {data, error, isLoading} = useSWR("/user/your-products", fetcher)
+
     return (
         <>
             <Header/>
@@ -27,8 +28,8 @@ export default function YourProducts() {
                 </div>}
             {!data && (
                 <div className="w-[100%] min-h-[500px] h-auto flex justify-center items-start ">
-                    <p className="p-4 px-8 mt-40 cursor-pointer text-xl text-gray-500 rounded-lg ">
-                        Products on which you have bid will be shown here
+                    <p className="p-4 px-8 mt-40 text-xl text-gray-500 rounded-lg ">
+                        Products which you have posted will be shown here
                     </p>
                 </div>
             )}

@@ -10,6 +10,7 @@ export default function YourBids() {
 
     const {data, error, isLoading} = useSWR("/user/your-bids", fetcher)
     const {data :userData, error : userError , isLoading : userIsLoading} = useSWR("/user/profile" , fetcher)
+
     return (
         <>
             <Header/>
