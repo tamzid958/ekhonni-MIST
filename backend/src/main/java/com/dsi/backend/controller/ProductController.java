@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -85,10 +86,16 @@ public class ProductController {
     }
 
     @GetMapping("/user/your-products")
-    public ResponseEntity<List<ProductView>> yourProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    public ResponseEntity<?> yourProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String sellerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
-        List<ProductView> products = productService.sellerProducts(sellerEmail);
-        return ResponseEntity.ok(products);
+        List<ProductView> productViewList = productService.sellerProducts(sellerEmail);
+        List<Map<String, ? > > productList = new ArrayList<>();
+        for (ProductView eachProduct : productViewList) {
+            List<ImageModelView> imageModelViewList = imageModelService.downloadImage(eachProduct.getId());
+            Map<String, ?> map = Map.of("product", eachProduct, "images", imageModelViewList);
+            productList.add(map);
+        }
+        return ResponseEntity.ok(productList);
     }
 
 }

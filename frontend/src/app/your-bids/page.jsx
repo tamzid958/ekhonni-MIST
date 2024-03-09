@@ -10,7 +10,7 @@ export default function YourBids() {
 
     const {data, error, isLoading} = useSWR("/user/your-bids", fetcher)
     const {data :userData, error : userError , isLoading : userIsLoading} = useSWR("/user/profile" , fetcher)
-
+    console.log(data);
     return (
         <>
             <Header/>
@@ -20,13 +20,14 @@ export default function YourBids() {
             {data && userData && data.length !== 0 &&
                 <div className="w-full min-h-[350px] h-auto flex flex-col justify-start items-center ">
                 {data.map((item) => (
-                <BuyerBids key={item.id} id={item.product.id} name={item.product.name}
-                           description={item.product.description} price={item.offeredPrice}
-                           category={item.product.category.category}
-                           subcategory={item.product.category.subCategory}
-                           isSold = {item.product.isSold}
-                           isBidActive = {item.product.isBidActive}
-                           finalBuyerId = {item.product.finalBuyerId}
+                <BuyerBids key={item.id} id={item.bid.id} name={item.bid.product.name}
+                           description={item.bid.product.description} price={item.bid.product.offeredPrice}
+                           category={item.bid.product.category.category}
+                           subcategory={item.bid.product.category.subCategory}
+                           isSold = {item.bid.product.isSold}
+                           isBidActive = {item.bid.product.isBidActive}
+                           finalBuyerId = {item.bid.product.finalBuyerId}
+                           image={item.images[0]?.imageByte}
                            userId = {userData.id} />
                 ))}
 

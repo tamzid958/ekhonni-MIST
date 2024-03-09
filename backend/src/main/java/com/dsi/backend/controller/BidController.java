@@ -2,7 +2,10 @@ package com.dsi.backend.controller;
 
 import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.Bid;
+import com.dsi.backend.projection.ImageModelView;
+import com.dsi.backend.projection.ProductView;
 import com.dsi.backend.service.BidService;
+import com.dsi.backend.service.ImageModelService;
 import com.dsi.backend.service.JwtTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -10,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -21,6 +26,9 @@ public class BidController {
 
     @Autowired
     private JwtTokenService jwtTokenService;
+
+    @Autowired
+    private ImageModelService imageModelService;
 
     @PostMapping("/user/products/bid/buyer/save")
     public ResponseEntity<?> saveBid(@RequestHeader(HttpHeaders.AUTHORIZATION) String token, @RequestParam Long id, @RequestParam Double offeredPrice) {
@@ -93,10 +101,16 @@ public class BidController {
     }
 
     @GetMapping("/user/your-bids")
-    public ResponseEntity<List<Bid>> yourProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    public ResponseEntity<?> yourProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String buyerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
         List<Bid> bids = bidService.buyerBids(buyerEmail);
-        return ResponseEntity.ok(bids);
+        List<Map<String, ? >> bidList= new ArrayList<>();
+        for (Bid eachBid : bids) {
+            List<ImageModelView> imageModelViewList = imageModelService.downloadImage(eachBid.getId());
+            Map<String, ?> map = Map.of("bid", eachBid, "images", imageModelViewList);
+            bidList.add(map);
+        }
+        return ResponseEntity.ok(bidList);
     }
 
     @GetMapping("/popular-products")

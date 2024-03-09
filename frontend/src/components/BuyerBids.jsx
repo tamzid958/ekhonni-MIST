@@ -5,7 +5,7 @@ import Image from "next/image";
 import SmallButton from "@/components/SmallButton";
 import Link from "next/link";
 
-const BuyerBids = ({id, name, subcategory, description, category, price , isSold , isBidActive , finalBuyerId , userId}) => {
+const BuyerBids = ({id, name, subcategory, description, category, price , isSold , isBidActive , finalBuyerId , userId, image}) => {
     return (
         <>
             {/*the main box*/}
@@ -14,7 +14,7 @@ const BuyerBids = ({id, name, subcategory, description, category, price , isSold
                 {/*Image box*/}
                 <div
                     className="w-1/4 h-[82%] relative my-3 border-2 border-black flex justify-start items-start -ml-5 ">
-                    <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"}/>
+                    <Image src={image} alt={"dslr"} fill objectFit={"cover"}/>
                 </div>
                 {/*implementation of status*/}
 

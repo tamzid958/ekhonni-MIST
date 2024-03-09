@@ -5,7 +5,7 @@ import SmallButton from "@/components/SmallButton";
 import Image from "next/image";
 import Link from "next/link";
 
-const SingleProduct = ({id, name, description, category , subcategory, startingPrice , isBidActive , isSold}) => {
+const SingleProduct = ({id, name, description, category , subcategory, startingPrice , isBidActive , isSold, image}) => {
     return (
         <>
             {/*the main box*/}
@@ -14,7 +14,7 @@ const SingleProduct = ({id, name, description, category , subcategory, startingP
                 {/*Image box*/}
                 <div
                     className="w-1/4 h-[82%] my-3  relative border-2 border-black flex justify-start items-start -ml-5 ">
-                    <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"}/>
+                    <Image src={image} alt={"dslr"} fill objectFit={"cover"}/>
                 </div>
                 {/*implementation of status*/}
                 {/*details info div*/}
