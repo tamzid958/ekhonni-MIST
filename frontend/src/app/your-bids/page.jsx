@@ -32,7 +32,8 @@ export default function YourBids() {
 
             </div>
             }
-            {!data || data && data.length === 0 && (
+            {!data || data &&
+                data.length === 0 && (
                 <div className="w-[100%] min-h-[500px] h-auto flex justify-center items-start ">
                     <p className="p-4 px-8 mt-40 cursor-pointer text-xl text-gray-500 rounded-lg ">
                         Products on which you have bid will be shown here

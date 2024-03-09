@@ -19,7 +19,7 @@ const CategoryDropdown = ({name, updateProduct}) => {
                     setSelectedCategory(e.target.value);
                 }}>
                 <option disabled selected>Select Category</option>
-                {!isLoading && !error && Categories.map((item) => (
+                {!isLoading && !error && Categories && Categories.map((item) => (
                     <option key={item.name} value={item.name}> {item.name} </option>
                 ))}
             </select>
@@ -33,7 +33,7 @@ const CategoryDropdown = ({name, updateProduct}) => {
                     }}
                 >
                     <option value="" disabled selected>Select Subcategory</option>
-                    {!isLoading && !error && Categories.find((categoryObj) => categoryObj.name === selectedCategory)?.subcategories.map(
+                    {!isLoading && !error && Categories && Categories.find((categoryObj) => categoryObj.name === selectedCategory)?.subcategories.map(
                         (subcategory) => (
                             <option key={subcategory} value={subcategory}>
                                 {subcategory}
