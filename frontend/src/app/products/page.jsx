@@ -18,32 +18,39 @@ import Link from "next/link";
 
 const Product = () => {
     const searchParams = useSearchParams()
-    const search = searchParams.get('search')
+    const searchValue = searchParams.get('search')
+    const categoryValue = searchParams.get('category')
 
     const url= '/products/filter'
     const method="POST"
     const [data,setData] = useState({
         pageNumber: 0,
         categories: [],
-        startPrice: 250000,
-        endPrice: 750000,
+        startPrice: 0,
+        endPrice: 1000000,
         search: null,
         division: [],
         sort: null
     })
     const {data:value,error,isLoading} = useSWR([url,method,data],reqFetcher)
-
+    console.log(data)
 
 
 
     useEffect(() => {
-        const value = "search";
-        console.log(search)
-        setData((prevData) => ({ ...prevData, [value]: search }));
-    }, [search]);
+        const search = "search";
+        const categories = "categories";
+        if(searchValue){
+            setData((prevData) => ({ ...prevData, [search]: searchValue }));
+        }
+        // if(categoryValue && !data.categories.some(category => category.name === categoryValue)){
+        //     setData((prevState)=>({
+        //         ...prevState,
+        //         [categories]:[...prevState.categories,{name:categoryValue,subCategories:[]}]
+        //     }))
+        // }
 
-
-
+    }, [searchValue]);
 
 
     const ChangeHandle = (e) => {
@@ -115,7 +122,7 @@ const Product = () => {
             [pageNumber]:0,
             [categories]:[],
             [startPrice]:0,
-            [endPrice]:750000,
+            [endPrice]:1000000,
             [search]:null,
             [division]:[],
             [sort]:null
@@ -209,7 +216,7 @@ const Product = () => {
                         </div>
                         <div className={"w-4/5 mx-auto box-border"}>
                             {
-                                !isLoading && !error && value.content.map((product, index) => (
+                                !isLoading && !error && value && value.content.map((product, index) => (
                                     <Link href={`/product/${product.id}`} key={index}>
                                         <LargeCard key={index} img="/bike.jpg" name={product.name}
                                                    desc={product.description} price={product.startingPrice}/>

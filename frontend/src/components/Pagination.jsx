@@ -16,8 +16,8 @@ const Pagination = ({data,pagination}) => {
         <>
             <div className="w-full h-10  my-4 mx-auto flex justify-center items-center">
                 <button className="text-xl" onClick={()=>{pagination(0)}} >◀</button>
-                <p className="mx-4 text-xl font-medium">{!isLoading && !error && value.totalPages > 0 ? value.pageable.pageNumber+1:0} of {!isLoading && !error && value.totalPages}</p>
-                <button className="text-xl"  onClick={()=>{pagination(!isLoading && !error && value.totalPages)}}>▶</button>
+                <p className="mx-4 text-xl font-medium">{!isLoading && !error && value && value.totalPages > 0 ? value.pageable.pageNumber+1:0} of {!isLoading && !error && value && value.totalPages ? !isLoading && !error && value && value.totalPages:0}</p>
+                <button className="text-xl"  onClick={()=>{pagination(!isLoading && !error && value && value.totalPages)}}>▶</button>
             </div>
         </>
     )

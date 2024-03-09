@@ -1,7 +1,8 @@
 import Image from "next/image";
 import ButtonFull from "@/components/ButtonFull";
+import Link from "next/link";
 
-const Card = ({picture, name, categories, price}) => {
+const Card = ({picture,id, name, categories, price}) => {
     return (
         <>
             <div className=" m-3 w-[300px] h-[350px] border-2 border-black rounded-md hover:w-[305px]">
@@ -12,7 +13,9 @@ const Card = ({picture, name, categories, price}) => {
                     <h1 className=" font-bold text-xl">{name}</h1>
                     <p className=" text-gray-400">{categories}</p>
                     <p className="pb-2">৳{price}</p>
-                    <ButtonFull value="Bid"/>
+                    <Link href={`/product/${id}`} >
+                        <ButtonFull value="Bid"/>
+                    </Link>
                 </div>
             </div>
         </>

@@ -2,7 +2,6 @@
 import {useState} from "react";
 import Header from "@/components/Header";
 import RemoveAdminModal from "@/components/RemoveAdminModal";
-import RemoveCategoryModal from "@/components/RemoveCategoryModal";
 
 
 const TestPage = () => {
