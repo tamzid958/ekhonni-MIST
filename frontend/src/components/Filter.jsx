@@ -23,7 +23,7 @@ const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory,ResetF
     })
     allFilter = [...allFilter, ...division];
     const {data:Categories,error,isLoading} = useSWR('/products/category/all',fetcher);
-
+    console.log(Categories)
 
     const handleCategoryClick = (index) => {
         if (selectedCategory === index) {
@@ -87,10 +87,11 @@ const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory,ResetF
                     </div>
                     <div>
                         <ul>
-                            {!isLoading && !error && Categories.map((data, index) => (
+                            {!isLoading && !error && Categories && Categories.map((data, index) => (
                                 <li key={index} className={"ml-2"} value={data.name} onClick={() => {
                                     handleCategoryClick(index)
                                     HandleCategory(Categories[index].name)
+
                                 }}>
                                     <div className={"flex"}>
                                         <p className={"mr-2 font-bold text-xl"}>
@@ -103,7 +104,7 @@ const Filter = ({ChangeHandle,FilterData,HandleCategory,HandleSubCategory,ResetF
                                             {data.subcategories.map((subcategory, subIndex) => (
                                                 <li key={subIndex} className="ml-10 text-gray-500 cursor-pointer"
                                                     onClick={() => {
-                                                        HandleSubCategory(Categories[index].name, Categories[index].SubCategories[subIndex])
+                                                        HandleSubCategory(data.name, subcategory)
                                                     }}>{subcategory}</li>
                                             ))}
                                         </ul>

@@ -14,7 +14,7 @@ import java.util.Map;
 public interface PaymentGatewayService {
     PaymentGatewayResp initiatePayment(Product product, String token) throws JsonProcessingException;
 
-    String convertToUrl(Transaction transaction);
+    String convertToUrl(Transaction transaction, String productId);
 
     PaymentGatewayResp convertToObject(String response) throws JsonProcessingException;
 

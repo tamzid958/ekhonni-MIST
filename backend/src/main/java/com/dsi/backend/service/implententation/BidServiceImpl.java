@@ -142,6 +142,11 @@ public class BidServiceImpl implements BidService{
     }
 
     @Override
+    public Bid fetchBidByProductAndBuyer(Long id, String buyerEmail) {
+        return bidRepository.findByProductIdAndBuyerEmail(id, buyerEmail);
+    }
+
+    @Override
     public List<Bid> buyerBids(String buyerEmail) {
         AppUser buyer = appUserRepository.findByEmail(buyerEmail);
         return bidRepository.findAllByBuyer(buyer);
@@ -152,5 +157,6 @@ public class BidServiceImpl implements BidService{
         List<Long> productId = bidRepository.allPopularBidsOrderByCountDesc();
         List<ProductView> productViewList = productRepository.findAllByIsApprovedByAdminTrueAndIsBidActiveTrueAndIsSoldFalseAndIdIsIn(productId);
         return ResponseEntity.ok(productViewList);
+
     }
 }

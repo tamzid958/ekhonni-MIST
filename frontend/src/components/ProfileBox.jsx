@@ -8,15 +8,19 @@ import Link from "next/link";
 import useSWR from "swr";
 import {fetcher} from "@/utils/fetcher";
 import {signOut} from "next-auth/react";
+import {useRouter} from "next/navigation";
 
 
 const ProfileBox = () => {
+    const router = useRouter();
     const [imageUrl, setImageUrl] = useState();
-
     const {data, error, isLoading} = useSWR('/user/profile', fetcher)
 
     const logOut = async () => {
-        await signOut();
+        await signOut({
+            callbackUrl : "/"
+        });
+
     }
 
     return (
@@ -41,7 +45,7 @@ const ProfileBox = () => {
                 <div className={"w-full mt-3"}>
                     <ProfileDiv image={"/edit.svg"} text={"Edit Profile"} color={"bg-slate-100"}/>
                     <ProfileDiv image={"/logout.svg"} text={"Logout"} color={"bg-slate-100"} onClick={() => {
-                        logOut()
+                        logOut();
                     }}/>
                     <ProfileDiv image={"/delete.svg"} text={"Delete Account"} color={"bg-red-500"}/>
                 </div>

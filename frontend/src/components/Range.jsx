@@ -2,9 +2,17 @@
 import React, { useState} from 'react';
 
 const PriceRangeSlider = ({min, max,ChangeHandle}) => {
-    const [minPrice, setMinPrice] = useState();
-    const [maxPrice, setMaxPrice] = useState();
+    const [minPrice, setMinPrice] = useState(max/2);
+    const [maxPrice, setMaxPrice] = useState(max/1);
+    const handleMinChange = (e) => {
+        setMinPrice(parseInt(e.target.value));
+        ChangeHandle(e)
+    };
 
+    const handleMaxChange = (e) => {
+        setMaxPrice(parseInt(e.target.value));
+        ChangeHandle(e)
+    };
 
     return (<div className="w-full flex items-center">
             <div className="flex-1">
@@ -16,7 +24,7 @@ const PriceRangeSlider = ({min, max,ChangeHandle}) => {
                     max={max / 2}
                     name={"startPrice"}
                     value={minPrice}
-                    onChange={ChangeHandle}
+                    onChange={handleMinChange}
                     className="block w-full mt-1 scale-x-[-1]"
                     style={{backgroundColor: 'white'}}
                 />
@@ -30,7 +38,7 @@ const PriceRangeSlider = ({min, max,ChangeHandle}) => {
                     max={max}
                     name={"endPrice"}
                     value={maxPrice}
-                    onChange={ChangeHandle}
+                    onChange={handleMaxChange}
                     className="block w-full mt-1 bg-white"
                 />
             </div>

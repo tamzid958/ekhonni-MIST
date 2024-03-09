@@ -19,7 +19,6 @@ const Header = () => {
     const currentURL = usePathname();
     const [profileModel, setProfileModel] = useState(false);
     const [notificationModalOpen, setNotificationModalOpen] = useState(false);
-
     const {data: notificationData, error, isLoading} = useSWR('/user/notification/fetch', fetcher);
     const CloseModal = (e) => {
         if (e.target.id !== "notificationModal" && e.target.id !== "notificationList") {
@@ -45,10 +44,13 @@ const Header = () => {
                                 <p className=" text-sm">Buy now,pay later</p>
                             </div>
                         </Link>
-                        <div className="flex my-auto px-5">
-                            <Image src={AllAdsSVG} alt={"message"} width={30} height={30} className=" mr-4"/>
-                            <p className=" text-lg font-semibold">All ads</p>
-                        </div>
+                        <Link href={"/products"} className={"my-auto"}>
+                            <div className="flex my-auto px-5">
+                                <Image src={AllAdsSVG} alt={"message"} width={30} height={30} className=" mr-4"/>
+                                <p className=" text-lg font-semibold">All ads</p>
+                            </div>
+                        </Link>
+
                     </div>
                     <div className="flex my-auto">
                         {session &&
@@ -61,7 +63,7 @@ const Header = () => {
                                            className="mr-4"/>
                                     {notificationData && notificationData.length !== 0 && !notificationModalOpen &&
                                         <div
-                                            className="absolute -top-2 right-36 w-5 h-5 flex items-center justify-center text-white bg-rose-600 opacity-85 text-xs rounded-full">
+                                            className="absolute -top-2 right-32 w-5 h-5 flex items-center justify-center text-white bg-rose-600 opacity-85 text-xs rounded-full">
                                             <span>{notificationData.length}</span>
                                         </div>}
                                     <p className=" text-lg font-semibold">Notifications</p>

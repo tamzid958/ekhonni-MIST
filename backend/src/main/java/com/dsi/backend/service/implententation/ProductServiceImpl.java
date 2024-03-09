@@ -122,16 +122,16 @@ public class ProductServiceImpl implements ProductService {
     public Map<String,Long> countProducts(String division) {
         List<Product> product;
         if(Objects.equals(division, "")) {
-            product =productRepository.findByIsApprovedByAdminTrue();
+            product =productRepository.findByIsApprovedByAdminTrueAndIsSoldTrue();
         } else {
-            product= productRepository.findByIsApprovedByAdminTrueAndSellerDivision(division);
+            product= productRepository.findByIsApprovedByAdminTrueAndIsSoldTrueAndSellerDivision(division);
         }
         return product.stream().collect(Collectors.groupingBy(Product::getCategoryName, Collectors.counting()));
     }
 
     @Override
     public List<ProductView> showByCategory(String category){
-        return productRepository.findByIsApprovedByAdminTrueAndCategoryCategory(category);
+        return productRepository.findByIsApprovedByAdminTrueAndIsSoldTrueAndCategoryCategory(category);
     }
 
     @Override

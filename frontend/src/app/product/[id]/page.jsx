@@ -15,7 +15,7 @@ import {requestApi} from "@/utils/axios.settings";
 
 
 const isSeller = (userData, productData) => {
-    if (userData?.id === productData?.seller?.id) {
+    if (userData?.id === productData?.product.seller?.id) {
         return true;
     } else {
         return false;
@@ -23,15 +23,14 @@ const isSeller = (userData, productData) => {
 }
 
 const isPurchased = (userData, productData) => {
-    if (productData?.isSold && (productData?.finalBuyerId === userData?.id)) {
+    if (productData?.product.isSold && (productData?.product.finalBuyerId === userData?.id)) {
         return true;
     } else {
         return false;
     }
 }
 const isFinalBuyer = (userData, productData) => {
-    console.log(userData?.id, "user id", productData?.finalBuyerId, "final buyer id")
-    if (productData?.finalBuyerId === userData?.id) {
+    if (productData?.product.finalBuyerId === userData?.id) {
         return true;
     } else {
         return false
@@ -67,7 +66,11 @@ const ProductPage = ({params}) => {
     const router = useRouter();
     const productID = params.id;
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const {data: productData, error: productError, isLoading: productDataIsLoading} = useSWR(`/products/${productID}`, fetcher)
+    const {
+        data: productData,
+        error: productError,
+        isLoading: productDataIsLoading
+    } = useSWR(`/products/${productID}`, fetcher)
     const {data: userData, error: userDataError, isLoading: userDataIsLoading} = useSWR('/user/profile', fetcher)
     console.log(productData);
     return (
@@ -154,22 +157,21 @@ const ProductPage = ({params}) => {
                                             (
                                                 <p className="px-4 py-1 cursor-default bg-black text-white text-xl shadow-lg shadow-slate-300 rounded-full">Bidding
                                                     Is Off</p>)}
-
                                         {/*For Buyer : Buy Now Button for Buyer, when Seller has Selected Current User*/}
                                         {!productError
-                                            && !isSeller(userData, productData) && isFinalBuyer(userData, productData) && !productData.isSold &&
+                                            && !isSeller(userData, productData) && isFinalBuyer(userData, productData) && !productData.product.isSold &&
                                             (<Button value={"Buy Now"} option={1} type={"button"}
                                                      onClick={() => {
                                                          session ? handleBuyNow(productID, router) : redirectToLogin(router)
                                                      }}/>)}
 
                                         {/*For Buyer : Product Has Been Sold*/}
-                                        {!productError && productData.isSold &&
+                                        {!productError && !userDataError && productData.product.isSold && !isPurchased(userData , productData) &&
                                             (
                                                 <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Sold</p>)}
 
                                         {/*For Buyer : Product Has Been Purchased By Current User*/}
-                                        {!productError && isPurchased(userData, productData) &&
+                                        {!productError && !userDataError && isPurchased(userData, productData) &&
                                             (
                                                 <p className="px-4 py-1 cursor-default bg-black text-white text-2xl shadow-lg shadow-slate-300 rounded-full">Purchased</p>)}
 

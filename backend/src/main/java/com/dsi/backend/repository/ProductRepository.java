@@ -17,13 +17,13 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Long>, CustomRepository {
 
     List<Product> findByIsApprovedByAdminFalse();
-    List<Product> findByIsApprovedByAdminTrue();
+    List<Product> findByIsApprovedByAdminTrueAndIsSoldTrue();
     List<ProductView> getByIsApprovedByAdminTrue();
     List<ProductView> findByIsApprovedByAdminIsNullOrderByProductTimeAsc();
     Product findByNameAndDescriptionAndSize(String name, String description, String size);
     List<Product> findByIsApprovedByAdminIsNull();
-    List<ProductView> findByIsApprovedByAdminTrueAndCategoryCategory(String category);
-    List<Product> findByIsApprovedByAdminTrueAndSellerDivision(String division);
+    List<ProductView> findByIsApprovedByAdminTrueAndIsSoldTrueAndCategoryCategory(String category);
+    List<Product> findByIsApprovedByAdminTrueAndIsSoldTrueAndSellerDivision(String division);
     List<Product> findByIsApprovedByAdminTrueAndCategoryCategoryIn(List<String> categories);
     List<Product> findByIsApprovedByAdminTrueAndCategorySubCategoryIn(List<String> subCategory);
     List<Product> findByIsApprovedByAdminTrueAndSellerDivisionIn(List<String> division);
