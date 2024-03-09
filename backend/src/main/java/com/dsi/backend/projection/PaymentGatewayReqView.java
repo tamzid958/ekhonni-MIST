@@ -18,5 +18,9 @@ public interface PaymentGatewayReqView {
     String getNum_of_item();
     String getProduct_name();
     String getProduct_profile();
+    String getProduct_amount();
+    String getVat();
+    String getDiscount_amount();
+    String getConvenience_fee();
 
 }

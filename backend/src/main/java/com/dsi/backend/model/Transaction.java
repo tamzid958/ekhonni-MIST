@@ -20,11 +20,12 @@ public class Transaction {
     private Product product;
     @ManyToOne
     private AppUser appUser;
+    private Double finalPrice;
     private String connectionStatus;
     private String transactionStatus;
 
     public String getTotal_amount(){
-        return Double.toString(product.getStartingPrice());
+        return Double.toString(finalPrice);
     }
     public String getCurrency(){
         return paymentGatewayReqParam.getCurrency();
@@ -75,7 +76,16 @@ public class Transaction {
         return paymentGatewayReqParam.getProduct_profile();
     }
     public String getProduct_amount(){
-        return Integer.toString(1);
+        return Double.toString(finalPrice);
+    }
+    public String getVat(){
+        return Integer.toString(0);
+    }
+    public String getDiscount_amount(){
+        return Integer.toString(0);
+    }
+    public String getConvenience_fee(){
+        return Integer.toString(0);
     }
 
 }

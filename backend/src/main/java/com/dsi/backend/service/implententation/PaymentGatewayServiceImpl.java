@@ -24,7 +24,6 @@ import reactor.core.publisher.Mono;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,6 +42,7 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
     @Autowired
     private BidService bidService;
 
+
     @Autowired
     public PaymentGatewayServiceImpl(WebClient webClient) {
         this.webClient = webClient;
@@ -52,6 +52,8 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
     public PaymentGatewayResp initiatePayment(Product product, String token) throws JsonProcessingException {
         product = productService.fetchProductById(product.getId());
         AppUser appUser = appUserService.fetchInformation(token);
+        Bid bid = bidService.fetchBidByProductAndBuyer(product.getId(),appUser.getEmail());
+        if(bid==null) throw new FinalBuyerNotFoundException("Final buyer does not exist");
 
         Transaction transaction = new Transaction();
         transaction = transactionRepository.save(transaction);
@@ -61,9 +63,10 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
         transaction.setPaymentGatewayReqParam(otherParams);
         transaction.setProduct(product);
         transaction.setAppUser(appUser);
+        transaction.setFinalPrice(bid.getOfferedPrice());
         transaction = transactionRepository.save(transaction);
 
-        String param = this.convertToUrl(transaction);
+        String param = this.convertToUrl(transaction, Long.toString(product.getId()));
         PaymentGatewayResp paymentGatewayResp = this.postCall(param);
         transaction.setConnectionStatus(paymentGatewayResp.getStatus());
         transactionRepository.save(transaction);
@@ -92,17 +95,17 @@ public class PaymentGatewayServiceImpl implements PaymentGatewayService {
         return this.convertToObject(responseString);
     }
     @Override
-    public String convertToUrl(Transaction transaction) {
+    public String convertToUrl(Transaction transaction, String productId) {
         PaymentGatewayReqView paymentGatewayReqView = this.convertToView(transaction);
         Map<String, String> paymentGatewayMap = objectMapper.convertValue(paymentGatewayReqView, Map.class);
         paymentGatewayMap.put("store_id", System.getenv("STORE_ID"));
         paymentGatewayMap.put("store_passwd", System.getenv("STORE_PASSWD"));
 
-        String url = System.getenv("FRONTEND_BASE_URL")+"/"+paymentGatewayReqView.getTran_id();
+        String url = System.getenv("FRONTEND_BASE_URL");
 
-        String successUrl = url+System.getenv("SSL_SUCCESS_URL");
-        String cancelUrl = url+System.getenv("SSL_CANCEL_URL");
-        String failUrl = url+System.getenv("SSL_FAIL_URL");
+        String successUrl = url+System.getenv("SSL_SUCCESS_URL")+"/"+paymentGatewayReqView.getTran_id();
+        String cancelUrl = url+System.getenv("SSL_CANCEL_URL")+"/"+productId;
+        String failUrl = url+System.getenv("SSL_FAIL_URL")+"/"+productId;
 
         paymentGatewayMap.put("success_url", successUrl);
         paymentGatewayMap.put("cancel_url", cancelUrl);

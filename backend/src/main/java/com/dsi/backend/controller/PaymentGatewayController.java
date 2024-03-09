@@ -25,7 +25,7 @@ public class PaymentGatewayController {
     @RequestMapping("/buy-now")
     public ResponseEntity<?> buyNow(@RequestBody Product product, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
         try {
-            return ResponseEntity.ok(paymentGatewayService.initiatePayment(product, token));
+            return new ResponseEntity<>(paymentGatewayService.initiatePayment(product, token), HttpStatus.CREATED);
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -35,10 +35,11 @@ public class PaymentGatewayController {
     @RequestMapping("/validate")
     public ResponseEntity<?> validate(@RequestBody ValidateResp validateResp, @RequestHeader(HttpHeaders.AUTHORIZATION) String token){
        try {
-           return ResponseEntity.ok(paymentGatewayService.validatePayment(validateResp, token));
+           return new ResponseEntity<>(paymentGatewayService.validatePayment(validateResp, token), HttpStatus.CREATED);
        }
        catch (Exception e){
            return new ResponseEntity<>(Map.of("error", e.getMessage()),HttpStatus.NOT_FOUND);
        }
     }
+
 }

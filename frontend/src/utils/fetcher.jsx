@@ -16,6 +16,7 @@ export const reqFetcher = async ([url,method,data]) => {
     return value;
 }
 
-export const addProductFetcher = async ([url, baseURL, method, headers], {arg}) =>{
-    return await callApi({url, baseURL, method, data: arg, headers});
+export const postCallFetcher = async ([baseUrl, url, method, headers], {arg}) => {
+    const response = await callApi({baseURL:baseUrl, url, method, data:arg, headers});
+    return response;
 }

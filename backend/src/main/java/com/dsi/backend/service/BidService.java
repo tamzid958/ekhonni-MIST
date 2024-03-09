@@ -22,8 +22,12 @@ public interface BidService {
 
     Boolean changeIsSold(Long id, String buyerEmail);
 
+
+    Bid fetchBidByProductAndBuyer(Long id, String buyerEmail);
+
     List<Bid> buyerBids(String buyerEmail);
 
     ResponseEntity<?> popularProducts();
+
 
 }
