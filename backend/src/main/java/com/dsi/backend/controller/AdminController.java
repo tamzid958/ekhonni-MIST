@@ -3,18 +3,18 @@ package com.dsi.backend.controller;
 import com.dsi.backend.model.AppUser;
 import com.dsi.backend.model.Category;
 import com.dsi.backend.model.Product;
+import com.dsi.backend.projection.ImageModelView;
 import com.dsi.backend.projection.ProductView;
 import com.dsi.backend.service.AdminService;
 import com.dsi.backend.service.AppUserService;
+import com.dsi.backend.service.ImageModelService;
 import com.dsi.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("api/v1/admin")
@@ -25,6 +25,9 @@ public class AdminController {
 
     @Autowired
     public ProductService productService;
+
+    @Autowired
+    private ImageModelService imageModelService;
 
     @Autowired
     public AdminService adminService;
@@ -39,8 +42,14 @@ public class AdminController {
     public Map<String, Object> fetchAllRequest() {
         Map<String, Object> result = new HashMap<>();
         List<ProductView> product = productService.fetchAllRequests();
+        List<Map<String, ? > > mapList = new ArrayList<>();
+        for (ProductView eachProduct : product) {
+            List<ImageModelView> imageModelViewList = imageModelService.downloadImage(eachProduct.getId());
+            Map<String, ?> map = Map.of("product", eachProduct, "images", imageModelViewList);
+            mapList.add(map);
+        }
         int size = product.size();
-        result.put("products", product);
+        result.put("products", mapList);
         result.put("size", size);
         return result;
     }

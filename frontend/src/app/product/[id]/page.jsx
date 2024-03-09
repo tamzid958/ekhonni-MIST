@@ -75,13 +75,13 @@ const ProductPage = ({params}) => {
             <Toaster richColors position={"top-right"}/>
             <Header/>
             {!productDataIsLoading && !productError && isSeller(userData, productData) && modalIsOpen &&
-                <SellerSelectModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""}
-                                   isBidActive={productData ? productData.isBidActive : false}
-                                   finalBuyerId={productData ? productData.finalBuyerId : null} productID={productID}/>}
+                <SellerSelectModal setModalOpen={setModalIsOpen} productName={productData ? productData.product.name : ""}
+                                   isBidActive={productData ? productData.product.isBidActive : false}
+                                   finalBuyerId={productData ? productData.product.finalBuyerId : null} productID={productID}/>}
             {!productDataIsLoading && !productError && !isSeller(userData, productData) && modalIsOpen &&
-                <BuyerBidModal setModalOpen={setModalIsOpen} productName={productData ? productData.name : ""}
+                <BuyerBidModal setModalOpen={setModalIsOpen} productName={productData ? productData.product.name : ""}
                                userData={userData ? userData : null}
-                               isVisible={productData ? productData.isVisible : false} productID={productID}/>}
+                               isVisible={productData ? productData.product.isVisible : false} productID={productID}/>}
             <div className="w-full h-[700px] flex flex-col justify-center items-center">
                 <div className="flex w-full justify-center items-center ">
                     <h1 className="font-semibold text-4xl mb-[1%]">Product Details</h1>
@@ -101,56 +101,56 @@ const ProductPage = ({params}) => {
                             <div className="w-1/2 h-full flex justify-center items-center">
                                 <div className="w-3/4 h-full flex flex-col justify-center items-center">
                                     <div className="w-full h-1/5 flex justify-start items-center  border-b">
-                                        <h1 className="text-3xl text-black font-medium text-left">{productData ? productData.name : ""}</h1>
+                                        <h1 className="text-3xl text-black font-medium text-left">{productData ? productData.product.name : ""}</h1>
                                     </div>
                                     <div className="w-full h-1/5 flex flex-col justify-start items-center border-b">
                                         <div className="w-full h-1/3 flex">
-                                            <p className="text-lg">{productData ? productData.category?.category : ""} , {productData ? productData.category?.subCategory : ""}</p>
+                                            <p className="text-lg">{productData ? productData.product.category?.category : ""} , {productData ? productData.product.category?.subCategory : ""}</p>
                                         </div>
                                         <div className="w-full h-1/3 flex">
-                                            <p className="text-base">{productData ? productData.seller?.address : ""}</p>
+                                            <p className="text-base">{productData ? productData.product.seller?.address : ""}</p>
                                         </div>
                                         <div className="w-full h-1/3 flex">
                                             <p className="text-base">For sale by <span
-                                                className="font-medium">{productData ? productData.seller?.name : ""}</span>
+                                                className="font-medium">{productData ? productData.product.seller?.name : ""}</span>
                                             </p>
                                         </div>
                                     </div>
                                     <div className="w-full h-1/5 flex items-start mt-2 border-b">
-                                        <p className="font-light">{productData ? productData.description : ""}</p>
+                                        <p className="font-light">{productData ? productData.product.description : ""}</p>
                                     </div>
                                     <div className="w-full h-1/5 flex flex-col justify-center items-start border-b">
                                         <p className="text-lg mb-2">Starting Price : <span
-                                            className="font-medium">{productData ? "Tk " + productData.startingPrice : ""}</span>
+                                            className="font-medium">{productData ? "Tk " + productData.product.startingPrice : ""}</span>
                                         </p>
                                         <p className="text-lg mb-2">Size : <span
-                                            className="font-medium">{productData ? productData.size : ""}</span></p>
+                                            className="font-medium">{productData ? productData.product.size : ""}</span></p>
                                         <p className="text-lg">Condition : &nbsp;
-                                            {productData && productData.usedCondition && (
+                                            {productData && productData.product.usedCondition && (
                                                 <span className="font-medium">Used</span>
                                             )}
-                                            {productData && !productData.usedCondition && (
+                                            {productData && !productData.product.usedCondition && (
                                                 <span className="font-medium">New</span>
                                             )}
                                         </p>
                                     </div>
                                     <div className="w-full h-1/5 flex justify-center items-center border-b">
                                         {/*For Seller : View Bids Modal Open Button For Seller*/}
-                                        {!productError && isSeller(userData, productData) && !productData.isSold &&
+                                        {!productError && isSeller(userData, productData) && !productData.product.isSold &&
                                             (<Button value={"View Bids"} option={1} type={"button"}
                                                      onClick={() => {
                                                          session ? setModalIsOpen(true) : redirectToLogin(router)
                                                      }}/>)}
 
                                         {/*For Buyer : Bid Modal Open Button For Buyer (Bidding is Active and Not Sold)*/}
-                                        {!productError && !isSeller(userData, productData) && productData.isBidActive && !productData.isSold && !productData.finalBuyerId &&
+                                        {!productError && !isSeller(userData, productData) && productData.product.isBidActive && !productData.product.isSold && !productData.product.finalBuyerId &&
                                             (<Button value={"Bid"} option={1} type={"button"}
                                                      onClick={() => {
                                                          session ? setModalIsOpen(true) : redirectToLogin(router)
                                                      }}/>)}
 
                                         {/*For Buyer : Bidding is Inactive*/}
-                                        {!productError && !isSeller(userData, productData) && !isFinalBuyer(userData, productData) && !productData.isBidActive && !productData.isSold &&
+                                        {!productError && !isSeller(userData, productData) && !isFinalBuyer(userData, productData) && !productData.product.isBidActive && !productData.product.isSold &&
                                             (
                                                 <p className="px-4 py-1 cursor-default bg-black text-white text-xl shadow-lg shadow-slate-300 rounded-full">Bidding
                                                     Is Off</p>)}

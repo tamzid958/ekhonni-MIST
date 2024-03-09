@@ -7,7 +7,7 @@ import {toast} from "sonner";
 import {requestApi} from "@/utils/axios.settings";
 import {useSWRConfig} from "swr";
 
-const PostApprovalbox = ({id, name, location, time, description, category, subCategory, price, username}) => {
+const PostApprovalbox = ({id, name, location, time, description, category, subCategory, price, username, image}) => {
 
     const {mutate} = useSWRConfig();
     let isApprovedByAdmin = "";
@@ -37,7 +37,7 @@ const PostApprovalbox = ({id, name, location, time, description, category, subCa
                 {/*Image box*/}
                 <div
                     className="w-1/4 h-[82%]  relative my-3 border-2 border-black flex justify-start items-start -ml-5 ">
-                    <Image src={"/dslr.jpg"} alt={"dslr"} fill objectFit={"cover"}/>
+                    <Image src={image} alt={"dslr"} fill objectFit={"cover"}/>
                 </div>
 
                 {/*details info div*/}

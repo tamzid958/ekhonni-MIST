@@ -1,6 +1,7 @@
 package com.dsi.backend.controller;
 
 import com.dsi.backend.model.*;
+import com.dsi.backend.projection.ImageModelView;
 import com.dsi.backend.projection.ProductView;
 import com.dsi.backend.service.CategoryService;
 import com.dsi.backend.service.ImageModelService;
@@ -51,6 +52,7 @@ public class ProductController {
     @RequestMapping("/products/filter")
     public Page<ProductView> filterProduct(@RequestBody FilterRequest filterRequest) {
         return productService.filterProduct(filterRequest);
+
     }
 
     @GetMapping("/products/category/all")
@@ -67,7 +69,7 @@ public class ProductController {
     public ResponseEntity<?> getProductById(@PathVariable("id") Long id) {
 
         ProductView product = productService.getProductById(id);
-        Set<ImageModel> images = imageModelService.downloadImage(id);
+        List<ImageModelView> images = imageModelService.downloadImage(id);
         Map<String, ?> map = Map.of("product", product, "images", images);
         return ResponseEntity.ok(map);
     }
