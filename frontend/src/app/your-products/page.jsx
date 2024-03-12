@@ -18,12 +18,12 @@ export default function YourProducts() {
             {data && data.length !== 0 &&
                 <div className="w-full h-auto min-h-[350px] flex flex-col justify-start items-center ">
                     {data.map((item) => (
-                        <SingleProduct key={item.id} id={item.bid?.product.id} name={item.bid?.product.name} description={item.bid?.product.description}
-                                       category={item.bid?.product?.category.category} subcategory={item.bid?.product?.category.subCategory}
-                                       startingPrice={item.bid?.product.startingPrice}
-                                       isBidActive={item.bid?.product.isBidActive}
-                                       isSold={item.bid?.product.isSold}
-                                       image={item.images[0]?.imageByte}/>
+                        <SingleProduct key={item.id} id={item.id} name={item.name} description={item.description}
+                                       category={item.category.category} subcategory={item.category.subCategory}
+                                       startingPrice={item.startingPrice}
+                                       isBidActive={item.isBidActive}
+                                       isSold={item.isSold}
+                                       image={item.productImage[0]?.imageByte}/>
                     ))}
 
                 </div>}
