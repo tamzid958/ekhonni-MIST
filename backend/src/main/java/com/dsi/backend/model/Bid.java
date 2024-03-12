@@ -1,7 +1,10 @@
 package com.dsi.backend.model;
 
+import com.dsi.backend.projection.ProductView;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.projection.ProjectionFactory;
+import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 
 import java.io.Serializable;
 
@@ -23,4 +26,9 @@ public class Bid extends BaseEntity<Long> implements Serializable {
 
     @Column(name = "offered_price")
     private Double offeredPrice;
+
+    public ProductView getProduct() {
+        ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
+        return projectionFactory.createProjection(ProductView.class, this.product);
+    }
 }
