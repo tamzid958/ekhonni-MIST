@@ -104,13 +104,7 @@ public class BidController {
     public ResponseEntity<?> yourProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String buyerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
         List<Bid> bids = bidService.buyerBids(buyerEmail);
-        List<Map<String, ? >> bidList= new ArrayList<>();
-        for (Bid eachBid : bids) {
-            List<ImageModelView> imageModelViewList = imageModelService.downloadImage(eachBid.getId());
-            Map<String, ?> map = Map.of("bid", eachBid, "images", imageModelViewList);
-            bidList.add(map);
-        }
-        return ResponseEntity.ok(bidList);
+        return ResponseEntity.ok(bids);
     }
 
     @GetMapping("/popular-products")
