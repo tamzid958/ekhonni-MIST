@@ -86,12 +86,6 @@ public class ProductController {
     public ResponseEntity<?> yourProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String sellerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
         List<ProductView> productViewList = productService.sellerProducts(sellerEmail);
-        List<Map<String, ? > > productList = new ArrayList<>();
-        for (ProductView eachProduct : productViewList) {
-            List<ImageModelView> imageModelViewList = imageModelService.downloadImage(eachProduct.getId());
-            Map<String, ?> map = Map.of("product", eachProduct, "images", imageModelViewList);
-            productList.add(map);
-        }
         return ResponseEntity.ok(productViewList);
     }
 
