@@ -12,7 +12,8 @@ import lombok.*;
 @Table(name = "image")
 public class ImageModel extends BaseEntity<Long>{
 
-    @ManyToOne @JoinColumn (name = "product_id", referencedColumnName = "id", columnDefinition = "bigint")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "product_id")//, referencedColumnName = "id", columnDefinition = "bigint")
     private Product product;
     private String name;
     private String type;

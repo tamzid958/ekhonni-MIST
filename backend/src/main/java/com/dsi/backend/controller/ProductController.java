@@ -68,11 +68,8 @@ public class ProductController {
 
     @GetMapping(value = "/products/{id}")
     public ResponseEntity<?> getProductById(@PathVariable("id") Long id) {
-
         ProductView product = productService.getProductById(id);
-        List<ImageModelView> images = imageModelService.downloadImage(id);
-        Map<String, ?> map = Map.of("product", product, "images", images);
-        return ResponseEntity.ok(map);
+        return ResponseEntity.ok(product);
     }
 
     @GetMapping("/products/count")
@@ -95,7 +92,7 @@ public class ProductController {
             Map<String, ?> map = Map.of("product", eachProduct, "images", imageModelViewList);
             productList.add(map);
         }
-        return ResponseEntity.ok(productList);
+        return ResponseEntity.ok(productViewList);
     }
 
 }
