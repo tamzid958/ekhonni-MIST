@@ -43,11 +43,12 @@ export default function AdminPage() {
             </div>
             <div className="w-full h-auto min-h-[400px] flex flex-col justify-start items-center ">
                 {!error && !isLoading && data && data.products && data.products.map((item) => (
-                    <PostApprovalbox key={item.id} id={item.id} name={item.name} username={item.seller.name}
-                                     description={item.description} price={item.startingPrice}
-                                     category={item.category.category} subCategory={item.category.subCategory}
-                                     location={item.seller.division}
-                                     time={new Date(item.productTime).toLocaleDateString('en-GB')}
+                    <PostApprovalbox key={item.id} id={item.product.id} name={item.product.name} username={item.product.seller.name}
+                                     description={item.product.description} price={item.product.startingPrice}
+                                     category={item.product.category.category} subCategory={item.product.category.subCategory}
+                                     location={item.product.seller.division}
+                                     time={new Date(item.product.productTime).toLocaleDateString('en-GB')}
+                                     image={item.images[0]?.imageByte}
                     />
                 ))}
                 {!data || data && data.length === 0 && (

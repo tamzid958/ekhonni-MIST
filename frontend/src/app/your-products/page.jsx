@@ -22,7 +22,8 @@ export default function YourProducts() {
                                        category={item.category.category} subcategory={item.category.subCategory}
                                        startingPrice={item.startingPrice}
                                        isBidActive={item.isBidActive}
-                                       isSold={item.isSold} />
+                                       isSold={item.isSold}
+                                       image={item.productImage[0]?.imageByte}/>
                     ))}
 
                 </div>}

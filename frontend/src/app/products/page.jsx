@@ -218,7 +218,7 @@ const Product = () => {
                             {
                                 !isLoading && !error && value && value.content.map((product, index) => (
                                     <Link href={`/product/${product.id}`} key={index}>
-                                        <LargeCard key={index} img="/bike.jpg" name={product.name}
+                                        <LargeCard key={index} img={product.productImage[0]?.imageByte} name={product.name}
                                                    desc={product.description} price={product.startingPrice}/>
                                     </Link>))
                             }

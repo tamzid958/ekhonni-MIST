@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>, CustomRepository {
 
@@ -27,7 +28,17 @@ public interface ProductRepository extends JpaRepository<Product, Long>, CustomR
     List<Product> findByIsApprovedByAdminTrueAndCategorySubCategoryIn(List<String> subCategory);
     List<Product> findByIsApprovedByAdminTrueAndSellerDivisionIn(List<String> division);
     List<Product> findByIsApprovedByAdminTrueAndStartingPriceBetween(Double minPrice, Double maxPrice);
+
+    List<Product> findByIsApprovedByAdminTrueOrderByStartingPriceAsc();
+
+    List<Product> findByIsApprovedByAdminTrueOrderByStartingPriceDesc();
+
+    List<Product> findByIsApprovedByAdminTrueOrderByProductTimeAsc();
+
+    List<Product> findByIsApprovedByAdminTrueOrderByProductTimeDesc();
+
     List<Product> findByIsApprovedByAdminTrueAndNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String searchKey1,String searchKey2);
+
     Product findProductById(Long id);
 
     List<ProductView> findAllBySeller(AppUser seller);
@@ -58,6 +69,5 @@ public interface ProductRepository extends JpaRepository<Product, Long>, CustomR
     @Transactional
     @Query(value = "UPDATE product p SET is_sold = true WHERE p.id = :product_id", nativeQuery = true)
     void changeIsSoldToTrue(Long product_id);
-
 
 }

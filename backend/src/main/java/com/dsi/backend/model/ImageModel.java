@@ -12,8 +12,12 @@ import lombok.*;
 @Table(name = "image")
 public class ImageModel extends BaseEntity<Long>{
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "product_id")//, referencedColumnName = "id", columnDefinition = "bigint")
+    private Product product;
     private String name;
     private String type;
-    @Column(length = 50000000, name = "image_byte")
-    private byte[] imageByte;
+
+    @Column(name = "image_byte", columnDefinition = "TEXT")
+    private String imageByte;
 }

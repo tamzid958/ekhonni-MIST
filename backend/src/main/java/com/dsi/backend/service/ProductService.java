@@ -21,7 +21,6 @@ public interface ProductService {
     List<ProductView> fetchAllRequests();
 
     ProductView getProductById(Long id);
-
     Product fetchProductById(Long id);
     Map<String,Long> countProducts(String division);
     List<ProductView> showByCategory(String category);

@@ -1,6 +1,7 @@
 package com.dsi.backend.controller;
 
 import com.dsi.backend.model.*;
+import com.dsi.backend.projection.ImageModelView;
 import com.dsi.backend.projection.ProductView;
 import com.dsi.backend.service.CategoryService;
 import com.dsi.backend.service.ImageModelService;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -45,12 +47,13 @@ public class ProductController {
                                          @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         ProductView savedProduct = productService.saveProduct(product, file, token);
 
-        return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
+        return new ResponseEntity<>(productService.getProductById(savedProduct.getId()), HttpStatus.CREATED);
     }
 
     @RequestMapping("/products/filter")
     public Page<ProductView> filterProduct(@RequestBody FilterRequest filterRequest) {
         return productService.filterProduct(filterRequest);
+
     }
 
     @GetMapping("/products/category/all")
@@ -64,8 +67,9 @@ public class ProductController {
     }
 
     @GetMapping(value = "/products/{id}")
-    public ProductView getProductById(@PathVariable("id") Long id) {
-        return productService.getProductById(id);
+    public ResponseEntity<?> getProductById(@PathVariable("id") Long id) {
+        ProductView product = productService.getProductById(id);
+        return ResponseEntity.ok(product);
     }
 
     @GetMapping("/products/count")
@@ -79,10 +83,10 @@ public class ProductController {
     }
 
     @GetMapping("/user/your-products")
-    public ResponseEntity<List<ProductView>> yourProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+    public ResponseEntity<?> yourProducts(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String sellerEmail = jwtTokenService.getUsernameFromToken(token.substring(7));
-        List<ProductView> products = productService.sellerProducts(sellerEmail);
-        return ResponseEntity.ok(products);
+        List<ProductView> productViewList = productService.sellerProducts(sellerEmail);
+        return ResponseEntity.ok(productViewList);
     }
 
 }

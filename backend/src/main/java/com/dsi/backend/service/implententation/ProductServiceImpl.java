@@ -3,9 +3,11 @@ package com.dsi.backend.service.implententation;
 import com.dsi.backend.exception.ProductNotFoundException;
 import com.dsi.backend.model.*;
 
+import com.dsi.backend.projection.ImageModelView;
 import com.dsi.backend.projection.ProductView;
 import com.dsi.backend.repository.AppUserRepository;
 import com.dsi.backend.repository.CategoryRepository;
+import com.dsi.backend.repository.ImageModelRepository;
 import com.dsi.backend.repository.ProductRepository;
 import com.dsi.backend.service.ImageModelService;
 import com.dsi.backend.service.JwtTokenService;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.projection.ProjectionFactory;
 import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.stereotype.Service;
@@ -42,8 +45,12 @@ public class ProductServiceImpl implements ProductService {
     private ImageModelService imageModelService;
 
     @Autowired
+    private ImageModelRepository imageModelRepository;
+
+    @Autowired
     private JwtTokenService jwtTokenService;
 
+    @Override
     public ProductView saveProduct(Product product, MultipartFile[] file, String token) {
         product.setIsApprovedByAdmin(null);
         product.setIsSold(false);
@@ -56,19 +63,24 @@ public class ProductServiceImpl implements ProductService {
         product.setCategory(category);
         product.setSeller(seller);
 
+        productRepository.save(product);
+
         try {
-            Set<ImageModel> image = imageModelService.uploadImage(file);
-            product.setProductImage(image);
+            Set<ImageModel> image = imageModelService.uploadImage(product,file);
+//            product.setProductImage(image);
 
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
             return null;
         }
+
         productRepository.save(product);
+
         ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
         return projectionFactory.createProjection(ProductView.class, product);
     }
 
+    @Override
     public Product updateProduct(Long id, Boolean isApprovedByAdmin) {
         Product existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new ProductNotFoundException("Product not found with id: " + id));
@@ -77,16 +89,27 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(existingProduct);
     }
 
+    @Override
     public List<ProductView> fetchAllRequests() {
         return productRepository.findByIsApprovedByAdminIsNullOrderByProductTimeAsc();
     }
 
+    @Override
     public ProductView getProductById(Long id) {
         Product product = productRepository.findById(id).orElseThrow(()->new ProductNotFoundException("Product not found by id: "+id));
 //        Product product = productRepository.findById(id);
-        ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
-        return projectionFactory.createProjection(ProductView.class, product);
+//        Set<ImageModel> imageModels = imageModelRepository.findAllByProductId(product.getId());
 
+        ProjectionFactory projectionFactory = new SpelAwareProxyProjectionFactory();
+        ProductView productView = projectionFactory.createProjection(ProductView.class, product);
+//        List<ImageModelView> imageModelViews = new ArrayList<ImageModelView>();
+//
+//        for (ImageModel image : imageModels) {
+//            imageModelViews.add(projectionFactory.createProjection(ImageModelView.class, image));
+//        }
+
+        return projectionFactory.createProjection(ProductView.class, product);
+        //return Map.of("product", productView, "images", imageModelViews);
     }
 
     @Override
@@ -95,6 +118,7 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(()->new ProductNotFoundException("Product not found by id: "+id));
     }
 
+    @Override
     public Map<String,Long> countProducts(String division) {
         List<Product> product;
         if(Objects.equals(division, "")) {
@@ -105,6 +129,7 @@ public class ProductServiceImpl implements ProductService {
         return product.stream().collect(Collectors.groupingBy(Product::getCategoryName, Collectors.counting()));
     }
 
+    @Override
     public List<ProductView> showByCategory(String category){
         return productRepository.findByIsApprovedByAdminTrueAndIsSoldTrueAndCategoryCategory(category);
     }

@@ -124,15 +124,14 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Override
     public AppUser fetchInformation(String token) {
-//        AppUser appUser = appUserRepository.findByEmail(email);
         return appUserRepository.findByEmail(jwtTokenService.getUsernameFromToken(token.substring(7)));
     }
 
     @Override
     public AppUserView uploadImage(MultipartFile imageFile, String token) throws IOException {
-        ImageModel imageModel = new ImageModel(imageFile.getOriginalFilename(),
+        ImageModel imageModel = new ImageModel(null,imageFile.getOriginalFilename(),
                 imageFile.getContentType(),
-                imageFile.getBytes());
+                "");
         imageModel = imageRepository.save(imageModel);
 
         AppUser appUser = appUserRepository.findByEmail(jwtTokenService.getUsernameFromToken(token.substring(7)));
@@ -143,7 +142,6 @@ public class AppUserServiceImpl implements AppUserService{
     }
 
     @Override
-
     public AppUser findUser(String email) {
         return appUserRepository.findByEmail(email);
     }
@@ -154,8 +152,6 @@ public class AppUserServiceImpl implements AppUserService{
         String link = System.getenv("FRONTEND_BASE_URL") + "/reset-password?token=" + token;
 
         String message = "This email has been sent to you because there has been an attempt to change your account password. If this is really you, click on this link to change your password:" + link ;
-
-
         mailSenderService.sendMail(email, "Reset Your Password", message);
     }
 
@@ -183,10 +179,8 @@ public class AppUserServiceImpl implements AppUserService{
 
     @Override
     public AppUser deleteAdmin(String email) {
-
         AppUser admin = appUserRepository.findByEmail(email);
         appUserRepository.delete(admin);
-
         return null;
     }
 
@@ -218,6 +212,5 @@ public class AppUserServiceImpl implements AppUserService{
 //        notificationService.clearAllNotification(appUser.getId());
 //        return ResponseEntity.ok("Account deleted successfully");
 //    }
-
 
 }
